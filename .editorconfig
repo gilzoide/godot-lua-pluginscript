@@ -1,0 +1,9 @@
+root = true
+
+[*]
+encoding = utf-8
+indent_style = space
+indent_size = 4
+
+[*.gd]
+indent_style = tab
