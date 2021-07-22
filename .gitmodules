@@ -1,0 +1,6 @@
+[submodule "lib/godot-headers"]
+	path = lib/godot-headers
+	url = https://github.com/godotengine/godot-headers.git
+[submodule "lib/high-level-gdnative"]
+	path = lib/high-level-gdnative
+	url = https://github.com/gilzoide/high-level-gdnative.git
