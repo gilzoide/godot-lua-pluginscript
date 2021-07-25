@@ -1,6 +1,7 @@
 #include "hgdn.h"
 #include "lua.h"
 
+// Language functions
 static void *lps_alloc(void *userdata, void *ptr, size_t osize, size_t nsize) {
     if (nsize == 0) {
         hgdn_free(ptr);
@@ -11,14 +12,55 @@ static void *lps_alloc(void *userdata, void *ptr, size_t osize, size_t nsize) {
     }
 }
 
-godot_pluginscript_language_data *lps_init() {
+godot_pluginscript_language_data *lps_language_init() {
     return lua_newstate(&lps_alloc, NULL);
 }
 
-void lps_finish(godot_pluginscript_language_data *data) {
+void lps_language_finish(godot_pluginscript_language_data *data) {
     lua_close((lua_State *) data);
 }
 
+
+// Script manifest
+godot_pluginscript_script_manifest lps_script_init(godot_pluginscript_language_data *data, const godot_string *path, const godot_string *source, godot_error *error) {
+    godot_pluginscript_script_manifest manifest = {};
+
+    // TODO
+
+    return manifest;
+}
+
+void lps_script_finish(godot_pluginscript_script_data *data) {
+    // TODO
+}
+
+
+// Instance
+godot_pluginscript_instance_data *lps_instance_init(godot_pluginscript_script_data *data, godot_object *owner) {
+    return NULL;
+}
+
+void lps_instance_finish(godot_pluginscript_instance_data *data) {
+}
+
+godot_bool lps_instance_set_prop(godot_pluginscript_instance_data *data, const godot_string *name, const godot_variant *value) {
+    // TODO
+    return false;
+}
+
+godot_bool lps_instance_get_prop(godot_pluginscript_instance_data *data, const godot_string *name, godot_variant *ret) {
+    // TODO
+    return false;
+}
+
+godot_variant lps_instance_call_method(godot_pluginscript_instance_data *p_data,
+        const godot_string_name *p_method, const godot_variant **p_args,
+        int p_argcount, godot_variant_call_error *r_error) {
+    return hgdn_new_nil_variant();
+}
+
+
+// GDNative functions
 GDN_EXPORT void godot_gdnative_init(godot_gdnative_init_options *options) {
     hgdn_gdnative_init(options);
 
@@ -27,8 +69,8 @@ GDN_EXPORT void godot_gdnative_init(godot_gdnative_init_options *options) {
         .type = "lua",
         .extension = "lua",
         .recognized_extensions = (const char *[]){ "lua", NULL },
-        .init = &lps_init,
-        .finish = &lps_finish,
+        .init = &lps_language_init,
+        .finish = &lps_language_finish,
         .reserved_words = (const char *[]){
             "and", "break", "do", "else", "elseif", "end",
             "false", "for", "function", "goto", "if", "in",
@@ -42,13 +84,25 @@ GDN_EXPORT void godot_gdnative_init(godot_gdnative_init_options *options) {
         .supports_builtin_mode = true,
 
         .script_desc = {
-            // TODO
+            .init = &lps_script_init,
+            .finish = &lps_script_finish,
+
+            .instance_desc = {
+                .init = lps_instance_init,
+                .finish = lps_instance_finish,
+                .set_prop = lps_instance_set_prop,
+                .get_prop = lps_instance_get_prop,
+                .call_method = lps_instance_call_method,
+            },
         },
     };
 
-    godot_pluginscript_register_language(&lua_desc);
+    hgdn_pluginscript_api->godot_pluginscript_register_language(&lua_desc);
 }
 
 GDN_EXPORT void godot_gdnative_terminate(godot_gdnative_terminate_options *options) {
     hgdn_gdnative_terminate(options);
+}
+
+GDN_EXPORT void godot_gdnative_singleton() {
 }
