@@ -25,14 +25,14 @@ some_prop_with_details = property {
   -- All Godot variant type names are defined globally as written in GDScript, like bool, int, float, String, Array, etc...
   type = int,
   -- ["set"] or ["setter"] = setter function, optional
-  set = function(value)
-    some_prop_with_details = value
+  set = function(self, value)
+    self.some_prop_with_details = value
     -- Unknown names to _ENV will search base class for methods and properties, respectively
-    emit_signal("something_happened_with_args", "some_prop_with_details", value)
+    self:emit_signal("something_happened_with_args", "some_prop_with_details", value)
   end,
   -- ["get"] or ["getter"] = getter function, optional
-  get = function()
-    return some_prop_with_details
+  get = function(self)
+    return self.some_prop_with_details
   end,
   -- ["export"] = export flag, optional
   export = false,
@@ -44,7 +44,7 @@ export {
 }
 
 -- Functions defined in _ENV are public methods
-function some_prop_doubled()
-  return some_prop * 2
+function some_prop_doubled(self)
+  return self.some_prop * 2
 end
 ```
