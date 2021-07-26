@@ -81,42 +81,41 @@ void lps_instance_notification(godot_pluginscript_instance_data *p_data, int p_n
     // TODO
 }
 
+godot_pluginscript_language_desc lua_desc = {
+    .name = "Lua",
+    .type = "Lua",
+    .extension = "lua",
+    .recognized_extensions = (const char *[]){ "lua", NULL },
+    .init = &lps_language_init,
+    .finish = &lps_language_finish,
+    .reserved_words = (const char *[]){
+        "and", "break", "do", "else", "elseif", "end",
+        "false", "for", "function", "goto", "if", "in",
+        "local", "nil", "not", "or", "repeat", "return",
+        "then", "true", "until", "while",
+        NULL
+    },
+    .comment_delimiters = (const char *[]){ "--", "--[[ ]]", NULL },
+    .string_delimiters = (const char *[]){ "' '", "\" \"", "[[ ]]", "[=[ ]=]", NULL },
+    .has_named_classes = false,
+    .supports_builtin_mode = true,
+    .add_global_constant = &lps_language_add_global_constant,
+
+    .script_desc = {
+        .init = &lps_script_init,
+        .finish = &lps_script_finish,
+        .instance_desc = {
+            .init = &lps_instance_init,
+            .finish = &lps_instance_finish,
+            .set_prop = &lps_instance_set_prop,
+            .get_prop = &lps_instance_get_prop,
+            .call_method = &lps_instance_call_method,
+            .notification = &lps_instance_notification,
+        },
+    },
+};
+
 // GDNative functions
-
-    godot_pluginscript_language_desc lua_desc = {
-        .name = "Lua",
-        .type = "Lua",
-        .extension = "lua",
-        .recognized_extensions = (const char *[]){ "lua", NULL },
-        .init = &lps_language_init,
-        .finish = &lps_language_finish,
-        .reserved_words = (const char *[]){
-            "and", "break", "do", "else", "elseif", "end",
-            "false", "for", "function", "goto", "if", "in",
-            "local", "nil", "not", "or", "repeat", "return",
-            "then", "true", "until", "while",
-            NULL
-        },
-        .comment_delimiters = (const char *[]){ "--", "--[[ ]]", NULL },
-        .string_delimiters = (const char *[]){ "' '", "\" \"", "[[ ]]", "[=[ ]=]", NULL },
-        .has_named_classes = false,
-        .supports_builtin_mode = true,
-        .add_global_constant = &lps_language_add_global_constant,
-
-        .script_desc = {
-            .init = &lps_script_init,
-            .finish = &lps_script_finish,
-
-            .instance_desc = {
-                .init = &lps_instance_init,
-                .finish = &lps_instance_finish,
-                .set_prop = &lps_instance_set_prop,
-                .get_prop = &lps_instance_get_prop,
-                .call_method = &lps_instance_call_method,
-                .notification = &lps_instance_notification,
-            },
-        },
-    };
 GDN_EXPORT void godot_gdnative_init(godot_gdnative_init_options *options) {
     hgdn_gdnative_init(options);
 

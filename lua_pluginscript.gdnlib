@@ -1,0 +1,16 @@
+[general]
+
+singleton=true
+load_once=true
+symbol_prefix="godot_"
+reloadable=false
+
+[entry]
+
+X11.64="res://godot-lua-pluginscript/build/linux/x86_64/release/liblua_pluginscript.so"
+X11.32="res://godot-lua-pluginscript/build/linux/i386/release/liblua_pluginscript.so"
+
+[dependencies]
+
+X11.64=[  ]
+X11.32=[  ]
