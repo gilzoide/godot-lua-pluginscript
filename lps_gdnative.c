@@ -1,9 +1,12 @@
-#define HGDN_STATIC
-#define HGDN_IMPLEMENTATION
 #include "hgdn.h"
 #include "lua.h"
+#include "lualib.h"
+#include "lauxlib.h"
+
+#include "lps_variant.h"
 
 // Language functions
+#ifndef USE_LUAJIT
 static void *lps_alloc(void *userdata, void *ptr, size_t osize, size_t nsize) {
     if (nsize == 0) {
         hgdn_free(ptr);
@@ -13,9 +16,16 @@ static void *lps_alloc(void *userdata, void *ptr, size_t osize, size_t nsize) {
         return hgdn_realloc(ptr, nsize);
     }
 }
+#endif
 
 godot_pluginscript_language_data *lps_language_init() {
-    return lua_newstate(&lps_alloc, NULL);
+#ifndef USE_LUAJIT
+    lua_State *L = lua_newstate(&lps_alloc, NULL);
+#else
+    lua_State *L = luaL_newstate();
+#endif
+    luaL_openlibs(L);
+    return L;
 }
 
 void lps_language_finish(godot_pluginscript_language_data *data) {
