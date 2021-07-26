@@ -1,6 +1,11 @@
 option("use-luajit")
     set_showmenu(true)
     set_default(true)
+    set_description("Use LuaJIT instead of vanilla Lua")
+option("system-lua")
+    set_default(false)
+    set_showmenu(true)
+    set_description("Try using Lua/LuaJIT system package")
 option_end()
 
 local lua_or_jit
@@ -11,7 +16,12 @@ else
     lua_or_jit = "lua"
 end
 
-add_requires(lua_or_jit)
+add_requires(lua_or_jit, {
+    system = has_config("system-lua") or false,
+    config = {
+        gc64 = true,
+    },
+})
 
 target("lua_pluginscript")
     set_kind("shared")
