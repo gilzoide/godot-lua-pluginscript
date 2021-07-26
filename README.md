@@ -39,9 +39,7 @@ some_prop_with_details = property {
   -- TODO: usage, hint/hint_text, rset_mode
 }
 -- `export` is an alias for `property` with `export = true`
-export {
-  "some_exported_prop", "hello world!"
-}
+some_exported_prop = export { "hello world!" }
 
 -- Functions defined in _ENV are public methods
 function some_prop_doubled(self)
