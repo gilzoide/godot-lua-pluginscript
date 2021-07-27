@@ -1,21 +1,14 @@
 option("use-luajit")
-    set_showmenu(true)
-    set_default(true)
     set_description("Use LuaJIT instead of vanilla Lua")
+    set_default(true)
+    set_showmenu(true)
 option("system-lua")
+    set_description("Use Lua/LuaJIT system package, if available")
     set_default(false)
     set_showmenu(true)
-    set_description("Try using Lua/LuaJIT system package")
 option_end()
 
-local lua_or_jit
-if has_config("use-luajit") then
-    lua_or_jit = "luajit"
-    add_defines("USE_LUAJIT")
-else
-    lua_or_jit = "lua"
-end
-
+local lua_or_jit = has_config("use-luajit") and "luajit" or "lua"
 add_requires(lua_or_jit, {
     system = has_config("system-lua") or false,
     config = {
@@ -27,5 +20,5 @@ target("lua_pluginscript")
     set_kind("shared")
     add_includedirs("lib/godot-headers")
     add_includedirs("lib/high-level-gdnative")
-    add_files("lps_gdnative.c", "lps_variant.c", "hgdn.c")
+    add_files("src/*.c")
     add_packages(lua_or_jit)

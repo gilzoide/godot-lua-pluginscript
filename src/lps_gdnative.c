@@ -26,8 +26,12 @@ void lps_language_finish(godot_pluginscript_language_data *data) {
     lua_close((lua_State *) data);
 }
 
-void lps_language_add_global_constant(godot_pluginscript_language_data *p_data, const godot_string *p_variable, const godot_variant *p_value) {
-    // TODO
+void lps_language_add_global_constant(godot_pluginscript_language_data *data, const godot_string *gd_name, const godot_variant *value) {
+    lua_State *L = (lua_State *) data;
+    hgdn_string name = hgdn_string_get(gd_name);
+    lps_pushvariant(L, value);
+    lua_setglobal(L, name.ptr);
+    hgdn_string_destroy(&name);
 }
 
 // Script manifest
