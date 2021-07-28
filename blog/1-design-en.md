@@ -1,5 +1,5 @@
 # Designing a Godot PluginScript for Lua
-`#Godot #Lua #GDNative #PluginScript #languageBindings`
+2021-07-28 | `#Godot #Lua #GDNative #PluginScript #languageBindings` | [*Versão em Português*](1-design-pt.md)
 
 This is the first article in a series about how I'm approaching the development
 of a plugin for using the [Lua](https://www.lua.org/) language in
@@ -12,7 +12,7 @@ Combining that with the power of [LuaJIT](https://luajit.org/),
 one of the fastest dynamic language implementations out there, we can also
 [call external C functions via the Foreign Function Interface (FFI)](https://luajit.org/ext_ffi.html)!
 
-With the extensible nature of scripting in Godot, all supported languages
+With the dynamic nature of scripting in Godot, all supported languages
 can seamlessly communicate with each other and thus we can choose to use the
 language that best fits the task in hand for each script.
 By the means of [signals](https://docs.godotengine.org/en/stable/getting_started/step_by_step/signals.html)
@@ -27,14 +27,8 @@ objects, we will create a PluginScript, which is one of the uses of
 [GDNative](https://docs.godotengine.org/en/stable/getting_started/step_by_step/scripting.html#gdnative-c),
 the native plugin C API provided by the engine to extend all sorts of
 engine systems, such as the scripting one.
-Another plus in this approach is that only the plugin have to be compiled,
+One pro of this approach is that only the plugin have to be compiled,
 so anyone with a standard prebuilt version of Godot can use it! =D
-
-As a side note, since interfacing with C using LuaJIT's FFI is substantially
-easier than with the Lua/C API and most people will likely want to use
-it for the increased speed, LuaJIT support will be implemented first.
-Using [cffi-lua](https://github.com/q66/cffi-lua) and similar modules
-may make this first implementation portable to vanilla Lua as well.
 
 
 ## Goals
@@ -59,7 +53,7 @@ This is an example of how a Lua script will look like. There are comments regard
 some design decisions, which may change during development.
 
 ```lua
--- Optional: set script as tool
+-- Optional: set class as tool
 tool()
 
 -- Optional: set base class by name, defaults to 'Reference'
@@ -72,7 +66,7 @@ class_name 'MyClass'
 signal("something_happened")
 signal("something_happened_with_args", "arg1", "arg2")
 
--- Values defined in _ENV are registered as properties of the script
+-- Values defined in _ENV are registered as properties of the class
 some_prop = 42
 
 -- Local variables and global ones are **not** registered properties
@@ -80,7 +74,7 @@ some_prop = 42
 local some_lua_local = false
 _G.some_lua_global = false
 
--- calling `property` adds metadata to defined properties,
+-- The `property` function adds metadata to defined properties,
 -- like setter and getter functions
 some_prop_with_details = property {
   -- [1] or ["default"] or ["default_value"] = property default value
@@ -89,13 +83,13 @@ some_prop_with_details = property {
   -- All Godot variant type names are defined globally as written in
   -- GDScript, like bool, int, float, String, Array, Vector2, etc...
   -- Notice that Lua <= 5.2 does not differentiate integers from float
-  -- numbers, so you may want to always specify `int` where appropriate
+  -- numbers, so we should always specify `int` where appropriate
   type = int,
   -- ["set"] or ["setter"] = setter function, optional
   set = function(self, value)
     self.some_prop_with_details = value
-    -- Indexing self with keys undefined in script will search base
-    -- class for methods and properties, respectively
+    -- Indexing `self` with keys undefined in script will search base
+    -- class for methods and properties
     self:emit_signal("something_happened_with_args", "some_prop_with_details", value)
   end,
   -- ["get"] or ["getter"] = getter function, optional
@@ -103,6 +97,7 @@ some_prop_with_details = property {
     return self.some_prop_with_details
   end,
   -- ["export"] = export flag, optional, defaults to false
+  -- Exported properties are editable in the Inspector
   export = false,
   -- TODO: usage, hint/hint_text, rset_mode
 }
@@ -123,7 +118,7 @@ end
 
 
 ## Implementation design details
-PluginScripts have three important concepts: the Language description,
+PluginScripts have three important concepts: the Language Description,
 Script Manifest and Instances.
 
 Let's check out what each layer is and how they will behave from a high
@@ -135,8 +130,7 @@ The language description tells Godot how to initialize and finalize our
 language runtime, as well as how to load script manifests from source
 files.
 
-When initializing the runtime, a new
-[lua_State](https://www.lua.org/manual/5.4/manual.html#lua_State)
+When initializing the runtime, a new [lua_State](https://www.lua.org/manual/5.4/manual.html#lua_State)
 will be created and Godot functionality setup in it.
 The Lua VM will use engine memory management routines, so that memory is
 tracked by the performance monitors in debug builds of the
@@ -165,18 +159,20 @@ Language finalization will simply [lua_close](https://www.lua.org/manual/5.4/man
 
 ### Script manifest
 Script manifests hold metadata about classes, such as defined signals,
-properties and methods, whether class is tool and its base class name.
+properties and methods, whether class is [tool](https://docs.godotengine.org/en/stable/tutorials/misc/running_code_in_the_editor.html)
+and its base class name.
 
 In Lua, this information will be stored in Lua tables indexed by the
 scripts' path.
 
 When initializing a script, its source code will be loaded in the VM,
-have its environment patched with a newly created table, then run.
-Using a new environment for each manifest makes scripts look more self
-contained and similar to GDScript.
+resulting in a function that will have its environment patched with a
+newly created table, then run.
+Using the manifest table as script environment makes scripts look more
+similar to GDScript.
 
-Functions declared in the manifest are registered as public class
-methods and other variables are declared as properties.
+Functions declared in the manifest are registered as class methods and
+other variables are declared as properties.
 Notice that local (`local var = value`) values are not registered in
 script manifests.  The same is true for values stored in the global
 table (`_G.var = value`).
@@ -189,23 +185,25 @@ When a script is attached to an object, the engine will call our
 PluginScript to initialize the instance data and when the object gets
 destroyed or gets the script removed, we get to finalize the data.
 
-Each instance will be a table that `__index`es the script, so that
-default values and methods can be found, falling back to searching
-for methods and properties in the base class.
-This table will be passed to methods as their first argument, in a
-fashion like `instance:method(...)`.
-This table will be indexed by the instance owner object's pointer.
+In Lua, instance data will be stored in Lua tables indexed by the
+instance owner object's memory address.
+
+When instances are indexed with a key that is not present, methods and
+property default values will be searched in the script manifest and its
+base class, in that order.
+This table will be passed to methods as their first argument, as if
+using Lua's method call notation: `instance:method(...)`.
 
 Instance finalization will destroy the data table.
 
 
 ## Wrapping up
 With this high level design in place, we can now start implementing the
-project! I have already created a Git repository for it hosted at
+plugin! I have created a Git repository for it hosted at
 [https://github.com/gilzoide/godot-lua-pluginscript](https://github.com/gilzoide/godot-lua-pluginscript).
 
 In the next post I'll discuss how to build the necessary infrastructure
-for the PluginScript to work, with stubs to the callbacks and a build
-system that correctly manages all dependencies.
+for the PluginScript to work, with stubs to the necessary callbacks and
+a build system that compiles the project in a single step.
 
 See you there ;D

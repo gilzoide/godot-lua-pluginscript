@@ -27,7 +27,7 @@ This is an example of how a Lua script will look like. There are comments regard
 some design decisions, which may change during development.
 
 ```lua
--- Optional: set script as tool
+-- Optional: set class as tool
 tool()
 
 -- Optional: set base class by name, defaults to 'Reference'
@@ -40,7 +40,7 @@ class_name 'MyClass'
 signal("something_happened")
 signal("something_happened_with_args", "arg1", "arg2")
 
--- Values defined in _ENV are registered as properties of the script
+-- Values defined in _ENV are registered as properties of the class
 some_prop = 42
 
 -- Local variables and global ones are **not** registered properties
@@ -48,7 +48,7 @@ some_prop = 42
 local some_lua_local = false
 _G.some_lua_global = false
 
--- calling `property` adds metadata to defined properties,
+-- The `property` function adds metadata to defined properties,
 -- like setter and getter functions
 some_prop_with_details = property {
   -- [1] or ["default"] or ["default_value"] = property default value
@@ -57,13 +57,13 @@ some_prop_with_details = property {
   -- All Godot variant type names are defined globally as written in
   -- GDScript, like bool, int, float, String, Array, Vector2, etc...
   -- Notice that Lua <= 5.2 does not differentiate integers from float
-  -- numbers, so you may want to always specify `int` where appropriate
+  -- numbers, so we should always specify `int` where appropriate
   type = int,
   -- ["set"] or ["setter"] = setter function, optional
   set = function(self, value)
     self.some_prop_with_details = value
-    -- Indexing self with keys undefined in script will search base
-    -- class for methods and properties, respectively
+    -- Indexing `self` with keys undefined in script will search base
+    -- class for methods and properties
     self:emit_signal("something_happened_with_args", "some_prop_with_details", value)
   end,
   -- ["get"] or ["getter"] = getter function, optional
@@ -71,6 +71,7 @@ some_prop_with_details = property {
     return self.some_prop_with_details
   end,
   -- ["export"] = export flag, optional, defaults to false
+  -- Exported properties are editable in the Inspector
   export = false,
   -- TODO: usage, hint/hint_text, rset_mode
 }
