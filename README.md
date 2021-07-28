@@ -10,8 +10,7 @@ Check out the [design article](blog/1-design-en.md) for insight in how this proj
   compiling the engine from scratch
 - Be able to seamlessly communicate with any other language supported by Godot,
   like GDScript, Visual Script and C#, in an idiomatic way
-- Simple script definition interface that doesn't need `require`ing anything,
-  with an empty file being a valid script
+- Simple script description interface that doesn't need `require`ing anything
 - Support for Lua 5.1+ and LuaJIT
 - Have a simple build process, where anyone with the cloned source code and
   installed build system + toolchain can build the project in a single step
@@ -27,30 +26,28 @@ This is an example of how a Lua script will look like. There are comments regard
 some design decisions, which may change during development.
 
 ```lua
--- Optional: set class as tool
-tool()
+-- Class definitions are regular Lua tables, to be returned from the script
+local MyClass = {}
+
+-- Optional: set class as tool, defaults to false
+MyClass.tool = true
 
 -- Optional: set base class by name, defaults to 'Reference'
-extends 'Node'
+MyClass.extends = 'Node'
 
 -- Optional: give your class a name
-class_name 'MyClass'
+MyClass.class_name = 'MyClass'
 
 -- Declare signals
-signal("something_happened")
-signal("something_happened_with_args", "arg1", "arg2")
+MyClass.something_happened = signal()
+MyClass.something_happened_with_args = signal("arg1", "arg2")
 
--- Values defined in _ENV are registered as properties of the class
-some_prop = 42
-
--- Local variables and global ones are **not** registered properties
--- Notice that script environment **is not the global _G table**
-local some_lua_local = false
-_G.some_lua_global = false
+-- Values defined in table are registered as properties of the class
+MyClass.some_prop = 42
 
 -- The `property` function adds metadata to defined properties,
 -- like setter and getter functions
-some_prop_with_details = property {
+MyClass.some_prop_with_details = property {
   -- [1] or ["default"] or ["default_value"] = property default value
   5,
   -- [2] or ["type"] = variant type, optional, inferred from default value
@@ -72,22 +69,25 @@ some_prop_with_details = property {
   end,
   -- ["export"] = export flag, optional, defaults to false
   -- Exported properties are editable in the Inspector
-  export = false,
+  export = true,
   -- TODO: usage, hint/hint_text, rset_mode
 }
 -- `export` is an alias for `property` with `export = true`
-some_exported_prop = export { "hello world!" }
+MyClass.some_exported_prop = export { "hello world!" }
 
--- Functions defined in _ENV are public methods
-function some_prop_doubled(self)
-  return self.some_prop * 2
-end
-
-function _init(self)
+-- Functions defined in table are public methods
+function MyClass:_init()  -- `function t:f(...)` is an alias for `function t.f(self, ...)`
   -- Singletons are available globally
   local os_name = OS:get_name()
   print("MyClass instance initialized! Running on a " .. os_name .. " system")
 end
+
+function MyClass:some_prop_doubled()
+  return self.some_prop * 2
+end
+
+-- In the end, table with class declaration must be returned from script
+return MyClass
 ```
 
 

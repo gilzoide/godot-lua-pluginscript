@@ -36,8 +36,7 @@ so anyone with a standard prebuilt version of Godot can use it! =D
   compiling the engine from scratch
 - Be able to seamlessly communicate with any other language supported by Godot,
   like GDScript, Visual Script and C#, in an idiomatic way
-- Simple script definition interface that doesn't need `require`ing anything,
-  with an empty file being a valid script
+- Simple script description interface that doesn't need `require`ing anything
 - Support for Lua 5.1+ and LuaJIT
 - Have a simple build process, where anyone with the cloned source code and
   installed build system + toolchain can build the project in a single step
@@ -53,30 +52,28 @@ This is an example of how a Lua script will look like. There are comments regard
 some design decisions, which may change during development.
 
 ```lua
--- Optional: set class as tool
-tool()
+-- Class definitions are regular Lua tables, to be returned from the script
+local MyClass = {}
+
+-- Optional: set class as tool, defaults to false
+MyClass.tool = true
 
 -- Optional: set base class by name, defaults to 'Reference'
-extends 'Node'
+MyClass.extends = 'Node'
 
 -- Optional: give your class a name
-class_name 'MyClass'
+MyClass.class_name = 'MyClass'
 
 -- Declare signals
-signal("something_happened")
-signal("something_happened_with_args", "arg1", "arg2")
+MyClass.something_happened = signal()
+MyClass.something_happened_with_args = signal("arg1", "arg2")
 
--- Values defined in _ENV are registered as properties of the class
-some_prop = 42
-
--- Local variables and global ones are **not** registered properties
--- Notice that script environment **is not the global _G table**
-local some_lua_local = false
-_G.some_lua_global = false
+-- Values defined in table are registered as properties of the class
+MyClass.some_prop = 42
 
 -- The `property` function adds metadata to defined properties,
 -- like setter and getter functions
-some_prop_with_details = property {
+MyClass.some_prop_with_details = property {
   -- [1] or ["default"] or ["default_value"] = property default value
   5,
   -- [2] or ["type"] = variant type, optional, inferred from default value
@@ -98,22 +95,25 @@ some_prop_with_details = property {
   end,
   -- ["export"] = export flag, optional, defaults to false
   -- Exported properties are editable in the Inspector
-  export = false,
+  export = true,
   -- TODO: usage, hint/hint_text, rset_mode
 }
 -- `export` is an alias for `property` with `export = true`
-some_exported_prop = export { "hello world!" }
+MyClass.some_exported_prop = export { "hello world!" }
 
--- Functions defined in _ENV are public methods
-function some_prop_doubled(self)
-  return self.some_prop * 2
-end
-
-function _init(self)
+-- Functions defined in table are public methods
+function MyClass:_init()  -- `function t:f(...)` is an alias for `function t.f(self, ...)`
   -- Singletons are available globally
   local os_name = OS:get_name()
   print("MyClass instance initialized! Running on a " .. os_name .. " system")
 end
+
+function MyClass:some_prop_doubled()
+  return self.some_prop * 2
+end
+
+-- In the end, table with class declaration must be returned from script
+return MyClass
 ```
 
 
@@ -132,8 +132,8 @@ files.
 
 When initializing the runtime, a new [lua_State](https://www.lua.org/manual/5.4/manual.html#lua_State)
 will be created and Godot functionality setup in it.
-The Lua VM will use engine memory management routines, so that memory is
-tracked by the performance monitors in debug builds of the
+The Lua Virtual Machine (VM) will use engine memory management routines, so
+that memory is tracked by the performance monitors in debug builds of the
 game/application.
 All scripts will share this same state.
 
@@ -165,17 +165,10 @@ and its base class name.
 In Lua, this information will be stored in Lua tables indexed by the
 scripts' path.
 
-When initializing a script, its source code will be loaded in the VM,
-resulting in a function that will have its environment patched with a
-newly created table, then run.
-Using the manifest table as script environment makes scripts look more
-similar to GDScript.
-
-Functions declared in the manifest are registered as class methods and
-other variables are declared as properties.
-Notice that local (`local var = value`) values are not registered in
-script manifests.  The same is true for values stored in the global
-table (`_G.var = value`).
+When initializing a script, its source code will be loaded and executed.
+Scripts must return a table, which defines the class metadata.
+Functions declared in the table are registered as class methods and
+other variables are declared as properties or signals.
 
 Script finalization will destroy the manifest table.
 

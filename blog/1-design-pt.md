@@ -37,8 +37,7 @@ precompilada de Godot possa utilizá-lo! =D
   precise ser compilado do zero
 - Possibilitar que *scritps* Lua se comuniquem transparentemente com
   quaisquer outras linguagens suportadas, como GDScript, Visual Script e C#
-- Ter uma interface simples para definir *scripts*, de modo que até um
-  arquivo vazio seja um *script* válido
+- Ter uma interface descritiva simples para declarar *scripts*
 - Suporte a Lua 5.1+ e LuaJIT
 - Ter um processo de construção simples, onde qualquer um com o
   código-fonte em mãos e o sistema de construção + *toolchain*
@@ -57,30 +56,28 @@ explicando algumas decisões de *design*, que podem mudar ao longo do
 desenvolvimento do projeto.
 
 ```lua
+-- Definições de classes são tabelas, que devem ser retornadas no fim do script
+local MinhaClasse = {}
+
 -- Opcional: marcar classe como tool
-tool()
+MinhaClasse.tool = true
 
 -- Opcional: declarar o nome da classe base, padrão 'Reference'
-extends 'Node'
+MinhaClasse.extends = 'Node'
 
 -- Opcional: dê um nome à sua classe
-class_name 'MinhaClasse'
+MinhaClasse.class_name = 'MinhaClasse'
 
 -- Declaração de sinais
-signal("algo_aconteceu")
-signal("algo_aconteceu_com_argumentos", "arg1", "arg2")
+MinhaClasse.um_sinal = signal()
+MinhaClasse.um_sinal_com_argumentos = signal("arg1", "arg2")
 
--- Valores definidos em _ENV são registrados como propriedades da classe
-alguma_propriedade = 42
-
--- Variáveis locais e globais **não** são registradas como propriedades
--- Note que o ambiente do script **não é a tabela global _G**
-local alguma_variavel_local = false
-_G.alguma_variavel_global = false
+-- Valores definidos na tabela são registrados como propriedades da classe
+MinhaClasse.uma_propriedade = 42
 
 -- A função `property` adiciona metadados às propriedades definidas,
 -- como métodos setter e getter
-alguma_propriedade_com_detalhes = property {
+MinhaClasse.uma_propriedade_com_detalhes = property {
   -- [1] ou ["default"] ou ["default_value"] = valor padrão da propriedade
   5,
   -- [2] ou ["type"] = tipo da variante, opcional, inferido do valor padrão
@@ -91,33 +88,36 @@ alguma_propriedade_com_detalhes = property {
   type = int,
   -- ["set"] ou ["setter"] = função setter, opcional
   set = function(self, valor)
-    self.alguma_propriedade_com_detalhes = valor
+    self.uma_propriedade_com_detalhes = valor
     -- Indexar `self` com chaves não definidas no script buscará métodos
     -- e propriedades na classe base
-    self:emit_signal("algo_aconteceu_com_argumentos", "alguma_propriedade_com_detalhes", valor)
+    self:emit_signal("um_sinal_com_argumentos", "uma_propriedade_com_detalhes", valor)
   end,
   -- ["get"] ou ["getter"] = função getter, opcional
   get = function(self)
-    return self.alguma_propriedade_com_detalhes
+    return self.uma_propriedade_com_detalhes
   end,
   -- ["export"] = sinaliza propriedade como exportada, opcional, padrão false
   -- Propriedades exportadas são editáveis pelo Inspetor
-  export = false,
+  export = true,
   -- TODO: usage, hint/hint_text, rset_mode
 }
 -- `export` é uma versão de `property` com `export = true`
-alguma_propriedade_exportada = export { "hello world!" }
+MinhaClasse.uma_propriedade_exportada = export { "hello world!" }
 
--- Funções definidas em _ENV são registrados como métodos públicos
-function alguma_propriedade_dobrada(self)
-  return self.alguma_propriedade * 2
-end
-
-function _init(self)
+-- Funções definidas na tabela são registrados como métodos
+function MinhaClasse:_init()  -- `function t:f(...)` é uma abreviação de `function t.f(self, ...)`
   -- Singletons estão disponíveis globalmente
   local nome_os = OS:get_name()
   print("Instância de MinhaClasse inicializada! Rodando em um sistema " .. nome_os)
 end
+
+function MinhaClasse:uma_propriedade_dobrada()
+  return self.uma_propriedade * 2
+end
+
+-- Ao final do script, a tabela com definição da classe deve ser retornada
+return MinhaClasse
 ```
 
 
@@ -174,18 +174,10 @@ e o nome de sua classe base.
 Em Lua, essa informação será guardada em tabelas indexadas pelo caminho
 dos *scripts*.
 
-Ao inicializar um *script*, seu código-fonte será carregado na VM,
-resultando em uma função que terá seu ambiente trocado por uma nova
-tabela e executada.
-Utilizar a própria tabela do manifesto como ambiente de execução do
-*script* faz com que *scripts* pareçam mais bem contidos e similares a
-código GDScript.
-
-Funções declaradas no manifesto são registradas como métodos da classe e
-outras variáveis são declaradas como propriedades.
-Note que variáveis locais (`local var = valor`) não serão registradas em
-manifestos.
-O mesmo acontece com valores guardados na tabela global (`_G.var = valor`).
+Ao inicializar um *script*, seu código-fonte será carregado e executado.
+*Scripts* devem retornar uma tabela, que definirá os metadados da classe.
+Funções declaradas na tabela de manifesto são registradas como métodos
+da classe e outras variáveis são declaradas como propriedades ou sinais.
 
 Ao finalizar um *script*, a tabela do manifesto será destruída.
 
