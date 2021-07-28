@@ -2,8 +2,8 @@
 `#Godot #Lua #GDNative #PluginScript #languageBindings`
 
 This is the first article in a series about how I'm approaching the development
-of a PluginScript for the [Lua](https://www.lua.org/) language in
-[Godot](https://godotengine.org/).
+of a plugin for using the [Lua](https://www.lua.org/) language in
+[Godot game engine](https://godotengine.org/).
 
 Lua is a simple and small, yet powerful and flexible, scripting language.
 Although it [isn't fit for every scenario](https://docs.godotengine.org/en/stable/about/faq.html#what-were-the-motivations-behind-creating-gdscript),
@@ -46,7 +46,7 @@ may make this first implementation portable to vanilla Lua as well.
   with an empty file being a valid script
 - Support for Lua 5.1+ and LuaJIT
 - Have a simple build process, where anyone with the cloned source code and
-  installed build system + toolchain can build the project
+  installed build system + toolchain can build the project in a single step
 
 
 ## Non-goals
@@ -125,6 +125,7 @@ end
 ## Implementation design details
 PluginScripts have three important concepts: the Language description,
 Script Manifest and Instances.
+
 Let's check out what each layer is and how they will behave from a high
 level perspective:
 
@@ -152,7 +153,7 @@ Lua's global `print` function will be set to `GD.print` and
 [Lua 5.4 warning function](https://www.lua.org/manual/5.4/manual.html#lua_WarnFunction)
 will behave like a `push_warning` call.
 
-The absolute path for [res://](https://docs.godotengine.org/en/stable/tutorials/io/data_paths.html#resource-path)
+The absolute path for the [resource path `res://`](https://docs.godotengine.org/en/stable/tutorials/io/data_paths.html#resource-path)
 will be added to Lua's [package.path](https://www.lua.org/manual/5.4/manual.html#pdf-package.path)
 and [package.cpath](https://www.lua.org/manual/5.4/manual.html#pdf-package.cpath).
 Functions that expect file names, like [loadfile](https://www.lua.org/manual/5.4/manual.html#pdf-loadfile)
@@ -186,8 +187,7 @@ Script finalization will destroy the manifest table.
 ### Instances
 When a script is attached to an object, the engine will call our
 PluginScript to initialize the instance data and when the object gets
-destroyed or gets another script attached, we get to finalize the
-data.
+destroyed or gets the script removed, we get to finalize the data.
 
 Each instance will be a table that `__index`es the script, so that
 default values and methods can be found, falling back to searching
@@ -201,8 +201,8 @@ Instance finalization will destroy the data table.
 
 ## Wrapping up
 With this high level design in place, we can now start implementing the
-project! I have already created a Git repository hosted at GitHub:
-[gilzoide/godot-lua-pluginscript](https://github.com/gilzoide/godot-lua-pluginscript).
+project! I have already created a Git repository for it hosted at
+[https://github.com/gilzoide/godot-lua-pluginscript](https://github.com/gilzoide/godot-lua-pluginscript).
 
 In the next post I'll discuss how to build the necessary infrastructure
 for the PluginScript to work, with stubs to the callbacks and a build
