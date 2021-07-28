@@ -7,3 +7,6 @@ indent_size = 4
 
 [*.gd]
 indent_style = tab
+
+[*.md]
+indent_size = 2
