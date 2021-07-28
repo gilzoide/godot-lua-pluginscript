@@ -147,12 +147,13 @@ Lua's global `print` function will be set to `GD.print` and
 [Lua 5.4 warning function](https://www.lua.org/manual/5.4/manual.html#lua_WarnFunction)
 will behave like a `push_warning` call.
 
-The absolute path for the [resource path `res://`](https://docs.godotengine.org/en/stable/tutorials/io/data_paths.html#resource-path)
-will be added to Lua's [package.path](https://www.lua.org/manual/5.4/manual.html#pdf-package.path)
-and [package.cpath](https://www.lua.org/manual/5.4/manual.html#pdf-package.cpath).
 Functions that expect file names, like [loadfile](https://www.lua.org/manual/5.4/manual.html#pdf-loadfile)
 and [io.open](https://www.lua.org/manual/5.4/manual.html#pdf-io.open),
-will be patched to accept paths like `res://*` and `user://*`.
+will be patched to accept paths in the format [`res://*`](https://docs.godotengine.org/en/stable/tutorials/io/data_paths.html#resource-path)
+and [`user://*`](https://docs.godotengine.org/en/stable/tutorials/io/data_paths.html#user-path-persistent-data).
+Also, a [package searcher](https://www.lua.org/manual/5.4/manual.html#pdf-package.searchers)
+will be added so that Lua can [require](https://www.lua.org/manual/5.4/manual.html#pdf-require)
+modules from paths relative to `res://`.
 
 Language finalization will simply [lua_close](https://www.lua.org/manual/5.4/manual.html#lua_close) the state.
 

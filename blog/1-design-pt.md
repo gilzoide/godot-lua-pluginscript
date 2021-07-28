@@ -151,14 +151,14 @@ A função global de Lua `print` será trocada por `GD.print` e a
 [função de aviso em Lua 5.4](https://www.lua.org/manual/5.4/manual.html#lua_WarnFunction)
 se comportará como uma chamada a `push_warning`.
 
-O caminho absoluto para o [caminho de recursos `res://`](https://docs.godotengine.org/pt_BR/stable/tutorials/io/data_paths.html#resource-path)
-será adicionado ao [package.path](https://www.lua.org/manual/5.2/pt/manual.html#pdf-package.path)
-e [package.cpath](https://www.lua.org/manual/5.2/pt/manual.html#pdf-package.cpath)
-de Lua.
 Funções que recebem nomes de arquivos como argumento, por exemplo
 [loadfile](https://www.lua.org/manual/5.2/pt/manual.html#pdf-loadfile)
 e [io.open](https://www.lua.org/manual/5.2/pt/manual.html#pdf-io.open),
-serão atualizadas para aceitar caminhos nos formatos `res://*` e `user://*`.
+serão atualizadas para aceitar caminhos nos formatos [`res://*`](https://docs.godotengine.org/pt_BR/stable/tutorials/io/data_paths.html#resource-path)
+e [`user://*`](https://docs.godotengine.org/pt_BR/stable/tutorials/io/data_paths.html#user-path-persistent-data).
+Do mesmo modo, um [localizador de módulos](https://www.lua.org/manual/5.2/pt/manual.html#pdf-package.searchers)
+será adicionado para [require](https://www.lua.org/manual/5.2/pt/manual.html#pdf-require)
+carregue módulos relativos ao caminho `res://`.
 
 Ao finalizar a linguagem, o estado da VM será destruído utilizando
 [lua_close](https://www.lua.org/manual/5.2/pt/manual.html#lua_close).
