@@ -22,9 +22,9 @@ rule("embed_header")
         local header_contents = {}
         for line in io.lines(sourcefile) do
             local escaped_line = line:gsub('"', '\\"')
-            table.insert(header_contents, escaped_line)
+            table.insert(header_contents, '"' .. escaped_line .. '\\n"')
         end
-        header_contents = '"' .. table.concat(header_contents, '\\n"\n"') .. '"'
+        header_contents = table.concat(header_contents, '\n')
         io.writefile(path.join("$(buildir)/include", path.filename(sourcefile) .. ".h"), header_contents)
     end)
 rule_end()

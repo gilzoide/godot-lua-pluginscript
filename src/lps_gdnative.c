@@ -3,8 +3,6 @@
 #include "lualib.h"
 #include "lauxlib.h"
 
-#include "lps_variant.h"
-
 const char GODOT_FFI_LUA[] =
 #include "godot_ffi.lua.h"
 ;
@@ -35,11 +33,7 @@ static void lps_language_finish(godot_pluginscript_language_data *data) {
 }
 
 static void lps_language_add_global_constant(godot_pluginscript_language_data *data, const godot_string *gd_name, const godot_variant *value) {
-    lua_State *L = (lua_State *) data;
-    hgdn_string name = hgdn_string_get(gd_name);
-    lps_pushvariant(L, value);
-    lua_setglobal(L, name.ptr);
-    hgdn_string_destroy(&name);
+    // TODO
 }
 
 // Script manifest
@@ -93,7 +87,7 @@ static void lps_instance_notification(godot_pluginscript_instance_data *p_data, 
     // TODO
 }
 
-godot_pluginscript_language_desc lua_desc = {
+godot_pluginscript_language_desc lps_language_desc = {
     .name = "Lua",
     .type = "Lua",
     .extension = "lua",
@@ -136,7 +130,7 @@ GDN_EXPORT void godot_gdnative_init(godot_gdnative_init_options *options) {
         return;
     }
 
-    hgdn_pluginscript_api->godot_pluginscript_register_language(&lua_desc);
+    hgdn_pluginscript_api->godot_pluginscript_register_language(&lps_language_desc);
 }
 
 GDN_EXPORT void godot_gdnative_terminate(godot_gdnative_terminate_options *options) {

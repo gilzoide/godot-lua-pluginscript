@@ -1,19 +1,33 @@
 local ffi = require 'ffi'
 
-ffi.cdef([[
+ffi.cdef[[
 // GDNative type definitions
-typedef _Bool godot_bool;
+typedef bool godot_bool;
 typedef int godot_int;
 typedef float godot_real;
 
 typedef void godot_object;
-typedef void *godot_string;
-typedef void *godot_char_string;
-typedef void *godot_string_name;
-typedef void *godot_node_path;
-typedef void *godot_rid;
-typedef void *godot_dictionary;
-typedef void *godot_array;
+typedef struct {
+	uint8_t _dont_touch_that[sizeof(void *)];
+} godot_string;
+typedef struct {
+	uint8_t _dont_touch_that[sizeof(void *)];
+} godot_char_string;
+typedef struct {
+	uint8_t _dont_touch_that[sizeof(void *)];
+} godot_string_name;
+typedef struct {
+	uint8_t _dont_touch_that[sizeof(void *)];
+} godot_node_path;
+typedef struct {
+	uint8_t _dont_touch_that[sizeof(void *)];
+} godot_rid;
+typedef struct {
+	uint8_t _dont_touch_that[sizeof(void *)];
+} godot_dictionary;
+typedef struct {
+	uint8_t _dont_touch_that[sizeof(void *)];
+} godot_array;
 
 typedef void godot_pool_byte_array_read_access;
 typedef void godot_pool_int_array_read_access;
@@ -30,13 +44,27 @@ typedef void godot_pool_string_array_write_access;
 typedef void godot_pool_vector2_array_write_access;
 typedef void godot_pool_vector3_array_write_access;
 typedef void godot_pool_color_array_write_access;
-typedef void *godot_pool_byte_array;
-typedef void *godot_pool_int_array;
-typedef void *godot_pool_real_array;
-typedef void *godot_pool_string_array;
-typedef void *godot_pool_vector2_array;
-typedef void *godot_pool_vector3_array;
-typedef void *godot_pool_color_array;
+typedef struct {
+	uint8_t _dont_touch_that[sizeof(void *)];
+} godot_pool_byte_array;
+typedef struct {
+	uint8_t _dont_touch_that[sizeof(void *)];
+} godot_pool_int_array;
+typedef struct {
+	uint8_t _dont_touch_that[sizeof(void *)];
+} godot_pool_real_array;
+typedef struct {
+	uint8_t _dont_touch_that[sizeof(void *)];
+} godot_pool_string_array;
+typedef struct {
+	uint8_t _dont_touch_that[sizeof(void *)];
+} godot_pool_vector2_array;
+typedef struct {
+	uint8_t _dont_touch_that[sizeof(void *)];
+} godot_pool_vector3_array;
+typedef struct {
+	uint8_t _dont_touch_that[sizeof(void *)];
+} godot_pool_color_array;
 
 typedef struct {
 	uint8_t _dont_touch_that[(16 + sizeof(int64_t))];
@@ -44,97 +72,97 @@ typedef struct {
 
 // Math type definitions copied from HGDN
 typedef union godot_vector2 {
-    float elements[2];
-    // xy
-    struct { float x, y; };
-    // rg
-    struct { float r, g; };
-    // st
-    struct { float s, t; };
-    // uv
-    struct { float u, v; };
-    // Size: width/height
-    struct { float width, height; };
+	float elements[2];
+	// xy
+	struct { float x, y; };
+	// rg
+	struct { float r, g; };
+	// st
+	struct { float s, t; };
+	// uv
+	struct { float u, v; };
+	// Size: width/height
+	struct { float width, height; };
 } godot_vector2;
 
 typedef union godot_vector3 {
-    float elements[3];
-    // xyz
-    struct { float x, y, z; };
-    struct { godot_vector2 xy; float _0; };
-    struct { float _1; godot_vector2 yz; };
-    // rgb
-    struct { float r, g, b; };
-    struct { godot_vector2 rg; float _2; };
-    struct { float _3; godot_vector2 gb; };
-    // stp
-    struct { float s, t, p; };
-    struct { godot_vector2 st; float _6; };
-    struct { float _7; godot_vector2 tp; };
-    // uv
-    struct { float u, v, _4; };
-    struct { godot_vector2 uv; float _5; };
-    // 3D Size: width/height/depth
-    struct { float width, height, depth; };
+	float elements[3];
+	// xyz
+	struct { float x, y, z; };
+	struct { godot_vector2 xy; float _0; };
+	struct { float _1; godot_vector2 yz; };
+	// rgb
+	struct { float r, g, b; };
+	struct { godot_vector2 rg; float _2; };
+	struct { float _3; godot_vector2 gb; };
+	// stp
+	struct { float s, t, p; };
+	struct { godot_vector2 st; float _6; };
+	struct { float _7; godot_vector2 tp; };
+	// uv
+	struct { float u, v, _4; };
+	struct { godot_vector2 uv; float _5; };
+	// 3D Size: width/height/depth
+	struct { float width, height, depth; };
 } godot_vector3;
 
 typedef union godot_vector4 {
-    float elements[4];
-    // xyzw
-    struct { float x, y, z, w; };
-    struct { godot_vector2 xy; godot_vector2 zw; };
-    struct { godot_vector3 xyz; float _0; };
-    struct { float _1; godot_vector3 yzw; };
-    // rgba
-    struct { float r, g, b, a; };
-    struct { godot_vector2 rg; godot_vector2 ba; };
-    struct { godot_vector3 rgb; float _2; };
-    struct { float _3; godot_vector3 gba; };
-    // stpq
-    struct { float s, t, p, q; };
-    struct { godot_vector2 st; godot_vector2 pq; };
-    struct { godot_vector3 stp; float _6; };
-    struct { float _7; godot_vector3 tpq; };
-    // uv
-    struct { float u, v; float _4[2]; };
-    struct { godot_vector2 uv; float _5[2]; };
+	float elements[4];
+	// xyzw
+	struct { float x, y, z, w; };
+	struct { godot_vector2 xy; godot_vector2 zw; };
+	struct { godot_vector3 xyz; float _0; };
+	struct { float _1; godot_vector3 yzw; };
+	// rgba
+	struct { float r, g, b, a; };
+	struct { godot_vector2 rg; godot_vector2 ba; };
+	struct { godot_vector3 rgb; float _2; };
+	struct { float _3; godot_vector3 gba; };
+	// stpq
+	struct { float s, t, p, q; };
+	struct { godot_vector2 st; godot_vector2 pq; };
+	struct { godot_vector3 stp; float _6; };
+	struct { float _7; godot_vector3 tpq; };
+	// uv
+	struct { float u, v; float _4[2]; };
+	struct { godot_vector2 uv; float _5[2]; };
 } godot_vector4;
 typedef godot_vector4 godot_color;
 
 typedef union godot_rect2 {
-    float elements[4];
-    struct { float x, y, width, height; };
-    struct { godot_vector2 position; godot_vector2 size; };
+	float elements[4];
+	struct { float x, y, width, height; };
+	struct { godot_vector2 position; godot_vector2 size; };
 } godot_rect2;
 
 typedef union godot_plane {
-    float elements[4];
-    struct { godot_vector3 normal; float d; };
+	float elements[4];
+	struct { godot_vector3 normal; float d; };
 } godot_plane;
 
 typedef union godot_quat {
-    float elements[4];
-    struct { float x, y, z, w; };
-    struct { godot_vector2 xy; godot_vector2 zw; };
-    struct { godot_vector3 xyz; float _0; };
-    struct { float _1; godot_vector3 yzw; };
+	float elements[4];
+	struct { float x, y, z, w; };
+	struct { godot_vector2 xy; godot_vector2 zw; };
+	struct { godot_vector3 xyz; float _0; };
+	struct { float _1; godot_vector3 yzw; };
 } godot_quat;
 
-typedef struct godot_basis {
-    godot_vector3 elements[3];
+typedef struct {
+	godot_vector3 elements[3];
 } godot_basis;
 
-typedef struct godot_aabb {
-    godot_vector3 position, size;
+typedef struct {
+	godot_vector3 position, size;
 } godot_aabb;
 
-typedef struct godot_transform2d {
-    godot_vector2 elements[3];
+typedef struct {
+	godot_vector2 elements[3];
 } godot_transform2d;
 
-typedef struct godot_transform {
-    godot_basis basis;
-    godot_vector3 origin;
+typedef struct {
+	godot_basis basis;
+	godot_vector3 origin;
 } godot_transform;
 
 // Enums
@@ -200,7 +228,6 @@ typedef enum godot_variant_type {
 	GODOT_VARIANT_TYPE_STRING,
 
 	// math types
-
 	GODOT_VARIANT_TYPE_VECTOR2, // 5
 	GODOT_VARIANT_TYPE_RECT2,
 	GODOT_VARIANT_TYPE_VECTOR3,
@@ -340,7 +367,6 @@ typedef enum {
 } godot_property_hint;
 
 typedef enum {
-
 	GODOT_PROPERTY_USAGE_STORAGE = 1,
 	GODOT_PROPERTY_USAGE_EDITOR = 2,
 	GODOT_PROPERTY_USAGE_NETWORK = 4,
@@ -1225,4 +1251,11 @@ typedef struct {
 	void (*profiling_frame)(godot_pluginscript_language_data *p_data);
 	godot_pluginscript_script_desc script_desc;
 } godot_pluginscript_language_desc;
-]])
+
+// Global API pointer
+const godot_gdnative_core_api_struct *hgdn_core_api;
+]]
+
+GD = {
+    api = ffi.C.hgdn_core_api,
+}
