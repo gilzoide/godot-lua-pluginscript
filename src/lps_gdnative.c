@@ -5,6 +5,10 @@
 
 #include "lps_variant.h"
 
+const char GODOT_FFI_LUA[] =
+#include "godot_ffi.lua.h"
+;
+
 // Language functions
 static void *lps_alloc(void *userdata, void *ptr, size_t osize, size_t nsize) {
     if (nsize == 0) {
@@ -16,17 +20,21 @@ static void *lps_alloc(void *userdata, void *ptr, size_t osize, size_t nsize) {
     }
 }
 
-godot_pluginscript_language_data *lps_language_init() {
+static godot_pluginscript_language_data *lps_language_init() {
     lua_State *L = lua_newstate(&lps_alloc, NULL);
     luaL_openlibs(L);
+    if (luaL_dostring(L, GODOT_FFI_LUA) != 0) {
+        const char *error_msg = lua_tostring(L, -1);
+        HGDN_PRINT_ERROR("Error running 'godot_ffi.lua': %s", error_msg);
+    }
     return L;
 }
 
-void lps_language_finish(godot_pluginscript_language_data *data) {
+static void lps_language_finish(godot_pluginscript_language_data *data) {
     lua_close((lua_State *) data);
 }
 
-void lps_language_add_global_constant(godot_pluginscript_language_data *data, const godot_string *gd_name, const godot_variant *value) {
+static void lps_language_add_global_constant(godot_pluginscript_language_data *data, const godot_string *gd_name, const godot_variant *value) {
     lua_State *L = (lua_State *) data;
     hgdn_string name = hgdn_string_get(gd_name);
     lps_pushvariant(L, value);
@@ -35,7 +43,7 @@ void lps_language_add_global_constant(godot_pluginscript_language_data *data, co
 }
 
 // Script manifest
-godot_pluginscript_script_manifest lps_script_init(godot_pluginscript_language_data *data, const godot_string *path, const godot_string *source, godot_error *error) {
+static godot_pluginscript_script_manifest lps_script_init(godot_pluginscript_language_data *data, const godot_string *path, const godot_string *source, godot_error *error) {
     godot_pluginscript_script_manifest manifest;
     manifest.data = data;
     hgdn_core_api->godot_string_name_new_data(&manifest.name, "");
@@ -50,38 +58,38 @@ godot_pluginscript_script_manifest lps_script_init(godot_pluginscript_language_d
     return manifest;
 }
 
-void lps_script_finish(godot_pluginscript_script_data *data) {
+static void lps_script_finish(godot_pluginscript_script_data *data) {
     // TODO
 }
 
 
 // Instance
-godot_pluginscript_instance_data *lps_instance_init(godot_pluginscript_script_data *data, godot_object *owner) {
+static godot_pluginscript_instance_data *lps_instance_init(godot_pluginscript_script_data *data, godot_object *owner) {
     // PluginScript system assumes NULL is an error
     return data;
 }
 
-void lps_instance_finish(godot_pluginscript_instance_data *data) {
+static void lps_instance_finish(godot_pluginscript_instance_data *data) {
 }
 
-godot_bool lps_instance_set_prop(godot_pluginscript_instance_data *data, const godot_string *name, const godot_variant *value) {
+static godot_bool lps_instance_set_prop(godot_pluginscript_instance_data *data, const godot_string *name, const godot_variant *value) {
     // TODO
     return false;
 }
 
-godot_bool lps_instance_get_prop(godot_pluginscript_instance_data *data, const godot_string *name, godot_variant *ret) {
+static godot_bool lps_instance_get_prop(godot_pluginscript_instance_data *data, const godot_string *name, godot_variant *ret) {
     // TODO
     return false;
 }
 
-godot_variant lps_instance_call_method(godot_pluginscript_instance_data *p_data,
+static godot_variant lps_instance_call_method(godot_pluginscript_instance_data *p_data,
         const godot_string_name *p_method, const godot_variant **p_args,
         int p_argcount, godot_variant_call_error *r_error) {
     // TODO
     return hgdn_new_nil_variant();
 }
 
-void lps_instance_notification(godot_pluginscript_instance_data *p_data, int p_notification) {
+static void lps_instance_notification(godot_pluginscript_instance_data *p_data, int p_notification) {
     // TODO
 }
 
