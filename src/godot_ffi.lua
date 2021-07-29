@@ -6,7 +6,9 @@ typedef bool godot_bool;
 typedef int godot_int;
 typedef float godot_real;
 
-typedef void godot_object;
+typedef struct {
+    uint8_t _dont_touch_that[0];
+} godot_object;
 typedef struct {
 	uint8_t _dont_touch_that[sizeof(void *)];
 } godot_string;
