@@ -1,12 +1,30 @@
-local function register_pool_array(name, ctype)
-    _G[name] = ffi.metatype(ctype, {})
+local function register_pool_array(kind)
+    local name = 'Pool' .. kind:sub(1, 1):upper() .. kind:sub(2) .. 'Array'
+    local kind_type = 'pool_' .. kind .. '_array'
+    local ctype = 'godot_' .. kind_type
+    local new_variant_name = 'hgdn_new_' .. kind_type .. '_variant'
+    
+    local methods = {
+        tovariant = ffi.C[new_variant_name],
+    }
+
+    _G[name] = ffi.metatype(ctype, {
+        __tostring = GD.str,
+        __index = function(self, key)
+            if typeof(key) == 'number' then
+                -- TODO: index array
+            else
+                return methods[key]
+            end
+        end,
+    })
 end
 
-register_pool_array('PoolByteArray', 'godot_pool_byte_array')
-register_pool_array('PoolIntArray', 'godot_pool_int_array')
-register_pool_array('PoolRealArray', 'godot_pool_real_array')
-register_pool_array('PoolStringArray', 'godot_pool_string_array')
-register_pool_array('PoolVector2Array', 'godot_pool_vector2_array')
-register_pool_array('PoolVector3Array', 'godot_pool_vector3_array')
-register_pool_array('PoolColorArray', 'godot_pool_color_array')
+register_pool_array('byte')
+register_pool_array('int')
+register_pool_array('real')
+register_pool_array('string')
+register_pool_array('vector2')
+register_pool_array('vector3')
+register_pool_array('color')
 

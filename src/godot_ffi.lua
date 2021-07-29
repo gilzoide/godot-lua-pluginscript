@@ -6,28 +6,28 @@ typedef bool godot_bool;
 typedef int godot_int;
 typedef float godot_real;
 
-typedef struct {
+typedef struct godot_object {
     uint8_t _dont_touch_that[0];
 } godot_object;
-typedef struct {
+typedef struct godot_string {
 	uint8_t _dont_touch_that[sizeof(void *)];
 } godot_string;
-typedef struct {
+typedef struct godot_char_string {
 	uint8_t _dont_touch_that[sizeof(void *)];
 } godot_char_string;
-typedef struct {
+typedef struct godot_string_name {
 	uint8_t _dont_touch_that[sizeof(void *)];
 } godot_string_name;
-typedef struct {
+typedef struct godot_node_path {
 	uint8_t _dont_touch_that[sizeof(void *)];
 } godot_node_path;
-typedef struct {
+typedef struct godot_rid {
 	uint8_t _dont_touch_that[sizeof(void *)];
 } godot_rid;
-typedef struct {
+typedef struct godot_dictionary {
 	uint8_t _dont_touch_that[sizeof(void *)];
 } godot_dictionary;
-typedef struct {
+typedef struct godot_array {
 	uint8_t _dont_touch_that[sizeof(void *)];
 } godot_array;
 
@@ -46,29 +46,29 @@ typedef void godot_pool_string_array_write_access;
 typedef void godot_pool_vector2_array_write_access;
 typedef void godot_pool_vector3_array_write_access;
 typedef void godot_pool_color_array_write_access;
-typedef struct {
+typedef struct godot_pool_byte_array {
 	uint8_t _dont_touch_that[sizeof(void *)];
 } godot_pool_byte_array;
-typedef struct {
+typedef struct godot_pool_int_array {
 	uint8_t _dont_touch_that[sizeof(void *)];
 } godot_pool_int_array;
-typedef struct {
+typedef struct godot_pool_real_array {
 	uint8_t _dont_touch_that[sizeof(void *)];
 } godot_pool_real_array;
-typedef struct {
+typedef struct godot_pool_string_array {
 	uint8_t _dont_touch_that[sizeof(void *)];
 } godot_pool_string_array;
-typedef struct {
+typedef struct godot_pool_vector2_array {
 	uint8_t _dont_touch_that[sizeof(void *)];
 } godot_pool_vector2_array;
-typedef struct {
+typedef struct godot_pool_vector3_array {
 	uint8_t _dont_touch_that[sizeof(void *)];
 } godot_pool_vector3_array;
-typedef struct {
+typedef struct godot_pool_color_array {
 	uint8_t _dont_touch_that[sizeof(void *)];
 } godot_pool_color_array;
 
-typedef struct {
+typedef struct godot_variant {
 	uint8_t _dont_touch_that[(16 + sizeof(int64_t))];
 } godot_variant;
 
@@ -150,19 +150,19 @@ typedef union godot_quat {
 	struct { float _1; godot_vector3 yzw; };
 } godot_quat;
 
-typedef struct {
+typedef struct godot_basis {
 	godot_vector3 elements[3];
 } godot_basis;
 
-typedef struct {
+typedef struct godot_aabb {
 	godot_vector3 position, size;
 } godot_aabb;
 
-typedef struct {
+typedef struct godot_transform2d {
 	godot_vector2 elements[3];
 } godot_transform2d;
 
-typedef struct {
+typedef struct godot_transform {
 	godot_basis basis;
 	godot_vector3 origin;
 } godot_transform;

@@ -15,3 +15,6 @@ function GD.print_error(...)
     GD.api.godot_print_error(message, info.name, info.short_src, info.currentline)
 end
 
+function GD.str(value)
+    return tostring(Variant(value))
+end
