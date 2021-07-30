@@ -31,7 +31,7 @@ static godot_pluginscript_language_data *lps_language_init() {
     luaL_openlibs(L);
     if (luaL_dostring(L, GODOT_FFI_LUA) != 0) {
         const char *error_msg = lua_tostring(L, -1);
-        HGDN_PRINT_ERROR("Error running 'godot_ffi.lua': %s", error_msg);
+        HGDN_PRINT_ERROR("Error running initialization script: %s", error_msg);
     }
     return L;
 }

@@ -54,7 +54,9 @@ Variant = ffi.metatype("godot_variant", {
         return tostring(GD.api.godot_variant_as_string(self))
     end,
     __index = {
-        tovariant = ffi.C.hgdn_new_variant_copy,
+        tovariant = function(self)
+            return self
+        end,
         unbox = function(self)
             local t = GD.api.godot_variant_get_type(self)
             if t == ffi.C.GODOT_VARIANT_TYPE_NIL then
