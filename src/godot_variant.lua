@@ -164,14 +164,14 @@ Variant = ffi.metatype("godot_variant", {
 		elseif t == 'string' then
 			return ffi.C.hgdn_new_cstring_variant(value)
 		elseif t == 'number' or tonumber(value) then
+			-- TODO: distinguish integers
 			return ffi.C.hgdn_new_real_variant(value)
 		elseif t == 'table' then
 			return ffi.C.hgdn_new_dictionary_variant(Dictionary(value))
-		elseif t == 'cdata' then
+		elseif t == 'cdata' and value.tovariant then
 			return value:tovariant()
-		else
-			return ffi.C.hgdn_new_nil_variant()
 		end
+		return ffi.C.hgdn_new_nil_variant()
 	end,
 	__gc = api.godot_variant_destroy,
 	__tostring = function(self)

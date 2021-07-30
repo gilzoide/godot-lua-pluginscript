@@ -7,6 +7,7 @@ local function register_pool_array(kind)
 	
 	local methods = {
 		tovariant = ffi.C['hgdn_new_' .. kind_type .. '_variant'],
+		varianttype = GD['TYPE_POOL_' .. kind:upper() .. '_ARRAY'],
 		toarray = function(self)
 			local array = ffi.new('godot_array')
 			api[new_array_name](array, self)

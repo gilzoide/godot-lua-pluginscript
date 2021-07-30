@@ -1,5 +1,6 @@
 local methods = {
 	tovariant = ffi.C.hgdn_new_dictionary_variant,
+	varianttype = GD.TYPE_DICTIONARY,
 	duplicate = function(self, deep)
 		return api.godot_dictionary_duplicate(self, deep or false)
 	end,

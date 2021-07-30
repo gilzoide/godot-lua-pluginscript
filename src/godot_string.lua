@@ -11,6 +11,7 @@ local CharString = ffi.metatype('godot_char_string', {
 
 local string_methods = {
 	tovariant = ffi.C.hgdn_new_string_variant,
+	varianttype = GD.TYPE_STRING,
 	length = function(self)
 		return api.godot_string_length(self)
 	end,
@@ -22,7 +23,7 @@ String = ffi.metatype('godot_string', {
 		if text == nil then
 			return api.godot_string_chars_to_utf8('')
 		elseif ffi.istype(mt, text) then
-			local self = ffi.new('godot_string')
+			local self = ffi.new(mt)
 			api.godot_string_new_copy(self, text)
 			return self
 		elseif ffi.istype(StringName, text) then
@@ -30,7 +31,7 @@ String = ffi.metatype('godot_string', {
 		elseif ffi.istype('wchar_t', text) then
 			return api.godot_string_chr(text)
 		elseif ffi.istype('wchar_t *', text) then
-			local self = ffi.new('godot_string')
+			local self = ffi.new(mt)
 			api.godot_string_new_with_wide_string(self, text, length or -1)
 			return self
 		else
@@ -64,7 +65,7 @@ local string_name_methods = {
 StringName = ffi.metatype('godot_string_name', {
 	__new = function(mt, text)
 		text = text or ''
-		local self = ffi.new('godot_string_name')
+		local self = ffi.new(mt)
 		if ffi.istype(String, text) then
 			api.godot_string_name_new(self, text)
 		else
@@ -84,10 +85,11 @@ StringName = ffi.metatype('godot_string_name', {
 
 local node_path_methods = {
 	tovariant = ffi.C.hgdn_new_node_path_variant,
+	varianttype = GD.TYPE_NODE_PATH,
 }
 NodePath = ffi.metatype('godot_node_path', {
 	__new = function(mt, text_or_nodepath)
-		local self = ffi.new('godot_node_path')
+		local self = ffi.new(mt)
 		if ffi.istype(mt, text_or_nodepath) then
 			api.godot_node_path_new_copy(self, text_or_nodepath)
 		elseif ffi.istype(String, text_or_nodepath) then

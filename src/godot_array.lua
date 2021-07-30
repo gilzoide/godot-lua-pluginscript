@@ -1,5 +1,6 @@
 local methods = {
 	tovariant = ffi.C.hgdn_new_array_variant,
+	varianttype = GD.TYPE_ARRAY,
 	toarray = function(self)
 		return self
 	end,
