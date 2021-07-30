@@ -1300,7 +1300,6 @@ const godot_gdnative_core_api_struct *hgdn_core_api;
 const godot_gdnative_core_1_1_api_struct *hgdn_core_1_1_api;
 ]]
 
-GD = {
-    api = ffi.C.hgdn_core_api,
-    api_1_1 = ffi.C.hgdn_core_1_1_api,
-}
+api = ffi.C.hgdn_core_api
+api_1_1 = ffi.C.hgdn_core_1_1_api
+

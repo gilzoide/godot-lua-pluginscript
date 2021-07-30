@@ -49,70 +49,70 @@ Variant = ffi.metatype("godot_variant", {
             return ffi.C.hgdn_new_nil_variant()
         end
     end,
-    __gc = GD.api.godot_variant_destroy,
+    __gc = api.godot_variant_destroy,
     __tostring = function(self)
-        return tostring(GD.api.godot_variant_as_string(self))
+        return tostring(api.godot_variant_as_string(self))
     end,
     __index = {
         tovariant = function(self)
             return self
         end,
         unbox = function(self)
-            local t = GD.api.godot_variant_get_type(self)
+            local t = api.godot_variant_get_type(self)
             if t == ffi.C.GODOT_VARIANT_TYPE_NIL then
                 return nil
             elseif t == ffi.C.GODOT_VARIANT_TYPE_BOOL then
-                return GD.api.godot_variant_as_bool(self)
+                return api.godot_variant_as_bool(self)
             elseif t == ffi.C.GODOT_VARIANT_TYPE_INT then
-                return GD.api.godot_variant_as_int(self)
+                return api.godot_variant_as_int(self)
             elseif t == ffi.C.GODOT_VARIANT_TYPE_REAL then
-                return GD.api.godot_variant_as_real(self)
+                return api.godot_variant_as_real(self)
             elseif t == ffi.C.GODOT_VARIANT_TYPE_STRING then
-                return GD.api.godot_variant_as_string(self)
+                return api.godot_variant_as_string(self)
             elseif t == ffi.C.GODOT_VARIANT_TYPE_VECTOR2 then
-                return GD.api.godot_variant_as_vector2(self)
+                return api.godot_variant_as_vector2(self)
             elseif t == ffi.C.GODOT_VARIANT_TYPE_RECT2 then
-                return GD.api.godot_variant_as_rect2(self)
+                return api.godot_variant_as_rect2(self)
             elseif t == ffi.C.GODOT_VARIANT_TYPE_VECTOR3 then
-                return GD.api.godot_variant_as_vector3(self)
+                return api.godot_variant_as_vector3(self)
             elseif t == ffi.C.GODOT_VARIANT_TYPE_TRANSFORM2D then
-                return GD.api.godot_variant_as_transform2d(self)
+                return api.godot_variant_as_transform2d(self)
             elseif t == ffi.C.GODOT_VARIANT_TYPE_PLANE then
-                return GD.api.godot_variant_as_plane(self)
+                return api.godot_variant_as_plane(self)
             elseif t == ffi.C.GODOT_VARIANT_TYPE_QUAT then
-                return GD.api.godot_variant_as_quat(self)
+                return api.godot_variant_as_quat(self)
             elseif t == ffi.C.GODOT_VARIANT_TYPE_AABB then
-                return GD.api.godot_variant_as_aabb(self)
+                return api.godot_variant_as_aabb(self)
             elseif t == ffi.C.GODOT_VARIANT_TYPE_BASIS then
-                return GD.api.godot_variant_as_basis(self)
+                return api.godot_variant_as_basis(self)
             elseif t == ffi.C.GODOT_VARIANT_TYPE_TRANSFORM then
-                return GD.api.godot_variant_as_transform(self)
+                return api.godot_variant_as_transform(self)
             elseif t == ffi.C.GODOT_VARIANT_TYPE_COLOR then
-                return GD.api.godot_variant_as_color(self)
+                return api.godot_variant_as_color(self)
             elseif t == ffi.C.GODOT_VARIANT_TYPE_NODE_PATH then
-                return GD.api.godot_variant_as_node_path(self)
+                return api.godot_variant_as_node_path(self)
             elseif t == ffi.C.GODOT_VARIANT_TYPE_RID then
-                return GD.api.godot_variant_as_rid(self)
+                return api.godot_variant_as_rid(self)
             elseif t == ffi.C.GODOT_VARIANT_TYPE_OBJECT then
-                return GD.api.godot_variant_as_object(self)
+                return api.godot_variant_as_object(self)
             elseif t == ffi.C.GODOT_VARIANT_TYPE_DICTIONARY then
-                return GD.api.godot_variant_as_dictionary(self)
+                return api.godot_variant_as_dictionary(self)
             elseif t == ffi.C.GODOT_VARIANT_TYPE_ARRAY then
-                return GD.api.godot_variant_as_array(self)
+                return api.godot_variant_as_array(self)
             elseif t == ffi.C.GODOT_VARIANT_TYPE_POOL_BYTE_ARRAY then
-                return GD.api.godot_variant_as_pool_byte_array(self)
+                return api.godot_variant_as_pool_byte_array(self)
             elseif t == ffi.C.GODOT_VARIANT_TYPE_POOL_INT_ARRAY then
-                return GD.api.godot_variant_as_pool_int_array(self)
+                return api.godot_variant_as_pool_int_array(self)
             elseif t == ffi.C.GODOT_VARIANT_TYPE_POOL_REAL_ARRAY then
-                return GD.api.godot_variant_as_pool_real_array(self)
+                return api.godot_variant_as_pool_real_array(self)
             elseif t == ffi.C.GODOT_VARIANT_TYPE_POOL_STRING_ARRAY then
-                return GD.api.godot_variant_as_pool_string_array(self)
+                return api.godot_variant_as_pool_string_array(self)
             elseif t == ffi.C.GODOT_VARIANT_TYPE_POOL_VECTOR2_ARRAY then
-                return GD.api.godot_variant_as_pool_vector2_array(self)
+                return api.godot_variant_as_pool_vector2_array(self)
             elseif t == ffi.C.GODOT_VARIANT_TYPE_POOL_VECTOR3_ARRAY then
-                return GD.api.godot_variant_as_pool_vector3_array(self)
+                return api.godot_variant_as_pool_vector3_array(self)
             elseif t == ffi.C.GODOT_VARIANT_TYPE_POOL_COLOR_ARRAY then
-                return GD.api.godot_variant_as_pool_color_array(self)
+                return api.godot_variant_as_pool_color_array(self)
             end
         end,
     },

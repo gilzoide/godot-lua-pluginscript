@@ -9,14 +9,14 @@ local function register_pool_array(kind)
         tovariant = ffi.C['hgdn_new_' .. kind_type .. '_variant'],
         toarray = function(self)
             local array = ffi.new('godot_array')
-            GD.api[new_array_name](array, self)
+            api[new_array_name](array, self)
             return array
         end,
-        get = GD.api[ctype .. '_get'],
-        set = GD.api[ctype .. '_set'],
-        append = GD.api[ctype .. '_append'],
+        get = api[ctype .. '_get'],
+        set = api[ctype .. '_set'],
+        append = api[ctype .. '_append'],
         size = function(self)
-            return GD.api[ctype .. '_size'](self)
+            return api[ctype .. '_size'](self)
         end,
     }
 
@@ -24,11 +24,11 @@ local function register_pool_array(kind)
         __new = function(mt, value)
             local self = ffi.new(mt)
             if ffi.istype(mt, value) then
-                GD.api[ctype .. '_new_copy'](self, value)
+                api[ctype .. '_new_copy'](self, value)
             elseif ffi.istype(mt, Array) then
-                GD.api[ctype .. '_new_with_array'](self, value)
+                api[ctype .. '_new_with_array'](self, value)
             else
-                GD.api[ctype .. '_new'](self)
+                api[ctype .. '_new'](self)
                 if value then
                     for i, v in ipairs(value) do
                         methods.append(self, v)
@@ -37,7 +37,7 @@ local function register_pool_array(kind)
             end
             return self
         end,
-        __gc = GD.api[ctype .. '_destroy'],
+        __gc = api[ctype .. '_destroy'],
         __tostring = GD.tostring,
         __index = function(self, key)
             local method = methods[key]

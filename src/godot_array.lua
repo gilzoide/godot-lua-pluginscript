@@ -4,84 +4,84 @@ local methods = {
         return self
     end,
     get = function(self, index)
-        return GD.api.godot_array_get(self, index):unbox()
+        return api.godot_array_get(self, index):unbox()
     end,
     set = function(self, index, value)
-        GD.api.godot_array_set(self, index, Variant(value))
+        api.godot_array_set(self, index, Variant(value))
     end,
     append = function(self, value)
-        GD.api.godot_array_append(self, Variant(value))
+        api.godot_array_append(self, Variant(value))
     end,
-    clear = GD.api.godot_array_clear,
+    clear = api.godot_array_clear,
     count = function(self, value)
-        return GD.api.godot_array_count(self, Variant(value))
+        return api.godot_array_count(self, Variant(value))
     end,
-    empty = GD.api.godot_array_empty,
+    empty = api.godot_array_empty,
     erase = function(self, value)
-        GD.api.godot_array_erase(self, Variant(value))
+        api.godot_array_erase(self, Variant(value))
     end,
     front = function(self)
-        return GD.api.godot_array_front(self):unbox()
+        return api.godot_array_front(self):unbox()
     end,
     back = function(self)
-        return GD.api.godot_array_back(self):unbox()
+        return api.godot_array_back(self):unbox()
     end,
     find = function(self, what, from)
-        return GD.api.godot_array_find(self, Variant(what), from or 0)
+        return api.godot_array_find(self, Variant(what), from or 0)
     end,
     find_last = function(self, what)
-        return GD.api.godot_array_find_last(self, Variant(what))
+        return api.godot_array_find_last(self, Variant(what))
     end,
     has = function(self, value)
-        return GD.api.godot_array_has(self, Variant(value))
+        return api.godot_array_has(self, Variant(value))
     end,
-    hash = GD.api.godot_array_hash,
+    hash = api.godot_array_hash,
     insert = function(self, pos, value)
-        GD.api.godot_array_insert(self, pos, Variant(value))
+        api.godot_array_insert(self, pos, Variant(value))
     end,
-    invert = GD.api.godot_array_invert,
+    invert = api.godot_array_invert,
     pop_back = function(self)
-        return GD.api.godot_array_pop_back(self):unbox()
+        return api.godot_array_pop_back(self):unbox()
     end,
     pop_front = function(self)
-        return GD.api.godot_array_pop_front(self):unbox()
+        return api.godot_array_pop_front(self):unbox()
     end,
-    remove = GD.api.godot_array_remove,
-    resize = GD.api.godot_array_resize,
+    remove = api.godot_array_remove,
+    resize = api.godot_array_resize,
     rfind = function(self, what, from)
-        return GD.api.godot_array_rfind(self, Variant(what), from or -1)
+        return api.godot_array_rfind(self, Variant(what), from or -1)
     end,
     size = function(self)
-        return GD.api.godot_array_size(self)
+        return api.godot_array_size(self)
     end,
-    sort = GD.api.godot_array_sort,
+    sort = api.godot_array_sort,
     sort_custom = function(self, obj, func)
-        GD.api.godot_array_sort_custom(self, obj, String(func))
+        api.godot_array_sort_custom(self, obj, String(func))
     end,
     bsearch = function(self, value, before)
         if before == nil then before = true end
-        return GD.api.godot_array_bsearch(self, Variant(value), before)
+        return api.godot_array_bsearch(self, Variant(value), before)
     end,
     bsearch_custom = function(self, value, obj, func, before)
         if before == nil then before = true end
-        return GD.api.godot_array_bsearch_custom(self, Variant(value), obj, String(func), before)
+        return api.godot_array_bsearch_custom(self, Variant(value), obj, String(func), before)
     end,
     duplicate = function(self, deep)
-        return GD.api.godot_array_duplicate(self, deep or false)
+        return api.godot_array_duplicate(self, deep or false)
     end,
     slice = function(self, begin, _end, step, deep)
-        return GD.api.godot_array_slice(self, begin, _end, step, deep or false)
+        return api.godot_array_slice(self, begin, _end, step, deep or false)
     end,
 }
 
-if GD.api_1_1 then
+if api_1_1 then
     methods.max = function(self)
-        return GD.api_1_1.godot_array_max(self):unbox()
+        return api_1_1.godot_array_max(self):unbox()
     end
     methods.min = function(self)
-        return GD.api_1_1.godot_array_min(self):unbox()
+        return api_1_1.godot_array_min(self):unbox()
     end
-    methods.shuffle = GD.api_1_1.godot_array_shuffle
+    methods.shuffle = api_1_1.godot_array_shuffle
 end
 
 Array = ffi.metatype('godot_array', {
@@ -90,7 +90,7 @@ Array = ffi.metatype('godot_array', {
             return value:toarray()
         end
         local self = ffi.new('godot_array')
-        GD.api.godot_array_new(self)
+        api.godot_array_new(self)
         if value then
             for i, v in ipairs(value) do
                 methods.append(self, v)
@@ -98,7 +98,7 @@ Array = ffi.metatype('godot_array', {
         end
         return self
     end,
-    __gc = GD.api.godot_array_destroy,
+    __gc = api.godot_array_destroy,
     __tostring = GD.tostring,
     __index = function(self, key)
         local method = methods[key]
