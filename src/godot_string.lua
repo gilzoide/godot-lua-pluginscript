@@ -9,6 +9,12 @@ local CharString = ffi.metatype('godot_char_string', {
     end,
 })
 
+local string_methods = {
+    tovariant = ffi.C.hgdn_new_string_variant,
+    length = function(self)
+        return GD.api.godot_string_length(self)
+    end,
+}
 String = ffi.metatype('godot_string', {
     __new = function(mt, text, length)
         if not text then
@@ -31,11 +37,18 @@ String = ffi.metatype('godot_string', {
     __tostring = function(self)
         return tostring(GD.api.godot_string_utf8(self))
     end,
-    __len = function(self)
-        return GD.api.godot_string_length(self)
-    end,
+    __len = string_methods.length,
+    __index = string_methods,
 })
 
+local string_name_methods = {
+    tovariant = function(self)
+        return GD.api.godot_string_name_get_name(self):tovariant()
+    end,
+    get_name = GD.api.godot_string_name_get_name,
+    get_hash = GD.api.godot_string_name_get_hash,
+    get_data_unique_pointer = GD.api.godot_string_name_get_data_unique_pointer,
+}
 StringName = ffi.metatype('godot_string_name', {
     __new = function(mt, text)
         text = text or ''
@@ -49,13 +62,17 @@ StringName = ffi.metatype('godot_string_name', {
     end,
     __gc = GD.api.godot_string_name_destroy,
     __tostring = function(self)
-        return tostring(GD.api.godot_string_name_get_name(self))
+        return tostring(self:get_name())
     end,
     __len = function(self)
-        return #GD.api.godot_string_name_get_name(self)
+        return #self:get_name()
     end,
+    __index = string_name_methods,
 })
 
+local node_path_methods = {
+    tovariant = ffi.C.hgdn_new_node_path_variant,
+}
 NodePath = ffi.metatype('godot_node_path', {
     __new = function(mt, text_or_nodepath)
         local self = ffi.new('godot_node_path')
@@ -72,4 +89,5 @@ NodePath = ffi.metatype('godot_node_path', {
     __tostring = function(self)
         return tostring(GD.api.godot_node_path_as_string(self))
     end,
+    __index = node_path_methods,
 })
