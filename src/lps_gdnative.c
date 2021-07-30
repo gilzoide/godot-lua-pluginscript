@@ -48,13 +48,13 @@ static void lps_language_finish(godot_pluginscript_language_data *data) {
     lua_close((lua_State *) data);
 }
 
+void (*lps_language_add_global_constant_cb)(const godot_string *name, const godot_variant *value);
 static void lps_language_add_global_constant(godot_pluginscript_language_data *data, const godot_string *name, const godot_variant *value) {
-    // TODO
+    lps_language_add_global_constant_cb(name, value);
 }
 
 // Script manifest
 godot_error (*lps_script_init_cb)(godot_pluginscript_script_manifest *data, const godot_string *path, const godot_string *source);
-
 static godot_pluginscript_script_manifest lps_script_init(godot_pluginscript_language_data *data, const godot_string *path, const godot_string *source, godot_error *error) {
     godot_pluginscript_script_manifest manifest;
     manifest.data = data;
@@ -73,39 +73,43 @@ static godot_pluginscript_script_manifest lps_script_init(godot_pluginscript_lan
     return manifest;
 }
 
+void (*lps_script_finish_cb)(godot_pluginscript_script_data *data);
 static void lps_script_finish(godot_pluginscript_script_data *data) {
-    // TODO
+    lps_script_finish_cb(data);
 }
 
 
 // Instance
+godot_pluginscript_instance_data *(*lps_instance_init_cb)(godot_pluginscript_script_data *data, godot_object *owner);
 static godot_pluginscript_instance_data *lps_instance_init(godot_pluginscript_script_data *data, godot_object *owner) {
-    // PluginScript system assumes NULL is an error
-    return data;
+    return lps_instance_init_cb(data, owner);
 }
 
+void (*lps_instance_finish_cb)(godot_pluginscript_instance_data *data);
 static void lps_instance_finish(godot_pluginscript_instance_data *data) {
+    lps_instance_finish_cb(data);
 }
 
+godot_bool (*lps_instance_set_prop_cb)(godot_pluginscript_instance_data *data, const godot_string *name, const godot_variant *value);
 static godot_bool lps_instance_set_prop(godot_pluginscript_instance_data *data, const godot_string *name, const godot_variant *value) {
-    // TODO
-    return false;
+    return lps_instance_set_prop_cb(data, name, value);
 }
 
+godot_bool (*lps_instance_get_prop_cb)(godot_pluginscript_instance_data *data, const godot_string *name, godot_variant *ret);
 static godot_bool lps_instance_get_prop(godot_pluginscript_instance_data *data, const godot_string *name, godot_variant *ret) {
-    // TODO
-    return false;
+    return lps_instance_get_prop_cb(data, name, ret);
 }
 
-static godot_variant lps_instance_call_method(godot_pluginscript_instance_data *p_data,
-        const godot_string_name *p_method, const godot_variant **p_args,
-        int p_argcount, godot_variant_call_error *r_error) {
-    // TODO
-    return hgdn_new_nil_variant();
+void (*lps_instance_call_method_cb)(godot_pluginscript_instance_data *p_data, const godot_string_name *p_method, const godot_variant **p_args, int p_argcount, godot_variant *ret, godot_variant_call_error *r_error);
+static godot_variant lps_instance_call_method(godot_pluginscript_instance_data *data, const godot_string_name *method, const godot_variant **args, int argcount, godot_variant_call_error *error) {
+    godot_variant var = hgdn_new_nil_variant();
+    lps_instance_call_method_cb(data, method, args, argcount, &var, error);
+    return var;
 }
 
-static void lps_instance_notification(godot_pluginscript_instance_data *p_data, int p_notification) {
-    // TODO
+void (*lps_instance_notification_cb)(godot_pluginscript_instance_data *data, int notification);
+static void lps_instance_notification(godot_pluginscript_instance_data *data, int notification) {
+    lps_instance_notification_cb(data, notification);
 }
 
 godot_pluginscript_language_desc lps_language_desc = {
