@@ -18,7 +18,8 @@ add_requires(lua_or_jit, {
 
 -- Embed any file into a `#include`able .h file
 rule("embed_header")
-    on_build_file(function(target, sourcefile)
+    on_build_file(function(target, sourcefile, opt)
+        cprint("${bright green}[%3d%%]:${clear} embed_header %s", opt.progress, sourcefile)
         local header_contents = {}
         for line in io.lines(sourcefile) do
             local escaped_line = line:gsub('"', '\\"')
@@ -29,10 +30,13 @@ rule("embed_header")
     end)
 rule_end()
 
+target("embed_lua_files")
+    set_kind("object")
+    add_files("src/*.lua", { rule = "embed_header" })
 target("lua_pluginscript")
     set_kind("shared")
     add_files("src/*.c")
-    add_files("src/*.lua", { rule = "embed_header" })
+    add_deps("embed_lua_files")
     add_includedirs("lib/godot-headers", "lib/high-level-gdnative", "$(buildir)/include")
     add_packages(lua_or_jit)
 target_end()
