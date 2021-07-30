@@ -19,6 +19,11 @@ add_requires(lua_or_jit, {
 -- Embed any file into a `#include`able .h file
 rule("embed_header")
     on_build_file(function(target, sourcefile, opt)
+        local target_file = path.join(get_config('buildir'), "include", path.filename(sourcefile) .. ".h")
+        if os.isfile(target_file) and os.mtime(target_file) > os.mtime(sourcefile) then
+            return
+        end
+
         cprint("${bright green}[%3d%%]:${clear} embed_header %s", opt.progress, sourcefile)
         local header_contents = {}
         for line in io.lines(sourcefile) do
@@ -26,7 +31,7 @@ rule("embed_header")
             table.insert(header_contents, '"' .. escaped_line .. '\\n"')
         end
         header_contents = table.concat(header_contents, '\n')
-        io.writefile(path.join("$(buildir)/include", path.filename(sourcefile) .. ".h"), header_contents)
+        io.writefile(target_file, header_contents)
     end)
 rule_end()
 
