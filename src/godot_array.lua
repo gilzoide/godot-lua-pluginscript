@@ -1,9 +1,7 @@
 local methods = {
     tovariant = ffi.C.hgdn_new_array_variant,
     toarray = function(self)
-        local clone = ffi.new('godot_array')
-        GD.api.godot_array_new_copy(clone, self)
-        return clone
+        return self
     end,
     get = function(self, index)
         return GD.api.godot_array_get(self, index):unbox()
@@ -74,14 +72,17 @@ local methods = {
     slice = function(self, begin, _end, step, deep)
         return GD.api.godot_array_slice(self, begin, _end, step, deep or false)
     end,
-    max = GD.api_1_1 and function(self)
-        return GD.api_1_1.godot_array_max(self):unbox()
-    end,
-    min = GD.api_1_1 and function(self)
-        return GD.api_1_1.godot_array_min(self):unbox()
-    end,
-    shuffle = GD.api_1_1 and GD.api_1_1.godot_array_shuffle,
 }
+
+if GD.api_1_1 then
+    methods.max = function(self)
+        return GD.api_1_1.godot_array_max(self):unbox()
+    end
+    methods.min = function(self)
+        return GD.api_1_1.godot_array_min(self):unbox()
+    end
+    methods.shuffle = GD.api_1_1.godot_array_shuffle
+end
 
 Array = ffi.metatype('godot_array', {
     __new = function(mt, value)

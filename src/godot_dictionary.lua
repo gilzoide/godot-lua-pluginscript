@@ -1,12 +1,46 @@
 local methods = {
-    set = function(self, key, value)
-        GD.api.godot_dictionary_set(self, Variant(key), Variant(value))
+    tovariant = ffi.C.hgdn_new_dictionary_variant,
+    duplicate = function(self, deep)
+        return GD.api.godot_dictionary_duplicate(self, deep or false)
     end,
+    size = function(self)
+        return GD.api.godot_dictionary_size(self)
+    end,
+    empty = GD.api.godot_dictionary_empty,
+    clear = GD.api.godot_dictionary_clear,
+    has = function(self, key)
+        return GD.api.godot_dictionary_has(self, Variant(key))
+    end,
+    has_all = function(self, ...)
+        local keys = Array{ ... }
+        return GD.api.godot_dictionary_has_all(self, keys)
+    end,
+    erase = function(self, key)
+        GD.api.godot_dictionary_erase(self, Variant(key))
+    end,
+    hash = GD.api.godot_dictionary_hash,
+    keys = GD.api.godot_dictionary_keys,
+    values = GD.api.godot_dictionary_values,
     get = function(self, key)
         return GD.api.godot_dictionary_get(self, Variant(key)):unbox()
     end,
-    tovariant = ffi.C.hgdn_new_dictionary_variant,
+    set = function(self, key, value)
+        GD.api.godot_dictionary_set(self, Variant(key), Variant(value))
+    end,
+    next = function(self, key)
+        return GD.api.godot_dictionary_next(self, Variant(key)):unbox()
+    end,
+    to_json = GD.api.godot_dictionary_to_json,
 }
+
+if GD.api_1_1 then
+    methods.erase_with_return = function(self, key)
+        return GD.api_1_1.godot_dictionary_erase_with_return(self, Variant(key))
+    end
+    methods.get_with_default = function(self, key, default)
+        return GD.api_1_1.godot_dictionary_get_with_default(self, Variant(key), Variant(default))
+    end
+end
 
 Dictionary = ffi.metatype('godot_dictionary', {
     __new = function(mt, value)
@@ -34,7 +68,5 @@ Dictionary = ffi.metatype('godot_dictionary', {
     end,
     __newindex = methods.set,
     __tostring = GD.str,
-    __len = function(self)
-        return GD.api.godot_dictionary_size(self)
-    end,
+    __len = methods.size,
 })
