@@ -27,8 +27,16 @@ local methods = {
     set = function(self, key, value)
         GD.api.godot_dictionary_set(self, Variant(key), Variant(value))
     end,
-    next = function(self, key)
-        return GD.api.godot_dictionary_next(self, Variant(key)):unbox()
+    next = function(self, key)  -- behave like `next(table [, index])` for __pairs
+        if key ~= nil then
+            key = Variant(key)
+        end
+        local next_key = GD.api.godot_dictionary_next(self, key)
+        if next_key ~= nil then
+            return next_key:unbox(), self:get(next_key)
+        else
+            return nil
+        end
     end,
     to_json = GD.api.godot_dictionary_to_json,
 }
@@ -69,4 +77,7 @@ Dictionary = ffi.metatype('godot_dictionary', {
     __newindex = methods.set,
     __tostring = GD.str,
     __len = methods.size,
+    __pairs = function(self)
+        return methods.next, self, nil
+    end,
 })
