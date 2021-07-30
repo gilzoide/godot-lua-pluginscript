@@ -13,6 +13,7 @@ const char GODOT_FFI_LUA[] =
 #include "godot_dictionary.lua.h"
 #include "godot_array.lua.h"
 #include "godot_pool_arrays.lua.h"
+#include "lps_callbacks.lua.h"
 ;
 
 // Language functions
@@ -26,8 +27,15 @@ static void *lps_alloc(void *userdata, void *ptr, size_t osize, size_t nsize) {
     }
 }
 
+static int lps_lua_touserdata(lua_State *L) {
+    const void *ptr = lua_topointer(L, 1);
+    lua_pushlightuserdata(L, (void *) ptr);
+    return 1;
+}
+
 static godot_pluginscript_language_data *lps_language_init() {
     lua_State *L = lua_newstate(&lps_alloc, NULL);
+    lua_register(L, "touserdata", &lps_lua_touserdata);
     luaL_openlibs(L);
     if (luaL_dostring(L, GODOT_FFI_LUA) != 0) {
         const char *error_msg = lua_tostring(L, -1);
@@ -40,11 +48,13 @@ static void lps_language_finish(godot_pluginscript_language_data *data) {
     lua_close((lua_State *) data);
 }
 
-static void lps_language_add_global_constant(godot_pluginscript_language_data *data, const godot_string *gd_name, const godot_variant *value) {
+static void lps_language_add_global_constant(godot_pluginscript_language_data *data, const godot_string *name, const godot_variant *value) {
     // TODO
 }
 
 // Script manifest
+godot_error (*lps_script_init_cb)(godot_pluginscript_script_manifest *data, const godot_string *path, const godot_string *source);
+
 static godot_pluginscript_script_manifest lps_script_init(godot_pluginscript_language_data *data, const godot_string *path, const godot_string *source, godot_error *error) {
     godot_pluginscript_script_manifest manifest;
     manifest.data = data;
@@ -55,7 +65,10 @@ static godot_pluginscript_script_manifest lps_script_init(godot_pluginscript_lan
     hgdn_core_api->godot_array_new(&manifest.signals);
     hgdn_core_api->godot_array_new(&manifest.properties);
 
-    // TODO
+    godot_error ret = lps_script_init_cb(&manifest, path, source);
+    if (error) {
+        *error = ret;
+    }
 
     return manifest;
 }

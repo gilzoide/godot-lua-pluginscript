@@ -1210,7 +1210,7 @@ typedef void godot_pluginscript_instance_data;
 typedef void godot_pluginscript_script_data;
 typedef void godot_pluginscript_language_data;
 
-typedef struct {
+typedef struct godot_property_attributes {
 	godot_method_rpc_mode rset_type;
 
 	godot_int type;
@@ -1220,7 +1220,7 @@ typedef struct {
 	godot_variant default_value;
 } godot_property_attributes;
 
-typedef struct {
+typedef struct godot_pluginscript_instance_desc {
 	godot_pluginscript_instance_data *(*init)(godot_pluginscript_script_data *p_data, godot_object *p_owner);
 	void (*finish)(godot_pluginscript_instance_data *p_data);
 	godot_bool (*set_prop)(godot_pluginscript_instance_data *p_data, const godot_string *p_name, const godot_variant *p_value);
@@ -1233,7 +1233,7 @@ typedef struct {
 	bool (*refcount_decremented)(godot_pluginscript_instance_data *p_data); // return true if it can die
 } godot_pluginscript_instance_desc;
 
-typedef struct {
+typedef struct godot_pluginscript_script_manifest {
 	godot_pluginscript_script_data *data;
 	godot_string_name name;
 	godot_bool is_tool;
@@ -1244,20 +1244,20 @@ typedef struct {
 	godot_array properties;
 } godot_pluginscript_script_manifest;
 
-typedef struct {
+typedef struct godot_pluginscript_script_desc {
 	godot_pluginscript_script_manifest (*init)(godot_pluginscript_language_data *p_data, const godot_string *p_path, const godot_string *p_source, godot_error *r_error);
 	void (*finish)(godot_pluginscript_script_data *p_data);
 	godot_pluginscript_instance_desc instance_desc;
 } godot_pluginscript_script_desc;
 
-typedef struct {
+typedef struct godot_pluginscript_profiling_data {
 	godot_string_name signature;
 	godot_int call_count;
 	godot_int total_time; // In microseconds
 	godot_int self_time; // In microseconds
 } godot_pluginscript_profiling_data;
 
-typedef struct {
+typedef struct godot_pluginscript_language_desc {
 	const char *name;
 	const char *type;
 	const char *extension;
@@ -1298,6 +1298,10 @@ typedef struct {
 // Global API pointer
 const godot_gdnative_core_api_struct *hgdn_core_api;
 const godot_gdnative_core_1_1_api_struct *hgdn_core_1_1_api;
+
+// Global PluginScript description and callbacks
+godot_pluginscript_language_desc lps_language_desc;
+godot_error (*lps_script_init_cb)(godot_pluginscript_script_manifest *data, const godot_string *path, const godot_string *source);
 ]]
 
 api = ffi.C.hgdn_core_api
