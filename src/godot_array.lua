@@ -99,7 +99,7 @@ Array = ffi.metatype('godot_array', {
         return self
     end,
     __gc = GD.api.godot_array_destroy,
-    __tostring = GD.str,
+    __tostring = GD.tostring,
     __index = function(self, key)
         local method = methods[key]
         if method then

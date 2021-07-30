@@ -75,7 +75,7 @@ Dictionary = ffi.metatype('godot_dictionary', {
         end
     end,
     __newindex = methods.set,
-    __tostring = GD.str,
+    __tostring = GD.tostring,
     __len = methods.size,
     __pairs = function(self)
         return methods.next, self, nil

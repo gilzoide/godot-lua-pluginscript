@@ -38,7 +38,7 @@ local function register_pool_array(kind)
             return self
         end,
         __gc = GD.api[ctype .. '_destroy'],
-        __tostring = GD.str,
+        __tostring = GD.tostring,
         __index = function(self, key)
             local method = methods[key]
             if method then

@@ -16,5 +16,9 @@ function GD.print_error(...)
 end
 
 function GD.str(value)
+    return GD.api.godot_variant_as_string(Variant(value))
+end
+
+function GD.tostring(value)
     return tostring(Variant(value))
 end
