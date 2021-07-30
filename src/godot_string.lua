@@ -14,23 +14,32 @@ local string_methods = {
     length = function(self)
         return GD.api.godot_string_length(self)
     end,
+    wide_str = GD.api.godot_string_wide_str,
+    -- TODO: add the rest
 }
 String = ffi.metatype('godot_string', {
     __new = function(mt, text, length)
-        if not text then
+        if text == nil then
             return GD.api.godot_string_chars_to_utf8('')
         elseif ffi.istype(mt, text) then
             local self = ffi.new('godot_string')
             GD.api.godot_string_new_copy(self, text)
             return self
+        elseif ffi.istype(StringName, text) then
+            return text:get_name()
+        elseif ffi.istype('wchar_t', text) then
+            return GD.api.godot_string_chr(text)
         elseif ffi.istype('wchar_t *', text) then
             local self = ffi.new('godot_string')
             GD.api.godot_string_new_with_wide_string(self, text, length or -1)
             return self
-        elseif length then
-            return GD.api.godot_string_chars_to_utf8_with_len(text, length)
         else
-            return GD.api.godot_string_chars_to_utf8(text)
+            text = tostring(text)
+            if length then
+                return GD.api.godot_string_chars_to_utf8_with_len(text, length)
+            else
+                return GD.api.godot_string_chars_to_utf8(text)
+            end
         end
     end,
     __gc = GD.api.godot_string_destroy,
@@ -39,6 +48,9 @@ String = ffi.metatype('godot_string', {
     end,
     __len = string_methods.length,
     __index = string_methods,
+    __concat = function(self, other)
+        return GD.api.godot_string_operator_plus(self, GD.str(other))
+    end,
 })
 
 local string_name_methods = {
