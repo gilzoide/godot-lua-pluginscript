@@ -7,7 +7,7 @@ typedef int godot_int;
 typedef float godot_real;
 
 typedef struct godot_object {
-    uint8_t _dont_touch_that[0];
+	uint8_t _dont_touch_that[0];
 } godot_object;
 typedef struct godot_string {
 	uint8_t _dont_touch_that[sizeof(void *)];

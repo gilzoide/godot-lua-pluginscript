@@ -2,11 +2,9 @@ root = true
 
 [*]
 encoding = utf-8
-indent_style = space
+indent_style = tab
 indent_size = 4
 
-[*.gd]
-indent_style = tab
-
 [*.md]
+indent_style = space
 indent_size = 2
