@@ -74,6 +74,13 @@ local methods = {
     slice = function(self, begin, _end, step, deep)
         return GD.api.godot_array_slice(self, begin, _end, step, deep or false)
     end,
+    max = GD.api_1_1 and function(self)
+        return GD.api_1_1.godot_array_max(self):unbox()
+    end,
+    min = GD.api_1_1 and function(self)
+        return GD.api_1_1.godot_array_min(self):unbox()
+    end,
+    shuffle = GD.api_1_1 and GD.api_1_1.godot_array_shuffle,
 }
 
 Array = ffi.metatype('godot_array', {
