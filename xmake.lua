@@ -38,6 +38,20 @@ rule_end()
 target("embed_lua_files")
 	set_kind("object")
 	add_files("src/*.lua", { rule = "embed_header" })
+target("cat_init_script")
+	set_kind("phony")
+	set_default(false)
+	on_build(function(target)
+		local buildir = get_config('buildir')
+		local embedded_files = {}
+		for line in io.lines("src/lps_gdnative.c") do
+			local m = line:match("#include%W*([^%.]+%.lua%.h)")
+			if m then
+				table.insert(embedded_files, io.readfile(path.join(buildir, "include", m)))
+			end
+		end
+		io.writefile(path.join(buildir, "include", "init_script.lua"), table.concat(embedded_files, '\n'))
+	end)
 target("lua_pluginscript")
 	set_kind("shared")
 	add_files("src/*.c")
