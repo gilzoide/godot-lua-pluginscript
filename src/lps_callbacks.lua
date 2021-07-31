@@ -48,9 +48,13 @@ ffi.C.lps_script_init_cb = wrap_callback(function(manifest, path, source)
 		elseif k == 'extends' then
 			manifest.base = StringName(v)
 		elseif type(v) == 'function' then
-			-- TODO: methods
+			local method = method_to_dictionary(v)
+			method.name = String(k)
+			manifest.methods:append(method)
 		elseif is_signal(v) then
-			-- TODO: signals
+			local sig = signal_to_dictionary(v)
+			sig.name = String(k)
+			manifest.signals:append(sig)
 		else
 			local prop, default_value = property_to_dictionary(v)
 			prop.name = String(k)
@@ -119,7 +123,6 @@ ffi.C.lps_instance_call_method_cb = wrap_callback(function(data, name, args, arg
 	name = tostring(name)
 	local method = self.__script[name]
 	if method ~= nil then
-		print('CALL', self, method, f ~= nil)
 		local args_table = {}
 		for i = 1, argcount do
 			args_table[i] = args[i - 1]:unbox()

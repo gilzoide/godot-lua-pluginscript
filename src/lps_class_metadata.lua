@@ -89,8 +89,19 @@ local function is_signal(value)
 	return getmetatable(value) == Signal
 end
 
+local function signal_to_dictionary(sig)
+	local dict = Dictionary()
+	dict.args = Array()
+	for i = 1, #sig do
+		dict.args:append(Dictionary{ name = String(sig[i]) })
+	end
+	return dict
+end
+
 function signal(...)
 	return setmetatable({ ... }, Signal)
 end
 
--- TODO: method metadata
+local function method_to_dictionary(f)
+	return Dictionary()
+end
