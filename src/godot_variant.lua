@@ -163,8 +163,9 @@ Variant = ffi.metatype("godot_variant", {
 			return ffi.C.hgdn_new_bool_variant(value)
 		elseif t == 'string' then
 			return ffi.C.hgdn_new_cstring_variant(value)
+		elseif ffi.istype(int, value) then
+			return ffi.C.hgdn_new_int_variant(value)
 		elseif t == 'number' or tonumber(value) then
-			-- TODO: distinguish integers
 			return ffi.C.hgdn_new_real_variant(value)
 		elseif t == 'table' then
 			return ffi.C.hgdn_new_dictionary_variant(Dictionary(value))
