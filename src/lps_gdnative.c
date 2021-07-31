@@ -124,7 +124,7 @@ godot_pluginscript_language_desc lps_language_desc = {
 		"and", "break", "do", "else", "elseif", "end",
 		"false", "for", "function", "goto", "if", "in",
 		"local", "nil", "not", "or", "repeat", "return",
-		"then", "true", "until", "while",
+		"self", "then", "true", "until", "while",
 		NULL
 	},
 	.comment_delimiters = (const char *[]){ "--", "--[[ ]]", NULL },
