@@ -129,9 +129,9 @@ ffi.C.lps_instance_call_method_cb = wrap_callback(function(data, name, args, arg
 		end
 		local unboxed_ret = method(self, unpack(args_table))
 		ret[0] = Variant(unboxed_ret)
-		err[0] = GD.CALL_OK
+		err.error = GD.CALL_OK
 	else
-		err[0] = GD.CALL_ERROR_INVALID_METHOD
+		err.error = GD.CALL_ERROR_INVALID_METHOD
 	end
 end)
 

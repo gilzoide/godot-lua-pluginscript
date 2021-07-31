@@ -174,12 +174,12 @@ print = GD.print
 
 function GD.print_warning(...)
 	local info = debug.getinfo(2, 'nSl')
-	local message = PoolStringArray(...):join('\t')
+	local message = tostring(PoolStringArray(...):join('\t'))
 	api.godot_print_warning(message, info.name, info.short_src, info.currentline)
 end
 
 function GD.print_error(...)
 	local info = debug.getinfo(2, 'nSl')
-	local message = PoolStringArray(...):join('\t')
+	local message = tostring(PoolStringArray(...):join('\t'))
 	api.godot_print_error(message, info.name, info.short_src, info.currentline)
 end
