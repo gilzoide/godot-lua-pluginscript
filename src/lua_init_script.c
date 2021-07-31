@@ -1,5 +1,6 @@
 const char LUA_INIT_SCRIPT[] =
 #include "godot_ffi.lua.h"
+#include "godot_class.lua.h"
 #include "godot_globals.lua.h"
 #include "godot_variant.lua.h"
 #include "godot_string.lua.h"
