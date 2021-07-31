@@ -127,5 +127,6 @@ Array = ffi.metatype('godot_array', {
 			methods.set(self, key, value)
 		end
 	end,
+	__concat = concat_gdvalues,
 	__len = methods.size,
 })

@@ -51,9 +51,7 @@ String = ffi.metatype('godot_string', {
 	end,
 	__len = string_methods.length,
 	__index = string_methods,
-	__concat = function(self, other)
-		return api.godot_string_operator_plus(self, GD.str(other))
-	end,
+	__concat = concat_gdvalues,
 })
 
 local string_name_methods = {
@@ -83,4 +81,5 @@ StringName = ffi.metatype('godot_string_name', {
 		return #self:get_name()
 	end,
 	__index = string_name_methods,
+	__concat = concat_gdvalues,
 })

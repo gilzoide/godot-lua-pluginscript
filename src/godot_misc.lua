@@ -19,6 +19,7 @@ NodePath = ffi.metatype('godot_node_path', {
 		return tostring(api.godot_node_path_as_string(self))
 	end,
 	__index = node_path_methods,
+	__concat = concat_gdvalues,
 })
 
 RID = ffi.metatype('godot_rid', {
@@ -37,6 +38,7 @@ RID = ffi.metatype('godot_rid', {
 		varianttype = GD.TYPE_RID,
 		get_id = api.godot_rid_get_id,
 	},
+	__concat = concat_gdvalues,
 	__eq = api.godot_rid_operator_equal,
 	__lt = api.godot_rid_operator_less,
 })
@@ -47,4 +49,5 @@ Object = ffi.metatype('godot_object', {
 		tovariant = ffi.C.hgdn_new_object_variant,
 		varianttype = GD.TYPE_OBJECT,
 	},
+	__concat = concat_gdvalues,
 })

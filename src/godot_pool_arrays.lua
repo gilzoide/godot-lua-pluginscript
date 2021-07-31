@@ -65,6 +65,7 @@ local function register_pool_array(kind, element_ctype)
 		end,
 		__gc = api[ctype .. '_destroy'],
 		__tostring = GD.tostring,
+		__concat = concat_gdvalues,
 		__index = function(self, key)
 			local numeric_index = tonumber(key)
 			if numeric_index then

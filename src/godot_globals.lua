@@ -1,3 +1,7 @@
+local function concat_gdvalues(a, b)
+	return api.godot_string_operator_plus(GD.str(a), GD.str(b))
+end
+
 GD = {
 	api = api,
 	api_1_1 = api_1_1,

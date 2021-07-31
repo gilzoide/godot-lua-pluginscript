@@ -32,7 +32,9 @@ godot_variant hgdn_new_pool_color_array_variant(const godot_pool_color_array *va
 godot_variant hgdn_new_pool_string_array_variant(const godot_pool_string_array *value);
 ]]
 
-local variant_array = ffi.typeof('godot_variant *[?]')
+local Variant_p_array = ffi.typeof('godot_variant *[?]')
+local const_Variant_pp = ffi.typeof('const godot_variant **')
+local VariantCallError = ffi.typeof('godot_variant_call_error')
 
 local methods = {
 	tovariant = function(self)
@@ -68,13 +70,13 @@ local methods = {
 	get_type = api.godot_variant_get_type,
 	pcall = function(self, method, ...)
 		local argc = select('#', ...)
-		local argv = ffi.new(variant_array, argc)
+		local argv = ffi.new(Variant_p_array, argc)
 		for i = 1, argc do
 			local arg = select(i, ...)
 			argv[i - 1] = Variant(arg)
 		end
-		local r_error = ffi.new('godot_variant_call_error')
-		local value = api.godot_variant_call(self, String(method), ffi.cast('const godot_variant **', argv), argc, r_error)
+		local r_error = ffi.new(VariantCallError)
+		local value = api.godot_variant_call(self, String(method), ffi.cast(const_Variant_pp, argv), argc, r_error)
 		if r_error.error == GD.CALL_OK then
 			return true, value:unbox()
 		else
@@ -178,5 +180,6 @@ Variant = ffi.metatype("godot_variant", {
 	__tostring = function(self)
 		return tostring(self:as_string())
 	end,
+	__concat = concat_gdvalues,
 	__index = methods,
 })

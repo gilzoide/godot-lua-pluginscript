@@ -4,6 +4,7 @@ Vector2 = ffi.metatype('godot_vector2', {
 		tovariant = ffi.C.hgdn_new_vector2_variant,
 		varianttype = GD.TYPE_VECTOR2,
 	},
+	__concat = concat_gdvalues,
 })
 
 Vector3 = ffi.metatype('godot_vector3', {
@@ -12,6 +13,7 @@ Vector3 = ffi.metatype('godot_vector3', {
 		tovariant = ffi.C.hgdn_new_vector3_variant,
 		varianttype = GD.TYPE_VECTOR3,
 	},
+	__concat = concat_gdvalues,
 })
 
 Vector4 = ffi.metatype('godot_vector4', {
@@ -20,6 +22,7 @@ Vector4 = ffi.metatype('godot_vector4', {
 		tovariant = ffi.C.hgdn_new_color_variant,
 		varianttype = GD.TYPE_COLOR,
 	},
+	__concat = concat_gdvalues,
 })
 Color = Vector4
 
@@ -29,6 +32,7 @@ Rect2 = ffi.metatype('godot_rect2', {
 		tovariant = ffi.C.hgdn_new_rect2_variant,
 		varianttype = GD.TYPE_RECT2,
 	},
+	__concat = concat_gdvalues,
 })
 
 Plane = ffi.metatype('godot_plane', {
@@ -37,6 +41,7 @@ Plane = ffi.metatype('godot_plane', {
 		tovariant = ffi.C.hgdn_new_plane_variant,
 		varianttype = GD.TYPE_PLANE,
 	},
+	__concat = concat_gdvalues,
 })
 
 Quat = ffi.metatype('godot_quat', {
@@ -45,6 +50,7 @@ Quat = ffi.metatype('godot_quat', {
 		tovariant = ffi.C.hgdn_new_quat_variant,
 		varianttype = GD.TYPE_QUAT,
 	},
+	__concat = concat_gdvalues,
 })
 
 Basis = ffi.metatype('godot_basis', {
@@ -53,6 +59,7 @@ Basis = ffi.metatype('godot_basis', {
 		tovariant = ffi.C.hgdn_new_basis_variant,
 		varianttype = GD.TYPE_BASIS,
 	},
+	__concat = concat_gdvalues,
 })
 
 AABB = ffi.metatype('godot_aabb', {
@@ -61,6 +68,7 @@ AABB = ffi.metatype('godot_aabb', {
 		tovariant = ffi.C.hgdn_new_aabb_variant,
 		varianttype = GD.TYPE_AABB,
 	},
+	__concat = concat_gdvalues,
 })
 
 Transform2D = ffi.metatype('godot_transform2d', {
@@ -69,6 +77,7 @@ Transform2D = ffi.metatype('godot_transform2d', {
 		tovariant = ffi.C.hgdn_new_transform2d_variant,
 		varianttype = GD.TYPE_TRANSFORM2D,
 	},
+	__concat = concat_gdvalues,
 })
 
 Transform = ffi.metatype('godot_transform', {
@@ -77,4 +86,5 @@ Transform = ffi.metatype('godot_transform', {
 		tovariant = ffi.C.hgdn_new_transform_variant,
 		varianttype = GD.TYPE_TRANSFORM,
 	},
+	__concat = concat_gdvalues,
 })
