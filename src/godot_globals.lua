@@ -154,22 +154,9 @@ GD = {
 	PROPERTY_USAGE_NOEDITOR = ffi.C.GODOT_PROPERTY_USAGE_NOEDITOR,
 }
 
-function GD.print(...)
-	local message = table.concat({ ... }, '\t')
-	api.godot_print(String(message))
-end
-
-function GD.print_warning(...)
-	local info = debug.getinfo(2, 'nSl')
-	local message = table.concat({ ... }, '\t')
-	api.godot_print_warning(message, info.name, info.short_src, info.currentline)
-end
-
-function GD.print_error(...)
-	local info = debug.getinfo(2, 'nSl')
-	local message = table.concat({ ... }, '\t')
-	api.godot_print_error(message, info.name, info.short_src, info.currentline)
-end
+bool = ffi.typeof('godot_bool')
+int = ffi.typeof('godot_int')
+float = ffi.typeof('godot_real')
 
 function GD.str(value)
 	return api.godot_variant_as_string(Variant(value))
@@ -179,6 +166,20 @@ function GD.tostring(value)
 	return tostring(Variant(value))
 end
 
-bool = ffi.typeof('godot_bool')
-int = ffi.typeof('godot_int')
-float = ffi.typeof('godot_real')
+function GD.print(...)
+	local message = PoolStringArray(...):join('\t')
+	api.godot_print(message)
+end
+print = GD.print
+
+function GD.print_warning(...)
+	local info = debug.getinfo(2, 'nSl')
+	local message = PoolStringArray(...):join('\t')
+	api.godot_print_warning(message, info.name, info.short_src, info.currentline)
+end
+
+function GD.print_error(...)
+	local info = debug.getinfo(2, 'nSl')
+	local message = PoolStringArray(...):join('\t')
+	api.godot_print_error(message, info.name, info.short_src, info.currentline)
+end
