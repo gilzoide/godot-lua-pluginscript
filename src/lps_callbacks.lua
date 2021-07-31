@@ -18,7 +18,6 @@ end
 -- void (*lps_language_add_global_constant_cb)(const godot_string *name, const godot_variant *value);
 ffi.C.lps_language_add_global_constant_cb = wrap_callback(function(_data, name, value)
 	_G[tostring(name)] = value:unbox()
-	print('GLOBAL', name, value)
 end)
 
 -- godot_error (*lps_script_init_cb)(godot_pluginscript_script_manifest *data, const godot_string *path, const godot_string *source);
@@ -41,10 +40,26 @@ ffi.C.lps_script_init_cb = wrap_callback(function(manifest, path, source)
 	end
 	local metadata_index = pointer_to_index(touserdata(metadata))
 	lps_scripts[metadata_index] = metadata
-	-- TODO: load metadata into manifest struct
-	if metadata.extends then
-		manifest.base = StringName(metadata.extends)
+	for k, v in pairs(metadata) do
+		if k == 'class_name' then
+			manifest.name = StringName(v)
+		elseif k == 'tool' then
+			manifest.is_tool = bool(v)
+		elseif k == 'extends' then
+			manifest.base = StringName(v)
+		elseif type(v) == 'function' then
+			-- TODO: methods
+		elseif is_signal(v) then
+			-- TODO: signals
+		else
+			local prop, default_value = property_to_dictionary(v)
+			prop.name = String(k)
+			-- Maintain default value directly for __indexing
+			metadata[k] = default_value
+			manifest.properties:append(prop)
+		end
 	end
+	metadata.__metatable = { __index = metadata }
 
 	manifest.data = ffi.cast('void *', metadata_index)
 	return GD.OK
@@ -58,11 +73,10 @@ end)
 -- godot_pluginscript_instance_data *(*lps_instance_init_cb)(godot_pluginscript_script_data *data, godot_object *owner);
 ffi.C.lps_instance_init_cb = wrap_callback(function(script_data, owner)
 	local script = lps_scripts[pointer_to_index(script_data)]
-	local instance = {
+	local instance = setmetatable({
 		__owner = owner,
 		__script = script,
-	}
-	-- TODO: add metatable?
+	}, script.__metatable)
 	local instance_index = pointer_to_index(touserdata(instance))
 	lps_instances[instance_index] = instance
 	return ffi.cast('void *', instance_index)
@@ -79,8 +93,7 @@ ffi.C.lps_instance_set_prop_cb = wrap_callback(function(data, name, value)
 	name = tostring(name)
 	local prop = self.__script[name]
 	if prop ~= nil then
-		print('SET', self, name, value)
-		self[tostring(name)] = value:unbox()
+		self[name] = value:unbox()
 		return true
 	else
 		return false
@@ -93,8 +106,7 @@ ffi.C.lps_instance_get_prop_cb = wrap_callback(function(data, name, ret)
 	name = tostring(name)
 	local prop = self.__script[name]
 	if prop ~= nil then
-		print('GET', self, name, ret)
-		ret = Variant(self[name])
+		ret[0] = Variant(self[name])
 		return true
 	else
 		return false
@@ -113,10 +125,10 @@ ffi.C.lps_instance_call_method_cb = wrap_callback(function(data, name, args, arg
 			args_table[i] = args[i - 1]:unbox()
 		end
 		local unboxed_ret = method(self, unpack(args_table))
-		ret = Variant(unboxed_ret)
-		err = GD.CALL_OK
+		ret[0] = Variant(unboxed_ret)
+		err[0] = GD.CALL_OK
 	else
-		err = GD.CALL_ERROR_INVALID_METHOD
+		err[0] = GD.CALL_ERROR_INVALID_METHOD
 	end
 end)
 

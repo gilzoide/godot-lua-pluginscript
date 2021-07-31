@@ -3,7 +3,7 @@
 #include "lualib.h"
 #include "lauxlib.h"
 
-const char GODOT_FFI_LUA[] =
+const char LUA_INIT_SCRIPT[] =
 #include "godot_ffi.lua.h"
 #include "godot_globals.lua.h"
 #include "godot_variant.lua.h"
@@ -13,6 +13,7 @@ const char GODOT_FFI_LUA[] =
 #include "godot_dictionary.lua.h"
 #include "godot_array.lua.h"
 #include "godot_pool_arrays.lua.h"
+#include "lps_class_metadata.lua.h"
 #include "lps_callbacks.lua.h"
 ;
 
@@ -37,7 +38,7 @@ static godot_pluginscript_language_data *lps_language_init() {
 	lua_State *L = lua_newstate(&lps_alloc, NULL);
 	lua_register(L, "touserdata", &lps_lua_touserdata);
 	luaL_openlibs(L);
-	if (luaL_dostring(L, GODOT_FFI_LUA) != 0) {
+	if (luaL_dostring(L, LUA_INIT_SCRIPT) != 0) {
 		const char *error_msg = lua_tostring(L, -1);
 		HGDN_PRINT_ERROR("Error running initialization script: %s", error_msg);
 	}
@@ -56,7 +57,7 @@ static void lps_language_add_global_constant(godot_pluginscript_language_data *d
 // Script manifest
 godot_error (*lps_script_init_cb)(godot_pluginscript_script_manifest *data, const godot_string *path, const godot_string *source);
 static godot_pluginscript_script_manifest lps_script_init(godot_pluginscript_language_data *data, const godot_string *path, const godot_string *source, godot_error *error) {
-	godot_pluginscript_script_manifest manifest;
+	godot_pluginscript_script_manifest manifest = {};
 	manifest.data = data;
 	hgdn_core_api->godot_string_name_new_data(&manifest.name, "");
 	hgdn_core_api->godot_string_name_new_data(&manifest.base, "Reference");
