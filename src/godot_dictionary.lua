@@ -26,7 +26,11 @@ local methods = {
 		return api.godot_dictionary_get(self, Variant(key)):unbox()
 	end,
 	set = function(self, key, value)
-		api.godot_dictionary_set(self, Variant(key), Variant(value))
+		if type(value) == 'nil' then
+			api.godot_dictionary_erase(self, Variant(key))
+		else
+			api.godot_dictionary_set(self, Variant(key), Variant(value))
+		end
 	end,
 	next = function(self, key)  -- behave like `next(table [, index])` for __pairs
 		if key ~= nil then

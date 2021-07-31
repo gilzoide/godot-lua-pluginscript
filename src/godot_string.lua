@@ -28,19 +28,21 @@ String = ffi.metatype('godot_string', {
 			return self
 		elseif ffi.istype(StringName, text) then
 			return text:get_name()
-		elseif ffi.istype('wchar_t', text) then
-			return api.godot_string_chr(text)
-		elseif ffi.istype('wchar_t *', text) then
-			local self = ffi.new(mt)
-			api.godot_string_new_with_wide_string(self, text, length or -1)
-			return self
-		else
-			text = tostring(text)
+		elseif ffi.istype('char *', text) then
 			if length then
 				return api.godot_string_chars_to_utf8_with_len(text, length)
 			else
 				return api.godot_string_chars_to_utf8(text)
 			end
+		elseif ffi.istype('wchar_t *', text) then
+			local self = ffi.new(mt)
+			api.godot_string_new_with_wide_string(self, text, length or -1)
+			return self
+		elseif ffi.istype('wchar_t', text) or ffi.istype('char', text) then
+			return api.godot_string_chr(text)
+		else
+			text = tostring(text)
+			return api.godot_string_chars_to_utf8_with_len(text, length or #text)
 		end
 	end,
 	__gc = api.godot_string_destroy,
