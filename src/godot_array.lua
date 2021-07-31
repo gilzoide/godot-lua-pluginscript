@@ -41,6 +41,12 @@ local methods = {
 		api.godot_array_insert(self, pos, Variant(value))
 	end,
 	invert = api.godot_array_invert,
+	push_back = function(self, value)
+		api.godot_array_push_back(self, Variant(value))
+	end,
+	push_front = function(self, value)
+		api.godot_array_push_front(self, Variant(value))
+	end,
 	pop_back = function(self)
 		return api.godot_array_pop_back(self):unbox()
 	end,
@@ -86,34 +92,35 @@ if api_1_1 then
 end
 
 Array = ffi.metatype('godot_array', {
-	__new = function(mt, value)
-		if value and value.toarray then
+	__new = function(mt, ...)
+		local argc = select('#', ...)
+		local value = ...
+		if argc == 1 and type(value) == 'cdata' and value.toarray then
 			return value:toarray()
 		end
-		local self = ffi.new('godot_array')
+		local self = ffi.new(mt)
 		api.godot_array_new(self)
-		if value then
-			for i, v in ipairs(value) do
-				methods.append(self, v)
-			end
+		local t = type(value)
+		for i = 1, argc do
+			local v = select(i, ...)
+			self:append(v)
 		end
 		return self
 	end,
 	__gc = api.godot_array_destroy,
 	__tostring = GD.tostring,
 	__index = function(self, key)
-		local method = methods[key]
-		if method then
-			return method
-		else
-			key = assert(tonumber(key),  "Array indices must be numeric")
-			if key >= 0 and key < #self then
-				return methods.get(self, key)
+		local numeric_index = tonumber(key)
+		if numeric_index then
+			if numeric_index >= 0 and numeric_index < #self then
+				return methods.get(self, numeric_index)
 			end
+		else
+			return methods[key]
 		end
 	end,
 	__newindex = function(self, key, value)
-		key = assert(key, "Array indices must be numeric")
+		key = assert(tonumber(key), "Array indices must be numeric")
 		if key == #self then
 			methods.append(self, value)
 		else
