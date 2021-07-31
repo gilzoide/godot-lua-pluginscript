@@ -22,11 +22,23 @@ NodePath = ffi.metatype('godot_node_path', {
 })
 
 RID = ffi.metatype('godot_rid', {
+	__new = function(mt, resource)
+		local self = ffi.new(mt)
+		if resource then
+			api.godot_rid_new_with_resource(self, resource)
+		else
+			api.godot_rid_new(self)
+		end
+		return self
+	end,
 	__tostring = GD.tostring,
 	__index = {
 		tovariant = ffi.C.hgdn_new_rid_variant,
 		varianttype = GD.TYPE_RID,
+		get_id = api.godot_rid_get_id,
 	},
+	__eq = api.godot_rid_operator_equal,
+	__lt = api.godot_rid_operator_less,
 })
 
 Object = ffi.metatype('godot_object', {
