@@ -1205,6 +1205,30 @@ typedef struct godot_gdnative_core_1_1_api_struct {
 	void (*godot_variant_evaluate)(godot_variant_operator p_op, const godot_variant *p_a, const godot_variant *p_b, godot_variant *r_ret, godot_bool *r_valid);
 } godot_gdnative_core_1_1_api_struct;
 
+typedef struct godot_gdnative_core_1_2_api_struct {
+	unsigned int type;
+	godot_gdnative_api_version version;
+	const godot_gdnative_api_struct *next;
+	godot_dictionary (*godot_dictionary_duplicate)(const godot_dictionary *p_self, const godot_bool p_deep);
+	godot_vector3 (*godot_vector3_move_toward)(const godot_vector3 *p_self, const godot_vector3 *p_to, const godot_real p_delta);
+	godot_vector2 (*godot_vector2_move_toward)(const godot_vector2 *p_self, const godot_vector2 *p_to, const godot_real p_delta);
+	godot_int (*godot_string_count)(const godot_string *p_self, godot_string p_what, godot_int p_from, godot_int p_to);
+	godot_int (*godot_string_countn)(const godot_string *p_self, godot_string p_what, godot_int p_from, godot_int p_to);
+	godot_vector3 (*godot_vector3_direction_to)(const godot_vector3 *p_self, const godot_vector3 *p_to);
+	godot_vector2 (*godot_vector2_direction_to)(const godot_vector2 *p_self, const godot_vector2 *p_to);
+	godot_array (*godot_array_slice)(const godot_array *p_self, const godot_int p_begin, const godot_int p_end, const godot_int p_step, const godot_bool p_deep);
+	godot_bool (*godot_pool_byte_array_empty)(const godot_pool_byte_array *p_self);
+	godot_bool (*godot_pool_int_array_empty)(const godot_pool_int_array *p_self);
+	godot_bool (*godot_pool_real_array_empty)(const godot_pool_real_array *p_self);
+	godot_bool (*godot_pool_string_array_empty)(const godot_pool_string_array *p_self);
+	godot_bool (*godot_pool_vector2_array_empty)(const godot_pool_vector2_array *p_self);
+	godot_bool (*godot_pool_vector3_array_empty)(const godot_pool_vector3_array *p_self);
+	godot_bool (*godot_pool_color_array_empty)(const godot_pool_color_array *p_self);
+	void *(*godot_get_class_tag)(const godot_string_name *p_class);
+	godot_object *(*godot_object_cast_to)(const godot_object *p_object, void *p_class_tag);
+	godot_object *(*godot_instance_from_id)(godot_int p_instance_id);
+} godot_gdnative_core_1_2_api_struct;
+
 // PluginScript
 typedef void godot_pluginscript_instance_data;
 typedef void godot_pluginscript_script_data;
@@ -1298,6 +1322,7 @@ typedef struct godot_pluginscript_language_desc {
 // Global API pointer
 const godot_gdnative_core_api_struct *hgdn_core_api;
 const godot_gdnative_core_1_1_api_struct *hgdn_core_1_1_api;
+const godot_gdnative_core_1_2_api_struct *hgdn_core_1_2_api;
 
 // Global PluginScript description and callbacks
 void (*lps_language_add_global_constant_cb)(const godot_string *name, const godot_variant *value);
@@ -1313,4 +1338,5 @@ void (*lps_instance_notification_cb)(godot_pluginscript_instance_data *data, int
 
 api = ffi.C.hgdn_core_api
 api_1_1 = ffi.C.hgdn_core_1_1_api
+api_1_2 = ffi.C.hgdn_core_1_2_api
 

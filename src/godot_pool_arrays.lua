@@ -16,17 +16,28 @@ local function register_pool_array(kind)
 		get = api[ctype .. '_get'],
 		set = api[ctype .. '_set'],
 		append = api[ctype .. '_append'],
+		append_array = api[ctype .. '_append_array'],
+		insert = api[ctype .. '_insert'],
+		invert = api[ctype .. '_invert'],
+		push_back = api[ctype .. '_push_back'],
+		remove = api[ctype .. '_remove'],
+		resize = api[ctype .. '_resize'],
+		-- TODO: read/write
 		size = function(self)
 			return api[ctype .. '_size'](self)
 		end,
 	}
+
+	if api_1_2 then
+		methods.empty = api_1_2[ctype .. '_empty']
+	end
 
 	_G[name] = ffi.metatype(ctype, {
 		__new = function(mt, value)
 			local self = ffi.new(mt)
 			if ffi.istype(mt, value) then
 				api[ctype .. '_new_copy'](self, value)
-			elseif ffi.istype(mt, Array) then
+			elseif ffi.istype(Array, value) then
 				api[ctype .. '_new_with_array'](self, value)
 			else
 				api[ctype .. '_new'](self)
