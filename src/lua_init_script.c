@@ -11,5 +11,6 @@ const char LUA_INIT_SCRIPT[] =
 #include "godot_pool_arrays.lua.h"
 #include "lps_class_metadata.lua.h"
 #include "lps_callbacks.lua.h"
+#include "late_globals.lua.h"
 ;
 

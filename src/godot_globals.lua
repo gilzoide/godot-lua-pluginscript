@@ -174,7 +174,7 @@ function GD.print(...)
 	local message = PoolStringArray(...):join('\t')
 	api.godot_print(message)
 end
-print = GD.print
+_G.print = GD.print
 
 function GD.print_warning(...)
 	local info = debug.getinfo(2, 'nSl')
@@ -188,22 +188,3 @@ function GD.print_error(...)
 	api.godot_print_error(message, info.name, info.short_src, info.currentline)
 end
 
-local Engine = api.godot_global_get_singleton("Engine")
-setmetatable(_G, {
-	__index = function(self, key)
-		key = String(key)
-		if Engine:has_singleton(key) then
-			local singleton = Engine:get_singleton(key)
-			rawset(self, key, singleton)
-			return singleton
-		end
-		if ClassDB:class_exists(key) then
-			local cls = Class(key)
-			rawset(self, key, cls)
-			return cls
-		end
-	end,
-})
-
-_G.Engine = Engine
-_G.ClassDB = ClassDB

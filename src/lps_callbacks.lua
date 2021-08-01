@@ -63,7 +63,6 @@ ffi.C.lps_script_init_cb = wrap_callback(function(manifest, path, source)
 			manifest.properties:append(prop)
 		end
 	end
-	metadata.__metatable = { __index = metadata }
 
 	manifest.data = ffi.cast('void *', metadata_index)
 	return GD.OK
@@ -80,7 +79,7 @@ ffi.C.lps_instance_init_cb = wrap_callback(function(script_data, owner)
 	local instance = setmetatable({
 		__owner = owner,
 		__script = script,
-	}, script.__metatable)
+	}, Instance)
 	local instance_index = pointer_to_index(touserdata(instance))
 	lps_instances[instance_index] = instance
 	return ffi.cast('void *', instance_index)
