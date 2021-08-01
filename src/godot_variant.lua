@@ -105,9 +105,9 @@ local methods = {
 		elseif t == GD.TYPE_BOOL then
 			return api.godot_variant_as_bool(self)
 		elseif t == GD.TYPE_INT then
-			return api.godot_variant_as_int(self)
+			return tonumber(api.godot_variant_as_int(self))
 		elseif t == GD.TYPE_REAL then
-			return api.godot_variant_as_real(self)
+			return tonumber(api.godot_variant_as_real(self))
 		elseif t == GD.TYPE_STRING then
 			return api.godot_variant_as_string(self)
 		elseif t == GD.TYPE_VECTOR2 then
@@ -170,7 +170,11 @@ Variant = ffi.metatype("godot_variant", {
 		elseif t == 'number' or tonumber(value) then
 			return ffi.C.hgdn_new_real_variant(value)
 		elseif t == 'table' then
-			return ffi.C.hgdn_new_dictionary_variant(Dictionary(value))
+			if value.tovariant then
+				return value:tovariant()
+			else
+				return ffi.C.hgdn_new_dictionary_variant(Dictionary(value))
+			end
 		elseif t == 'cdata' and value.tovariant then
 			return value:tovariant()
 		end

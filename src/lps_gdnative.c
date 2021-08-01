@@ -34,7 +34,9 @@ static godot_pluginscript_language_data *lps_language_init() {
 }
 
 static void lps_language_finish(godot_pluginscript_language_data *data) {
-	lua_close((lua_State *) data);
+	lua_State *L = (lua_State *) data;
+	lua_gc(L, LUA_GCCOLLECT, 0);
+	lua_close(L);
 }
 
 void (*lps_language_add_global_constant_cb)(const godot_string *name, const godot_variant *value);
