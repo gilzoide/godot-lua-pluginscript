@@ -393,7 +393,9 @@ typedef enum {
 } godot_property_usage_flags;
 
 // Core API
-typedef void godot_method_bind;
+typedef struct godot_method_bind {
+	uint8_t _dont_touch_that[1];
+} godot_method_bind;
 
 typedef struct godot_gdnative_api_version {
 	unsigned int major;

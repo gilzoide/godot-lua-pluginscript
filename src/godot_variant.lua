@@ -30,12 +30,7 @@ godot_variant hgdn_new_pool_vector2_array_variant(const godot_pool_vector2_array
 godot_variant hgdn_new_pool_vector3_array_variant(const godot_pool_vector3_array *value);
 godot_variant hgdn_new_pool_color_array_variant(const godot_pool_color_array *value);
 godot_variant hgdn_new_pool_string_array_variant(const godot_pool_string_array *value);
-godot_variant hgdn_object_callv(godot_object *instance, const char *method, const godot_array *args);
 ]]
-
-local Variant_p_array = ffi.typeof('godot_variant *[?]')
-local const_Variant_pp = ffi.typeof('const godot_variant **')
-local VariantCallError = ffi.typeof('godot_variant_call_error')
 
 local function Object_gc(obj)
 	if obj:call('unreference') then

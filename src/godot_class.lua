@@ -1,6 +1,28 @@
 local ClassDB = api.godot_global_get_singleton("ClassDB")
 
-local MethodBind = {
+local Variant_p_array = ffi.typeof('godot_variant *[?]')
+local const_Variant_pp = ffi.typeof('const godot_variant **')
+local VariantCallError = ffi.typeof('godot_variant_call_error')
+
+local MethodBind = ffi.metatype('godot_method_bind', {
+	__call = function(self, obj, ...)
+		local argc = select('#', ...)
+		local argv = ffi.new(Variant_p_array, argc)
+		for i = 1, argc do
+			local arg = select(i, ...)
+			argv[i - 1] = Variant(arg)
+		end
+		local r_error = ffi.new(VariantCallError)
+		local value = api.godot_method_bind_call(self, Object(obj), ffi.cast(const_Variant_pp, argv), argc, r_error)
+		if r_error.error == GD.CALL_OK then
+			return value:unbox()
+		else
+			return nil
+		end
+	end,
+})
+
+local MethodBindByName = {
 	new = function(self, method)
 		return setmetatable({ method = method }, self)
 	end,
@@ -51,3 +73,4 @@ local Instance = {
 		return rawget(self, '__owner')[key]
 	end,
 }
+
