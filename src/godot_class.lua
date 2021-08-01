@@ -1,21 +1,19 @@
 local ClassDB = api.godot_global_get_singleton("ClassDB")
 
-ffi.cdef[[
-typedef struct lps_method_bind { godot_string method; } lps_method_bind;
-]]
-local MethodBind = ffi.metatype('lps_method_bind', {
-	__new = function(mt, method)
-		return ffi.new(mt, String(method))
+local MethodBind = {
+	new = function(self, method)
+		return setmetatable({ method = method }, self)
 	end,
-	__call = function(self, var, ...)
-		return Variant(var):call(self.method, ...)
+	__call = function(self, obj, ...)
+		return obj:call(self.method, ...)
 	end,
-})
+}
 
 local class_methods = {
 	new = function(self, ...)
-		local instance = ffi.gc(ClassDB:instance(self.class_name), MethodBind('unreference'))
+		local instance = ClassDB:instance(self.class_name)
 		instance:call('_init', ...)
+		instance:call('unreference') -- Balance Variant:as_object `reference` call
 		return instance
 	end,
 }
@@ -38,6 +36,12 @@ local Class = {
 local instance_methods = {
 	tovariant = function(self)
 		return Variant(rawget(self, '__owner'))
+	end,
+	pcall = function(self, ...)
+		return rawget(self, '__owner'):pcall(...)
+	end,
+	call = function(self, ...)
+		return rawget(self, '__owner'):call(...)
 	end,
 }
 local Instance = {

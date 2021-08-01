@@ -30,11 +30,18 @@ godot_variant hgdn_new_pool_vector2_array_variant(const godot_pool_vector2_array
 godot_variant hgdn_new_pool_vector3_array_variant(const godot_pool_vector3_array *value);
 godot_variant hgdn_new_pool_color_array_variant(const godot_pool_color_array *value);
 godot_variant hgdn_new_pool_string_array_variant(const godot_pool_string_array *value);
+godot_variant hgdn_object_callv(godot_object *instance, const char *method, const godot_array *args);
 ]]
 
 local Variant_p_array = ffi.typeof('godot_variant *[?]')
 local const_Variant_pp = ffi.typeof('const godot_variant **')
 local VariantCallError = ffi.typeof('godot_variant_call_error')
+
+local function Object_gc(obj)
+	if obj:call('unreference') then
+		api.godot_object_destroy(obj)
+	end
+end
 
 local methods = {
 	tovariant = function(self)
@@ -57,7 +64,13 @@ local methods = {
 	as_color = api.godot_variant_as_color,
 	as_node_path = api.godot_variant_as_node_path,
 	as_rid = api.godot_variant_as_rid,
-	as_object = api.godot_variant_as_object,
+	as_object = function(self)
+		local obj = api.godot_variant_as_object(self)
+		if obj ~= nil and obj:call('reference') then
+			obj = ffi.gc(obj, Object_gc)
+		end
+		return obj
+	end,
 	as_dictionary = api.godot_variant_as_dictionary,
 	as_array = api.godot_variant_as_array,
 	as_pool_byte_array = api.godot_variant_as_pool_byte_array,
@@ -135,7 +148,7 @@ local methods = {
 		elseif t == GD.TYPE_RID then
 			return api.godot_variant_as_rid(self)
 		elseif t == GD.TYPE_OBJECT then
-			return api.godot_variant_as_object(self)
+			return self:as_object()
 		elseif t == GD.TYPE_DICTIONARY then
 			return api.godot_variant_as_dictionary(self)
 		elseif t == GD.TYPE_ARRAY then
@@ -163,7 +176,7 @@ Variant = ffi.metatype("godot_variant", {
 		local t = type(value)
 		if t == 'boolean' then
 			return ffi.C.hgdn_new_bool_variant(value)
-		elseif t == 'string' then
+		elseif t == 'string' or ffi.istype('char *', value) then
 			return ffi.C.hgdn_new_cstring_variant(value)
 		elseif ffi.istype(int, value) then
 			return ffi.C.hgdn_new_int_variant(value)

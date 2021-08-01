@@ -46,6 +46,17 @@ RID = ffi.metatype('godot_rid', {
 local object_methods = {
 	tovariant = ffi.C.hgdn_new_object_variant,
 	varianttype = GD.TYPE_OBJECT,
+	pcall = function(self, method, ...)
+		local has_method = ffi.C.hgdn_object_callv(self, 'has_method', Array(method)):unbox()
+		if has_method then
+			return true, ffi.C.hgdn_object_callv(self, method, Array(...)):unbox()
+		else
+			return false
+		end
+	end,
+	call = function(self, method, ...)
+		return select(2, self:pcall(method, ...))
+	end,
 }
 Object = ffi.metatype('godot_object', {
 	__tostring = GD.tostring,
@@ -54,11 +65,10 @@ Object = ffi.metatype('godot_object', {
 		if method then
 			return method
 		end
-		local var = object_methods.tovariant(self)
-		if var:call('has_method', key) then
-			return MethodBind(key)
+		if self:call('has_method', key) then
+			return MethodBind:new(key)
 		else
-			var:call('get', key)
+			self:call('get', key)
 		end
 	end,
 	__concat = concat_gdvalues,
