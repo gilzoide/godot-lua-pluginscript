@@ -35,7 +35,7 @@ precompilada de Godot possa utilizá-lo! =D
 ## Objetivos
 - Adicionar suporte à linguagem Lua em Godot de um modo que o motor não
   precise ser compilado do zero
-- Possibilitar que *scritps* Lua se comuniquem transparentemente com
+- Possibilitar que *scripts* Lua se comuniquem transparentemente com
   quaisquer outras linguagens suportadas, como GDScript, Visual Script e C#
 - Ter uma interface descritiva simples para declarar *scripts*
 - Suporte a Lua 5.1+ e LuaJIT
