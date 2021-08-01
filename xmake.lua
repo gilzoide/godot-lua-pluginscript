@@ -1,3 +1,5 @@
+if GD then return {} end
+
 option("use-luajit")
 	set_description("Use LuaJIT instead of vanilla Lua")
 	set_default(true)
