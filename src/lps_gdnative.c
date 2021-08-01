@@ -50,7 +50,7 @@ static godot_pluginscript_script_manifest lps_script_init(godot_pluginscript_lan
 	godot_pluginscript_script_manifest manifest = {};
 	manifest.data = data;
 	hgdn_core_api->godot_string_name_new_data(&manifest.name, "");
-	hgdn_core_api->godot_string_name_new_data(&manifest.base, "Reference");
+	hgdn_core_api->godot_string_name_new_data(&manifest.base, "");
 	hgdn_core_api->godot_dictionary_new(&manifest.member_lines);
 	hgdn_core_api->godot_array_new(&manifest.methods);
 	hgdn_core_api->godot_array_new(&manifest.signals);

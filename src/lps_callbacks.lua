@@ -64,6 +64,10 @@ ffi.C.lps_script_init_cb = wrap_callback(function(manifest, path, source)
 		end
 	end
 
+	if #manifest.name == 0 then
+		manifest.name = StringName("Reference")
+	end
+
 	manifest.data = ffi.cast('void *', metadata_index)
 	return GD.OK
 end)
