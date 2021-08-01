@@ -44,7 +44,7 @@ target("cat_init_script")
 	on_build(function(target)
 		local buildir = get_config('buildir')
 		local embedded_files = {}
-		for line in io.lines("src/lps_gdnative.c") do
+		for line in io.lines("src/lua_init_script.c") do
 			local m = line:match("#include%W*([^%.]+%.lua%.h)")
 			if m then
 				table.insert(embedded_files, io.readfile(path.join(buildir, "include", m)))
