@@ -80,6 +80,9 @@ ffi.C.lps_instance_init_cb = wrap_callback(function(script_data, owner)
 		__owner = owner,
 		__script = script,
 	}, Instance)
+	if script._init then
+		script._init(instance)
+	end
 	local instance_index = pointer_to_index(touserdata(instance))
 	lps_instances[instance_index] = instance
 	return ffi.cast('void *', instance_index)
