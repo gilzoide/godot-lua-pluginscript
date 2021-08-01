@@ -1,9 +1,6 @@
 local methods = {
 	tovariant = ffi.C.hgdn_new_array_variant,
 	varianttype = GD.TYPE_ARRAY,
-	toarray = function(self)
-		return self
-	end,
 	get = function(self, index)
 		return api.godot_array_get(self, index):unbox()
 	end,
@@ -93,15 +90,9 @@ end
 
 Array = ffi.metatype('godot_array', {
 	__new = function(mt, ...)
-		local argc = select('#', ...)
-		local value = ...
-		if argc == 1 and type(value) == 'cdata' and value.toarray then
-			return value:toarray()
-		end
 		local self = ffi.new(mt)
 		api.godot_array_new(self)
-		local t = type(value)
-		for i = 1, argc do
+		for i = 1, select('#', ...) do
 			local v = select(i, ...)
 			self:append(v)
 		end
