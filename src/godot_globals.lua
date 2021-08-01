@@ -162,6 +162,10 @@ bool = ffi.typeof('godot_bool')
 int = ffi.typeof('godot_int')
 float = ffi.typeof('godot_real')
 
+if api_1_1 then
+	GD.is_instance_valid = api_1_1.godot_is_instance_valid
+end
+
 function GD.str(value)
 	return api.godot_variant_as_string(Variant(value))
 end
