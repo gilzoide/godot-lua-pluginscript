@@ -12,5 +12,7 @@ const char LUA_INIT_SCRIPT[] =
 #include "lps_class_metadata.lua.h"
 #include "lps_callbacks.lua.h"
 #include "late_globals.lua.h"
+
+#include "in_editor_callbacks.lua.h"
 ;
 

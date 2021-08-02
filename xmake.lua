@@ -29,7 +29,7 @@ rule("embed_header")
 		cprint("${bright green}[%3d%%]:${clear} embed_header %s", opt.progress, sourcefile)
 		local header_contents = {}
 		for line in io.lines(sourcefile) do
-			local escaped_line = line:gsub('"', '\\"')
+			local escaped_line = line:gsub('\\', '\\\\'):gsub('"', '\\"')
 			table.insert(header_contents, '"' .. escaped_line .. '\\n"')
 		end
 		header_contents = table.concat(header_contents, '\n')
