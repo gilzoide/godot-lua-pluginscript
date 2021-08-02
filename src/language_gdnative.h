@@ -20,5 +20,6 @@ extern void (*lps_instance_notification_cb)(godot_pluginscript_instance_data *da
 void lps_register_in_editor_callbacks(godot_pluginscript_language_desc *desc);
 
 extern void (*lps_get_template_source_code_cb)(const godot_string *class_name, const godot_string *base_class_name, godot_string *ret);
+extern godot_bool (*lps_validate_cb)(const godot_string *p_script, int *r_line_error, int *r_col_error, godot_string *r_test_error, const godot_string *p_path, godot_pool_string_array *r_functions);
 
 #endif

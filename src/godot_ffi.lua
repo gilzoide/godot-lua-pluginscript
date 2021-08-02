@@ -1338,6 +1338,7 @@ void (*lps_instance_call_method_cb)(godot_pluginscript_instance_data *data, cons
 void (*lps_instance_notification_cb)(godot_pluginscript_instance_data *data, int notification);
 
 void (*lps_get_template_source_code_cb)(const godot_string *class_name, const godot_string *base_class_name, godot_string *ret);
+godot_bool (*lps_validate_cb)(const godot_string *script, int *line_error, int *col_error, godot_string *test_error, const godot_string *path, godot_pool_string_array *functions);
 ]]
 
 api = ffi.C.hgdn_core_api
