@@ -19,8 +19,9 @@ local string_methods = {
 	-- TODO: add the rest
 }
 String = ffi.metatype('godot_string', {
-	__new = function(mt, text, length)
-		if text == nil then
+	__new = function(mt, ...)
+		local text, length = ...
+		if select('#', ...) == 0 then
 			return api.godot_string_chars_to_utf8('')
 		elseif ffi.istype(mt, text) then
 			local self = ffi.new(mt)
