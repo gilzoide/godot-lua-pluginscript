@@ -1,5 +1,4 @@
 ffi.cdef[[
-godot_variant hgdn_new_variant_copy(const godot_variant *value);
 godot_variant hgdn_new_nil_variant();
 godot_variant hgdn_new_bool_variant(const godot_bool value);
 godot_variant hgdn_new_uint_variant(const uint64_t value);

@@ -85,6 +85,8 @@ local function register_pool_array(kind, element_ctype)
 			end
 		end,
 		__len = methods.size,
+		__ipairs = array_ipairs,
+		__pairs = array_ipairs,
 	})
 end
 

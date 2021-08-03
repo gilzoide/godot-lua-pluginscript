@@ -88,6 +88,17 @@ if api_1_1 then
 	methods.shuffle = api_1_1.godot_array_shuffle
 end
 
+local function array_next(self, index)
+	index = index + 1
+	if index < #self then
+		return index, self:get(index)
+	end
+end
+
+local function array_ipairs(self)
+	return array_next, self, -1
+end
+
 Array = ffi.metatype('godot_array', {
 	__new = function(mt, ...)
 		local self = ffi.new(mt)
@@ -120,4 +131,6 @@ Array = ffi.metatype('godot_array', {
 	end,
 	__concat = concat_gdvalues,
 	__len = methods.size,
+	__ipairs = array_ipairs,
+	__pairs = array_ipairs,
 })
