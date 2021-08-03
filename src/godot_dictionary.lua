@@ -74,12 +74,7 @@ Dictionary = ffi.metatype('godot_dictionary', {
 	__tostring = GD.tostring,
 	__concat = concat_gdvalues,
 	__index = function(self, key)
-		local method = methods[key]
-		if method ~= nil then
-			return method
-		else
-			return methods.get(self, key)
-		end
+		return methods[key] or methods.get(self, key)
 	end,
 	__newindex = methods.set,
 	__len = methods.size,

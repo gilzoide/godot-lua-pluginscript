@@ -193,4 +193,10 @@ Variant = ffi.metatype("godot_variant", {
 	end,
 	__concat = concat_gdvalues,
 	__index = methods,
+	__eq = function(a, b)
+		return api.godot_variant_operator_equal(Variant(a), Variant(b))
+	end,
+	__lt = function(a, b)
+		return api.godot_variant_operator_less(Variant(a), Variant(b))
+	end,
 })
