@@ -142,6 +142,7 @@ ffi.C.lps_instance_call_method_cb = wrap_callback(function(data, name, args, arg
 end)
 
 -- void (*lps_instance_notification_cb)(godot_pluginscript_instance_data *data, int notification);
-ffi.C.lps_instance_notification_cb = function(data, notification)
-
+ffi.C.lps_instance_notification_cb = function(data, what)
+	local self = lps_instances[pointer_to_index(data)]
+	self:call("_notification", what)
 end
