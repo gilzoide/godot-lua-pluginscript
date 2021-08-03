@@ -128,7 +128,7 @@ static godot_pluginscript_language_desc lps_language_desc = {
 	.comment_delimiters = (const char *[]){ "--", "--[[ ]]", NULL },
 	.string_delimiters = (const char *[]){ "' '", "\" \"", "[[ ]]", "[=[ ]=]", NULL },
 	.has_named_classes = false,
-	.supports_builtin_mode = true,
+	.supports_builtin_mode = false,
 	.add_global_constant = &lps_language_add_global_constant,
 
 	.script_desc = {
