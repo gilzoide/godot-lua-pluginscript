@@ -112,10 +112,17 @@ static godot_pluginscript_language_desc lps_language_desc = {
 	.init = &lps_language_init,
 	.finish = &lps_language_finish,
 	.reserved_words = (const char *[]){
+		// Lua keywords
 		"and", "break", "do", "else", "elseif", "end",
 		"false", "for", "function", "goto", "if", "in",
 		"local", "nil", "not", "or", "repeat", "return",
-		"self", "then", "true", "until", "while",
+		"then", "true", "until", "while",
+		// Other remarkable identifiers
+		"self", "_G", "_VERSION",
+#if LUA_VERSION_NUM >= 502
+		"_ENV",
+#endif
+		"bool", "int", "float",
 		NULL
 	},
 	.comment_delimiters = (const char *[]){ "--", "--[[ ]]", NULL },
