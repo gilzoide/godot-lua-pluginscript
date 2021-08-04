@@ -278,8 +278,8 @@ godot_pluginscript_language_desc lps_language_desc = {
 };
 ```
 
-Agora o toque final, trocar a função `godot_gdnative_init` para
-registrar a linguagem:
+Agora o toque final, mudar a função `godot_gdnative_init` pra registrar
+a linguagem:
 
 ```c
 GDN_EXPORT void godot_gdnative_init(godot_gdnative_init_options *options) {
@@ -288,9 +288,8 @@ GDN_EXPORT void godot_gdnative_init(godot_gdnative_init_options *options) {
 }
 ```
 
-Recompile o projeto usando o comando `xmake` e reinicie o editor de
-Godot.
-Olha só, o arquivo `xmake.lua` é reconhecido como um *script* Lua e o
+Recompile o projeto usando o comando `xmake` e reinicie o editor.
+Olha só, Godot reconhece o arquivo `xmake.lua` como um *script* Lua e o
 código está colorido! Chique no úrtimo! =D
 
 ![](2-pluginscript-xmake-lua.png)
