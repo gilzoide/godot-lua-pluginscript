@@ -1,13 +1,13 @@
 # Implementing the skeleton of a GDNative + PluginScript library
-2021-08-03 | `#Godot #Lua #LuaJIT #GDNative #PluginScript #C` | [*Versão em Português*](2-infrastructure-pt.md)
+2021-08-04 | `#Godot #Lua #LuaJIT #GDNative #PluginScript #C` | [*Versão em Português*](2-infrastructure-pt.md)
 
-In the [last post we talked about the design of a plugin for using Lua as a scripting language in Godot](1-design-en.md).
+In the [last post we talked about the design of a plugin for using Lua in the Godot game engine](1-design-en.md).
 Today we'll start implementing our plugin with the barebones
 infrastructure: a [GDNative](https://godotengine.org/article/look-gdnative-architecture)
 library that registers [Lua](https://www.lua.org/) as a scripting
-language for the [Godot game engine](https://godotengine.org/).
+language for [Godot](https://godotengine.org/).
 The scripting runtime won't work for now, but Godot will correctly load
-our library and import `.lua` files.
+our library and recognize `.lua` files.
 
 
 ## How to GDNative
@@ -24,14 +24,13 @@ Since we want ours to be loaded at project startup, so that Lua scripts
 can be imported, we'll make it a singleton.
 For this, we also need to declare a function called
 `godot_gdnative_singleton`, or Godot won't load our library.
-The downside of using singleton GDNative libraries is that they are
-never reloaded, so we'll have to reopen the editor each time we
-recompile it.
+The downside of using singleton GDNative libraries is that we'll have to
+reopen the editor each time we recompile it.
 
-Ok, time to start this up!
+Ok, time to start this up! <br/>
 First of all, let's download the [GDNative C API repository](https://github.com/godotengine/godot-headers.git lib/godot-headers).
 Since I'm using [Git](https://git-scm.com/) for the project, I'll add it
-as a submodule.
+as a [submodule](https://git-scm.com/book/en/v2/Git-Tools-Submodules).
 I'm using the `lib` directory for maintaining all third-party libraries
 at the same place.
 
@@ -70,10 +69,10 @@ GDN_EXPORT void godot_gdnative_singleton() {
 }
 ```
 
-Since HGDN is a header-only library, we need a C or C++ file for the
-implementation. We could use `src/language_gdnative.c` for this, but
-I'll add a new file for it to avoid recompiling HGDN implementation on
-future builds:
+Since HGDN is a header-only library, we need a C or C++ file for
+compiling its implementation.
+We could use `src/language_gdnative.c` for this, but I'll add a new file
+for it to avoid recompiling HGDN implementation on future builds:
 
 ```c
 // src/hgdn.c
@@ -81,7 +80,7 @@ future builds:
 #include "hgdn.h"
 ```
 
-Time to build!
+Time to build! 🛠 <br/>
 I'll be using [xmake](https://xmake.io) as build system, because it
 is simple to use and supports several platforms, as well as
 cross-compiling, out of the box.
@@ -107,7 +106,7 @@ target_end()
 Run `xmake` and, if all goes well, we should have a `.so` or `.dll` or
 `.dylib` shared library in the `build` folder.
 
-Time to open Godot.
+Time to open Godot. <br/>
 I've created a new project and added our module repository at
 `addons/godot-lua-pluginscript`.
 To make the FileSystem dock cleaner, I also [added .gdignore files](https://docs.godotengine.org/en/stable/getting_started/workflow/project_setup/project_organization.html#ignoring-specific-folders)
@@ -129,12 +128,12 @@ And set the path to the shared library we just built:
 ![](2-pick-so.png)
 ![](2-pick-so-save.png)
 
-Restart the editor and our module should be imported, nice!
+Restart the editor and our module should be imported. Nice!
 
 ![](2-settings-gdnative-enabled.png)
 
 
-# How to PluginScript
+## How to PluginScript
 If we look at the [PluginScript API](https://github.com/godotengine/godot-headers/blob/3.3/pluginscript/godot_pluginscript.h#L166),
 there is only one function defined, responsible for registering
 scripting languages based on a description.
@@ -145,14 +144,14 @@ well as several callbacks that Godot will call, e.g.: for
 initializing/finalizing our language runtime, scripts and instances,
 debugging and profiling code.
 
-All we have to do is create the required callbacks, fill in this
+All we have to do is create the required callbacks, fill in the
 description and register Lua as a scripting language!
 For now we'll just add stubs for the plugin to be loaded, in the next
 post we'll start implementing these callbacks.
+We'll also skip the optional callbacks for now.
 
-First, let's implement stubs for the callbacks. We'll skip the optional
-ones for now. Add the following in `src/language_gdnative.c`, just below
-the initial `#include "hgdn.h"`:
+Add the following in `src/language_gdnative.c`, just below the initial
+`#include "hgdn.h"`:
 
 ```c
 // Called when our language runtime will be initialized
@@ -249,7 +248,7 @@ godot_pluginscript_language_desc lps_language_desc = {
     .string_delimiters = (const char *[]){ "' '", "\" \"", "[[ ]]", "[=[ ]=]", NULL },
     // Lua scripts don't care about the class name
     .has_named_classes = false,
-    // Builtin scripts didn't work for me, so disable for now...
+    // Builtin scripts didn't work in my tests, disabling...
     .supports_builtin_mode = false,
 
     // Callbacks
@@ -288,7 +287,7 @@ and syntax highlighting works! Awesome! =D
 
 
 ## Wrapping up
-With the base of our PluginScript ready, we can now focus on actually
+With the base of our PluginScript ready, we can now focus on
 implementing the functionality.
 The version of the project built in this article is available [here](https://github.com/gilzoide/godot-lua-pluginscript/tree/blog-2-infrastructure).
 

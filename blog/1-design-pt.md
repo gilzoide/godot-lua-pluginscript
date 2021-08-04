@@ -206,9 +206,9 @@ podemos começar a implementar nosso *plugin*!
 Eu criei um repositório Git para ele, disponível no endereço
 [https://github.com/gilzoide/godot-lua-pluginscript](https://github.com/gilzoide/godot-lua-pluginscript).
 
-No próximo artigo discutirei como construir a infraestrutura necessária
-para nosso *PluginScript* funcionar, com implementações vazias para os
-*callbacks* necessários e um sistema de construção para compilar o
-projeto em um único passo.
+No [próximo artigo](2-infrastructure-pt.md) discutirei como construir a
+infraestrutura necessária para nosso *PluginScript* funcionar, com
+implementações vazias para os *callbacks* necessários e um sistema de
+construção para compilar o projeto em um único passo.
 
 Vejo vocês lá ;D

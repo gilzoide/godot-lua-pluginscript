@@ -196,8 +196,9 @@ With this high level design in place, we can now start implementing the
 plugin! I have created a Git repository for it hosted at
 [https://github.com/gilzoide/godot-lua-pluginscript](https://github.com/gilzoide/godot-lua-pluginscript).
 
-In the next post I'll discuss how to build the necessary infrastructure
-for the PluginScript to work, with stubs to the necessary callbacks and
-a build system that compiles the project in a single step.
+In the [next post](2-infrastructure-en.md) I'll discuss how to build the
+necessary infrastructure for the PluginScript to work, with stubs to the
+necessary callbacks and a build system that compiles the project in a
+single step.
 
 See you there ;D
