@@ -16,7 +16,7 @@ local function wrap_callback(f)
 end
 
 -- void (*lps_language_add_global_constant_cb)(const godot_string *name, const godot_variant *value);
-ffi.C.lps_language_add_global_constant_cb = wrap_callback(function(_data, name, value)
+ffi.C.lps_language_add_global_constant_cb = wrap_callback(function(name, value)
 	_G[tostring(name)] = value:unbox()
 end)
 
