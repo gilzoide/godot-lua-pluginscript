@@ -22,9 +22,9 @@ jobs:
           xmake-version: latest
       - name: Build artifact
         env:
-          TOOLCHAIN: ${{ startsWith(matrix.os, "windows") && "--toolchain=mingw" }}
+          ARGS: ${{ startsWith(matrix.os, 'windows') && '--toolchain=mingw' }}
         run: |
-          xmake f -y $TOOLCHAIN
+          xmake f -y $ARGS
           xmake
       - name: Upload artifact
         uses: actions/upload-artifact@v2
