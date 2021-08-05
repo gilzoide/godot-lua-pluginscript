@@ -1,0 +1,29 @@
+name: Build
+on: workflow_dispatch
+
+jobs:
+  build:
+    name: Build
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+        arch: [x86_64, x86]
+        exclude:
+          - os: macos-latest
+            arch: x86
+    steps:
+      - name: Setup xmake
+        uses: xmake-io/github-action-setup-xmake@v1.0.12
+        with:
+          xmake-version: latest
+      - name: Build artifact
+        run: |
+          xmake f -a ${{ matrix.arch }}
+          xmake
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.os }} ${{ matrix.arch }}
+          path: build/*.{dll,so,dylib}
+
