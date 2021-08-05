@@ -11,6 +11,8 @@ jobs:
         arch: [x86_64]
     steps:
       - uses: actions/checkout@v2
+        with:
+          submodules: true
       - name: Setup xmake
         uses: xmake-io/github-action-setup-xmake@v1.0.12
         with:
