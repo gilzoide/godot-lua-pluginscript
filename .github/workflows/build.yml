@@ -13,6 +13,7 @@ jobs:
           - os: macos-latest
             arch: x86
     steps:
+      - uses: actions/checkout@v2
       - name: Setup xmake
         uses: xmake-io/github-action-setup-xmake@v1.0.12
         with:
