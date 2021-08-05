@@ -8,10 +8,7 @@ jobs:
     strategy:
       matrix:
         os: [windows-latest, ubuntu-latest, macos-latest]
-        arch: [x86_64, x86]
-        exclude:
-          - os: macos-latest
-            arch: x86
+        arch: [x86_64]
     steps:
       - uses: actions/checkout@v2
       - name: Setup xmake
@@ -20,8 +17,8 @@ jobs:
           xmake-version: latest
       - name: Build artifact
         run: |
-          xmake f -y -a ${{ matrix.arch }}
-          xmake -y
+          xmake f -y
+          xmake
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
