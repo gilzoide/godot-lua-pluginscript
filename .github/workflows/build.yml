@@ -1,5 +1,8 @@
 name: Build
 on: workflow_dispatch
+defaults:
+  run:
+    shell: bash
 
 jobs:
   build:
@@ -18,8 +21,10 @@ jobs:
         with:
           xmake-version: latest
       - name: Build artifact
+        env:
+          TOOLCHAIN: ${{ startsWith(matrix.os, "windows") && "--toolchain=mingw" }}
         run: |
-          xmake f -y ${{ startsWith(matrix.os, "windows") && "--toolchain=mingw" }}
+          xmake f -y $TOOLCHAIN
           xmake
       - name: Upload artifact
         uses: actions/upload-artifact@v2
