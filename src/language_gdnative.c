@@ -55,8 +55,10 @@ static void lps_language_add_global_constant(godot_pluginscript_language_data *d
 
 // Script manifest
 static godot_pluginscript_script_manifest lps_script_init(godot_pluginscript_language_data *data, const godot_string *path, const godot_string *source, godot_error *error) {
-	godot_pluginscript_script_manifest manifest = {};
-	manifest.data = data;
+	godot_pluginscript_script_manifest manifest = {
+		.data = NULL,
+		.is_tool = false,
+	};
 	hgdn_core_api->godot_string_name_new_data(&manifest.name, "");
 	hgdn_core_api->godot_string_name_new_data(&manifest.base, "");
 	hgdn_core_api->godot_dictionary_new(&manifest.member_lines);
