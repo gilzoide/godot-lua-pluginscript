@@ -25,5 +25,5 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.os }} ${{ matrix.arch }}
-          path: build/*.{dll,so,dylib}
+          path: build/lua_pluginscript_*
 
