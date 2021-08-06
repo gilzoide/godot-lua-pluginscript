@@ -2,6 +2,7 @@ local vector2_methods = {
 	tovariant = ffi.C.hgdn_new_vector2_variant,
 	varianttype = GD.TYPE_VECTOR2,
 
+	new = api.godot_vector2_new,
 	as_string = api.godot_vector2_as_string,
 	normalized = api.godot_vector2_normalized,
 	length = api.godot_vector2_length,
@@ -89,6 +90,7 @@ local vector3_methods = {
 	tovariant = ffi.C.hgdn_new_vector3_variant,
 	varianttype = GD.TYPE_VECTOR3,
 
+	new = api.godot_vector3_new,
 	as_string = api.godot_vector3_as_string,
 	min_axis = api.godot_vector3_min_axis,
 	max_axis = api.godot_vector3_max_axis,
@@ -188,6 +190,8 @@ local color_methods = {
 	tovariant = ffi.C.hgdn_new_color_variant,
 	varianttype = GD.TYPE_COLOR,
 
+	new_rgba = api.godot_color_new_rgba,
+	new_rgb = api.godot_color_new_rgb,
 	get_h = api.godot_color_get_h,
 	get_s = api.godot_color_get_s,
 	get_v = api.godot_color_get_v,
@@ -266,6 +270,8 @@ local rect2_methods = {
 	tovariant = ffi.C.hgdn_new_rect2_variant,
 	varianttype = GD.TYPE_RECT2,
 
+	new_with_position_and_size = api.godot_rect2_new_with_position_and_size,
+	new = api.godot_rect2_new,
 	as_string = api.godot_rect2_as_string,
 	get_area = api.godot_rect2_get_area,
 	intersects = api.godot_rect2_intersects,
@@ -314,6 +320,9 @@ local plane_methods = {
 	tovariant = ffi.C.hgdn_new_plane_variant,
 	varianttype = GD.TYPE_PLANE,
 
+	new_with_reals = api.godot_plane_new_with_reals,
+	new_with_vectors = api.godot_plane_new_with_vectors,
+	new_with_normal = api.godot_plane_new_with_normal,
 	as_string = api.godot_plane_as_string,
 	normalized = api.godot_plane_normalized,
 	center = api.godot_plane_center,
@@ -352,17 +361,18 @@ Plane = ffi.metatype('godot_plane', {
 	__new = function(mt, a, b, c, d)
 		if ffi.istype(mt, a) then
 			return ffi.new(mt, a)
-		elseif ffi.istype(Vector3, a) then
+		end
+		local self = ffi.new(mt)
+		if ffi.istype(Vector3, a) then
 			if ffi.istype(Vector3, b) then
-				local self = ffi.new(mt)
-				api.godot_plane_new_with_vectors(self, a, b, c)
-				return self
+				self:new_with_vectors(self, a, b, c)
 			else
-				return ffi.new(mt, { normal = a, d = b })
+				self:new_with_normal(a, b)
 			end
 		else
-			return ffi.new(mt, { normal = Vector3(a, b, c), d = d })
+			self:new_with_reals(a, b, c, d)
 		end
+		return self
 	end,
 	__tostring = GD.tostring,
 	__index = plane_methods,
@@ -379,6 +389,8 @@ local quat_methods = {
 	tovariant = ffi.C.hgdn_new_quat_variant,
 	varianttype = GD.TYPE_QUAT,
 
+	new = api.godot_quat_new,
+	new_with_axis_angle = api.godot_quat_new_with_axis_angle,
 	as_string = api.godot_quat_as_string,
 	length = api.godot_quat_length,
 	length_squared = api.godot_quat_length_squared,
@@ -393,6 +405,8 @@ local quat_methods = {
 }
 
 if api_1_1 then
+	quat_methods.new_with_basis = api_1_1.godot_quat_new_with_basis
+	quat_methods.new_with_euler = api_1_1.godot_quat_new_with_euler
 	quat_methods.set_axis_angle = api_1_1.godot_quat_set_axis_angle
 end
 
@@ -400,20 +414,20 @@ Quat = ffi.metatype('godot_quat', {
 	__new = function(mt, x, y, z, w)
 		if ffi.istype(mt, x) then
 			return ffi.new(mt, x)
-		elseif ffi.istype(Vector3, x) then
-			local self = ffi.new(mt)
-			if y then
-				api.godot_quat_new_with_axis_angle(self, x, y)
-			else
-				assert(api_1_1, "Core API 1.1 is necessary for initializing Quat from Euler angles").godot_quat_new_with_euler(self, x)
-			end
-			return self
-		elseif api_1_1 and ffi.istype(Basis, x) then
-			local self = ffi.new(mt)
-			api_1_1.godot_quat_new_with_basis(self, x)
-			return self
 		end
-		return ffi.new(mt, { x = x, y = y, z = z, w = w or 1 })
+		local self = ffi.new(mt)
+		if ffi.istype(Vector3, x) then
+			if y then
+				self:new_with_axis_angle(x, y)
+			else
+				self:new_with_euler(x)
+			end
+		elseif ffi.istype(Basis, x) then
+			self:new_with_basis(self, x)
+		else
+			self:new(x, y, z, w or 1)
+		end
+		return self
 	end,
 	__tostring = GD.tostring,
 	__index = quat_methods,
@@ -442,6 +456,11 @@ local basis_methods = {
 	tovariant = ffi.C.hgdn_new_basis_variant,
 	varianttype = GD.TYPE_BASIS,
 
+	new = api.godot_basis_new,
+	new_with_rows = api.godot_basis_new_with_rows,
+	new_with_axis_and_angle = api.godot_basis_new_with_axis_and_angle,
+	new_with_euler = api.godot_basis_new_with_euler,
+	new_with_euler_quat = api.godot_basis_new_with_euler_quat,
 	as_string = api.godot_basis_as_string,
 	inverse = api.godot_basis_inverse,
 	transposed = api.godot_basis_transposed,
@@ -480,16 +499,16 @@ Basis = ffi.metatype('godot_basis', {
 		local self = ffi.new(mt)
 		if ffi.istype(Vector3, x) then
 			if ffi.istype(Vector3, y) then
-				api.godot_basis_new_with_rows(self, x, y, z)
+				self:new_with_rows(x, y, z)
 			elseif y then
-				api.godot_basis_new_with_axis_and_angle(self, x, y)
+				self:new_with_axis_and_angle(x, y)
 			else
-				api.godot_basis_new_with_euler(self, x)
+				self:new_with_euler(x)
 			end
 		elseif ffi.istype(Quat, x) then
-			api.godot_basis_new_with_euler_quat(self, x)
+			self:new_with_euler_quat(x)
 		else
-			api.godot_basis_new(self)
+			self:new()
 		end
 		return self
 	end,
@@ -522,6 +541,7 @@ local aabb_methods = {
 	tovariant = ffi.C.hgdn_new_aabb_variant,
 	varianttype = GD.TYPE_AABB,
 
+	new = api.godot_aabb_new,
 	as_string = api.godot_aabb_as_string,
 	get_area = api.godot_aabb_get_area,
 	has_no_area = api.godot_aabb_has_no_area,
