@@ -551,13 +551,54 @@ AABB = ffi.metatype('godot_aabb', {
 	end,
 })
 
+local transform2d_methods = {
+	tovariant = ffi.C.hgdn_new_transform2d_variant,
+	varianttype = GD.TYPE_TRANSFORM2D,
+
+	new = api.godot_transform2d_new,
+	new_axis_origin = api.godot_transform2d_new_axis_origin,
+	as_string = api.godot_transform2d_as_string,
+	inverse = api.godot_transform2d_inverse,
+	affine_inverse = api.godot_transform2d_affine_inverse,
+	get_rotation = api.godot_transform2d_get_rotation,
+	get_origin = api.godot_transform2d_get_origin,
+	get_scale = api.godot_transform2d_get_scale,
+	orthonormalized = api.godot_transform2d_orthonormalized,
+	rotated = api.godot_transform2d_rotated,
+	scaled = api.godot_transform2d_scaled,
+	translated = api.godot_transform2d_translated,
+	xform_vector2 = api.godot_transform2d_xform_vector2,
+	xform_inv_vector2 = api.godot_transform2d_xform_inv_vector2,
+	basis_xform_vector2 = api.godot_transform2d_basis_xform_vector2,
+	basis_xform_inv_vector2 = api.godot_transform2d_basis_xform_inv_vector2,
+	interpolate_with = api.godot_transform2d_interpolate_with,
+	new_identity = api.godot_transform2d_new_identity,
+	xform_rect2 = api.godot_transform2d_xform_rect2,
+	xform_inv_rect2 = api.godot_transform2d_xform_inv_rect2,
+}
+
 Transform2D = ffi.metatype('godot_transform2d', {
+	__new = function(mt, x, y, origin)
+		if ffi.istype(mt, x) then
+			return ffi.new(mt, x)
+		end
+		local self = ffi.new(mt)
+		if not x then
+			self:new_identity()
+		elseif tonumber(x) then
+			self:new(x, y)
+		else
+			self:new_axis_origin(x, y, origin)
+		end
+		return self
+	end,
 	__tostring = GD.tostring,
-	__index = {
-		tovariant = ffi.C.hgdn_new_transform2d_variant,
-		varianttype = GD.TYPE_TRANSFORM2D,
-	},
+	__index = transform2d_methods,
 	__concat = concat_gdvalues,
+	__eq = function(a, b)
+		return a.elements[0] == b.elements[0] and a.elements[1] == b.elements[1] and a.elements[2] == b.elements[2]
+	end,
+	__mul = api.godot_transform2d_operator_multiply,
 })
 
 Transform = ffi.metatype('godot_transform', {
