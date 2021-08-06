@@ -35,10 +35,10 @@ rule("embed_header")
 			end
 			if #line > 0 then
 				local escaped_line = line:gsub('\\', '\\\\'):gsub('"', '\\"')
-				table.insert(header_contents, escaped_line)
+				table.insert(header_contents, '"' .. escaped_line .. '\\n"')
 			end
 		end
-		header_contents = '"' .. table.concat(header_contents, '\\n') .. '\\n"'
+		header_contents = table.concat(header_contents, '\n')
 		io.writefile(target_file, header_contents)
 	end)
 rule_end()
