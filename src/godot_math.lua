@@ -435,13 +435,84 @@ Quat = ffi.metatype('godot_quat', {
 	end,
 })
 
+local basis_methods = {
+	tovariant = ffi.C.hgdn_new_basis_variant,
+	varianttype = GD.TYPE_BASIS,
+
+	as_string = api.godot_basis_as_string,
+	inverse = api.godot_basis_inverse,
+	transposed = api.godot_basis_transposed,
+	orthonormalized = api.godot_basis_orthonormalized,
+	determinant = api.godot_basis_determinant,
+	rotated = api.godot_basis_rotated,
+	scaled = api.godot_basis_scaled,
+	get_scale = api.godot_basis_get_scale,
+	get_euler = api.godot_basis_get_euler,
+	tdotx = api.godot_basis_tdotx,
+	tdoty = api.godot_basis_tdoty,
+	tdotz = api.godot_basis_tdotz,
+	xform = api.godot_basis_xform,
+	xform_inv = api.godot_basis_xform_inv,
+	get_orthogonal_index = api.godot_basis_get_orthogonal_index,
+	get_axis = api.godot_basis_get_axis,
+	set_axis = api.godot_basis_set_axis,
+	get_row = api.godot_basis_get_row,
+	set_row = api.godot_basis_set_row,
+}
+
+if api_1_1 then
+	basis_methods.slerp = api_1_1.godot_basis_slerp
+	basis_methods.get_quat = api_1_1.godot_basis_get_quat
+	basis_methods.set_quat = api_1_1.godot_basis_set_quat
+	basis_methods.set_axis_angle_scale = api_1_1.godot_basis_set_axis_angle_scale
+	basis_methods.set_euler_scale = api_1_1.godot_basis_set_euler_scale
+	basis_methods.set_quat_scale = api_1_1.godot_basis_set_quat_scale
+end
+
 Basis = ffi.metatype('godot_basis', {
+	__new = function(mt, x, y, z)
+		if ffi.istype(mt, x) then
+			return ffi.new(mt, x)
+		end
+		local self = ffi.new(mt)
+		if ffi.istype(Vector3, x) then
+			if ffi.istype(Vector3, y) then
+				api.godot_basis_new_with_rows(self, x, y, z)
+			elseif y then
+				api.godot_basis_new_with_axis_and_angle(self, x, y)
+			else
+				api.godot_basis_new_with_euler(self, x)
+			end
+		elseif ffi.istype(Quat, x) then
+			api.godot_basis_new_with_euler_quat(self, x)
+		else
+			api.godot_basis_new(self)
+		end
+		return self
+	end,
 	__tostring = GD.tostring,
-	__index = {
-		tovariant = ffi.C.hgdn_new_basis_variant,
-		varianttype = GD.TYPE_BASIS,
-	},
+	__index = basis_methods,
 	__concat = concat_gdvalues,
+	__eq = function(a, b)
+		return a.elements[0] == b.elements[0] and a.elements[1] == b.elements[1] and a.elements[2] == b.elements[2]
+	end,
+	__add = function(a, b)
+		return Basis(a.elements[0] + b.elements[0], a.elements[1] + b.elements[1], a.elements[2] + b.elements[2])
+	end,
+	__sub = function(a, b)
+		return Basis(a.elements[0] - b.elements[0], a.elements[1] - b.elements[1], a.elements[2] - b.elements[2])
+	end,
+	__mul = function(a, b)
+		if ffi.istype(Basis, a) then
+			if ffi.istype(Basis, b) then
+				return api.godot_basis_operator_multiply_vector(a, b)
+			else
+				return Basis(a.elements[0] * b, a.elements[1] * b, a.elements[2] * b)
+			end
+		else
+			return Basis(a * b.elements[0], a * b.elements[1], a * b.elements[2])
+		end
+	end,
 })
 
 AABB = ffi.metatype('godot_aabb', {
