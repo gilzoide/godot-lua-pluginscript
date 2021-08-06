@@ -598,6 +598,34 @@ local transform2d_methods = {
 	new_identity = api.godot_transform2d_new_identity,
 	xform_rect2 = api.godot_transform2d_xform_rect2,
 	xform_inv_rect2 = api.godot_transform2d_xform_inv_rect2,
+	xform = function(self, value)
+		if ffi.istype(Vector2, value) then
+			return self:xform_vector2(value)
+		elseif ffi.istype(Rect2, value) then
+			return self:xform_rect2(value)
+		elseif ffi.istype(PoolVector2Array, value) then
+			local array = PoolVector2Array()
+			array:resize(#value)
+			for i, v in ipairs(value) do
+				array:set(i, self:xform_vector2(v))
+			end
+			return array
+		end
+	end,
+	xform_inv = function(self, value)
+		if ffi.istype(Vector2, value) then
+			return self:xform_inv_vector2(value)
+		elseif ffi.istype(Rect2, value) then
+			return self:xform_inv_rect2(value)
+		elseif ffi.istype(PoolVector2Array, value) then
+			local array = PoolVector2Array()
+			array:resize(#value)
+			for i, v in ipairs(value) do
+				array:set(i, self:xform_inv_vector2(v))
+			end
+			return array
+		end
+	end,
 }
 
 Transform2D = ffi.metatype('godot_transform2d', {
@@ -627,10 +655,86 @@ Transform2D = ffi.metatype('godot_transform2d', {
 local transform_methods = {
 	fillvariant = api.godot_variant_new_transform,
 	varianttype = GD.TYPE_TRANSFORM,
+
+	new_with_axis_origin = api.godot_transform_new_with_axis_origin,
+	new = api.godot_transform_new,
+	as_string = api.godot_transform_as_string,
+	inverse = api.godot_transform_inverse,
+	affine_inverse = api.godot_transform_affine_inverse,
+	orthonormalized = api.godot_transform_orthonormalized,
+	rotated = api.godot_transform_rotated,
+	scaled = api.godot_transform_scaled,
+	translated = api.godot_transform_translated,
+	looking_at = api.godot_transform_looking_at,
+	xform_plane = api.godot_transform_xform_plane,
+	xform_inv_plane = api.godot_transform_xform_inv_plane,
+	new_identity = api.godot_transform_new_identity,
+	operator_equal = api.godot_transform_operator_equal,
+	operator_multiply = api.godot_transform_operator_multiply,
+	xform_vector3 = api.godot_transform_xform_vector3,
+	xform_inv_vector3 = api.godot_transform_xform_inv_vector3,
+	xform_aabb = api.godot_transform_xform_aabb,
+	xform_inv_aabb = api.godot_transform_xform_inv_aabb,
+	xform = function(self, value)
+		if ffi.istype(Vector3, value) then
+			return self:xform_vector3(value)
+		elseif ffi.istype(Plane, value) then
+			return self:xform_plane(value)
+		elseif ffi.istype(AABB, value) then
+			return self:xform_aabb(value)
+		elseif ffi.istype(PoolVector3Array, value) then
+			local array = PoolVector3Array()
+			array:resize(#value)
+			for i, v in ipairs(value) do
+				array:set(i, self:xform_vector3(v))
+			end
+			return array
+		end
+	end,
+	xform_inv = function(self, value)
+		if ffi.istype(Vector3, value) then
+			return self:xform_inv_vector3(value)
+		elseif ffi.istype(Plane, value) then
+			return self:xform_inv_plane(value)
+		elseif ffi.istype(AABB, value) then
+			return self:xform_inv_aabb(value)
+		elseif ffi.istype(PoolVector3Array, value) then
+			local array = PoolVector3Array()
+			array:resize(#value)
+			for i, v in ipairs(value) do
+				array:set(i, self:xform_inv_vector3(v))
+			end
+			return array
+		end
+	end,
 }
 
+if api_1_1 then
+	transform_methods.new_with_quat = api_1_1.godot_transform_new_with_quat
+end
+
 Transform = ffi.metatype('godot_transform', {
+	__new = function(mt, x, y, z, origin)
+		if ffi.istype(mt, x) then
+			return ffi.new(mt, x)
+		end
+		local self = ffi.new(mt)
+		if not x then
+			self:new_identity()
+		elseif ffi.istype(Vector3, x) then
+			self:new_with_axis_origin(x, y, z, origin)
+		elseif ffi.istype(Basis, x) then
+			self:new_with_basis(x, y or Vector3())
+		elseif ffi.istype(Quat, x) then
+			self:new_with_quat(x)
+		end
+		return self
+	end,
 	__tostring = GD.tostring,
 	__index = transform_methods,
 	__concat = concat_gdvalues,
+	__eq = function(a, b)
+		return a.basis == b.basis and a.origin == b.origin
+	end,
+	__mul = api.godot_transform_operator_multiply,
 })
