@@ -123,15 +123,17 @@ end
 
 Vector3 = ffi.metatype('godot_vector3', {
 	__new = function(mt, x, y, z)
+		-- (Vector3)
 		if ffi.istype(mt, x) then
 			return ffi.new(mt, x)
+		-- (Vector2, float?)
 		elseif ffi.istype(Vector2, x) then
-			return ffi.new(mt, { x = x.x, y = x.y, z = y })
+			x, y, z = x.x, x.y, y
+		-- (float, Vector2)
 		elseif ffi.istype(Vector2, y) then
-			return ffi.new(mt, { x = x, y = y.x, z = y.y })
-		else
-			return ffi.new(mt, { elements = { x, y, z }})
+			x, y, z = x, y.x, y.y
 		end
+		return ffi.new(mt, { elements = { x, y, z }})
 	end,
 	__tostring = GD.tostring,
 	__index = vector3_methods,
@@ -182,15 +184,82 @@ Vector3 = ffi.metatype('godot_vector3', {
 	end,
 })
 
-Vector4 = ffi.metatype('godot_vector4', {
+local color_methods = {
+	get_h = api.godot_color_get_h,
+	get_s = api.godot_color_get_s,
+	get_v = api.godot_color_get_v,
+	as_string = api.godot_color_as_string,
+	to_rgba32 = api.godot_color_to_rgba32,
+	to_argb32 = api.godot_color_to_argb32,
+	gray = api.godot_color_gray,
+	inverted = api.godot_color_inverted,
+	contrasted = api.godot_color_contrasted,
+	linear_interpolate = api.godot_color_linear_interpolate,
+	blend = api.godot_color_blend,
+	to_html = api.godot_color_to_html,
+}
+
+if api_1_1 then
+	color_methods.to_abgr32 = api_1_1.godot_color_to_abgr32
+	color_methods.to_abgr64 = api_1_1.godot_color_to_abgr64
+	color_methods.to_argb64 = api_1_1.godot_color_to_argb64
+	color_methods.to_rgba64 = api_1_1.godot_color_to_rgba64
+	color_methods.darkened = api_1_1.godot_color_darkened
+	color_methods.from_hsv = api_1_1.godot_color_from_hsv
+	color_methods.lightened = api_1_1.godot_color_lightened
+end
+
+Color = ffi.metatype('godot_color', {
+	__new = function(mt, r, g, b, a)
+		if ffi.istype(mt, r) then
+			return ffi.new(mt, r)
+		elseif ffi.istype(Vector2, r) then
+			-- (Vector2, Vector2)
+			if ffi.istype(Vector2, g) then
+				r, g, b, a = r.x, r.y, g.x, g.y
+			-- (Vector2, float?, float?)
+			else
+				r, g, b, a = r.x, r.y, g, b
+			end
+		-- (Vector3, float?)
+		elseif ffi.istype(Vector3, r) then
+			r, g, b, a = r.x, r.y, r.z, g
+		-- (float, Vector2, float?)
+		elseif ffi.istype(Vector2, g) then
+			r, g, b, a = r, g.x, g.y, b
+		-- (float, float, Vector2)
+		elseif ffi.istype(Vector2, b) then
+			r, g, b, a = r, g, b.x, b.y
+		-- (float, Vector3)
+		elseif ffi.istype(Vector3, g) then
+			r, g, b, a = r, g.x, g.y, g.z
+		end
+		return ffi.new(mt, { elements = { r or 0, g or 0, b or 0, a or 1 }})
+	end,
 	__tostring = GD.tostring,
-	__index = {
-		tovariant = ffi.C.hgdn_new_color_variant,
-		varianttype = GD.TYPE_COLOR,
-	},
+	__index = color_methods,
 	__concat = concat_gdvalues,
+	__eq = function(a, b)
+		a, b = Color(a), Color(b)
+		return a.r == b.r and a.g == b.g and a.b == b.b and a.a == b.a
+	end,
+	__lt = function(a, b)
+		a, b = Color(a), Color(b)
+		if a.r == b.r then
+			if a.g == b.g then
+				if a.b == b.b then
+					return a.a < b.a
+				else
+					return a.b < b.b
+				end
+			else
+				return a.g < b.g
+			end
+		else
+			return a.r < b.r
+		end
+	end,
 })
-Color = Vector4
 
 Rect2 = ffi.metatype('godot_rect2', {
 	__tostring = GD.tostring,

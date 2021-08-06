@@ -108,7 +108,7 @@ typedef union godot_vector3 {
 	struct { godot_real width, height, depth; };
 } godot_vector3;
 
-typedef union godot_vector4 {
+typedef union godot_color {
 	godot_real elements[4];
 	// xyzw
 	struct { godot_real x, y, z, w; };
@@ -128,8 +128,7 @@ typedef union godot_vector4 {
 	// uv
 	struct { godot_real u, v; godot_real _4[2]; };
 	struct { godot_vector2 uv; godot_real _5[2]; };
-} godot_vector4;
-typedef godot_vector4 godot_color;
+} godot_color;
 
 typedef union godot_rect2 {
 	godot_real elements[4];
