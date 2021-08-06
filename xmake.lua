@@ -27,12 +27,18 @@ rule("embed_header")
 		end
 
 		cprint("${bright green}[%3d%%]:${clear} embed_header %s", opt.progress, sourcefile)
+		local strip_initial_space = not is_mode("debug")
 		local header_contents = {}
 		for line in io.lines(sourcefile) do
-			local escaped_line = line:gsub('\\', '\\\\'):gsub('"', '\\"')
-			table.insert(header_contents, '"' .. escaped_line .. '\\n"')
+			if strip_initial_space then
+				line = line:gsub('^%s*', ''):gsub('^%-%-.*', ''):gsub('^//.*', '')
+			end
+			if #line > 0 then
+				local escaped_line = line:gsub('\\', '\\\\'):gsub('"', '\\"')
+				table.insert(header_contents, escaped_line)
+			end
 		end
-		header_contents = table.concat(header_contents, '\n')
+		header_contents = '"' .. table.concat(header_contents, '\\n') .. '\\n"'
 		io.writefile(target_file, header_contents)
 	end)
 rule_end()
@@ -47,9 +53,9 @@ target("cat_init_script")
 		local buildir = get_config('buildir')
 		local embedded_files = {}
 		for line in io.lines("src/lua_init_script.c") do
-			local m = line:match("#include%W*([^%.]+%.lua%.h)")
+			local m = line:match("#include%W*([^%.]+%.lua)%.h")
 			if m then
-				table.insert(embedded_files, io.readfile(path.join(buildir, "include", m)))
+				table.insert(embedded_files, io.readfile(path.join("src", m)))
 			end
 		end
 		io.writefile(path.join(buildir, "include", "init_script.lua"), table.concat(embedded_files, '\n'))
