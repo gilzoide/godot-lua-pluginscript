@@ -515,13 +515,40 @@ Basis = ffi.metatype('godot_basis', {
 	end,
 })
 
+local aabb_methods = {
+	tovariant = ffi.C.hgdn_new_aabb_variant,
+	varianttype = GD.TYPE_AABB,
+
+	as_string = api.godot_aabb_as_string,
+	get_area = api.godot_aabb_get_area,
+	has_no_area = api.godot_aabb_has_no_area,
+	has_no_surface = api.godot_aabb_has_no_surface,
+	intersects = api.godot_aabb_intersects,
+	encloses = api.godot_aabb_encloses,
+	merge = api.godot_aabb_merge,
+	intersection = api.godot_aabb_intersection,
+	intersects_plane = api.godot_aabb_intersects_plane,
+	intersects_segment = api.godot_aabb_intersects_segment,
+	has_point = api.godot_aabb_has_point,
+	get_support = api.godot_aabb_get_support,
+	get_longest_axis = api.godot_aabb_get_longest_axis,
+	get_longest_axis_index = api.godot_aabb_get_longest_axis_index,
+	get_longest_axis_size = api.godot_aabb_get_longest_axis_size,
+	get_shortest_axis = api.godot_aabb_get_shortest_axis,
+	get_shortest_axis_index = api.godot_aabb_get_shortest_axis_index,
+	get_shortest_axis_size = api.godot_aabb_get_shortest_axis_size,
+	expand = api.godot_aabb_expand,
+	grow = api.godot_aabb_grow,
+	get_endpoint = api.godot_aabb_get_endpoint,
+}
+
 AABB = ffi.metatype('godot_aabb', {
 	__tostring = GD.tostring,
-	__index = {
-		tovariant = ffi.C.hgdn_new_aabb_variant,
-		varianttype = GD.TYPE_AABB,
-	},
+	__index = aabb_methods,
 	__concat = concat_gdvalues,
+	__eq = function(a, b)
+		return a.position == b.position and a.size == b.size
+	end,
 })
 
 Transform2D = ffi.metatype('godot_transform2d', {
