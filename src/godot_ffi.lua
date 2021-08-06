@@ -74,80 +74,80 @@ typedef struct godot_variant {
 
 // Math type definitions copied from HGDN
 typedef union godot_vector2 {
-	float elements[2];
+	godot_real elements[2];
 	// xy
-	struct { float x, y; };
+	struct { godot_real x, y; };
 	// rg
-	struct { float r, g; };
+	struct { godot_real r, g; };
 	// st
-	struct { float s, t; };
+	struct { godot_real s, t; };
 	// uv
-	struct { float u, v; };
+	struct { godot_real u, v; };
 	// Size: width/height
-	struct { float width, height; };
+	struct { godot_real width, height; };
 } godot_vector2;
 
 typedef union godot_vector3 {
-	float elements[3];
+	godot_real elements[3];
 	// xyz
-	struct { float x, y, z; };
-	struct { godot_vector2 xy; float _0; };
-	struct { float _1; godot_vector2 yz; };
+	struct { godot_real x, y, z; };
+	struct { godot_vector2 xy; godot_real _0; };
+	struct { godot_real _1; godot_vector2 yz; };
 	// rgb
-	struct { float r, g, b; };
-	struct { godot_vector2 rg; float _2; };
-	struct { float _3; godot_vector2 gb; };
+	struct { godot_real r, g, b; };
+	struct { godot_vector2 rg; godot_real _2; };
+	struct { godot_real _3; godot_vector2 gb; };
 	// stp
-	struct { float s, t, p; };
-	struct { godot_vector2 st; float _6; };
-	struct { float _7; godot_vector2 tp; };
+	struct { godot_real s, t, p; };
+	struct { godot_vector2 st; godot_real _6; };
+	struct { godot_real _7; godot_vector2 tp; };
 	// uv
-	struct { float u, v, _4; };
-	struct { godot_vector2 uv; float _5; };
+	struct { godot_real u, v, _4; };
+	struct { godot_vector2 uv; godot_real _5; };
 	// 3D Size: width/height/depth
-	struct { float width, height, depth; };
+	struct { godot_real width, height, depth; };
 } godot_vector3;
 
 typedef union godot_vector4 {
-	float elements[4];
+	godot_real elements[4];
 	// xyzw
-	struct { float x, y, z, w; };
+	struct { godot_real x, y, z, w; };
 	struct { godot_vector2 xy; godot_vector2 zw; };
-	struct { godot_vector3 xyz; float _0; };
-	struct { float _1; godot_vector3 yzw; };
+	struct { godot_vector3 xyz; godot_real _0; };
+	struct { godot_real _1; godot_vector3 yzw; };
 	// rgba
-	struct { float r, g, b, a; };
+	struct { godot_real r, g, b, a; };
 	struct { godot_vector2 rg; godot_vector2 ba; };
-	struct { godot_vector3 rgb; float _2; };
-	struct { float _3; godot_vector3 gba; };
+	struct { godot_vector3 rgb; godot_real _2; };
+	struct { godot_real _3; godot_vector3 gba; };
 	// stpq
-	struct { float s, t, p, q; };
+	struct { godot_real s, t, p, q; };
 	struct { godot_vector2 st; godot_vector2 pq; };
-	struct { godot_vector3 stp; float _6; };
-	struct { float _7; godot_vector3 tpq; };
+	struct { godot_vector3 stp; godot_real _6; };
+	struct { godot_real _7; godot_vector3 tpq; };
 	// uv
-	struct { float u, v; float _4[2]; };
-	struct { godot_vector2 uv; float _5[2]; };
+	struct { godot_real u, v; godot_real _4[2]; };
+	struct { godot_vector2 uv; godot_real _5[2]; };
 } godot_vector4;
 typedef godot_vector4 godot_color;
 
 typedef union godot_rect2 {
-	float elements[4];
-	struct { float x, y, width, height; };
+	godot_real elements[4];
+	struct { godot_real x, y, width, height; };
 	struct { godot_vector2 position; godot_vector2 size; };
 } godot_rect2;
 
 typedef union godot_plane {
-	float elements[4];
-	struct { godot_vector3 normal; float d; };
+	godot_real elements[4];
+	struct { godot_vector3 normal; godot_real d; };
 } godot_plane;
 
 typedef union godot_quat {
-	float elements[4];
-	struct { float x, y, z, w; };
+	godot_real elements[4];
+	struct { godot_real x, y, z, w; };
 	struct { godot_vector2 xy; godot_vector2 zw; };
-	struct { godot_vector3 xyz; float _0; };
-	struct { float _1; godot_vector3 yzw; };
+	struct { godot_vector3 xyz; godot_real _0; };
+	struct { godot_real _1; godot_vector3 yzw; };
 } godot_quat;
 
 typedef struct godot_basis {
