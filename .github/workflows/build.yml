@@ -11,7 +11,9 @@ jobs:
     strategy:
       matrix:
         os: [windows-latest, ubuntu-latest, macos-latest]
-        arch: [x86_64]
+        include:
+          - os: windows-latest
+            config-args: --cflags=/Zm10
     steps:
       - uses: actions/checkout@v2
         with:
@@ -22,9 +24,10 @@ jobs:
           xmake-version: latest
       - name: Build artifact
         env:
-          ARGS: ${{ startsWith(matrix.os, 'windows') && '--plat=windows --toolchain=msvc --cflags=/Zm1' }}
+          ARGS: ${{ matrix.config-args || '' }}
         run: |
-          xmake f -y --clean $ARGS
+          xmake f -y --clean
+          xmake f -y $ARGS
           xmake
       - name: Upload artifact
         uses: actions/upload-artifact@v2
