@@ -185,6 +185,9 @@ Vector3 = ffi.metatype('godot_vector3', {
 })
 
 local color_methods = {
+	tovariant = ffi.C.hgdn_new_color_variant,
+	varianttype = GD.TYPE_COLOR,
+
 	get_h = api.godot_color_get_h,
 	get_s = api.godot_color_get_s,
 	get_v = api.godot_color_get_v,
