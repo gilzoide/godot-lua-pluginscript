@@ -22,7 +22,7 @@ jobs:
           xmake-version: latest
       - name: Build artifact
         env:
-          ARGS: ${{ startsWith(matrix.os, 'windows') && '--cflags=/Zm1' }}
+          ARGS: ${{ startsWith(matrix.os, 'windows') && '--plat=windows --toolchain=msvc --cflags=/Zm1' }}
         run: |
           xmake f -y --clean $ARGS
           xmake
