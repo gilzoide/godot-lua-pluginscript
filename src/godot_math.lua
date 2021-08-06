@@ -240,11 +240,9 @@ Color = ffi.metatype('godot_color', {
 	__index = color_methods,
 	__concat = concat_gdvalues,
 	__eq = function(a, b)
-		a, b = Color(a), Color(b)
 		return a.r == b.r and a.g == b.g and a.b == b.b and a.a == b.a
 	end,
 	__lt = function(a, b)
-		a, b = Color(a), Color(b)
 		if a.r == b.r then
 			if a.g == b.g then
 				if a.b == b.b then
@@ -261,13 +259,52 @@ Color = ffi.metatype('godot_color', {
 	end,
 })
 
+local rect2_methods = {
+	tovariant = ffi.C.hgdn_new_rect2_variant,
+	varianttype = GD.TYPE_RECT2,
+
+	as_string = api.godot_rect2_as_string,
+	get_area = api.godot_rect2_get_area,
+	intersects = api.godot_rect2_intersects,
+	encloses = api.godot_rect2_encloses,
+	has_no_area = api.godot_rect2_has_no_area,
+	clip = api.godot_rect2_clip,
+	merge = api.godot_rect2_merge,
+	has_point = api.godot_rect2_has_point,
+	grow = api.godot_rect2_grow,
+	expand = api.godot_rect2_expand,
+}
+
+if api_1_1 then
+	rect2_methods.grow_individual = api_1_1.godot_rect2_grow_individual
+	rect2_methods.grow_margin = api_1_1.godot_rect2_grow_margin
+	rect2_methods.abs = api_1_1.godot_rect2_abs
+end
+
 Rect2 = ffi.metatype('godot_rect2', {
+	__new = function(mt, x, y, width, height)
+		if ffi.istype(mt, x) then
+			return ffi.new(mt, x)
+		elseif ffi.istype(Vector2, x) then
+			-- (Vector2, Vector2)
+			if ffi.istype(Vector2, y) then
+				x, y, width, height = x.x, x.y, y.x, y.y
+			-- (Vector2, float?, float?)
+			else
+				x, y, width, height = x.x, x.y, y, width
+			end
+		-- (float, float, Vector2)
+		elseif ffi.istype(Vector2, width) then
+			x, y, width, height = x, y, width.x, width.y
+		end
+		return ffi.new(mt, { x = x, y = y, width = width, height = height })
+	end,
 	__tostring = GD.tostring,
-	__index = {
-		tovariant = ffi.C.hgdn_new_rect2_variant,
-		varianttype = GD.TYPE_RECT2,
-	},
+	__index = rect2_methods,
 	__concat = concat_gdvalues,
+	__eq = function(a, b)
+		return a.x == b.x and a.y == b.y and a.width == b.width and a.height == b.height
+	end,
 })
 
 Plane = ffi.metatype('godot_plane', {
