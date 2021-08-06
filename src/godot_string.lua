@@ -10,7 +10,7 @@ local CharString = ffi.metatype('godot_char_string', {
 })
 
 local string_methods = {
-	tovariant = ffi.C.hgdn_new_string_variant,
+	fillvariant = api.godot_variant_new_string,
 	varianttype = GD.TYPE_STRING,
 	length = function(self)
 		return api.godot_string_length(self)
@@ -56,8 +56,8 @@ String = ffi.metatype('godot_string', {
 })
 
 local string_name_methods = {
-	tovariant = function(self)
-		return api.godot_string_name_get_name(self):tovariant()
+	fillvariant = function(var, self)
+		api.godot_variant_new_string(var, api.godot_string_name_get_name(self))
 	end,
 	get_name = api.godot_string_name_get_name,
 	get_hash = api.godot_string_name_get_hash,

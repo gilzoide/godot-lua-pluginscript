@@ -2,17 +2,19 @@ local function register_pool_array(kind, element_ctype)
 	local name = 'Pool' .. kind:sub(1, 1):upper() .. kind:sub(2) .. 'Array'
 	local kind_type = 'pool_' .. kind .. '_array'
 	local ctype = 'godot_' .. kind_type
-	local godot_array_new_pool_array = 'godot_array_new_' .. kind_type
-	local godot_pool_array_new = ctype .. '_new'
-	local godot_pool_array_new_copy = ctype .. '_new_copy'
-	local godot_pool_array_new_with_array = ctype .. '_new_with_array'
+
+	local godot_array_new_pool_array = api['godot_array_new_' .. kind_type]
+	local godot_pool_array_new = api[ctype .. '_new']
+	local godot_pool_array_new_copy = api[ctype .. '_new_copy']
+	local godot_pool_array_new_with_array = api[ctype .. '_new_with_array']
+	local godot_pool_array_destroy = api[ctype .. '_destroy']
 	
 	local methods = {
-		tovariant = ffi.C['hgdn_new_' .. kind_type .. '_variant'],
+		fillvariant = api['godot_variant_new_' .. kind_type],
 		varianttype = GD['TYPE_POOL_' .. kind:upper() .. '_ARRAY'],
 		toarray = function(self)
 			local array = ffi.new(Array)
-			api[godot_array_new_pool_array](array, self)
+			godot_array_new_pool_array(array, self)
 			return array
 		end,
 		get = api[ctype .. '_get'],
@@ -25,9 +27,7 @@ local function register_pool_array(kind, element_ctype)
 		remove = api[ctype .. '_remove'],
 		resize = api[ctype .. '_resize'],
 		-- TODO: read/write
-		size = function(self)
-			return api[ctype .. '_size'](self)
-		end,
+		size = api[ctype .. '_size'],
 	}
 
 	if element_ctype == String then
@@ -50,12 +50,11 @@ local function register_pool_array(kind, element_ctype)
 			local self = ffi.new(mt)
 			local value = ...
 			if ffi.istype(mt, value) then
-				api[godot_pool_array_new_copy](self, value)
+				godot_pool_array_new_copy(self, value)
 			elseif ffi.istype(Array, value) then
-				api[godot_pool_array_new_with_array](self, value)
+				godot_pool_array_new_with_array(self, value)
 			else
-				api[godot_pool_array_new](self)
-				local t = type(value)
+				godot_pool_array_new(self)
 				for i = 1, select('#', ...) do
 					local v = select(i, ...)
 					self:append(element_ctype(v))
@@ -63,7 +62,7 @@ local function register_pool_array(kind, element_ctype)
 			end
 			return self
 		end,
-		__gc = api[ctype .. '_destroy'],
+		__gc = godot_pool_array_destroy,
 		__tostring = GD.tostring,
 		__concat = concat_gdvalues,
 		__index = function(self, key)
@@ -84,7 +83,9 @@ local function register_pool_array(kind, element_ctype)
 				methods.set(self, key, value)
 			end
 		end,
-		__len = methods.size,
+		__len = function(self)
+			return methods.size(self)
+		end,
 		__ipairs = array_ipairs,
 		__pairs = array_ipairs,
 	})
@@ -97,4 +98,3 @@ register_pool_array('string', String)
 register_pool_array('vector2', Vector2)
 register_pool_array('vector3', Vector3)
 register_pool_array('color', Color)
-

@@ -56,8 +56,8 @@ local Class = {
 }
 
 local instance_methods = {
-	tovariant = function(self)
-		return Variant(rawget(self, '__owner'))
+	fillvariant = function(var, self)
+		api.godot_variant_new_object(var, rawget(self, '__owner'))
 	end,
 	pcall = function(self, ...)
 		return rawget(self, '__owner'):pcall(...)

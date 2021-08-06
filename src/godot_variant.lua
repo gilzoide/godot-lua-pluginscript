@@ -1,36 +1,3 @@
-ffi.cdef[[
-godot_variant hgdn_new_nil_variant();
-godot_variant hgdn_new_bool_variant(const godot_bool value);
-godot_variant hgdn_new_uint_variant(const uint64_t value);
-godot_variant hgdn_new_int_variant(const int64_t value);
-godot_variant hgdn_new_real_variant(const double value);
-godot_variant hgdn_new_vector2_variant(const godot_vector2 value);
-godot_variant hgdn_new_vector3_variant(const godot_vector3 value);
-godot_variant hgdn_new_rect2_variant(const godot_rect2 value);
-godot_variant hgdn_new_plane_variant(const godot_plane value);
-godot_variant hgdn_new_quat_variant(const godot_quat value);
-godot_variant hgdn_new_aabb_variant(const godot_aabb value);
-godot_variant hgdn_new_basis_variant(const godot_basis value);
-godot_variant hgdn_new_transform2d_variant(const godot_transform2d value);
-godot_variant hgdn_new_transform_variant(const godot_transform value);
-godot_variant hgdn_new_color_variant(const godot_color value);
-godot_variant hgdn_new_node_path_variant(const godot_node_path *value);
-godot_variant hgdn_new_rid_variant(const godot_rid *value);
-godot_variant hgdn_new_object_variant(const godot_object *value);
-godot_variant hgdn_new_string_variant(const godot_string *value);
-godot_variant hgdn_new_cstring_variant(const char *value);
-godot_variant hgdn_new_wide_string_variant(const wchar_t *value);
-godot_variant hgdn_new_dictionary_variant(const godot_dictionary *value);
-godot_variant hgdn_new_array_variant(const godot_array *value);
-godot_variant hgdn_new_pool_byte_array_variant(const godot_pool_byte_array *value);
-godot_variant hgdn_new_pool_int_array_variant(const godot_pool_int_array *value);
-godot_variant hgdn_new_pool_real_array_variant(const godot_pool_real_array *value);
-godot_variant hgdn_new_pool_vector2_array_variant(const godot_pool_vector2_array *value);
-godot_variant hgdn_new_pool_vector3_array_variant(const godot_pool_vector3_array *value);
-godot_variant hgdn_new_pool_color_array_variant(const godot_pool_color_array *value);
-godot_variant hgdn_new_pool_string_array_variant(const godot_pool_string_array *value);
-]]
-
 local function Object_gc(obj)
 	if obj:call('unreference') then
 		api.godot_object_destroy(obj)
@@ -38,9 +5,7 @@ local function Object_gc(obj)
 end
 
 local methods = {
-	tovariant = function(self)
-		return self
-	end,
+	fillvariant = api.godot_variant_new_copy,
 	as_bool = api.godot_variant_as_bool,
 	as_uint = api.godot_variant_as_uint,
 	as_int = api.godot_variant_as_int,
@@ -167,25 +132,30 @@ local methods = {
 
 Variant = ffi.metatype("godot_variant", {
 	__new = function(mt, value)
+		local self = ffi.new(mt)
 		local t = type(value)
 		if t == 'boolean' then
-			return ffi.C.hgdn_new_bool_variant(value)
-		elseif t == 'string' or ffi.istype('char *', value) then
-			return ffi.C.hgdn_new_cstring_variant(value)
+			api.godot_variant_new_bool(self, value)
+		elseif t == 'string' or ffi.istype('char *', value) or ffi.istype('wchar_t *', value) then
+			local s = String(value)
+			api.godot_variant_new_string(self, s)
 		elseif ffi.istype(int, value) then
-			return ffi.C.hgdn_new_int_variant(value)
+			api.godot_variant_new_int(self, value)
 		elseif t == 'number' or tonumber(value) then
-			return ffi.C.hgdn_new_real_variant(value)
+			api.godot_variant_new_real(self, value)
 		elseif t == 'table' then
-			if value.tovariant then
-				return value:tovariant()
+			if value.fillvariant then
+				value.fillvariant(self, value)
 			else
-				return ffi.C.hgdn_new_dictionary_variant(Dictionary(value))
+				local d = Dictionary(value)
+				api.godot_variant_new_dictionary(self, value)
 			end
-		elseif t == 'cdata' and value.tovariant then
-			return value:tovariant()
+		elseif t == 'cdata' and value.fillvariant then
+			value.fillvariant(self, value)
+		else
+			api.godot_variant_new_nil(self)
 		end
-		return ffi.C.hgdn_new_nil_variant()
+		return self
 	end,
 	__gc = api.godot_variant_destroy,
 	__tostring = function(self)

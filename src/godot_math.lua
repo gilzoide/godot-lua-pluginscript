@@ -1,5 +1,5 @@
 local vector2_methods = {
-	tovariant = ffi.C.hgdn_new_vector2_variant,
+	fillvariant = api.godot_variant_new_vector2,
 	varianttype = GD.TYPE_VECTOR2,
 
 	new = api.godot_vector2_new,
@@ -87,7 +87,7 @@ Vector2 = ffi.metatype('godot_vector2', {
 })
 
 local vector3_methods = {
-	tovariant = ffi.C.hgdn_new_vector3_variant,
+	fillvariant = api.godot_variant_new_vector3,
 	varianttype = GD.TYPE_VECTOR3,
 
 	new = api.godot_vector3_new,
@@ -187,7 +187,7 @@ Vector3 = ffi.metatype('godot_vector3', {
 })
 
 local color_methods = {
-	tovariant = ffi.C.hgdn_new_color_variant,
+	fillvariant = api.godot_variant_new_color,
 	varianttype = GD.TYPE_COLOR,
 
 	new_rgba = api.godot_color_new_rgba,
@@ -267,7 +267,7 @@ Color = ffi.metatype('godot_color', {
 })
 
 local rect2_methods = {
-	tovariant = ffi.C.hgdn_new_rect2_variant,
+	fillvariant = api.godot_variant_new_rect2,
 	varianttype = GD.TYPE_RECT2,
 
 	new_with_position_and_size = api.godot_rect2_new_with_position_and_size,
@@ -317,7 +317,7 @@ Rect2 = ffi.metatype('godot_rect2', {
 })
 
 local plane_methods = {
-	tovariant = ffi.C.hgdn_new_plane_variant,
+	fillvariant = api.godot_variant_new_plane,
 	varianttype = GD.TYPE_PLANE,
 
 	new_with_reals = api.godot_plane_new_with_reals,
@@ -386,7 +386,7 @@ Plane = ffi.metatype('godot_plane', {
 })
 
 local quat_methods = {
-	tovariant = ffi.C.hgdn_new_quat_variant,
+	fillvariant = api.godot_variant_new_quat,
 	varianttype = GD.TYPE_QUAT,
 
 	new = api.godot_quat_new,
@@ -453,7 +453,7 @@ Quat = ffi.metatype('godot_quat', {
 })
 
 local basis_methods = {
-	tovariant = ffi.C.hgdn_new_basis_variant,
+	fillvariant = api.godot_variant_new_basis,
 	varianttype = GD.TYPE_BASIS,
 
 	new = api.godot_basis_new,
@@ -538,7 +538,7 @@ Basis = ffi.metatype('godot_basis', {
 })
 
 local aabb_methods = {
-	tovariant = ffi.C.hgdn_new_aabb_variant,
+	fillvariant = api.godot_variant_new_aabb,
 	varianttype = GD.TYPE_AABB,
 
 	new = api.godot_aabb_new,
@@ -575,7 +575,7 @@ AABB = ffi.metatype('godot_aabb', {
 })
 
 local transform2d_methods = {
-	tovariant = ffi.C.hgdn_new_transform2d_variant,
+	fillvariant = api.godot_variant_new_transform2d,
 	varianttype = GD.TYPE_TRANSFORM2D,
 
 	new = api.godot_transform2d_new,
@@ -624,11 +624,13 @@ Transform2D = ffi.metatype('godot_transform2d', {
 	__mul = api.godot_transform2d_operator_multiply,
 })
 
+local transform_methods = {
+	fillvariant = api.godot_variant_new_transform,
+	varianttype = GD.TYPE_TRANSFORM,
+}
+
 Transform = ffi.metatype('godot_transform', {
 	__tostring = GD.tostring,
-	__index = {
-		tovariant = ffi.C.hgdn_new_transform_variant,
-		varianttype = GD.TYPE_TRANSFORM,
-	},
+	__index = transform_methods,
 	__concat = concat_gdvalues,
 })

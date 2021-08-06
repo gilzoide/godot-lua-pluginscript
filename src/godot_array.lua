@@ -1,5 +1,5 @@
 local methods = {
-	tovariant = ffi.C.hgdn_new_array_variant,
+	fillvariant = api.godot_variant_new_array,
 	varianttype = GD.TYPE_ARRAY,
 	get = function(self, index)
 		return api.godot_array_get(self, index):unbox()

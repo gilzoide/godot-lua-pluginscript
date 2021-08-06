@@ -1,5 +1,5 @@
 local node_path_methods = {
-	tovariant = ffi.C.hgdn_new_node_path_variant,
+	fillvariant = api.godot_variant_new_node_path,
 	varianttype = GD.TYPE_NODE_PATH,
 }
 NodePath = ffi.metatype('godot_node_path', {
@@ -34,7 +34,7 @@ RID = ffi.metatype('godot_rid', {
 	end,
 	__tostring = GD.tostring,
 	__index = {
-		tovariant = ffi.C.hgdn_new_rid_variant,
+		fillvariant = api.godot_variant_new_rid,
 		varianttype = GD.TYPE_RID,
 		get_id = api.godot_rid_get_id,
 	},
@@ -44,7 +44,7 @@ RID = ffi.metatype('godot_rid', {
 })
 
 local object_methods = {
-	tovariant = ffi.C.hgdn_new_object_variant,
+	fillvariant = api.godot_variant_new_object,
 	varianttype = GD.TYPE_OBJECT,
 	pcall = function(self, method, ...)
 		if self:has_method() then
