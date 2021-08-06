@@ -372,13 +372,67 @@ Plane = ffi.metatype('godot_plane', {
 	end,
 })
 
+local quat_methods = {
+	tovariant = ffi.C.hgdn_new_quat_variant,
+	varianttype = GD.TYPE_QUAT,
+
+	as_string = api.godot_quat_as_string,
+	length = api.godot_quat_length,
+	length_squared = api.godot_quat_length_squared,
+	normalized = api.godot_quat_normalized,
+	is_normalized = api.godot_quat_is_normalized,
+	inverse = api.godot_quat_inverse,
+	dot = api.godot_quat_dot,
+	xform = api.godot_quat_xform,
+	slerp = api.godot_quat_slerp,
+	slerpni = api.godot_quat_slerpni,
+	cubic_slerp = api.godot_quat_cubic_slerp,
+}
+
+if api_1_1 then
+	quat_methods.set_axis_angle = api_1_1.godot_quat_set_axis_angle
+end
+
 Quat = ffi.metatype('godot_quat', {
+	__new = function(mt, x, y, z, w)
+		if ffi.istype(mt, x) then
+			return ffi.new(mt, x)
+		elseif ffi.istype(Vector3, x) then
+			local self = ffi.new(mt)
+			if y then
+				api.godot_quat_new_with_axis_angle(self, x, y)
+			else
+				assert(api_1_1, "Core API 1.1 is necessary for initializing Quat from Euler angles").godot_quat_new_with_euler(self, x)
+			end
+			return self
+		elseif api_1_1 and ffi.istype(Basis, x) then
+			local self = ffi.new(mt)
+			api_1_1.godot_quat_new_with_basis(self, x)
+			return self
+		end
+		return ffi.new(mt, { x = x, y = y, z = z, w = w or 1 })
+	end,
 	__tostring = GD.tostring,
-	__index = {
-		tovariant = ffi.C.hgdn_new_quat_variant,
-		varianttype = GD.TYPE_QUAT,
-	},
+	__index = quat_methods,
 	__concat = concat_gdvalues,
+	__eq = function(a, b)
+		return a.x == b.x and a.y == b.y and a.z == b.z and a.w == b.w
+	end,
+	__add = function(a, b)
+		return Quat(a.x + b.x, a.y + b.y, a.z + b.z, a.w + b.w)
+	end,
+	__sub = function(a, b)
+		return Quat(a.x - b.x, a.y - b.y, a.z - b.z, a.w - b.w)
+	end,
+	__mul = function(self, s)
+		return Quat(self.x * s, self.y * s, self.z * s, self.w * s)
+	end,
+	__div = function(self, s)
+		return self * (1.0 / s)
+	end,
+	__unm = function(self)
+		return Quat(-self.x, -self.y, -self.z, -self.w)
+	end,
 })
 
 Basis = ffi.metatype('godot_basis', {
