@@ -13,7 +13,7 @@ jobs:
         os: [windows-latest, ubuntu-latest, macos-latest]
         include:
           - os: windows-latest
-            config-args: --cflags=/Zm10
+            config-args: --plat=windows --cflags=/Zm10
     steps:
       - uses: actions/checkout@v2
         with:
@@ -26,7 +26,6 @@ jobs:
         env:
           ARGS: ${{ matrix.config-args || '' }}
         run: |
-          xmake f -y --clean
           xmake f -y $ARGS
           xmake
       - name: Upload artifact
