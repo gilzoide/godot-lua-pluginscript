@@ -114,7 +114,7 @@ Object = ffi.metatype('godot_object', {
 		if self:has_method(key) then
 			return MethodBindByName:new(key)
 		else
-			self:get(key)
+			return self:get(key)
 		end
 	end,
 	__concat = concat_gdvalues,
