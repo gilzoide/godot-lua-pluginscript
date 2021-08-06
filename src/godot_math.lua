@@ -307,13 +307,69 @@ Rect2 = ffi.metatype('godot_rect2', {
 	end,
 })
 
+local plane_methods = {
+	tovariant = ffi.C.hgdn_new_plane_variant,
+	varianttype = GD.TYPE_PLANE,
+
+	as_string = api.godot_plane_as_string,
+	normalized = api.godot_plane_normalized,
+	center = api.godot_plane_center,
+	get_any_point = api.godot_plane_get_any_point,
+	is_point_over = api.godot_plane_is_point_over,
+	distance_to = api.godot_plane_distance_to,
+	has_point = api.godot_plane_has_point,
+	project = api.godot_plane_project,
+	intersect_3 = function(self, b, c)
+		local dest = Vector3()
+		if api.godot_plane_intersect_3(self, dest, b, c) then
+			return dest
+		else
+			return nil
+		end
+	end,
+	intersects_ray = function(self, from, dir)
+		local dest = Vector3()
+		if api.godot_plane_intersects_ray(self, dest, from, dir) then
+			return dest
+		else
+			return nil
+		end
+	end,
+	intersects_segment = function(self, begin, end_)
+		local dest = Vector3()
+		if api.godot_plane_intersects_segment(self, dest, begin, end_) then
+			return dest
+		else
+			return nil
+		end
+	end,
+}
+
 Plane = ffi.metatype('godot_plane', {
+	__new = function(mt, a, b, c, d)
+		if ffi.istype(mt, a) then
+			return ffi.new(mt, a)
+		elseif ffi.istype(Vector3, a) then
+			if ffi.istype(Vector3, b) then
+				local self = ffi.new(mt)
+				api.godot_plane_new_with_vectors(self, a, b, c)
+				return self
+			else
+				return ffi.new(mt, { normal = a, d = b })
+			end
+		else
+			return ffi.new(mt, { normal = Vector3(a, b, c), d = d })
+		end
+	end,
 	__tostring = GD.tostring,
-	__index = {
-		tovariant = ffi.C.hgdn_new_plane_variant,
-		varianttype = GD.TYPE_PLANE,
-	},
+	__index = plane_methods,
 	__concat = concat_gdvalues,
+	__unm = function(self)
+		return api.godot_plane_operator_neg(self)
+	end,
+	__eq = function(a, b)
+		return a.d == b.d and a.normal == b.normal
+	end,
 })
 
 Quat = ffi.metatype('godot_quat', {
