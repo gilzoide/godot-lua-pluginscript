@@ -24,7 +24,7 @@ jobs:
         env:
           ARGS: ${{ startsWith(matrix.os, 'windows') && '--cflags=/Zm1' }}
         run: |
-          xmake f -y $ARGS
+          xmake f -y --clean $ARGS
           xmake
       - name: Upload artifact
         uses: actions/upload-artifact@v2
