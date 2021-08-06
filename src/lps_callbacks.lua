@@ -100,11 +100,14 @@ end)
 -- godot_bool (*lps_instance_set_prop_cb)(godot_pluginscript_instance_data *data, const godot_string *name, const godot_variant *value);
 ffi.C.lps_instance_set_prop_cb = wrap_callback(function(data, name, value)
 	local self = lps_instances[pointer_to_index(data)]
+	local script = self.__script
 	name = tostring(name)
-	local prop = self.__script[name]
+	local prop = script[name]
 	if prop ~= nil then
 		self[name] = value:unbox()
 		return true
+	elseif script._set then
+		return script._set(self, name, value:unbox())
 	else
 		return false
 	end
@@ -113,11 +116,20 @@ end)
 -- godot_bool (*lps_instance_get_prop_cb)(godot_pluginscript_instance_data *data, const godot_string *name, godot_variant *ret);
 ffi.C.lps_instance_get_prop_cb = wrap_callback(function(data, name, ret)
 	local self = lps_instances[pointer_to_index(data)]
+	local script = self.__script
 	name = tostring(name)
-	local prop = self.__script[name]
+	local prop = script[name]
 	if prop ~= nil then
 		ret[0] = Variant(self[name])
 		return true
+	elseif script._get then
+		local unboxed_ret = script._get(self, name)
+		if unboxed_ret ~= nil then
+			ret[0] = Variant(unboxed_ret)
+			return true
+		else
+			return false
+		end
 	else
 		return false
 	end
