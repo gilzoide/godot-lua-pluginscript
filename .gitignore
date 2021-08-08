@@ -2,3 +2,6 @@ logs/
 build/
 .xmake/
 .cache/
+
+src/init_script.c
+src/init_script.lua

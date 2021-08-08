@@ -1,7 +1,7 @@
 DEBUG ?= 0
 
-SRC = hgdn.c language_gdnative.c language_in_editor_callbacks.c
-OBJS = $(addsuffix .o,$(basename $(SRC))) init_script.o
+SRC = hgdn.c language_gdnative.c language_in_editor_callbacks.c init_script.c
+OBJS = $(addsuffix .o,$(basename $(SRC)))
 
 # Note that the order is important!
 LUA_SRC = \
@@ -33,9 +33,11 @@ else
 	PATH_SEP = :
 endif
 
+DYNAMIC_CC = $(CROSS)$(CC)
+
 define COMPILE_O = 
 build/%/$(basename $1).o: src/$1 | build/%/
-	$$(CC) -o $$@ $$< -c $$(CFLAGS)
+	$$(DYNAMIC_CC) -o $$@ $$< -c $$(CFLAGS)
 endef
 
 # Add compile .o
@@ -50,28 +52,28 @@ build/%/:
 build/%/luajit: | build/%/
 	cp -r lib/luajit $@
 	$(MAKE) -C $@ $(MAKE_LUAJIT_ARGS)
-	cp $@/src/*.$(DLL_SUFFIX) $|
+	cp $@/src/$(LUAJIT_DLL_IN) $|$(LUAJIT_DLL_OUT)
 
-build/common/init_script.lua: $(LUA_SRC) | build/common/
+src/init_script.lua: $(LUA_SRC)
 	cat $^ > $@
 
-build/%/init_script.c: build/common/init_script.lua | build/%/luajit
-	env PATH="$(PATH)$(PATH_SEP)$(realpath $|/src)" LUA_PATH=";;./lib/luajit/src/?.lua" luajit -b $< $@
+src/init_script.c: src/init_script.lua
+	luajit -b $< $@
 
-build/%/init_script.o: build/%/init_script.c
-	$(CC) -o $@ $< -c $(CFLAGS)
-
-build/%/lua_pluginscript.so: DLL_SUFFIX = so
+build/%/lua_pluginscript.so: LUAJIT_DLL_IN = libluajit.so
+build/%/lua_pluginscript.so: LUAJIT_DLL_OUT = libluajit.so
 build/%/lua_pluginscript.so: $(addprefix build/%/,$(OBJS)) | build/%/luajit
-	$(CC) -o $@ $^ -shared $(CFLAGS) -Lbuild/$* -lluajit
+	$(DYNAMIC_CC) -o $@ $^ -shared $(CFLAGS) -Lbuild/$* -lluajit
 
-build/%/lua_pluginscript.dll: DLL_SUFFIX = dll
+build/%/lua_pluginscript.dll: LUAJIT_DLL_IN = lua51.dll
+build/%/lua_pluginscript.dll: LUAJIT_DLL_OUT = lua51.dll
 build/%/lua_pluginscript.dll: $(addprefix build/%/,$(OBJS)) | build/%/luajit
-	$(CC) -o $@ $^ -shared $(CFLAGS) -Lbuild/$* -llua51
+	$(DYNAMIC_CC) -o $@ $^ -shared $(CFLAGS) -Lbuild/$* -llua51
 
-build/%/lua_pluginscript.dylib: DLL_SUFFIX = dylib
+build/%/lua_pluginscript.dylib: LUAJIT_DLL_IN = libluajit.so
+build/%/lua_pluginscript.dylib: LUAJIT_DLL_OUT = libluajit.dylib
 build/%/lua_pluginscript.dylib: $(addprefix build/%/,$(OBJS)) | build/%/luajit
-	$(CC) -o $@ $^ -shared $(CFLAGS) -Lbuild/$* -lluajit
+	$(DYNAMIC_CC) -o $@ $^ -shared $(CFLAGS) -Lbuild/$* -lluajit
 
 # Targets by OS + arch
 linux32: MAKE_LUAJIT_ARGS += TARGET_SYS=Linux CC="$(CC) -m32 -fPIC"
@@ -84,14 +86,14 @@ linux64: build/linux_x86_64/lua_pluginscript.so
 
 windows32: MAKE_LUAJIT_ARGS += TARGET_SYS=Windows
 windows32: build/windows_x86/lua_pluginscript.dll
-cross-windows32: MAKE_LUAJIT_ARGS += HOST_CC="cc -m32" CC="i686-w64-mingw32-cc"
-cross-windows32: CC = i686-w64-mingw32-cc
+cross-windows32: CROSS = i686-w64-mingw32-
+cross-windows32: MAKE_LUAJIT_ARGS += HOST_CC="cc -m32" CROSS="i686-w64-mingw32-"
 cross-windows32: windows32
 
 windows64: MAKE_LUAJIT_ARGS += TARGET_SYS=Windows
 windows64: build/windows_x86_64/lua_pluginscript.dll
-cross-windows64: MAKE_LUAJIT_ARGS += HOST_CC="cc" CC="x86_64-w64-mingw32-cc"
-cross-windows64: CC = x86_64-w64-mingw32-cc
+cross-windows64: CROSS = x86_64-w64-mingw32-
+cross-windows64: MAKE_LUAJIT_ARGS += HOST_CC="cc" CROSS="x86_64-w64-mingw32-"
 cross-windows64: windows64
 
 osx: MAKE_LUAJIT_ARGS += TARGET_SYS=Darwin

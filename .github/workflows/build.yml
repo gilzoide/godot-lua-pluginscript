@@ -13,7 +13,7 @@ jobs:
         os: [windows-latest, ubuntu-latest, macos-latest]
         include:
           - os: windows-latest
-            make: windows64 CC=gcc SHELL=bash
+            make: windows64 CC=gcc
             arch: x86_64
           - os: ubuntu-latest
             make: linux64
