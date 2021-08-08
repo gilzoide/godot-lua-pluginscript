@@ -15,15 +15,9 @@ jobs:
           - os: windows-latest
             make: windows64
             arch: x86_64
-          - os: windows-latest
-            make: windows32
-            arch: x86
           - os: ubuntu-latest
             make: linux64
             arch: x86_64
-          - os: ubuntu-latest
-            make: linux32
-            arch: x86
           - os: macos-latest
             make: osx MACOSX_DEPLOYMENT_TARGET=10.14
             arch: x86_64
