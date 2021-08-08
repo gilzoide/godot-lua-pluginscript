@@ -13,24 +13,31 @@ jobs:
         os: [windows-latest, ubuntu-latest, macos-latest]
         include:
           - os: windows-latest
-            config-args: --plat=windows --cflags=-Zm1
+            make: windows64
+            arch: x86_64
+          - os: windows-latest
+            make: windows32
+            arch: x86
+          - os: ubuntu-latest
+            make: linux64
+            arch: x86_64
+          - os: ubuntu-latest
+            make: linux32
+            arch: x86
+          - os: macos-latest
+            make: osx MACOSX_DEPLOYMENT_TARGET=10.14
+            arch: x86_64
     steps:
       - uses: actions/checkout@v2
         with:
           submodules: true
-      - name: Setup xmake
-        uses: xmake-io/github-action-setup-xmake@v1.0.12
-        with:
-          xmake-version: latest
       - name: Build artifact
         env:
-          ARGS: ${{ matrix.config-args || '' }}
-        run: |
-          xmake f -y $ARGS
-          xmake
+          MAKE_ARGS: ${{ matrix.make || '' }}
+        run: make $MAKE_ARGS
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ matrix.os }} ${{ matrix.arch }}
-          path: build/lua_pluginscript_*
+          name: ${{ matrix.os }}_${{ matrix.arch }}
+          path: build/*/lua*.*
 
