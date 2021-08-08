@@ -36,7 +36,7 @@ static godot_pluginscript_language_data *lps_language_init() {
 	lua_State *L = lua_newstate(&lps_alloc, NULL);
 	lua_register(L, "touserdata", &lps_lua_touserdata);
 	luaL_openlibs(L);
-	if (luaL_dostring(L, LUA_INIT_SCRIPT) != 0) {
+	if (luaL_dostring(L, luaJIT_BC_init_script) != 0) {
 		const char *error_msg = lua_tostring(L, -1);
 		HGDN_PRINT_ERROR("Error running initialization script: %s", error_msg);
 	}

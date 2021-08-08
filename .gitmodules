@@ -4,3 +4,6 @@
 [submodule "lib/high-level-gdnative"]
 	path = lib/high-level-gdnative
 	url = https://github.com/gilzoide/high-level-gdnative.git
+[submodule "lib/luajit"]
+	path = lib/luajit
+	url = https://luajit.org/git/luajit.git
