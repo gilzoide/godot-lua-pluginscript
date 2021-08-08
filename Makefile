@@ -28,9 +28,9 @@ else
 endif
 
 ifeq ($(OS), Windows_NT)
-	PATH_SEP = ";"
+	PATH_SEP = ;
 else
-	PATH_SEP = ":"
+	PATH_SEP = :
 endif
 
 define COMPILE_O = 
@@ -42,7 +42,7 @@ endef
 $(foreach f,$(SRC),$(eval $(call COMPILE_O,$f)))
 
 # Avoid removing intermediate files created by chained implicit rules
-.PRECIOUS: build/%/ build/%/luajit $(addprefix build/%/,$(OBJS))
+.PRECIOUS: build/%/ build/%/luajit build/%/init_script.c $(addprefix build/%/,$(OBJS))
 
 build/%/:
 	mkdir -p $@
@@ -55,10 +55,10 @@ build/%/luajit: | build/%/
 build/common/init_script.lua: $(LUA_SRC) | build/common/
 	cat $^ > $@
 
-build/common/init_script.c: build/common/init_script.lua
-	env PATH="$(PATH)$(PATH_SEP)$|/src" LUA_PATH=";;./$|/src/?.lua" luajit -b $< $@
+build/%/init_script.c: build/common/init_script.lua | build/%/luajit
+	env PATH="$(PATH)$(PATH_SEP)$|/src" LUA_PATH=";;./lib/luajit/src/?.lua" luajit -b $< $@
 
-build/%/init_script.o: build/common/init_script.c
+build/%/init_script.o: build/%/init_script.c
 	$(CC) -o $@ $< -c $(CFLAGS)
 
 build/%/lua_pluginscript.so: DLL_SUFFIX = so
