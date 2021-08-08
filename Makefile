@@ -56,7 +56,7 @@ build/common/init_script.lua: $(LUA_SRC) | build/common/
 	cat $^ > $@
 
 build/%/init_script.c: build/common/init_script.lua | build/%/luajit
-	env PATH="$(PATH)$(PATH_SEP)$|/src" LUA_PATH=";;./lib/luajit/src/?.lua" luajit -b $< $@
+	env PATH="$(PATH)$(PATH_SEP)$(realpath $|/src)" LUA_PATH=";;./lib/luajit/src/?.lua" luajit -b $< $@
 
 build/%/init_script.o: build/%/init_script.c
 	$(CC) -o $@ $< -c $(CFLAGS)
