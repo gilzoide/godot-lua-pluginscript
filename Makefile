@@ -95,5 +95,5 @@ cross-windows64: CC = x86_64-w64-mingw32-cc
 cross-windows64: windows64
 
 osx: MAKE_LUAJIT_ARGS += TARGET_SYS=Darwin
-osx: build/osx/lua_pluginscript.dylib
+osx: build/osx_x86_64/lua_pluginscript.dylib
 

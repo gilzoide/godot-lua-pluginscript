@@ -106,10 +106,16 @@ git submodule init
 git submodule update
 ```
 
-Build using [xmake](https://xmake.io/) from project root:
+Build using [make](https://www.gnu.org/software/make/) from project root,
+specifying the system as target:
 
 ```sh
-xmake
+# Choose one of the supported platforms, based on your operating system
+make windows64
+make windows32
+make linux64
+make linux32
+make osx
 ```
 
 The GDNativeLibrary file `lua_pluginscript.gdnlib` is already configured to use
