@@ -168,7 +168,17 @@ GDN_EXPORT void godot_gdnative_init(godot_gdnative_init_options *options) {
 		lps_register_in_editor_callbacks(&lps_language_desc);
 	}
 
-	lps_active_library_path = hgdn_string_get(options->active_library_path);
+	godot_object *OS = hgdn_core_api->godot_global_get_singleton("OS");
+	if (hgdn_variant_get_bool_own(hgdn_object_call(OS, "has_feature", "standalone"))) {
+		godot_string dir = hgdn_core_api->godot_string_chr('.');
+		godot_string library_filepath = hgdn_core_api->godot_string_get_file(options->active_library_path);
+		lps_active_library_path = hgdn_string_get_own(hgdn_core_api->godot_string_plus_file(&dir, &library_filepath));
+		hgdn_core_api->godot_string_destroy(&library_filepath);
+		hgdn_core_api->godot_string_destroy(&dir);
+	}
+	else {
+		lps_active_library_path = hgdn_string_get(options->active_library_path);
+	}
 
 	hgdn_pluginscript_api->godot_pluginscript_register_language(&lps_language_desc);
 }

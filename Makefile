@@ -1,6 +1,6 @@
 DEBUG ?= 0
 
-CFLAGS += "-I$(CURDIR)/lib/godot-headers" "-I$(CURDIR)/lib/high-level-gdnative" "-I$(CURDIR)/lib/luajit/src"
+CFLAGS += -std=c11 "-I$(CURDIR)/lib/godot-headers" "-I$(CURDIR)/lib/high-level-gdnative" "-I$(CURDIR)/lib/luajit/src"
 ifeq ($(DEBUG), 1)
 	CFLAGS += -g -O0 -DDEBUG
 else
