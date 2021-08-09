@@ -7,16 +7,16 @@ reloadable=false
 
 [entry]
 
-OSX.64="res://addons/godot-lua-pluginscript/build/lua_pluginscript_macosx_x86_64.dylib"
-Windows.64="res://addons/godot-lua-pluginscript/build/lua_pluginscript_windows_x86_64.dll"
-Windows.32="res://addons/godot-lua-pluginscript/build/lua_pluginscript_windows_x86.dll"
-X11.64="res://addons/godot-lua-pluginscript/build/lua_pluginscript_linux_x86_64.so"
-X11.32="res://addons/godot-lua-pluginscript/build/lua_pluginscript_linux_x86.so"
+OSX.64="res://addons/godot-lua-pluginscript/build/osx_x86_64/lua_pluginscript.dylib"
+Windows.64="res://addons/godot-lua-pluginscript/build/windows_x86_64/lua_pluginscript.dll"
+Windows.32="res://addons/godot-lua-pluginscript/build/windows_x86/lua_pluginscript.dll"
+X11.64="res://addons/godot-lua-pluginscript/build/linux_x86_64/lua_pluginscript.so"
+X11.32="res://addons/godot-lua-pluginscript/build/linux_x86/lua_pluginscript.so"
 
 [dependencies]
 
-OSX.64=[  ]
-Windows.64=[  ]
-Windows.32=[  ]
-X11.64=[  ]
-X11.32=[  ]
+OSX.64=[ ]
+Windows.64=[ "res://addons/godot-lua-pluginscript/build/windows_x86_64/lua51.dll" ]
+Windows.32=[ "res://addons/godot-lua-pluginscript/build/windows_x86/lua51.dll" ]
+X11.64=[ ]
+X11.32=[ ]
