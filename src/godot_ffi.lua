@@ -1340,7 +1340,10 @@ void (*lps_get_template_source_code_cb)(const godot_string *class_name, const go
 godot_bool (*lps_validate_cb)(const godot_string *script, int *line_error, int *col_error, godot_string *test_error, const godot_string *path, godot_pool_string_array *functions);
 ]]
 
-api = ffi.C.hgdn_core_api
-api_1_1 = ffi.C.hgdn_core_1_1_api
-api_1_2 = ffi.C.hgdn_core_1_2_api
+local active_library_path = ...
+local clib = ffi.load(active_library_path, true)
+
+api = clib.hgdn_core_api
+api_1_1 = clib.hgdn_core_1_1_api
+api_1_2 = clib.hgdn_core_1_2_api
 

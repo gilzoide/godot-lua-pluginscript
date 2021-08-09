@@ -15,6 +15,9 @@ godot_bool (*lps_instance_get_prop_cb)(godot_pluginscript_instance_data *data, c
 void (*lps_instance_call_method_cb)(godot_pluginscript_instance_data *data, const godot_string_name *method, const godot_variant **args, int argcount, godot_variant *ret, godot_variant_call_error *error);
 void (*lps_instance_notification_cb)(godot_pluginscript_instance_data *data, int notification);
 
+// Active shared library path, for loading symbols in FFI
+static hgdn_string lps_active_library_path;
+
 // Language functions
 static void *lps_alloc(void *userdata, void *ptr, size_t osize, size_t nsize) {
 	if (nsize == 0) {
@@ -36,7 +39,12 @@ static godot_pluginscript_language_data *lps_language_init() {
 	lua_State *L = lua_newstate(&lps_alloc, NULL);
 	lua_register(L, "touserdata", &lps_lua_touserdata);
 	luaL_openlibs(L);
-	if (luaL_dostring(L, LUA_INIT_SCRIPT) != 0) {
+	if (luaL_loadstring(L, LUA_INIT_SCRIPT) != 0) {
+		const char *error_msg = lua_tostring(L, -1);
+		HGDN_PRINT_ERROR("Error loading initialization script: %s", error_msg);
+	}
+	lua_pushlstring(L, lps_active_library_path.ptr, lps_active_library_path.length);
+	if (lua_pcall(L, 1, 0, 0) != 0) {
 		const char *error_msg = lua_tostring(L, -1);
 		HGDN_PRINT_ERROR("Error running initialization script: %s", error_msg);
 	}
@@ -160,10 +168,13 @@ GDN_EXPORT void godot_gdnative_init(godot_gdnative_init_options *options) {
 		lps_register_in_editor_callbacks(&lps_language_desc);
 	}
 
+	lps_active_library_path = hgdn_string_get(options->active_library_path);
+
 	hgdn_pluginscript_api->godot_pluginscript_register_language(&lps_language_desc);
 }
 
 GDN_EXPORT void godot_gdnative_terminate(godot_gdnative_terminate_options *options) {
+	hgdn_string_destroy(&lps_active_library_path);
 	hgdn_gdnative_terminate(options);
 }
 
