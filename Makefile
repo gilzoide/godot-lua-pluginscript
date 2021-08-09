@@ -1,5 +1,14 @@
 DEBUG ?= 0
 
+CFLAGS += "-I$(CURDIR)/lib/godot-headers" "-I$(CURDIR)/lib/high-level-gdnative" "-I$(CURDIR)/lib/luajit/src"
+ifeq ($(DEBUG), 1)
+	CFLAGS += -g -O0 -DDEBUG
+else
+	CFLAGS += -O3 -DNDEBUG
+endif
+
+_CC = $(CROSS)$(CC)
+
 SRC = hgdn.c language_gdnative.c language_in_editor_callbacks.c
 OBJS = $(SRC:.c=.o) init_script.o
 BUILT_OBJS = $(addprefix build/%/,$(OBJS))
@@ -20,21 +29,6 @@ LUA_SRC = \
 	src/lps_callbacks.lua \
 	src/late_globals.lua \
 	src/in_editor_callbacks.lua
-
-CFLAGS += "-I$(CURDIR)/lib/godot-headers" "-I$(CURDIR)/lib/high-level-gdnative" "-I$(CURDIR)/lib/luajit/src"
-ifeq ($(DEBUG), 1)
-	CFLAGS += -g -O0 -DDEBUG
-else
-	CFLAGS += -O3 -DNDEBUG
-endif
-
-ifeq ($(OS), Windows_NT)
-	PATH_SEP = ;
-else
-	PATH_SEP = :
-endif
-
-_CC = $(CROSS)$(CC)
 
 define COMPILE_O = 
 build/%/$(basename $1).o: src/$1 | build/%/
@@ -58,8 +52,8 @@ build/%/luajit: | build/%/
 build/common/init_script.lua: $(LUA_SRC) | build/common/
 	cat $^ > $@
 
-build/%/init_script.c: build/common/init_script.lua | build/%/luajit
-	$(if $(CROSS), luajit, build/$*/luajit/src/luajit$(EXE)) src/tools/binary_to_c.lua LUA_INIT_SCRIPT $< > $@
+build/%/init_script.c: build/common/init_script.lua src/tools/lua_script_to_c.lua | build/%/luajit
+	$(if $(CROSS), lua, build/$*/luajit/src/luajit$(EXE)) $(word 2,$^) LUA_INIT_SCRIPT $< > $@
 
 build/%/init_script.o: build/%/init_script.c
 	$(_CC) -o $@ $< -c $(CFLAGS)
@@ -95,12 +89,12 @@ linux64: build/linux_x86_64/lua_pluginscript.so
 
 windows32: build/windows_x86/lua_pluginscript.dll
 cross-windows32: CROSS = i686-w64-mingw32-
-cross-windows32: MAKE_LUAJIT_ARGS += HOST_CC="$(CC) -m32" CROSS="i686-w64-mingw32-"
+cross-windows32: MAKE_LUAJIT_ARGS += HOST_CC="$(CC) -m32" CROSS="i686-w64-mingw32-" LDFLAGS=-static-libgcc
 cross-windows32: windows32
 
 windows64: build/windows_x86_64/lua_pluginscript.dll
 cross-windows64: CROSS = x86_64-w64-mingw32-
-cross-windows64: MAKE_LUAJIT_ARGS += HOST_CC="$(CC)" CROSS="x86_64-w64-mingw32-"
+cross-windows64: MAKE_LUAJIT_ARGS += HOST_CC="$(CC)" CROSS="x86_64-w64-mingw32-" LDFLAGS=-static-libgcc
 cross-windows64: windows64
 
 osx: build/osx_x86_64/lua_pluginscript.dylib
