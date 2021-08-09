@@ -148,7 +148,7 @@ Variant = ffi.metatype("godot_variant", {
 				value.fillvariant(self, value)
 			else
 				local d = Dictionary(value)
-				api.godot_variant_new_dictionary(self, value)
+				api.godot_variant_new_dictionary(self, d)
 			end
 		elseif t == 'cdata' and value.fillvariant then
 			value.fillvariant(self, value)
