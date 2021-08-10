@@ -52,8 +52,8 @@ build/%/luajit: | build/%/
 build/common/init_script.lua: $(LUA_SRC) | build/common/
 	cat $^ > $@
 
-build/%/init_script.c: build/common/init_script.lua src/tools/lua_script_to_c.lua | build/%/luajit
-	$(if $(CROSS), lua, build/$*/luajit/src/luajit$(EXE)) $(word 2,$^) LUA_INIT_SCRIPT $< > $@
+build/%/init_script.c: src/tools/lua_script_to_c.lua build/common/init_script.lua | build/%/luajit
+	$(if $(CROSS), lua, build/$*/luajit/src/luajit$(EXE)) $^ LUA_INIT_SCRIPT > $@
 
 build/%/init_script.o: build/%/init_script.c
 	$(_CC) -o $@ $< -c $(CFLAGS)
