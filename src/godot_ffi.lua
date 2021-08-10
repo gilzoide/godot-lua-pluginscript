@@ -31,21 +31,52 @@ typedef struct godot_array {
 	uint8_t _dont_touch_that[sizeof(void *)];
 } godot_array;
 
-typedef void godot_pool_byte_array_read_access;
-typedef void godot_pool_int_array_read_access;
-typedef void godot_pool_real_array_read_access;
-typedef void godot_pool_string_array_read_access;
-typedef void godot_pool_vector2_array_read_access;
-typedef void godot_pool_vector3_array_read_access;
-typedef void godot_pool_color_array_read_access;
-typedef void godot_pool_array_write_access;
-typedef void godot_pool_byte_array_write_access;
-typedef void godot_pool_int_array_write_access;
-typedef void godot_pool_real_array_write_access;
-typedef void godot_pool_string_array_write_access;
-typedef void godot_pool_vector2_array_write_access;
-typedef void godot_pool_vector3_array_write_access;
-typedef void godot_pool_color_array_write_access;
+typedef struct godot_pool_byte_array_read_access {
+	uint8_t _dont_touch_that[1];
+} godot_pool_byte_array_read_access;
+typedef struct godot_pool_int_array_read_access {
+	uint8_t _dont_touch_that[1];
+} godot_pool_int_array_read_access;
+typedef struct godot_pool_real_array_read_access {
+	uint8_t _dont_touch_that[1];
+} godot_pool_real_array_read_access;
+typedef struct godot_pool_string_array_read_access {
+	uint8_t _dont_touch_that[1];
+} godot_pool_string_array_read_access;
+typedef struct godot_pool_vector2_array_read_access {
+	uint8_t _dont_touch_that[1];
+} godot_pool_vector2_array_read_access;
+typedef struct godot_pool_vector3_array_read_access {
+	uint8_t _dont_touch_that[1];
+} godot_pool_vector3_array_read_access;
+typedef struct godot_pool_color_array_read_access {
+	uint8_t _dont_touch_that[1];
+} godot_pool_color_array_read_access;
+typedef struct godot_pool_array_write_access {
+	uint8_t _dont_touch_that[1];
+} godot_pool_array_write_access;
+typedef struct godot_pool_byte_array_write_access {
+	uint8_t _dont_touch_that[1];
+} godot_pool_byte_array_write_access;
+typedef struct godot_pool_int_array_write_access {
+	uint8_t _dont_touch_that[1];
+} godot_pool_int_array_write_access;
+typedef struct godot_pool_real_array_write_access {
+	uint8_t _dont_touch_that[1];
+} godot_pool_real_array_write_access;
+typedef struct godot_pool_string_array_write_access {
+	uint8_t _dont_touch_that[1];
+} godot_pool_string_array_write_access;
+typedef struct godot_pool_vector2_array_write_access {
+	uint8_t _dont_touch_that[1];
+} godot_pool_vector2_array_write_access;
+typedef struct godot_pool_vector3_array_write_access {
+	uint8_t _dont_touch_that[1];
+} godot_pool_vector3_array_write_access;
+typedef struct godot_pool_color_array_write_access {
+	uint8_t _dont_touch_that[1];
+} godot_pool_color_array_write_access;
+
 typedef struct godot_pool_byte_array {
 	uint8_t _dont_touch_that[sizeof(void *)];
 } godot_pool_byte_array;
