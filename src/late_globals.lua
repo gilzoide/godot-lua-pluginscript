@@ -51,8 +51,12 @@ Thread = Class:new("_Thread")
 Mutex = Class:new("_Mutex")
 Semaphore = Class:new("_Semaphore")
 
-local dirsep, pathsep, path_mark = package.config:match("^([^\n]*)\n([^\n]*)\n([^\n]+)")
-local template_pattern = '[^' .. pathsep .. ']+'
+local active_library_dirsep_pos, dll_ext = active_library_path:match("()[^/]+(%.%w+)$")
+local execdir_repl = OS:has_feature("standalone") and active_library_path:sub(1, active_library_dirsep_pos - 1) or tostring(ProjectSettings:globalize_path("res://"))
+execdir_repl = string.sub(execdir_repl, 1, -2)  -- Remove trailing slash
+
+-- Supports "res://" and "user://" paths
+-- Replaces "!" for executable path on standalone builds or project path otherwise
 local function searchpath(name, path, sep, rep)
 	sep = sep or '.'
 	rep = rep or '/'
@@ -61,8 +65,8 @@ local function searchpath(name, path, sep, rep)
 	end
 	local notfound = {}
 	local f = File:new()
-	for template in path:gmatch(template_pattern) do
-		local filename = template:gsub(path_mark, name)
+	for template in path:gmatch('[^;]+') do
+		local filename = template:gsub('%?', name):gsub('%!', execdir_repl)
 		if f:open(filename, File.READ) == GD.OK then
 			return filename, f
 		else
@@ -75,12 +79,22 @@ end
 local function lua_searcher(name)
 	local filename, open_file_or_err = searchpath(name, package.path)
 	if not filename then
-		return nil, open_file_or_err
+		return open_file_or_err
 	end
 	local file_len = open_file_or_err:get_len()
 	local contents = open_file_or_err:get_buffer(file_len):get_string()
 	open_file_or_err:close()
 	return assert(loadstring(contents, filename))
+end
+
+local function c_searcher(name)
+	local filename, open_file_or_err = searchpath(name, package.cpath)
+	if not filename then
+		return open_file_or_err
+	end
+	open_file_or_err:close()
+	local funcname = 'luaopen_' .. name:match('[^-]+$'):gsub('%.', '_')
+	return package.loadlib(filename, funcname)
 end
 
 function package.searchpath(...)
@@ -93,7 +107,9 @@ function package.searchpath(...)
 	end
 end
 
+package.path = 'res://?.lua;res://?/init.lua;' .. package.path
+package.cpath = '!/?' .. dll_ext .. ';!/loadall' .. dll_ext .. ';' .. package.cpath
+
 local searchers = package.searchers or package.loaders
 searchers[2] = lua_searcher
-
-package.path = 'res://?.lua' .. pathsep .. 'res://?/init.lua' .. pathsep .. package.path
+searchers[3] = c_searcher
