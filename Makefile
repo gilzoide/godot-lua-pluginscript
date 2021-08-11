@@ -31,35 +31,30 @@ LUA_SRC = \
 	src/late_globals.lua \
 	src/in_editor_callbacks.lua
 
-define COMPILE_O = 
-build/%/$(basename $1).o: src/$1 | build/%
-	$$(_CC) -o $$@ $$< -c $$(CFLAGS)
-endef
-
-# Add compile .o
-$(foreach f,$(SRC),$(eval $(call COMPILE_O,$f)))
-
 # Avoid removing intermediate files created by chained implicit rules
-.PRECIOUS: build/%/. build/%/luajit build/%/init_script.c $(BUILT_OBJS) build/%/lua51.dll $(MAKE_LUAJIT_OUTPUT)
+.PRECIOUS: build/%/luajit build/%/init_script.c $(BUILT_OBJS) build/%/lua51.dll $(MAKE_LUAJIT_OUTPUT)
 
 build/common build/windows_x86 build/windows_x86_64 build/linux_x86 build/linux_x86_64 build/osx_x86_64:
 	mkdir -p $@
 
+build/%/hgdn.o: src/hgdn.c
+	$(_CC) -o $@ $< -c $(CFLAGS)
+build/%/language_gdnative.o: src/language_gdnative.c
+	$(_CC) -o $@ $< -c $(CFLAGS)
+build/%/language_in_editor_callbacks.o: src/language_in_editor_callbacks.c
+	$(_CC) -o $@ $< -c $(CFLAGS)
+
 build/%/luajit: | build/%
 	cp -r lib/luajit $@
-
 $(MAKE_LUAJIT_OUTPUT): | build/%/luajit
 	$(MAKE) -C $| $(and $(TARGET_SYS),TARGET_SYS=$(TARGET_SYS)) $(MAKE_LUAJIT_ARGS)
-
 build/%/lua51.dll: build/%/luajit/src/lua51.dll
 	cp $< $@
 
 build/common/init_script.lua: $(LUA_SRC) | build/common
 	cat $^ > $@
-
 build/%/init_script.c: src/tools/lua_script_to_c.lua build/common/init_script.lua build/%/luajit/src/luajit
 	$(if $(CROSS), lua, $(lastword $^)$(EXE)) $(wordlist 1,2,$^) LUA_INIT_SCRIPT > $@
-
 build/%/init_script.o: build/%/init_script.c
 	$(_CC) -o $@ $< -c $(CFLAGS)
 
