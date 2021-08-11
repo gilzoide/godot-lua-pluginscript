@@ -19,15 +19,12 @@ jobs:
             make: make linux64
             arch: x86_64
           - os: macos-latest
-            make: gmake osx MACOSX_DEPLOYMENT_TARGET=10.14
+            make: make osx MACOSX_DEPLOYMENT_TARGET=10.14
             arch: x86_64
     steps:
       - uses: actions/checkout@v2
         with:
           submodules: true
-      - name: Install latest GNU Make
-        if: ${{ startsWith(matrix.os, 'macos') }}
-        run: brew install make
       - name: Build artifact
         run: ${{ matrix.make }}
       - name: Upload artifact
