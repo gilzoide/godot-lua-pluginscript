@@ -87,14 +87,31 @@ local function lua_searcher(name)
 	return assert(loadstring(contents, filename))
 end
 
-local function c_searcher(name)
+local function c_searcher(name, name_override)
 	local filename, open_file_or_err = searchpath(name, package.cpath)
 	if not filename then
 		return open_file_or_err
 	end
 	open_file_or_err:close()
-	local funcname = 'luaopen_' .. name:match('[^-]+$'):gsub('%.', '_')
-	return package.loadlib(filename, funcname)
+	local func_suffix = (name_override or name):gsub('%.', '_')
+	-- Split module name if a "-" is found
+	local igmark = string.find(func_suffix, '-', 1, false)
+	if igmark then
+		local funcname = 'luaopen_' .. func_suffix:sub(1, igmark - 1)
+		local f = package.loadlib(filename, funcname)
+		if f then return f end
+		func_suffix = func_suffix:sub(igmark + 1)
+	end
+	local f, err = package.loadlib(filename, 'luaopen_' .. func_suffix)
+	return assert(f, string.format('error loading module %q from file %q:\n\t%s', name, filename, err))
+end
+
+local function c_root_searcher(name)
+	local root_name = name:match('^([^.]+)%.')
+	if not root_name then
+		return nil
+	end
+	return c_searcher(root_name, name)
 end
 
 function package.searchpath(...)
@@ -113,3 +130,4 @@ package.cpath = '!/?' .. dll_ext .. ';!/loadall' .. dll_ext .. ';' .. package.cp
 local searchers = package.searchers or package.loaders
 searchers[2] = lua_searcher
 searchers[3] = c_searcher
+searchers[4] = c_root_searcher
