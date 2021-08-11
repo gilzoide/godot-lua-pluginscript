@@ -27,6 +27,7 @@ local property_types = {
 	int = GD.TYPE_INT, [int] = GD.TYPE_INT,
 	float = GD.TYPE_FLOAT, [float] = GD.TYPE_FLOAT,
 	String = GD.TYPE_STRING, [String] = GD.TYPE_STRING,
+	string = GD.TYPE_STRING, [string] = GD.TYPE_STRING,
 
 	Vector2 = GD.TYPE_VECTOR2, [Vector2] = GD.TYPE_VECTOR2,
 	Rect2 = GD.TYPE_RECT2, [Rect2] = GD.TYPE_RECT2,

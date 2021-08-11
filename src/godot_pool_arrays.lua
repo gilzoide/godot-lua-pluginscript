@@ -94,6 +94,9 @@ local function register_pool_array(kind, element_ctype)
 		methods.get_string = function(self)
 			return ffi.string(self:read():ptr(), #self)
 		end
+		methods.hex_encode = function(self)
+			return api.godot_string_hex_encode_buffer(self:read():ptr(), #self)
+		end
 	elseif element_ctype == String then
 		methods.join = function(self, delimiter)
 			local result = String(self[0])

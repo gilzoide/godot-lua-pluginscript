@@ -77,9 +77,7 @@ local methods = {
 	rfind = function(self, what, from)
 		return api.godot_array_rfind(self, Variant(what), from or -1)
 	end,
-	size = function(self)
-		return api.godot_array_size(self)
-	end,
+	size = api.godot_array_size,
 	sort = api.godot_array_sort,
 	sort_custom = function(self, obj, func)
 		api.godot_array_sort_custom(self, obj, String(func))
@@ -152,7 +150,9 @@ Array = ffi.metatype('godot_array', {
 		end
 	end,
 	__concat = concat_gdvalues,
-	__len = methods.size,
+	__len = function(self)
+		return methods.size(self)
+	end,
 	__ipairs = array_ipairs,
 	__pairs = array_ipairs,
 })

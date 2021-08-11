@@ -31,7 +31,7 @@ local function pointer_to_index(ptr)
 end
 
 local function wrap_callback(f)
-	-- TODO: use `pcall` on debug only?
+	-- TODO: use `xpcall` on debug only?
 	return function(...)
 		return select(2, xpcall(f, GD.print_error, ...))
 	end
