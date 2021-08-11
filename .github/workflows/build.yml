@@ -13,25 +13,26 @@ jobs:
         os: [windows-latest, ubuntu-latest, macos-latest]
         include:
           - os: windows-latest
-            make: windows64 CC=gcc
+            make: make windows64 CC=gcc
             arch: x86_64
           - os: ubuntu-latest
-            make: linux64
+            make: make linux64
             arch: x86_64
           - os: macos-latest
-            make: osx MACOSX_DEPLOYMENT_TARGET=10.14
+            make: gmake osx MACOSX_DEPLOYMENT_TARGET=10.14
             arch: x86_64
     steps:
       - uses: actions/checkout@v2
         with:
           submodules: true
+      - name: Install latest GNU Make
+        if: ${{ startsWith(matrix.os, 'macos') }}
+        run: brew install make
       - name: Build artifact
-        env:
-          MAKE_ARGS: ${{ matrix.make || '' }}
-        run: make $MAKE_ARGS
+        run: ${{ matrix.make }}
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.os }}_${{ matrix.arch }}
-          path: build/*/*lua*.*
+          path: build/*/lua*.*
 
