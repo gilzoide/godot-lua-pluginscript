@@ -17,7 +17,7 @@ Check out the [design article](blog/1-design-en.md) for insight in how this proj
 
 
 ## Non-goals
-- Provide calls to core Godot classes' methods via native method bindings
+- Provide calls to core Godot classes' methods via native method bindings `ptrcall`
 - Support multithreading on the Lua side
 
 
@@ -92,7 +92,7 @@ return MyClass
 
 
 ## Building
-This project uses git submodules for some dependencies, so be sure to activate
+This project uses git submodules for its dependencies, so be sure to activate
 submodules before building.
 
 ```sh
@@ -121,3 +121,14 @@ make osx
 The GDNativeLibrary file `lua_pluginscript.gdnlib` is already configured to use
 the built files stored in the `build` folder, so that one can use this
 repository directly inside a Godot project.
+
+
+## Third-party software
+This project uses the following software:
+
+- [godot-headers](https://github.com/godotengine/godot-headers): headers for
+  GDNative, released under the MIT license
+- [LuaJIT](https://luajit.org/luajit.html): Just-In-Time Compiler (JIT) for the
+  Lua programming language, released under the MIT license
+- [High Level GDNative (HGDN)](https://github.com/gilzoide/high-level-gdnative):
+  higher level GDNative API header, released to the Public Domain
