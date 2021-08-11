@@ -189,7 +189,11 @@ if api_1_1 then
 end
 
 function GD.str(value)
-	return api.godot_variant_as_string(Variant(value))
+	if ffi.istype(String, value) then
+		return value
+	else
+		return api.godot_variant_as_string(Variant(value))
+	end
 end
 
 function GD.tostring(value)
