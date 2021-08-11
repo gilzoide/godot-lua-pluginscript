@@ -12,6 +12,7 @@ _CC = $(CROSS)$(CC)
 SRC = hgdn.c language_gdnative.c language_in_editor_callbacks.c
 OBJS = $(SRC:.c=.o) init_script.o
 BUILT_OBJS = $(addprefix build/%/,$(OBJS))
+MAKE_LUAJIT_OUTPUT = build/%/luajit/src/luajit build/%/luajit/src/lua51.dll build/%/luajit/src/libluajit.a
 
 # Note that the order is important!
 LUA_SRC = \
@@ -31,7 +32,7 @@ LUA_SRC = \
 	src/in_editor_callbacks.lua
 
 define COMPILE_O = 
-build/%/$(basename $1).o: src/$1 | build/%/
+build/%/$(basename $1).o: src/$1 | build/%/.
 	$$(_CC) -o $$@ $$< -c $$(CFLAGS)
 endef
 
@@ -39,41 +40,43 @@ endef
 $(foreach f,$(SRC),$(eval $(call COMPILE_O,$f)))
 
 # Avoid removing intermediate files created by chained implicit rules
-.PRECIOUS: build/%/ build/%/luajit build/%/init_script.c $(BUILT_OBJS)
+.PRECIOUS: build/%/. build/%/luajit build/%/init_script.c $(BUILT_OBJS) build/%/lua51.dll $(MAKE_LUAJIT_OUTPUT)
 
-build/%/:
-	mkdir -p $@
+build/%/.:
+	mkdir -p $(dir $@)
 
-build/%/luajit: | build/%/
+build/%/luajit: | build/%/.
 	cp -r lib/luajit $@
-	$(MAKE) -C $@ TARGET_SYS=$(TARGET_SYS) $(MAKE_LUAJIT_ARGS)
-	cp $@/src/$(LUAJIT_LIB) $|
 
-build/common/init_script.lua: $(LUA_SRC) | build/common/
+$(MAKE_LUAJIT_OUTPUT): | build/%/luajit
+	$(MAKE) -C build/$*/luajit $(and $(TARGET_SYS),TARGET_SYS=$(TARGET_SYS)) $(MAKE_LUAJIT_ARGS)
+
+build/%/lua51.dll: build/%/luajit/src/lua51.dll
+	cp $< $@
+
+build/common/init_script.lua: $(LUA_SRC) | build/common/.
 	cat $^ > $@
 
-build/%/init_script.c: src/tools/lua_script_to_c.lua build/common/init_script.lua | build/%/luajit
-	$(if $(CROSS), lua, build/$*/luajit/src/luajit$(EXE)) $^ LUA_INIT_SCRIPT > $@
+build/%/init_script.c: src/tools/lua_script_to_c.lua build/common/init_script.lua build/%/luajit/src/luajit
+	$(if $(CROSS), lua, $(lastword $^)$(EXE)) $(wordlist 1,2,$^) LUA_INIT_SCRIPT > $@
 
 build/%/init_script.o: build/%/init_script.c
 	$(_CC) -o $@ $< -c $(CFLAGS)
 
 build/%/lua_pluginscript.so: TARGET_SYS = Linux
-build/%/lua_pluginscript.so: LUAJIT_LIB = libluajit.a
-build/%/lua_pluginscript.so: $(BUILT_OBJS) | build/%/luajit
-	$(_CC) -o $@ $^ build/$*/$(LUAJIT_LIB) -shared $(CFLAGS) -lm -ldl
+build/%/lua_pluginscript.so: $(BUILT_OBJS) build/%/luajit/src/libluajit.a
+	$(_CC) -o $@ $^ -shared $(CFLAGS) -lm -ldl
 
 build/%/lua_pluginscript.dll: TARGET_SYS = Windows
 build/%/lua_pluginscript.dll: EXE = .exe
-build/%/lua_pluginscript.dll: LUAJIT_LIB = lua51.dll
-build/%/lua_pluginscript.dll: $(BUILT_OBJS) | build/%/luajit
-	$(_CC) -o $@ $^ -shared $(CFLAGS) -Lbuild/$* -llua51
+build/%/lua_pluginscript.dll: $(BUILT_OBJS) build/%/lua51.dll
+	$(_CC) -o $@ $^ -shared $(CFLAGS)
 
 build/%/lua_pluginscript.dylib: TARGET_SYS = Darwin
-build/%/lua_pluginscript.dylib: LUAJIT_LIB = libluajit.a
-build/%/lua_pluginscript.dylib: $(BUILT_OBJS) | build/%/luajit
-	$(_CC) -o $@ $^ build/$*/$(LUAJIT_LIB) -shared $(CFLAGS)
+build/%/lua_pluginscript.dylib: $(BUILT_OBJS) build/%/luajit/src/libluajit.a
+	$(_CC) -o $@ $^ -shared $(CFLAGS)
 
+# Phony targets
 .PHONY: clean
 clean:
 	$(RM) -r build/*/
