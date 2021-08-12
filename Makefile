@@ -15,7 +15,10 @@ SRC = hgdn.c language_gdnative.c language_in_editor_callbacks.c
 OBJS = $(SRC:.c=.o) init_script.o
 BUILT_OBJS = $(addprefix build/%/,$(OBJS))
 MAKE_LUAJIT_OUTPUT = build/%/luajit/src/luajit build/%/luajit/src/lua51.dll build/%/luajit/src/libluajit.a
-BUILD_FORLDERS = build/common build/windows_x86 build/windows_x86_64 build/linux_x86 build/linux_x86_64 build/osx_x86_64 build/osx_arm64 build/osx_universal64
+BUILD_FORLDERS = build/common build/windows_x86 build/windows_x86_64 build/linux_x86 build/linux_x86_64 build/osx_x86_64 build/osx_arm64 build/osx_universal64 build/addons/godot-lua-pluginscript
+DIST_SRC = LICENSE lua_pluginscript.gdnlib $(wildcard build/*/lua*.*)
+DIST_ZIP_SRC = $(addprefix addons/godot-lua-pluginscript/,$(DIST_SRC))
+DIST_DEST = $(addprefix build/addons/godot-lua-pluginscript/,$(DIST_SRC))
 
 # Note that the order is important!
 LUA_SRC = \
@@ -88,10 +91,18 @@ build/osx_arm64/lua_pluginscript.dylib: MAKE_LUAJIT_ARGS += TARGET_FLAGS="-arch 
 build/osx_universal64/lua_pluginscript.dylib: build/osx_x86_64/lua_pluginscript.dylib build/osx_arm64/lua_pluginscript.dylib | build/osx_universal64
 	$(_LIPO) $^ -create -output $@
 
+build/addons/godot-lua-pluginscript/%:
+	@mkdir -p $(dir $@)
+	cp $* $@
+build/lua_pluginscript.zip: $(DIST_DEST)
+	cd build && zip lua_pluginscript $(DIST_ZIP_SRC)
+
 # Phony targets
-.PHONY: clean
+.PHONY: clean dist
 clean:
 	$(RM) -r build/*/
+
+dist: build/lua_pluginscript.zip
 
 # Targets by OS + arch
 linux32: MAKE_LUAJIT_ARGS += CC="$(CC) -m32 -fPIC"
