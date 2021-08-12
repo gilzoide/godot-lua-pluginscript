@@ -19,8 +19,8 @@ jobs:
             make: make linux64
             arch: x86_64
           - os: macos-latest
-            make: make osx MACOSX_DEPLOYMENT_TARGET=10.14
-            arch: x86_64
+            make: make osx64 MACOSX_DEPLOYMENT_TARGET=10.14
+            arch: x86_64-arm64
     steps:
       - uses: actions/checkout@v2
         with:
