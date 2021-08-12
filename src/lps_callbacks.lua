@@ -65,7 +65,7 @@ clib.lps_script_init_cb = wrap_callback(function(manifest, path, source)
 	for k, v in pairs(metadata) do
 		if k == 'class_name' then
 			manifest.name = StringName(v)
-		elseif k == 'tool' then
+		elseif k == 'is_tool' then
 			manifest.is_tool = bool(v)
 		elseif k == 'extends' then
 			manifest.base = StringName(v)

@@ -60,7 +60,7 @@ desenvolvimento do projeto.
 local MinhaClasse = {}
 
 -- Opcional: marcar classe como tool
-MinhaClasse.tool = true
+MinhaClasse.is_tool = true
 
 -- Opcional: declarar o nome da classe base, padrão 'Reference'
 MinhaClasse.extends = 'Node'

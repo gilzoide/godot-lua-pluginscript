@@ -56,7 +56,7 @@ some design decisions, which may change during development.
 local MyClass = {}
 
 -- Optional: set class as tool, defaults to false
-MyClass.tool = true
+MyClass.is_tool = true
 
 -- Optional: set base class by name, defaults to 'Reference'
 MyClass.extends = 'Node'
