@@ -4,5 +4,5 @@ s/\\/\\\\/g
 s/\"/\\"/g
 # Add starting quote
 s/^/"/
-# Add ending quote
-s/$/"/
+# Add ending newline and quote
+s/$/\\n"/
