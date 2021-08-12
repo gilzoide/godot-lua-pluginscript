@@ -85,7 +85,7 @@ build/osx_x86_64/lua_pluginscript.dylib: CFLAGS += -arch x86_64
 build/osx_x86_64/lua_pluginscript.dylib: MAKE_LUAJIT_ARGS += TARGET_FLAGS="-arch x86_64"
 build/osx_arm64/lua_pluginscript.dylib: CFLAGS += -arch arm64
 build/osx_arm64/lua_pluginscript.dylib: MAKE_LUAJIT_ARGS += TARGET_FLAGS="-arch arm64"
-build/osx_universal64/lua_pluginscript.dylib: build/osx_x86_64/lua_pluginscript.dylib build/osx_arm64/lua_pluginscript.dylib
+build/osx_universal64/lua_pluginscript.dylib: build/osx_x86_64/lua_pluginscript.dylib build/osx_arm64/lua_pluginscript.dylib | build/osx_universal64
 	$(_LIPO) $^ -create -output $@
 
 # Phony targets
