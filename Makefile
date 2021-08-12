@@ -13,6 +13,7 @@ SRC = hgdn.c language_gdnative.c language_in_editor_callbacks.c
 OBJS = $(SRC:.c=.o) init_script.o
 BUILT_OBJS = $(addprefix build/%/,$(OBJS))
 MAKE_LUAJIT_OUTPUT = build/%/luajit/src/luajit build/%/luajit/src/lua51.dll build/%/luajit/src/libluajit.a
+BUILD_FORLDERS = build/common build/windows_x86 build/windows_x86_64 build/linux_x86 build/linux_x86_64 build/osx_x86_64 build/osx_arm64
 
 # Note that the order is important!
 LUA_SRC = \
@@ -34,7 +35,7 @@ LUA_SRC = \
 # Avoid removing intermediate files created by chained implicit rules
 .PRECIOUS: build/%/luajit build/%/init_script.c $(BUILT_OBJS) build/%/lua51.dll $(MAKE_LUAJIT_OUTPUT)
 
-build/common build/windows_x86 build/windows_x86_64 build/linux_x86 build/linux_x86_64 build/osx_x86_64:
+$(BUILD_FORLDERS):
 	mkdir -p $@
 
 build/%/hgdn.o: src/hgdn.c
@@ -95,4 +96,9 @@ cross-windows64: CROSS = x86_64-w64-mingw32-
 cross-windows64: MAKE_LUAJIT_ARGS += HOST_CC="$(CC)" CROSS="x86_64-w64-mingw32-" LDFLAGS=-static-libgcc
 cross-windows64: windows64
 
-osx: build/osx_x86_64/lua_pluginscript.dylib
+osx-x86_64: CFLAGS += -target x86_64-apple-macos$(MACOSX_DEPLOYMENT_TARGET)
+osx-x86_64: MAKE_LUAJIT_ARGS += TARGET_CFLAGS="-target x86_64-apple-macos$(MACOSX_DEPLOYMENT_TARGET)"
+osx-x86_64: build/osx_x86_64/lua_pluginscript.dylib
+osx-arm64: CFLAGS += -target arm64-apple-macos11
+osx-arm64: MAKE_LUAJIT_ARGS += TARGET_CFLAGS="-target arm64-apple-macos11"
+osx-arm64: build/osx_arm64/lua_pluginscript.dylib
