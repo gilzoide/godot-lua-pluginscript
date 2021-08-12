@@ -73,10 +73,10 @@ build/%/lua_pluginscript.dll: $(BUILT_OBJS) build/%/lua51.dll
 build/%/lua_pluginscript.dylib: TARGET_SYS = Darwin
 build/%/lua_pluginscript.dylib: $(BUILT_OBJS) build/%/luajit/src/libluajit.a
 	$(_CC) -o $@ $^ -shared $(CFLAGS) $(LDFLAGS)
-build/osx_x86_64/lua_pluginscript.dylib: CFLAGS += -target x86_64-apple-macos$(MACOSX_DEPLOYMENT_TARGET)
-build/osx_x86_64/lua_pluginscript.dylib: MAKE_LUAJIT_ARGS += TARGET_CFLAGS="-target x86_64-apple-macos$(MACOSX_DEPLOYMENT_TARGET)"
-build/osx_arm64/lua_pluginscript.dylib: CFLAGS += -target arm64-apple-macos11
-build/osx_arm64/lua_pluginscript.dylib: MAKE_LUAJIT_ARGS += TARGET_CFLAGS="-target arm64-apple-macos11"
+build/osx_x86_64/lua_pluginscript.dylib: CFLAGS += -target x86_64-apple-macos
+build/osx_x86_64/lua_pluginscript.dylib: MAKE_LUAJIT_ARGS += TARGET_CFLAGS="-target x86_64-apple-macos"
+build/osx_arm64/lua_pluginscript.dylib: CFLAGS += -target arm64-apple-macos
+build/osx_arm64/lua_pluginscript.dylib: MAKE_LUAJIT_ARGS += TARGET_CFLAGS="-target arm64-apple-macos"
 build/osx_universal64/lua_pluginscript.dylib: build/osx_x86_64/lua_pluginscript.dylib build/osx_arm64/lua_pluginscript.dylib
 	$(_LIPO) $^ -create -output $@
 
