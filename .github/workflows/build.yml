@@ -20,7 +20,6 @@ jobs:
             arch: x86_64
           - os: macos-latest
             make: |
-              clang --version
               make osx-arm64 MACOSX_DEPLOYMENT_TARGET=11.0
               make osx-x86_64 MACOSX_DEPLOYMENT_TARGET=10.14
               make osx64
