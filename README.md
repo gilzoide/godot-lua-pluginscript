@@ -2,12 +2,13 @@
 
 
 ## Design
-Check out the [design article](blog/1-design-en.md) for insight in how this project is being designed.
+Check out the [design article](blog/1-design-en.md) for insight in how this
+project is being designed.
 
 
 ## Goals
-- Provide support for the Lua language in Godot in a way that does not require
-  compiling the engine from scratch
+- Provide support for Lua as a scripting language in Godot in a way that does
+  not require compiling the engine from scratch
 - Be able to seamlessly communicate with any other language supported by Godot,
   like GDScript, Visual Script and C#, in an idiomatic way
 - Simple script description interface that doesn't need `require`ing anything
@@ -17,12 +18,12 @@ Check out the [design article](blog/1-design-en.md) for insight in how this proj
 
 
 ## Non-goals
-- Provide calls to core Godot classes' methods via native method bindings `ptrcall`
+- Provide calls to all core Godot classes' methods via native method bindings
 - Support multithreading on the Lua side
 
 
 ## Script example
-This is an example of how a Lua script will look like. There are comments regarding
+This is an example of how a Lua script looks like. There are comments regarding
 some design decisions, which may change during development.
 
 ```lua
@@ -111,11 +112,11 @@ specifying the system as target:
 
 ```sh
 # Choose one of the supported platforms, based on your operating system
-make windows64
-make windows32
-make linux64
-make linux32
-make osx
+make windows64  # x86_64
+make windows32  # x86
+make linux64    # x86_64
+make linux32    # x86
+make osx64      # "universal" multiarch x86_64 + amd64 dylib
 ```
 
 The GDNativeLibrary file `lua_pluginscript.gdnlib` is already configured to use
@@ -132,3 +133,9 @@ This project uses the following software:
   Lua programming language, released under the MIT license
 - [High Level GDNative (HGDN)](https://github.com/gilzoide/high-level-gdnative):
   higher level GDNative API header, released to the Public Domain
+
+
+## Other projects for using Lua in Godot
+- https://github.com/perbone/luascript
+- https://github.com/Trey2k/lua
+- https://github.com/zozer/godot-lua-module
