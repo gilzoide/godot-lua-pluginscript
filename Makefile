@@ -74,9 +74,9 @@ build/%/lua_pluginscript.dylib: TARGET_SYS = Darwin
 build/%/lua_pluginscript.dylib: $(BUILT_OBJS) build/%/luajit/src/libluajit.a
 	$(_CC) -o $@ $^ -shared $(CFLAGS) $(LDFLAGS)
 build/osx_x86_64/lua_pluginscript.dylib: CFLAGS += -arch x86_64
-build/osx_x86_64/lua_pluginscript.dylib: MAKE_LUAJIT_ARGS += TARGET_CFLAGS="-arch x86_64"
+build/osx_x86_64/lua_pluginscript.dylib: MAKE_LUAJIT_ARGS += TARGET_FLAGS="-arch x86_64"
 build/osx_arm64/lua_pluginscript.dylib: CFLAGS += -arch arm64
-build/osx_arm64/lua_pluginscript.dylib: MAKE_LUAJIT_ARGS += TARGET_CFLAGS="-arch arm64"
+build/osx_arm64/lua_pluginscript.dylib: MAKE_LUAJIT_ARGS += TARGET_FLAGS="-arch arm64"
 build/osx_universal64/lua_pluginscript.dylib: build/osx_x86_64/lua_pluginscript.dylib build/osx_arm64/lua_pluginscript.dylib
 	$(_LIPO) $^ -create -output $@
 
