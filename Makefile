@@ -61,16 +61,16 @@ build/%/init_script.o: build/%/init_script.c
 
 build/%/lua_pluginscript.so: TARGET_SYS = Linux
 build/%/lua_pluginscript.so: $(BUILT_OBJS) build/%/luajit/src/libluajit.a
-	$(_CC) -o $@ $^ -shared $(CFLAGS) -lm -ldl
+	$(_CC) -o $@ $^ -shared $(CFLAGS) -lm -ldl $(LDFLAGS)
 
 build/%/lua_pluginscript.dll: TARGET_SYS = Windows
 build/%/lua_pluginscript.dll: EXE = .exe
 build/%/lua_pluginscript.dll: $(BUILT_OBJS) build/%/lua51.dll
-	$(_CC) -o $@ $^ -shared $(CFLAGS)
+	$(_CC) -o $@ $^ -shared $(CFLAGS) $(LDFLAGS)
 
 build/%/lua_pluginscript.dylib: TARGET_SYS = Darwin
 build/%/lua_pluginscript.dylib: $(BUILT_OBJS) build/%/luajit/src/libluajit.a
-	$(_CC) -o $@ $^ -shared $(CFLAGS)
+	$(_CC) -o $@ $^ -shared $(CFLAGS) $(LDFLAGS)
 
 # Phony targets
 .PHONY: clean
