@@ -138,7 +138,7 @@ local string_methods = {
 		end
 	end,
 	substr = function(self, from, len)
-		return api.godot_string_substr(self, from, len or -1)
+		return api.godot_string_substr(self, from or 0, len or -1)
 	end,
 	to_double = api.godot_string_to_double,
 	to_float = api.godot_string_to_float,
@@ -234,6 +234,45 @@ local string_methods = {
 	is_valid_integer = api.godot_string_is_valid_integer,
 	is_valid_ip_address = api.godot_string_is_valid_ip_address,
 }
+
+-- Implement some of the Lua string API
+string_methods.byte = function(self, i, j)
+	return string.byte(tostring(self), i, j)
+end
+
+string_methods.gmatch = function(self, patt, init)
+	return string.gmatch(tostring(self), patt, init)
+end
+
+string_methods.gsub = function(self, patt, repl, n)
+	return string.gsub(tostring(self), patt, repl, n)
+end
+
+string_methods.len = string_methods.length
+string_methods.lower = string_methods.to_lower
+string_methods.upper = string_methods.to_upper
+
+string_methods.match = function(self, patt, init)
+	return string.match(tostring(self), patt, init)
+end
+
+string_methods.rep = function(self, n, sep)
+	return string.rep(tostring(self), n, sep)
+end
+
+string_methods.reverse = function(self)
+	return string.reverse(tostring(self))
+end
+
+string_methods.sub = function(self, i, j)
+	i = i or 1
+	j = j or -1
+	if i < 0 then i = i + #self + 1 end
+	if i <= 0 then i = 1 end
+	if j < 0 then j = j + #self + 1 end
+	i = i - 1
+	return string_methods.substr(self, i, j - i)
+end
 
 if api_1_1 then
 	string_methods.dedent = api_1_1.godot_string_dedent
