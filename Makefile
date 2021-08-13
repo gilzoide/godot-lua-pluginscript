@@ -1,10 +1,15 @@
 DEBUG ?= 0
+LUAJIT_52_COMPAT ?= 1
 
 CFLAGS += -std=c11 "-I$(CURDIR)/lib/godot-headers" "-I$(CURDIR)/lib/high-level-gdnative" "-I$(CURDIR)/lib/luajit/src"
 ifeq ($(DEBUG), 1)
 	CFLAGS += -g -O0 -DDEBUG
 else
 	CFLAGS += -O3 -DNDEBUG
+endif
+
+ifeq ($(LUAJIT_52_COMPAT), 1)
+	MAKE_LUAJIT_ARGS += XCFLAGS=-DLUAJIT_ENABLE_LUA52COMPAT
 endif
 
 _CC = $(CROSS)$(CC)
@@ -68,7 +73,7 @@ build/%/lua51.dll: build/%/luajit/src/lua51.dll
 
 build/common/init_script.lua: $(LUA_SRC) | build/common
 	cat $^ > $@
-build/%/init_script.c: build/common/init_script.lua
+build/%/init_script.c: build/common/init_script.lua $(INIT_SCRIPT_SED)
 	echo "const char LUA_INIT_SCRIPT[] = {" > $@
 	sed $(addprefix -f ,$(INIT_SCRIPT_SED)) $< >> $@
 	echo "};" >> $@

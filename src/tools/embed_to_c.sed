@@ -1,7 +1,7 @@
 # Escape backslashes
 s/\\/\\\\/g
 # Escape quotes
-s/\"/\\"/g
+s/"/\\"/g
 # Add starting quote
 s/^/"/
 # Add ending newline and quote
