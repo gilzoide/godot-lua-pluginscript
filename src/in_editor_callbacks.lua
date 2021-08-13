@@ -23,6 +23,7 @@
 if Engine:is_editor_hint() then
 	-- void (*lps_get_template_source_code_cb)(const godot_string *class_name, const godot_string *base_class_name, godot_string *ret)
 	clib.lps_get_template_source_code_cb = wrap_callback(function(class_name, base_class_name, ret)
+		class_name = class_name:gsub("[^_%w]", "_")
 		ret[0] = String('local ' .. class_name .. ' = {\n\textends = "' .. base_class_name .. '",\n}\n\nreturn ' .. class_name)
 	end)
 
