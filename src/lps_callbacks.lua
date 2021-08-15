@@ -23,8 +23,11 @@
 local loadstring = loadstring or load
 local unpack = table.unpack or unpack
 
+local weakv = { __weak = 'v' }
+
 local lps_scripts = {}
 local lps_instances = {}
+local lps_coroutines = setmetatable({}, weakv)
 
 local function pointer_to_index(ptr)
 	return tonumber(ffi.cast('uintptr_t', ptr))
@@ -36,6 +39,16 @@ local function wrap_callback(f)
 		return select(2, xpcall(f, GD.print_error, ...))
 	end
 end
+
+local function get_lua_instance(ptr)
+	return lps_instances[pointer_to_index(ptr)]
+end
+
+local function set_lua_instance(ptr, instance)
+	lps_instances[pointer_to_index(ptr)] = instance
+end
+
+local thread_cache = nil
 
 -- void (*lps_language_add_global_constant_cb)(const godot_string *name, const godot_variant *value);
 clib.lps_language_add_global_constant_cb = wrap_callback(function(name, value)
@@ -109,18 +122,18 @@ clib.lps_instance_init_cb = wrap_callback(function(script_data, owner)
 	if script._init then
 		script._init(instance)
 	end
-	lps_instances[pointer_to_index(owner)] = instance
+	set_lua_instance(owner, instance)
 	return owner
 end)
 
 -- void (*lps_instance_finish_cb)(godot_pluginscript_instance_data *data);
 clib.lps_instance_finish_cb = wrap_callback(function(data)
-	lps_instances[pointer_to_index(data)] = nil
+	set_lua_instance(owner, nil)
 end)
 
 -- godot_bool (*lps_instance_set_prop_cb)(godot_pluginscript_instance_data *data, const godot_string *name, const godot_variant *value);
 clib.lps_instance_set_prop_cb = wrap_callback(function(data, name, value)
-	local self = lps_instances[pointer_to_index(data)]
+	local self = get_lua_instance(data)
 	local script = self.__script
 	name = tostring(name)
 	local prop = script[name]
@@ -136,7 +149,7 @@ end)
 
 -- godot_bool (*lps_instance_get_prop_cb)(godot_pluginscript_instance_data *data, const godot_string *name, godot_variant *ret);
 clib.lps_instance_get_prop_cb = wrap_callback(function(data, name, ret)
-	local self = lps_instances[pointer_to_index(data)]
+	local self = get_lua_instance(data)
 	local script = self.__script
 	name = tostring(name)
 	local prop = script[name]
@@ -158,7 +171,7 @@ end)
 
 -- void (*lps_instance_call_method_cb)(godot_pluginscript_instance_data *data, const godot_string_name *method, const godot_variant **args, int argcount, godot_variant *ret, godot_variant_call_error *error);
 clib.lps_instance_call_method_cb = wrap_callback(function(data, name, args, argcount, ret, err)
-	local self = lps_instances[pointer_to_index(data)]
+	local self = get_lua_instance(data)
 	name = tostring(name)
 	local method = self.__script[name]
 	if method ~= nil then
@@ -166,7 +179,12 @@ clib.lps_instance_call_method_cb = wrap_callback(function(data, name, args, argc
 		for i = 1, argcount do
 			args_table[i] = args[i - 1]:unbox()
 		end
-		local unboxed_ret = method(self, unpack(args_table))
+		local co = setthreadfunc(thread_cache, method)
+		thread_cache = nil
+		local success, unboxed_ret = assert(coroutine.resume(co, self, unpack(args_table)))
+		if coroutine.status(co) == 'dead' then  -- reuse dead coroutines
+			thread_cache = co
+		end
 		ret[0] = Variant(unboxed_ret)
 		err.error = GD.CALL_OK
 	else
@@ -176,6 +194,6 @@ end)
 
 -- void (*lps_instance_notification_cb)(godot_pluginscript_instance_data *data, int notification);
 clib.lps_instance_notification_cb = wrap_callback(function(data, what)
-	local self = lps_instances[pointer_to_index(data)]
+	local self = get_lua_instance(data)
 	self:call("_notification", what)
 end)

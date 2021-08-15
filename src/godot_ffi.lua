@@ -1375,6 +1375,7 @@ typedef struct godot_pluginscript_language_desc {
 const godot_gdnative_core_api_struct *hgdn_core_api;
 const godot_gdnative_core_1_1_api_struct *hgdn_core_1_1_api;
 const godot_gdnative_core_1_2_api_struct *hgdn_core_1_2_api;
+godot_object *hgdn_library;
 
 // Global PluginScript description and callbacks
 void (*lps_language_add_global_constant_cb)(const godot_string *name, const godot_variant *value);

@@ -24,6 +24,25 @@ for k, v in pairs(api.godot_get_global_constants()) do
 	GD[tostring(k)] = v
 end
 
+local library_resource_dir = clib.hgdn_library.resource_path:get_base_dir()
+local CoroutineObject = GD.load(library_resource_dir:plus_file('coroutine.lua'))
+
+function GD.yield(obj, signal_name)
+	local co, is_main = coroutine.running()
+	assert(co and not is_main, "GD.yield can be called only from script methods")
+	local co_obj = lps_coroutines[co]
+	if not co_obj then
+		co_obj = CoroutineObject:new()
+		local co_obj_table = get_lua_instance(co_obj)
+		co_obj_table.coroutine = co
+		lps_coroutines[co] = co_obj_table
+	end
+	if obj and signal_name then
+		obj:connect(signal_name, co_obj, "resume")
+	end
+	coroutine.yield(co_obj)
+end
+
 local Engine = api.godot_global_get_singleton("Engine")
 setmetatable(_G, {
 	__index = function(self, key)

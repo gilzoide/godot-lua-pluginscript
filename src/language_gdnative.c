@@ -59,9 +59,25 @@ static int lps_lua_touserdata(lua_State *L) {
 	return 1;
 }
 
+static int lps_lua_set_thread_func(lua_State *L) {
+	lua_State *co;
+	if (lua_isthread(L, 1)) {
+		co = lua_tothread(L, 1);
+		lua_settop(co, 0);
+		lua_pushvalue(L, 1);
+	}
+	else {
+		co = lua_newthread(L);
+	}
+	lua_pushvalue(L, 2);
+	lua_xmove(L, co, 1);
+	return 1;
+}
+
 static godot_pluginscript_language_data *lps_language_init() {
 	lua_State *L = lua_newstate(&lps_alloc, NULL);
 	lua_register(L, "touserdata", &lps_lua_touserdata);
+	lua_register(L, "setthreadfunc", &lps_lua_set_thread_func);
 	luaL_openlibs(L);
 	if (luaL_loadstring(L, LUA_INIT_SCRIPT) != 0) {
 		const char *error_msg = lua_tostring(L, -1);
