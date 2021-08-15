@@ -206,7 +206,6 @@ GDN_EXPORT void godot_gdnative_init(godot_gdnative_init_options *options) {
 	else {
 		lps_active_library_path = hgdn_string_get(options->active_library_path);
 	}
-		hgdn_print("LIB %s", lps_active_library_path.ptr);
 
 	hgdn_pluginscript_api->godot_pluginscript_register_language(&lps_language_desc);
 }
