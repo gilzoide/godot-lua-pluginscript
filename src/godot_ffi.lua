@@ -454,13 +454,11 @@ typedef struct godot_gdnative_api_version {
 	unsigned int minor;
 } godot_gdnative_api_version;
 
-typedef struct godot_gdnative_api_struct godot_gdnative_api_struct;
-
-struct godot_gdnative_api_struct {
+typedef struct godot_gdnative_api_struct {
 	unsigned int type;
 	godot_gdnative_api_version version;
-	const godot_gdnative_api_struct *next;
-};
+	const struct godot_gdnative_api_struct *next;
+} godot_gdnative_api_struct;
 
 typedef godot_object *(*godot_class_constructor)();
 

@@ -66,6 +66,7 @@ static godot_pluginscript_language_data *lps_language_init() {
 	if (luaL_loadstring(L, LUA_INIT_SCRIPT) != 0) {
 		const char *error_msg = lua_tostring(L, -1);
 		HGDN_PRINT_ERROR("Error loading initialization script: %s", error_msg);
+		return L;
 	}
 	lua_pushlstring(L, lps_active_library_path.ptr, lps_active_library_path.length);
 	if (lua_pcall(L, 1, 0, 0) != 0) {
@@ -76,9 +77,7 @@ static godot_pluginscript_language_data *lps_language_init() {
 }
 
 static void lps_language_finish(godot_pluginscript_language_data *data) {
-	lua_State *L = (lua_State *) data;
-	lua_gc(L, LUA_GCCOLLECT, 0);
-	lua_close(L);
+	lua_close((lua_State *) data);
 }
 
 static void lps_language_add_global_constant(godot_pluginscript_language_data *data, const godot_string *name, const godot_variant *value) {

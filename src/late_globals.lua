@@ -103,7 +103,7 @@ local function c_searcher(name, name_override)
 		func_suffix = func_suffix:sub(igmark + 1)
 	end
 	local f, err = package.loadlib(filename, 'luaopen_' .. func_suffix)
-	return assert(f, string.format('error loading module %q from file %q:\n\t%s', name, filename, err))
+	return assert(f, string.format('error loading module %q from file %q:\n\t%s', name_override or name, filename, err))
 end
 
 local function c_root_searcher(name)

@@ -74,9 +74,9 @@ build/%/lua51.dll: build/%/luajit/src/lua51.dll
 build/common/init_script.lua: $(LUA_SRC) | build/common
 	cat $^ > $@
 build/%/init_script.c: build/common/init_script.lua $(INIT_SCRIPT_SED)
-	echo "const char LUA_INIT_SCRIPT[] = {" > $@
+	echo "const char LUA_INIT_SCRIPT[] =" > $@
 	sed $(addprefix -f ,$(INIT_SCRIPT_SED)) $< >> $@
-	echo "};" >> $@
+	echo ";" >> $@
 
 build/%/init_script.o: build/%/init_script.c
 	$(_CC) -o $@ $< -c $(CFLAGS)
