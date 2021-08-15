@@ -27,6 +27,7 @@ end
 GD = {
 	api = api,
 	api_1_1 = api_1_1,
+	api_1_2 = api_1_2,
 	-- godot_error
 	OK = ffi.C.GODOT_OK, 
 	FAILED = ffi.C.GODOT_FAILED, 

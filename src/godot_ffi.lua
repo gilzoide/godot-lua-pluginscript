@@ -1371,7 +1371,7 @@ typedef struct godot_pluginscript_language_desc {
 	godot_pluginscript_script_desc script_desc;
 } godot_pluginscript_language_desc;
 
-// Global API pointer
+// Global API pointers
 const godot_gdnative_core_api_struct *hgdn_core_api;
 const godot_gdnative_core_1_1_api_struct *hgdn_core_1_1_api;
 const godot_gdnative_core_1_2_api_struct *hgdn_core_1_2_api;
@@ -1394,7 +1394,7 @@ godot_bool (*lps_validate_cb)(const godot_string *script, int *line_error, int *
 local active_library_path = ...
 local clib = ffi.load(active_library_path, true)
 
-api = clib.hgdn_core_api
-api_1_1 = clib.hgdn_core_1_1_api
-api_1_2 = clib.hgdn_core_1_2_api
+local api = clib.hgdn_core_api
+local api_1_1 = clib.hgdn_core_1_1_api
+local api_1_2 = clib.hgdn_core_1_2_api
 
