@@ -109,9 +109,8 @@ clib.lps_instance_init_cb = wrap_callback(function(script_data, owner)
 	if script._init then
 		script._init(instance)
 	end
-	local instance_index = pointer_to_index(touserdata(instance))
-	lps_instances[instance_index] = instance
-	return ffi.cast('void *', instance_index)
+	lps_instances[pointer_to_index(owner)] = instance
+	return owner
 end)
 
 -- void (*lps_instance_finish_cb)(godot_pluginscript_instance_data *data);
@@ -176,7 +175,7 @@ clib.lps_instance_call_method_cb = wrap_callback(function(data, name, args, argc
 end)
 
 -- void (*lps_instance_notification_cb)(godot_pluginscript_instance_data *data, int notification);
-clib.lps_instance_notification_cb = function(data, what)
+clib.lps_instance_notification_cb = wrap_callback(function(data, what)
 	local self = lps_instances[pointer_to_index(data)]
 	self:call("_notification", what)
-end
+end)

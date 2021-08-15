@@ -54,7 +54,7 @@ Semaphore = Class:new("_Semaphore")
 
 local active_library_dirsep_pos, dll_ext = active_library_path:match("()[^/]+(%.%w+)$")
 local execdir_repl = OS:has_feature("standalone") and active_library_path:sub(1, active_library_dirsep_pos - 1) or tostring(ProjectSettings:globalize_path("res://"))
-execdir_repl = string.sub(execdir_repl, 1, -2)  -- Remove trailing slash
+execdir_repl = execdir_repl:sub(1, -2)  -- Remove trailing slash
 
 -- Supports "res://" and "user://" paths
 -- Replaces "!" for executable path on standalone builds or project path otherwise
