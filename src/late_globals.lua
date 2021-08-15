@@ -44,6 +44,7 @@ setmetatable(_G, {
 -- References are already got, just register them globally
 _G.Engine = Engine
 _G.ClassDB = ClassDB
+_G.ResourceLoader = ResourceLoader
 -- These classes are registered with a prepending "_" in ClassDB
 File = Class:new("_File")
 Directory = Class:new("_Directory")

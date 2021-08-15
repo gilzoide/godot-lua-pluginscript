@@ -219,3 +219,7 @@ function GD.print_error(...)
 	api.godot_print_error(message, info.name, info.short_src, info.currentline)
 end
 
+local ResourceLoader = api.godot_global_get_singleton("ResourceLoader")
+function GD.load(path)
+	return ResourceLoader:load(path)
+end
