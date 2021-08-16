@@ -25,7 +25,9 @@ local vector2_methods = {
 	varianttype = GD.TYPE_VECTOR2,
 
 	new = api.godot_vector2_new,
-	as_string = api.godot_vector2_as_string,
+	as_string = function(self)
+		return ffi.gc(api.godot_vector2_as_string(self), api.godot_string_destroy)
+	end,
 	normalized = api.godot_vector2_normalized,
 	length = api.godot_vector2_length,
 	angle = api.godot_vector2_angle,
@@ -113,7 +115,9 @@ local vector3_methods = {
 	varianttype = GD.TYPE_VECTOR3,
 
 	new = api.godot_vector3_new,
-	as_string = api.godot_vector3_as_string,
+	as_string = function(self)
+		return ffi.gc(api.godot_vector3_as_string(self), api.godot_string_destroy)
+	end,
 	min_axis = api.godot_vector3_min_axis,
 	max_axis = api.godot_vector3_max_axis,
 	length = api.godot_vector3_length,
@@ -217,7 +221,9 @@ local color_methods = {
 	get_h = api.godot_color_get_h,
 	get_s = api.godot_color_get_s,
 	get_v = api.godot_color_get_v,
-	as_string = api.godot_color_as_string,
+	as_string = function(self)
+		return ffi.gc(api.godot_color_as_string(self), api.godot_string_destroy)
+	end,
 	to_rgba32 = api.godot_color_to_rgba32,
 	to_argb32 = api.godot_color_to_argb32,
 	gray = api.godot_color_gray,
@@ -225,7 +231,9 @@ local color_methods = {
 	contrasted = api.godot_color_contrasted,
 	linear_interpolate = api.godot_color_linear_interpolate,
 	blend = api.godot_color_blend,
-	to_html = api.godot_color_to_html,
+	to_html = function(self)
+		return ffi.gc(api.godot_color_to_html(self), api.godot_string_destroy)
+	end,
 }
 
 if api_1_1 then
@@ -294,7 +302,9 @@ local rect2_methods = {
 
 	new_with_position_and_size = api.godot_rect2_new_with_position_and_size,
 	new = api.godot_rect2_new,
-	as_string = api.godot_rect2_as_string,
+	as_string = function(self)
+		return ffi.gc(api.godot_rect2_as_string(self), api.godot_string_destroy)
+	end,
 	get_area = api.godot_rect2_get_area,
 	intersects = api.godot_rect2_intersects,
 	encloses = api.godot_rect2_encloses,
@@ -345,7 +355,9 @@ local plane_methods = {
 	new_with_reals = api.godot_plane_new_with_reals,
 	new_with_vectors = api.godot_plane_new_with_vectors,
 	new_with_normal = api.godot_plane_new_with_normal,
-	as_string = api.godot_plane_as_string,
+	as_string = function(self)
+		return ffi.gc(api.godot_plane_as_string(self), api.godot_string_destroy)
+	end,
 	normalized = api.godot_plane_normalized,
 	center = api.godot_plane_center,
 	get_any_point = api.godot_plane_get_any_point,
@@ -413,7 +425,9 @@ local quat_methods = {
 
 	new = api.godot_quat_new,
 	new_with_axis_angle = api.godot_quat_new_with_axis_angle,
-	as_string = api.godot_quat_as_string,
+	as_string = function(self)
+		return ffi.gc(api.godot_quat_as_string(self), api.godot_string_destroy)
+	end,
 	length = api.godot_quat_length,
 	length_squared = api.godot_quat_length_squared,
 	normalized = api.godot_quat_normalized,
@@ -483,7 +497,9 @@ local basis_methods = {
 	new_with_axis_and_angle = api.godot_basis_new_with_axis_and_angle,
 	new_with_euler = api.godot_basis_new_with_euler,
 	new_with_euler_quat = api.godot_basis_new_with_euler_quat,
-	as_string = api.godot_basis_as_string,
+	as_string = function(self)
+		return ffi.gc(api.godot_basis_as_string(self), api.godot_string_destroy)
+	end,
 	inverse = api.godot_basis_inverse,
 	transposed = api.godot_basis_transposed,
 	orthonormalized = api.godot_basis_orthonormalized,
@@ -564,7 +580,9 @@ local aabb_methods = {
 	varianttype = GD.TYPE_AABB,
 
 	new = api.godot_aabb_new,
-	as_string = api.godot_aabb_as_string,
+	as_string = function(self)
+		return ffi.gc(api.godot_aabb_as_string(self), api.godot_string_destroy)
+	end,
 	get_area = api.godot_aabb_get_area,
 	has_no_area = api.godot_aabb_has_no_area,
 	has_no_surface = api.godot_aabb_has_no_surface,
@@ -602,7 +620,9 @@ local transform2d_methods = {
 
 	new = api.godot_transform2d_new,
 	new_axis_origin = api.godot_transform2d_new_axis_origin,
-	as_string = api.godot_transform2d_as_string,
+	as_string = function(self)
+		return ffi.gc(api.godot_transform2d_as_string(self), api.godot_string_destroy)
+	end,
 	inverse = api.godot_transform2d_inverse,
 	affine_inverse = api.godot_transform2d_affine_inverse,
 	get_rotation = api.godot_transform2d_get_rotation,
@@ -680,7 +700,9 @@ local transform_methods = {
 
 	new_with_axis_origin = api.godot_transform_new_with_axis_origin,
 	new = api.godot_transform_new,
-	as_string = api.godot_transform_as_string,
+	as_string = function(self)
+		return ffi.gc(api.godot_transform_as_string(self), api.godot_string_destroy)
+	end,
 	inverse = api.godot_transform_inverse,
 	affine_inverse = api.godot_transform_affine_inverse,
 	orthonormalized = api.godot_transform_orthonormalized,

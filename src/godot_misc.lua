@@ -23,16 +23,34 @@
 local node_path_methods = {
 	fillvariant = api.godot_variant_new_node_path,
 	varianttype = GD.TYPE_NODE_PATH,
+
+	as_string = function(self)
+		return ffi.gc(api.godot_node_path_as_string(self), api.godot_string_destroy)
+	end,
+	path_is_absolute = api.godot_node_path_is_absolute,
+	path_get_name_count = api.godot_node_path_get_name_count,
+	path_get_name = function(self, idx)
+		return ffi.gc(api.godot_node_path_get_name(self, idx), api.godot_string_destroy)
+	end,
+	path_get_subname_count = api.godot_node_path_get_subname_count,
+	path_get_subname = function(self, idx)
+		return ffi.gc(api.godot_node_path_get_subname(self, idx), api.godot_string_destroy)
+	end,
+	path_get_concatenated_subnames = function(self)
+		return ffi.gc(api.godot_node_path_get_concatenated_subnames(self), api.godot_string_destroy)
+	end,
+	path_is_empty = api.godot_node_path_is_empty,
+	path_get_as_property_path = function(self)
+		return ffi.gc(api.godot_node_path_get_as_property_path(self), api.godot_node_path_destroy)
+	end,
 }
 NodePath = ffi.metatype('godot_node_path', {
 	__new = function(mt, text_or_nodepath)
 		local self = ffi.new(mt)
 		if ffi.istype(mt, text_or_nodepath) then
 			api.godot_node_path_new_copy(self, text_or_nodepath)
-		elseif ffi.istype(String, text_or_nodepath) then
-			api.godot_node_path_new(self, text_or_nodepath)
 		else
-			api.godot_node_path_new(self, String(text_or_nodepath))
+			api.godot_node_path_new(self, GD.str(text_or_nodepath))
 		end
 		return self
 	end,
@@ -42,6 +60,9 @@ NodePath = ffi.metatype('godot_node_path', {
 	end,
 	__index = node_path_methods,
 	__concat = concat_gdvalues,
+	__eq = function(a, b)
+		return api.godot_node_path_operator_equal(NodePath(a), NodePath(b))
+	end,
 })
 
 RID = ffi.metatype('godot_rid', {

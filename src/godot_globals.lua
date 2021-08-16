@@ -21,7 +21,7 @@
 -- FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 -- IN THE SOFTWARE.
 local function concat_gdvalues(a, b)
-	return api.godot_string_operator_plus(GD.str(a), GD.str(b))
+	return ffi.gc(api.godot_string_operator_plus(GD.str(a), GD.str(b)), api.godot_string_destroy)
 end
 
 GD = {
