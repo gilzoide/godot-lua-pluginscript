@@ -26,6 +26,17 @@ local Variant_p_array = ffi.typeof('godot_variant *[?]')
 local const_Variant_pp = ffi.typeof('const godot_variant **')
 local VariantCallError = ffi.typeof('godot_variant_call_error')
 
+local _Object  -- forward local declaration
+local Object_call = api.godot_method_bind_get_method('Object', 'call')
+local Object_get = api.godot_method_bind_get_method('Object', 'get')
+local Object_has_method = api.godot_method_bind_get_method('Object', 'has_method')
+local Object_is_class = api.godot_method_bind_get_method('Object', 'is_class')
+local function Object_gc(obj)
+	if Object_call(obj, 'unreference') then
+		api.godot_object_destroy(obj)
+	end
+end
+
 local MethodBind = ffi.metatype('godot_method_bind', {
 	__call = function(self, obj, ...)
 		local argc = select('#', ...)
@@ -35,7 +46,7 @@ local MethodBind = ffi.metatype('godot_method_bind', {
 			argv[i - 1] = Variant(arg)
 		end
 		local r_error = ffi.new(VariantCallError)
-		local value = api.godot_method_bind_call(self, Object(obj), ffi.cast(const_Variant_pp, argv), argc, r_error)
+		local value = ffi.gc(api.godot_method_bind_call(self, _Object(obj), ffi.cast(const_Variant_pp, argv), argc, r_error), api.godot_variant_destroy)
 		if r_error.error == GD.CALL_OK then
 			return value:unbox()
 		else
@@ -55,15 +66,20 @@ local MethodBindByName = {
 
 local class_methods = {
 	new = function(self, ...)
-		local instance = ClassDB:instance(self.class_name)
-		instance:call('_init', ...)
-		instance:call('unreference') -- Balance Variant:as_object `reference` call
-		return instance
+		local obj = self.constructor()
+		if Object_call(obj, 'init_ref') then
+			ffi.gc(obj, Object_gc)
+		end
+		Object_call(obj, '_init', ...)
+		return obj
 	end,
 }
 local Class = {
 	new = function(self, class_name)
-		return setmetatable({ class_name = class_name }, self)
+		return setmetatable({
+			class_name = class_name,
+			constructor = api.godot_get_class_constructor(class_name),
+		}, self)
 	end,
 	__index = function(self, key)
 		local method = class_methods[key]

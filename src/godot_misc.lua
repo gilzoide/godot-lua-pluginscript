@@ -68,22 +68,25 @@ RID = ffi.metatype('godot_rid', {
 local object_methods = {
 	fillvariant = api.godot_variant_new_object,
 	varianttype = GD.TYPE_OBJECT,
-	pcall = function(self, method, ...)
-		if self:has_method() then
-			return true, self:call(method, ...)
-		else
-			return false
-		end
-	end,
+
 	add_user_signal = api.godot_method_bind_get_method('Object', 'add_user_signal'),
-	call = api.godot_method_bind_get_method('Object', 'call'),
+	call = function(self, method, ...)
+		local result = Object_call(self, method, ...)
+		-- Workaround for correcting reference counts of instantiated scripts
+		-- Godot initializes the reference count when constructing a Variant from
+		-- the Object and Lua automatically references it again (count == 2)
+		if method == 'new' and Object_is_class(self, 'Script') then
+			Object_call(result, 'unreference')
+		end
+		return result
+	end,
 	call_deferred = api.godot_method_bind_get_method('Object', 'call_deferred'),
 	can_translate_messages = api.godot_method_bind_get_method('Object', 'can_translate_messages'),
 	connect = api.godot_method_bind_get_method('Object', 'connect'),
 	disconnect = api.godot_method_bind_get_method('Object', 'disconnect'),
 	emit_signal = api.godot_method_bind_get_method('Object', 'emit_signal'),
 	free = api.godot_method_bind_get_method('Object', 'free'),
-	get = api.godot_method_bind_get_method('Object', 'get'),
+	get = Object_get,
 	get_class = api.godot_method_bind_get_method('Object', 'get_class'),
 	get_incoming_connections = api.godot_method_bind_get_method('Object', 'get_incoming_connections'),
 	get_indexed = api.godot_method_bind_get_method('Object', 'get_indexed'),
@@ -96,11 +99,11 @@ local object_methods = {
 	get_signal_connection_list = api.godot_method_bind_get_method('Object', 'get_signal_connection_list'),
 	get_signal_list = api.godot_method_bind_get_method('Object', 'get_signal_list'),
 	has_meta = api.godot_method_bind_get_method('Object', 'has_meta'),
-	has_method = api.godot_method_bind_get_method('Object', 'has_method'),
+	has_method = Object_has_method,
 	has_signal = api.godot_method_bind_get_method('Object', 'has_signal'),
 	has_user_signal = api.godot_method_bind_get_method('Object', 'has_user_signal'),
 	is_blocking_signals = api.godot_method_bind_get_method('Object', 'is_blocking_signals'),
-	is_class = api.godot_method_bind_get_method('Object', 'is_class'),
+	is_class = Object_is_class,
 	is_connected = api.godot_method_bind_get_method('Object', 'is_connected'),
 	is_queued_for_deletion = api.godot_method_bind_get_method('Object', 'is_queued_for_deletion'),
 	notification = api.godot_method_bind_get_method('Object', 'notification'),
@@ -116,7 +119,16 @@ local object_methods = {
 	to_string = api.godot_method_bind_get_method('Object', 'to_string'),
 	tr = api.godot_method_bind_get_method('Object', 'tr'),
 }
-Object = ffi.metatype('godot_object', {
+
+object_methods.pcall = function(self, method, ...)
+	if Object_has_method(self, method) then
+		return true, object_methods.call(self, method, ...)
+	else
+		return false
+	end
+end
+
+_Object = ffi.metatype('godot_object', {
 	__new = function(mt, init)
 		if ffi.istype(mt, init) then
 			return init
@@ -124,7 +136,9 @@ Object = ffi.metatype('godot_object', {
 			return init.__owner
 		end
 	end,
-	__tostring = GD.tostring,
+	__tostring = function(self)
+		return tostring(object_methods.to_string(self))
+	end,
 	__index = function(self, key)
 		if type(key) ~= 'string' then
 			return
@@ -132,12 +146,13 @@ Object = ffi.metatype('godot_object', {
 		local method = object_methods[key]
 		if method then
 			return method
-		end
-		if self:has_method(key) then
+		elseif Object_has_method(self, key) then
 			return MethodBindByName:new(key)
 		else
-			return self:get(key)
+			return Object_get(self, key)
 		end
 	end,
 	__concat = concat_gdvalues,
 })
+
+Object = Class:new 'Object'

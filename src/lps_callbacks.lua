@@ -159,7 +159,7 @@ clib.lps_instance_get_prop_cb = wrap_callback(function(data, name, ret)
 	elseif script._get then
 		local unboxed_ret = script._get(self, name)
 		if unboxed_ret ~= nil then
-			ret[0] = Variant(unboxed_ret)
+			ret[0] = ffi.gc(Variant(unboxed_ret), nil)
 			return true
 		else
 			return false
@@ -185,7 +185,7 @@ clib.lps_instance_call_method_cb = wrap_callback(function(data, name, args, argc
 		if coroutine.status(co) == 'dead' then  -- reuse dead coroutines
 			thread_cache = co
 		end
-		ret[0] = Variant(unboxed_ret)
+		ret[0] = ffi.gc(Variant(unboxed_ret), nil)
 		err.error = GD.CALL_OK
 	else
 		err.error = GD.CALL_ERROR_INVALID_METHOD

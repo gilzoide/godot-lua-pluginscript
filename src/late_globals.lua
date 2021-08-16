@@ -46,9 +46,8 @@ end
 local Engine = api.godot_global_get_singleton("Engine")
 setmetatable(_G, {
 	__index = function(self, key)
-		key = String(key)
 		if Engine:has_singleton(key) then
-			local singleton = Engine:get_singleton(key)
+			local singleton = api.godot_global_get_singleton(key)
 			rawset(self, key, singleton)
 			return singleton
 		end

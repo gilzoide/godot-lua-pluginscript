@@ -20,19 +20,15 @@
 -- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 -- FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 -- IN THE SOFTWARE.
-local function Object_gc(obj)
-	if obj:call('unreference') then
-		api.godot_object_destroy(obj)
-	end
-end
-
 local methods = {
 	fillvariant = api.godot_variant_new_copy,
 	as_bool = api.godot_variant_as_bool,
 	as_uint = api.godot_variant_as_uint,
 	as_int = api.godot_variant_as_int,
 	as_real = api.godot_variant_as_real,
-	as_string = api.godot_variant_as_string,
+	as_string = function(self)
+		return ffi.gc(api.godot_variant_as_string(self), api.godot_string_destroy)
+	end,
 	as_vector2 = api.godot_variant_as_vector2,
 	as_rect2 = api.godot_variant_as_rect2,
 	as_vector3 = api.godot_variant_as_vector3,
@@ -43,24 +39,44 @@ local methods = {
 	as_basis = api.godot_variant_as_basis,
 	as_transform = api.godot_variant_as_transform,
 	as_color = api.godot_variant_as_color,
-	as_node_path = api.godot_variant_as_node_path,
+	as_node_path = function(self)
+		return ffi.gc(api.godot_variant_as_node_path(self), api.godot_node_path_destroy)
+	end,
 	as_rid = api.godot_variant_as_rid,
 	as_object = function(self)
 		local obj = api.godot_variant_as_object(self)
 		if obj ~= nil and obj:call('reference') then
-			obj = ffi.gc(obj, Object_gc)
+			ffi.gc(obj, Object_gc)
 		end
 		return obj
 	end,
-	as_dictionary = api.godot_variant_as_dictionary,
-	as_array = api.godot_variant_as_array,
-	as_pool_byte_array = api.godot_variant_as_pool_byte_array,
-	as_pool_int_array = api.godot_variant_as_pool_int_array,
-	as_pool_real_array = api.godot_variant_as_pool_real_array,
-	as_pool_string_array = api.godot_variant_as_pool_string_array,
-	as_pool_vector2_array = api.godot_variant_as_pool_vector2_array,
-	as_pool_vector3_array = api.godot_variant_as_pool_vector3_array,
-	as_pool_color_array = api.godot_variant_as_pool_color_array,
+	as_dictionary = function(self)
+		return ffi.gc(api.godot_variant_as_dictionary(self), api.godot_dictionary_destroy)
+	end,
+	as_array = function(self)
+		return ffi.gc(api.godot_variant_as_array(self), api.godot_array_destroy)
+	end,
+	as_pool_byte_array = function(self)
+		return ffi.gc(api.godot_variant_as_pool_byte_array(self), api.godot_pool_byte_array_destroy)
+	end,
+	as_pool_int_array = function(self)
+		return ffi.gc(api.godot_variant_as_pool_int_array(self), api.godot_pool_int_array_destroy)
+	end,
+	as_pool_real_array = function(self)
+		return ffi.gc(api.godot_variant_as_pool_real_array(self), api.godot_pool_real_array_destroy)
+	end,
+	as_pool_string_array = function(self)
+		return ffi.gc(api.godot_variant_as_pool_string_array(self), api.godot_pool_string_array_destroy)
+	end,
+	as_pool_vector2_array = function(self)
+		return ffi.gc(api.godot_variant_as_pool_vector2_array(self), api.godot_pool_vector2_array_destroy)
+	end,
+	as_pool_vector3_array = function(self)
+		return ffi.gc(api.godot_variant_as_pool_vector3_array(self), api.godot_pool_vector3_array_destroy)
+	end,
+	as_pool_color_array = function(self)
+		return ffi.gc(api.godot_variant_as_pool_color_array(self), api.godot_pool_color_array_destroy)
+	end,
 	get_type = api.godot_variant_get_type,
 	pcall = function(self, method, ...)
 		local argc = select('#', ...)
@@ -70,7 +86,7 @@ local methods = {
 			argv[i - 1] = Variant(arg)
 		end
 		local r_error = ffi.new(VariantCallError)
-		local value = api.godot_variant_call(self, String(method), ffi.cast(const_Variant_pp, argv), argc, r_error)
+		local value = ffi.gc(api.godot_variant_call(self, String(method), ffi.cast(const_Variant_pp, argv), argc, r_error), api.godot_variant_destroy)
 		if r_error.error == GD.CALL_OK then
 			return true, value:unbox()
 		else
@@ -103,7 +119,7 @@ local methods = {
 		elseif t == GD.TYPE_REAL then
 			return tonumber(api.godot_variant_as_real(self))
 		elseif t == GD.TYPE_STRING then
-			return api.godot_variant_as_string(self)
+			return self:as_string()
 		elseif t == GD.TYPE_VECTOR2 then
 			return api.godot_variant_as_vector2(self)
 		elseif t == GD.TYPE_RECT2 then
@@ -125,29 +141,29 @@ local methods = {
 		elseif t == GD.TYPE_COLOR then
 			return api.godot_variant_as_color(self)
 		elseif t == GD.TYPE_NODE_PATH then
-			return api.godot_variant_as_node_path(self)
+			return self:as_node_path()
 		elseif t == GD.TYPE_RID then
 			return api.godot_variant_as_rid(self)
 		elseif t == GD.TYPE_OBJECT then
 			return self:as_object()
 		elseif t == GD.TYPE_DICTIONARY then
-			return api.godot_variant_as_dictionary(self)
+			return self:as_dictionary()
 		elseif t == GD.TYPE_ARRAY then
-			return api.godot_variant_as_array(self)
+			return self:as_array()
 		elseif t == GD.TYPE_POOL_BYTE_ARRAY then
-			return api.godot_variant_as_pool_byte_array(self)
+			return self:as_pool_byte_array()
 		elseif t == GD.TYPE_POOL_INT_ARRAY then
-			return api.godot_variant_as_pool_int_array(self)
+			return self:as_pool_int_array()
 		elseif t == GD.TYPE_POOL_REAL_ARRAY then
-			return api.godot_variant_as_pool_real_array(self)
+			return self:as_pool_real_array()
 		elseif t == GD.TYPE_POOL_STRING_ARRAY then
-			return api.godot_variant_as_pool_string_array(self)
+			return self:as_pool_string_array()
 		elseif t == GD.TYPE_POOL_VECTOR2_ARRAY then
-			return api.godot_variant_as_pool_vector2_array(self)
+			return self:as_pool_vector2_array()
 		elseif t == GD.TYPE_POOL_VECTOR3_ARRAY then
-			return api.godot_variant_as_pool_vector3_array(self)
+			return self:as_pool_vector3_array()
 		elseif t == GD.TYPE_POOL_COLOR_ARRAY then
-			return api.godot_variant_as_pool_color_array(self)
+			return self:as_pool_color_array()
 		end
 	end,
 }
