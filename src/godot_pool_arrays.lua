@@ -67,6 +67,7 @@ local function register_pool_array(kind, element_ctype)
 	local methods = {
 		fillvariant = api['godot_variant_new_' .. kind_type],
 		varianttype = GD['TYPE_POOL_' .. kind:upper() .. '_ARRAY'],
+
 		toarray = function(self)
 			local array = ffi.new(Array)
 			godot_array_new_pool_array(array, self)

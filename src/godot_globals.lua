@@ -193,7 +193,7 @@ function GD.str(value)
 	if ffi.istype(String, value) then
 		return value
 	else
-		return api.godot_variant_as_string(Variant(value))
+		return Variant(value):as_string()
 	end
 end
 
@@ -201,21 +201,29 @@ function GD.tostring(value)
 	return tostring(Variant(value))
 end
 
+local function join_str(sep, ...)
+	local result = {}
+	for i = 1, select('#', ...) do
+		table.insert(result, tostring(select(i, ...)))
+	end
+	return table.concat(result, sep)
+end
+
 function GD.print(...)
-	local message = PoolStringArray(...):join('\t')
+	local message = String(join_str('\t', ...))
 	api.godot_print(message)
 end
 _G.print = GD.print
 
 function GD.print_warning(...)
 	local info = debug.getinfo(2, 'nSl')
-	local message = tostring(PoolStringArray(...):join('\t'))
+	local message = join_str('\t', ...)
 	api.godot_print_warning(message, info.name, info.short_src, info.currentline)
 end
 
 function GD.print_error(...)
 	local info = debug.getinfo(2, 'nSl')
-	local message = tostring(PoolStringArray(...):join('\t'))
+	local message = join_str('\t', ...)
 	api.godot_print_error(message, info.name, info.short_src, info.currentline)
 end
 
