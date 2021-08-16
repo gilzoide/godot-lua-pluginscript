@@ -45,7 +45,8 @@ local methods = {
 	keys = api.godot_dictionary_keys,
 	values = api.godot_dictionary_values,
 	get = function(self, key)
-		return api.godot_dictionary_get(self, Variant(key)):unbox()
+		local var = ffi.gc(api.godot_dictionary_get(self, Variant(key)), api.godot_variant_destroy)
+		return var:unbox()
 	end,
 	set = function(self, key, value)
 		if type(value) == 'nil' then
@@ -73,7 +74,8 @@ if api_1_1 then
 		return api_1_1.godot_dictionary_erase_with_return(self, Variant(key))
 	end
 	methods.get_with_default = function(self, key, default)
-		return api_1_1.godot_dictionary_get_with_default(self, Variant(key), Variant(default))
+		local var = ffi.gc(api_1_1.godot_dictionary_get_with_default(self, Variant(key), Variant(default)), api.godot_variant_destroy)
+		return var:unbox()
 	end
 end
 

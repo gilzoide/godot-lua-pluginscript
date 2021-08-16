@@ -24,7 +24,8 @@ local methods = {
 	fillvariant = api.godot_variant_new_array,
 	varianttype = GD.TYPE_ARRAY,
 	get = function(self, index)
-		return api.godot_array_get(self, index):unbox()
+		local var = ffi.gc(api.godot_array_get(self, index), api.godot_variant_destroy)
+		return var:unbox()
 	end,
 	set = function(self, index, value)
 		api.godot_array_set(self, index, Variant(value))
@@ -41,10 +42,12 @@ local methods = {
 		api.godot_array_erase(self, Variant(value))
 	end,
 	front = function(self)
-		return api.godot_array_front(self):unbox()
+		local var = ffi.gc(api.godot_array_front(self), api.godot_variant_destroy)
+		return var:unbox()
 	end,
 	back = function(self)
-		return api.godot_array_back(self):unbox()
+		local var = ffi.gc(api.godot_array_back(self), api.godot_variant_destroy)
+		return var:unbox()
 	end,
 	find = function(self, what, from)
 		return api.godot_array_find(self, Variant(what), from or 0)
@@ -67,10 +70,12 @@ local methods = {
 		api.godot_array_push_front(self, Variant(value))
 	end,
 	pop_back = function(self)
-		return api.godot_array_pop_back(self):unbox()
+		local var = ffi.gc(api.godot_array_pop_back(self), api.godot_variant_destroy)
+		return var:unbox()
 	end,
 	pop_front = function(self)
-		return api.godot_array_pop_front(self):unbox()
+		local var = ffi.gc(api.godot_array_pop_front(self), api.godot_variant_destroy)
+		return var:unbox()
 	end,
 	remove = api.godot_array_remove,
 	resize = api.godot_array_resize,
@@ -100,10 +105,12 @@ local methods = {
 
 if api_1_1 then
 	methods.max = function(self)
-		return api_1_1.godot_array_max(self):unbox()
+		local var = ffi.gc(api_1_1.godot_array_max(self), api.godot_variant_destroy)
+		return var:unbox()
 	end
 	methods.min = function(self)
-		return api_1_1.godot_array_min(self):unbox()
+		local var = ffi.gc(api_1_1.godot_array_min(self), api.godot_variant_destroy)
+		return var:unbox()
 	end
 	methods.shuffle = api_1_1.godot_array_shuffle
 end
