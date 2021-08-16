@@ -23,11 +23,10 @@
 local loadstring = loadstring or load
 local unpack = table.unpack or unpack
 
-local weakv = { __weak = 'v' }
+local weak_k = { __mode = 'k' }
 
 local lps_scripts = {}
-local lps_instances = {}
-local lps_coroutines = setmetatable({}, weakv)
+local lps_instances = setmetatable({}, weak_k)
 
 local function pointer_to_index(ptr)
 	return tonumber(ffi.cast('uintptr_t', ptr))
@@ -47,8 +46,6 @@ end
 local function set_lua_instance(ptr, instance)
 	lps_instances[pointer_to_index(ptr)] = instance
 end
-
-local thread_cache = nil
 
 -- void (*lps_language_add_global_constant_cb)(const godot_string *name, const godot_variant *value);
 clib.lps_language_add_global_constant_cb = wrap_callback(function(name, value)
@@ -97,10 +94,6 @@ clib.lps_script_init_cb = wrap_callback(function(manifest, path, source)
 			metadata[k] = default_value
 			manifest.properties:append(prop)
 		end
-	end
-
-	if #manifest.name == 0 then
-		manifest.name = StringName("Reference")
 	end
 
 	manifest.data = ffi.cast('void *', metadata_index)
@@ -179,12 +172,8 @@ clib.lps_instance_call_method_cb = wrap_callback(function(data, name, args, argc
 		for i = 1, argcount do
 			args_table[i] = args[i - 1]:unbox()
 		end
-		local co = setthreadfunc(thread_cache, method)
-		thread_cache = nil
+		local co = coroutine.create(method)
 		local success, unboxed_ret = assert(coroutine.resume(co, self, unpack(args_table)))
-		if coroutine.status(co) == 'dead' then  -- reuse dead coroutines
-			thread_cache = co
-		end
 		ret[0] = ffi.gc(Variant(unboxed_ret), nil)
 		err.error = GD.CALL_OK
 	else

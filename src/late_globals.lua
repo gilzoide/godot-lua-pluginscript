@@ -30,15 +30,15 @@ local CoroutineObject = GD.load(library_resource_dir:plus_file('coroutine.lua'))
 function GD.yield(obj, signal_name)
 	local co, is_main = coroutine.running()
 	assert(co and not is_main, "GD.yield can be called only from script methods")
-	local co_obj = lps_coroutines[co]
+	local co_obj = lps_instances[co]
 	if not co_obj then
 		co_obj = CoroutineObject:new()
 		local co_obj_table = get_lua_instance(co_obj)
 		co_obj_table.coroutine = co
-		lps_coroutines[co] = co_obj_table
+		lps_instances[co] = co_obj_table
 	end
 	if obj and signal_name then
-		obj:connect(signal_name, co_obj, "resume")
+		obj:connect(signal_name, co_obj, "resume", Array(), Object.CONNECT_ONESHOT)
 	end
 	coroutine.yield(co_obj)
 end
