@@ -121,7 +121,7 @@ end)
 
 -- void (*lps_instance_finish_cb)(godot_pluginscript_instance_data *data);
 clib.lps_instance_finish_cb = wrap_callback(function(data)
-	set_lua_instance(owner, nil)
+	set_lua_instance(data, nil)
 end)
 
 -- godot_bool (*lps_instance_set_prop_cb)(godot_pluginscript_instance_data *data, const godot_string *name, const godot_variant *value);
