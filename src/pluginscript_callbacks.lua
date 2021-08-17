@@ -52,23 +52,24 @@ clib.lps_language_add_global_constant_cb = wrap_callback(function(name, value)
 	_G[tostring(name)] = value:unbox()
 end)
 
--- godot_error (*lps_script_init_cb)(godot_pluginscript_script_manifest *manifest, const godot_string *path, const godot_string *source);
-clib.lps_script_init_cb = wrap_callback(function(manifest, path, source)
+-- void (*lps_script_init_cb)(godot_pluginscript_script_manifest *manifest, const godot_string *path, const godot_string *source, godot_error *error);
+clib.lps_script_init_cb = wrap_callback(function(manifest, path, source, err)
 	path = tostring(path)
 	source = tostring(source)
-	local script, err = loadstring(source, path)
+	local script, err_message = loadstring(source, path)
 	if not script then
-		GD.print_error(path .. ': Error parsing script: ' .. err)
-		return GD.ERR_PARSE_ERROR
+		GD.print_error(path .. ': Error parsing script: ' .. err_message)
+		err[0] = GD.ERR_PARSE_ERROR
+		return
 	end
 	local success, metadata = pcall(script)
 	if not success then
 		GD.print_error(path .. ': Error loading script metadata: ' .. metadata)
-		return GD.ERR_SCRIPT_FAILED
+		return
 	end
 	if type(metadata) ~= 'table' then
 		GD.print_error(path .. ': script must return a table')
-		return GD.ERR_SCRIPT_FAILED
+		return
 	end
 	local metadata_index = pointer_to_index(touserdata(metadata))
 	lps_scripts[metadata_index] = metadata
@@ -97,7 +98,7 @@ clib.lps_script_init_cb = wrap_callback(function(manifest, path, source)
 	end
 
 	manifest.data = ffi.cast('void *', metadata_index)
-	return GD.OK
+	err[0] = GD.OK
 end)
 
 -- void (*lps_script_finish_cb)(godot_pluginscript_script_data *data);

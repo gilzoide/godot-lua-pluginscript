@@ -30,7 +30,7 @@
 
 // Callbacks to be implemented in Lua
 void (*lps_language_add_global_constant_cb)(const godot_string *name, const godot_variant *value);
-godot_error (*lps_script_init_cb)(godot_pluginscript_script_manifest *manifest, const godot_string *path, const godot_string *source);
+void (*lps_script_init_cb)(godot_pluginscript_script_manifest *manifest, const godot_string *path, const godot_string *source, godot_error *error);
 void (*lps_script_finish_cb)(godot_pluginscript_script_data *data);
 godot_pluginscript_instance_data *(*lps_instance_init_cb)(godot_pluginscript_script_data *data, godot_object *owner);
 void (*lps_instance_finish_cb)(godot_pluginscript_instance_data *data);
@@ -97,7 +97,8 @@ static godot_pluginscript_script_manifest lps_script_init(godot_pluginscript_lan
 	hgdn_core_api->godot_array_new(&manifest.signals);
 	hgdn_core_api->godot_array_new(&manifest.properties);
 
-	godot_error cb_error = lps_script_init_cb(&manifest, path, source);
+	godot_error cb_error = GODOT_ERR_SCRIPT_FAILED;
+	lps_script_init_cb(&manifest, path, source, &cb_error);
 	if (error) {
 		*error = cb_error;
 	}

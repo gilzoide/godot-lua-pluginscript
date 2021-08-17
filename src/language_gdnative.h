@@ -10,7 +10,7 @@ extern void (*lps_language_add_global_constant_cb)(const godot_string *name, con
 // LuaJIT callbacks cannot return C aggregate types by value, so
 // `manifest` will be created in C and passed by reference
 // Ref: https://luajit.org/ext_ffi_semantics.html#callback
-extern godot_error (*lps_script_init_cb)(godot_pluginscript_script_manifest *manifest, const godot_string *path, const godot_string *source);
+extern void (*lps_script_init_cb)(godot_pluginscript_script_manifest *manifest, const godot_string *path, const godot_string *source, godot_error *error);
 extern void (*lps_script_finish_cb)(godot_pluginscript_script_data *data);
 extern godot_pluginscript_instance_data *(*lps_instance_init_cb)(godot_pluginscript_script_data *data, godot_object *owner);
 extern void (*lps_instance_finish_cb)(godot_pluginscript_instance_data *data);

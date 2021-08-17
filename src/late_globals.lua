@@ -21,7 +21,7 @@
 -- FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 -- IN THE SOFTWARE.
 for k, v in pairs(api.godot_get_global_constants()) do
-	GD[tostring(k)] = v
+	GD[k:ascii()] = v
 end
 
 local library_resource_dir = clib.hgdn_library.resource_path:get_base_dir()
