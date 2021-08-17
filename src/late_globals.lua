@@ -25,7 +25,7 @@ for k, v in pairs(api.godot_get_global_constants()) do
 end
 
 local library_resource_dir = clib.hgdn_library.resource_path:get_base_dir()
-local CoroutineObject = GD.load(library_resource_dir:plus_file('coroutine.lua'))
+local CoroutineObject = GD.load(library_resource_dir:plus_file('lps_coroutine.lua'))
 
 function GD.yield(obj, signal_name)
 	local co, is_main = coroutine.running()

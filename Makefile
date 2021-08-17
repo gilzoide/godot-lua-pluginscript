@@ -25,12 +25,12 @@ GDNLIB_ENTRY_PREFIX = addons/godot-lua-pluginscript
 BUILD_FOLDERS = build build/common build/windows_x86 build/windows_x86_64 build/linux_x86 build/linux_x86_64 build/osx_x86_64 build/osx_arm64 build/osx_universal64 build/$(GDNLIB_ENTRY_PREFIX)
 
 DIST_SRC = LICENSE
-DIST_ADDONS_SRC = LICENSE lua_pluginscript.gdnlib $(wildcard build/*/lua*.*)
+DIST_ADDONS_SRC = LICENSE lps_coroutine.lua lua_pluginscript.gdnlib $(wildcard build/*/lua*.*)
 DIST_ZIP_SRC = $(DIST_SRC) $(addprefix $(GDNLIB_ENTRY_PREFIX)/,$(DIST_ADDONS_SRC))
 DIST_DEST = $(addprefix build/,$(DIST_SRC)) $(addprefix build/$(GDNLIB_ENTRY_PREFIX)/,$(DIST_ADDONS_SRC))
 
 # Note that the order is important!
-LUA_SRC = \
+LUA_INIT_SCRIPT_SRC = \
 	src/godot_ffi.lua \
 	src/godot_class.lua \
 	src/godot_globals.lua \
@@ -71,7 +71,7 @@ $(MAKE_LUAJIT_OUTPUT): | build/%/luajit
 build/%/lua51.dll: build/%/luajit/src/lua51.dll
 	cp $< $@
 
-build/common/init_script.lua: $(LUA_SRC) | build/common
+build/common/init_script.lua: $(LUA_INIT_SCRIPT_SRC) | build/common
 	cat $^ > $@
 build/%/init_script.c: build/common/init_script.lua $(INIT_SCRIPT_SED)
 	echo "const char LUA_INIT_SCRIPT[] =" > $@
