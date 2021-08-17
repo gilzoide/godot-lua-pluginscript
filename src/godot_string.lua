@@ -20,16 +20,11 @@
 -- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 -- FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 -- IN THE SOFTWARE.
-local CharString = ffi.metatype('godot_char_string', {
-	__gc = api.godot_char_string_destroy,
-	__tostring = function(self)
-		local ptr = api.godot_char_string_get_data(self)
-		return ffi.string(ptr, #self)
-	end,
-	__len = function(self)
-		return api.godot_char_string_length(self)
-	end,
-})
+local function consume_char_string(cs)
+	local lua_str = ffi.string(api.godot_char_string_get_data(cs), api.godot_char_string_length(cs))
+	api.godot_char_string_destroy(cs)
+	return lua_str
+end
 
 local string_methods = {
 	fillvariant = api.godot_variant_new_string,
@@ -217,6 +212,15 @@ local string_methods = {
 		return ffi.gc(api.godot_string_strip_escapes(self), api.godot_string_destroy)
 	end,
 	erase = api.godot_string_erase,
+	ascii = function(self)
+		return consume_char_string(api.godot_string_ascii(self))
+	end,
+	ascii_extended = function(self)
+		return consume_char_string(api.godot_string_ascii_extended(self))
+	end,
+	utf8 = function(self)
+		return consume_char_string(api.godot_string_utf8(self))
+	end,
 	hash = api.godot_string_hash,
 	hash64 = api.godot_string_hash64,
 	md5_buffer = function(self)
@@ -386,9 +390,7 @@ String = ffi.metatype('godot_string', {
 		end
 	end,
 	__gc = api.godot_string_destroy,
-	__tostring = function(self)
-		return tostring(api.godot_string_utf8(self))
-	end,
+	__tostring = string_methods.utf8,
 	__len = function(self)
 		return string_methods.length(self)
 	end,
