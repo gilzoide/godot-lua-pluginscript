@@ -1,25 +1,66 @@
 // HGDN already includes godot-headers
 #include "hgdn.h"
+#include "lua.h"
+#include "lualib.h"
+#include "lauxlib.h"
+
+extern const char LUA_INIT_SCRIPT[];
+
+// Callbacks to be implemented in Lua
+void (*lps_language_add_global_constant_cb)(const godot_string *name, const godot_variant *value);
+// LuaJIT callbacks cannot return C aggregate types by value, so
+// `manifest` will be created in C and passed by reference
+// Ref: https://luajit.org/ext_ffi_semantics.html#callback
+void (*lps_script_init_cb)(godot_pluginscript_script_manifest *manifest, const godot_string *path, const godot_string *source, godot_error *error);
+void (*lps_script_finish_cb)(godot_pluginscript_script_data *data);
+godot_pluginscript_instance_data *(*lps_instance_init_cb)(godot_pluginscript_script_data *data, godot_object *owner);
+void (*lps_instance_finish_cb)(godot_pluginscript_instance_data *data);
+godot_bool (*lps_instance_set_prop_cb)(godot_pluginscript_instance_data *data, const godot_string *name, const godot_variant *value);
+godot_bool (*lps_instance_get_prop_cb)(godot_pluginscript_instance_data *data, const godot_string *name, godot_variant *ret);
+// Same caveat as `lps_script_init_cb`
+void (*lps_instance_call_method_cb)(godot_pluginscript_instance_data *data, const godot_string_name *method, const godot_variant **args, int argcount, godot_variant *ret, godot_variant_call_error *error);
+void (*lps_instance_notification_cb)(godot_pluginscript_instance_data *data, int notification);
+
+// lua_Alloc function: https://www.lua.org/manual/5.4/manual.html#lua_Alloc
+// Use `hgdn_free` and `hgdn_realloc` to make memory requests
+// go through Godot, so memory usage is tracked on debug builds
+void *lps_alloc(void *userdata, void *ptr, size_t osize, size_t nsize) {
+    if (nsize == 0) {
+        hgdn_free(ptr);
+        return NULL;
+    }
+    else {
+        return hgdn_realloc(ptr, nsize);
+    }
+}
 
 // Called when our language runtime will be initialized
 godot_pluginscript_language_data *lps_language_init() {
-    // TODO
-    return NULL;
+    lua_State *L = lua_newstate(&lps_alloc, NULL);
+    luaL_openlibs(L);  // Load core Lua libraries
+    if (luaL_dostring(L, LUA_INIT_SCRIPT) != 0) {
+        const char *error_msg = lua_tostring(L, -1);
+        HGDN_PRINT_ERROR("Error running initialization script: %s", error_msg);
+    }
+    return L;
 }
 
 // Called when our language runtime will be terminated
 void lps_language_finish(godot_pluginscript_language_data *data) {
-    // TODO
+    lua_close((lua_State *) data);
 }
 
 // Called when Godot registers globals in the language, such as Autoload nodes
 void lps_language_add_global_constant(godot_pluginscript_language_data *data, const godot_string *name, const godot_variant *value) {
-    // TODO
+    lps_language_add_global_constant_cb(name, value);
 }
 
 // Called when a Lua script is loaded, e.g.: const SomeScript = preload("res://some_script.lua")
 godot_pluginscript_script_manifest lps_script_init(godot_pluginscript_language_data *data, const godot_string *path, const godot_string *source, godot_error *error) {
-    godot_pluginscript_script_manifest manifest = {};
+    godot_pluginscript_script_manifest manifest = {
+        .data = NULL,
+        .is_tool = false,
+    };
     // All Godot objects must be initialized, or else our plugin SEGFAULTs
     hgdn_core_api->godot_string_name_new_data(&manifest.name, "");
     hgdn_core_api->godot_string_name_new_data(&manifest.base, "");
@@ -27,48 +68,51 @@ godot_pluginscript_script_manifest lps_script_init(godot_pluginscript_language_d
     hgdn_core_api->godot_array_new(&manifest.methods);
     hgdn_core_api->godot_array_new(&manifest.signals);
     hgdn_core_api->godot_array_new(&manifest.properties);
-    // TODO
+
+    godot_error cb_error = GODOT_ERR_SCRIPT_FAILED;
+    lps_script_init_cb(&manifest, path, source, &cb_error);
+    if (error) {
+        *error = cb_error;
+    }
+
     return manifest;
 }
 
 // Called when a Lua script is unloaded
 void lps_script_finish(godot_pluginscript_script_data *data) {
-    // TODO
+    lps_script_finish_cb(data);
 }
-
 
 // Called when a Script Instance is being created, e.g.: var instance = SomeScript.new()
 godot_pluginscript_instance_data *lps_instance_init(godot_pluginscript_script_data *data, godot_object *owner) {
-    // TODO
-    return NULL;
+    return lps_instance_init_cb(data, owner);
 }
 
 // Called when a Script Instance is being finalized
 void lps_instance_finish(godot_pluginscript_instance_data *data) {
-    // TODO
+    lps_instance_finish_cb(data);
 }
 
 // Called when setting a property on an instance, e.g.: instance.prop = value
 godot_bool lps_instance_set_prop(godot_pluginscript_instance_data *data, const godot_string *name, const godot_variant *value) {
-    // TODO
-    return false;
+    return lps_instance_set_prop_cb(data, name, value);
 }
 
 // Called when getting a property on an instance, e.g.: var value = instance.prop
 godot_bool lps_instance_get_prop(godot_pluginscript_instance_data *data, const godot_string *name, godot_variant *ret) {
-    // TODO
-    return false;
+    return lps_instance_get_prop_cb(data, name, ret);
 }
 
 // Called when calling a method on an instance, e.g.: instance.method(args)
 godot_variant lps_instance_call_method(godot_pluginscript_instance_data *data, const godot_string_name *method, const godot_variant **args, int argcount, godot_variant_call_error *error) {
-    // TODO
-    return hgdn_new_nil_variant();
+    godot_variant var = hgdn_new_nil_variant();
+    lps_instance_call_method_cb(data, method, args, argcount, &var, error);
+    return var;
 }
 
 // Called when a notification is sent to instance
 void lps_instance_notification(godot_pluginscript_instance_data *data, int notification) {
-    // TODO
+    lps_instance_notification_cb(data, notification);
 }
 
 // Declared as a global variable, because Godot needs the
@@ -117,12 +161,12 @@ godot_pluginscript_language_desc lps_language_desc = {
 // This is not needed, since symbols are exported by default, but it
 // doesn't hurt being explicit about it
 GDN_EXPORT void godot_gdnative_init(godot_gdnative_init_options *options) {
-	hgdn_gdnative_init(options);
-	hgdn_pluginscript_api->godot_pluginscript_register_language(&lps_language_desc);
+    hgdn_gdnative_init(options);
+    hgdn_pluginscript_api->godot_pluginscript_register_language(&lps_language_desc);
 }
 
 GDN_EXPORT void godot_gdnative_terminate(godot_gdnative_terminate_options *options) {
-	hgdn_gdnative_terminate(options);
+    hgdn_gdnative_terminate(options);
 }
 
 GDN_EXPORT void godot_gdnative_singleton() {
