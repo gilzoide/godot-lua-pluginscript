@@ -28,9 +28,9 @@
 
 #include "language_gdnative.h"
 
-// Callbacks definition
+// Callbacks to be implemented in Lua
 void (*lps_language_add_global_constant_cb)(const godot_string *name, const godot_variant *value);
-godot_error (*lps_script_init_cb)(godot_pluginscript_script_manifest *data, const godot_string *path, const godot_string *source);
+godot_error (*lps_script_init_cb)(godot_pluginscript_script_manifest *manifest, const godot_string *path, const godot_string *source);
 void (*lps_script_finish_cb)(godot_pluginscript_script_data *data);
 godot_pluginscript_instance_data *(*lps_instance_init_cb)(godot_pluginscript_script_data *data, godot_object *owner);
 void (*lps_instance_finish_cb)(godot_pluginscript_instance_data *data);
@@ -97,9 +97,9 @@ static godot_pluginscript_script_manifest lps_script_init(godot_pluginscript_lan
 	hgdn_core_api->godot_array_new(&manifest.signals);
 	hgdn_core_api->godot_array_new(&manifest.properties);
 
-	godot_error ret = lps_script_init_cb(&manifest, path, source);
+	godot_error cb_error = lps_script_init_cb(&manifest, path, source);
 	if (error) {
-		*error = ret;
+		*error = cb_error;
 	}
 
 	return manifest;

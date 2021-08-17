@@ -1,4 +1,4 @@
--- @file lps_class_metadata.lua  Helpers for Script/Class metadata (properties, methods, signals)
+-- @file pluginscript_class_metadata.lua  Helpers for Script/Class metadata (properties, methods, signals)
 -- This file is part of Godot Lua PluginScript: https://github.com/gilzoide/godot-lua-pluginscript
 --
 -- Copyright (C) 2021 Gil Barbosa Reis.

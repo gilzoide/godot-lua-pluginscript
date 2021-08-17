@@ -1,4 +1,4 @@
--- @file lps_callbacks.lua  PluginScript callbacks implementation
+-- @file pluginscript_callbacks.lua  PluginScript callbacks implementation
 -- This file is part of Godot Lua PluginScript: https://github.com/gilzoide/godot-lua-pluginscript
 --
 -- Copyright (C) 2021 Gil Barbosa Reis.
@@ -33,9 +33,9 @@ local function pointer_to_index(ptr)
 end
 
 local function wrap_callback(f)
-	-- TODO: use `xpcall` on debug only?
 	return function(...)
-		return select(2, xpcall(f, GD.print_error, ...))
+		local success, result = xpcall(f, GD.print_error, ...)
+		return result
 	end
 end
 
@@ -52,7 +52,7 @@ clib.lps_language_add_global_constant_cb = wrap_callback(function(name, value)
 	_G[tostring(name)] = value:unbox()
 end)
 
--- godot_error (*lps_script_init_cb)(godot_pluginscript_script_manifest *data, const godot_string *path, const godot_string *source);
+-- godot_error (*lps_script_init_cb)(godot_pluginscript_script_manifest *manifest, const godot_string *path, const godot_string *source);
 clib.lps_script_init_cb = wrap_callback(function(manifest, path, source)
 	path = tostring(path)
 	source = tostring(source)

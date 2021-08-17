@@ -1377,7 +1377,7 @@ const godot_gdnative_core_1_1_api_struct *hgdn_core_1_1_api;
 const godot_gdnative_core_1_2_api_struct *hgdn_core_1_2_api;
 godot_object *hgdn_library;
 
-// Global PluginScript description and callbacks
+// Global PluginScript callbacks
 void (*lps_language_add_global_constant_cb)(const godot_string *name, const godot_variant *value);
 godot_error (*lps_script_init_cb)(godot_pluginscript_script_manifest *data, const godot_string *path, const godot_string *source);
 void (*lps_script_finish_cb)(godot_pluginscript_script_data *data);

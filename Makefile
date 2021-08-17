@@ -41,8 +41,8 @@ LUA_INIT_SCRIPT_SRC = \
 	src/godot_dictionary.lua \
 	src/godot_array.lua \
 	src/godot_pool_arrays.lua \
-	src/lps_class_metadata.lua \
-	src/lps_callbacks.lua \
+	src/pluginscript_class_metadata.lua \
+	src/pluginscript_callbacks.lua \
 	src/late_globals.lua \
 	src/in_editor_callbacks.lua
 
