@@ -58,12 +58,12 @@ clib.lps_script_init_cb = wrap_callback(function(manifest, path, source)
 	source = tostring(source)
 	local script, err = loadstring(source, path)
 	if not script then
-		GD.print_error('Error parsing script: ' .. err)
+		GD.print_error(path .. ': Error parsing script: ' .. err)
 		return GD.ERR_PARSE_ERROR
 	end
 	local success, metadata = pcall(script)
 	if not success then
-		GD.print_error('Error loading script: ' .. metadata)
+		GD.print_error(path .. ': Error loading script metadata: ' .. metadata)
 		return GD.ERR_SCRIPT_FAILED
 	end
 	if type(metadata) ~= 'table' then
