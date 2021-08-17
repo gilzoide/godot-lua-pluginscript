@@ -50,7 +50,7 @@ NodePath = ffi.metatype('godot_node_path', {
 		if ffi.istype(mt, text_or_nodepath) then
 			api.godot_node_path_new_copy(self, text_or_nodepath)
 		else
-			api.godot_node_path_new(self, GD.str(text_or_nodepath))
+			api.godot_node_path_new(self, str(text_or_nodepath))
 		end
 		return self
 	end,

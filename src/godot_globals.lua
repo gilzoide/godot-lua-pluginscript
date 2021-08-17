@@ -20,8 +20,16 @@
 -- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 -- FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 -- IN THE SOFTWARE.
+local function str(value)
+	if ffi.istype(String, value) then
+		return value
+	else
+		return Variant(value):as_string()
+	end
+end
+
 local function concat_gdvalues(a, b)
-	return ffi.gc(api.godot_string_operator_plus(GD.str(a), GD.str(b)), api.godot_string_destroy)
+	return ffi.gc(api.godot_string_operator_plus(str(a), str(b)), api.godot_string_destroy)
 end
 
 GD = {
@@ -189,13 +197,7 @@ if api_1_1 then
 	GD.is_instance_valid = api_1_1.godot_is_instance_valid
 end
 
-function GD.str(value)
-	if ffi.istype(String, value) then
-		return value
-	else
-		return Variant(value):as_string()
-	end
-end
+GD.str = str
 
 function GD.tostring(value)
 	return tostring(Variant(value))
