@@ -28,7 +28,7 @@ local library_resource_dir = clib.hgdn_library.resource_path:get_base_dir()
 local CoroutineObject = GD.load(library_resource_dir:plus_file('lps_coroutine.lua'))
 
 function GD.yield(obj, signal_name)
-	local co, is_main = coroutine.running()
+	local co, is_main = coroutine_running()
 	assert(co and not is_main, "GD.yield can be called only from script methods")
 	local co_obj = lps_instances[co]
 	if not co_obj then
@@ -40,7 +40,7 @@ function GD.yield(obj, signal_name)
 	if obj and signal_name then
 		obj:connect(signal_name, co_obj, "resume", Array(), Object.CONNECT_ONESHOT)
 	end
-	coroutine.yield(co_obj)
+	coroutine_yield(co_obj)
 end
 
 local Engine = api.godot_global_get_singleton("Engine")
@@ -89,10 +89,10 @@ local function searchpath(name, path, sep, rep)
 		if f:open(filename, File.READ) == GD.OK then
 			return filename, f
 		else
-			table.insert(notfound, string.format("\n\tno file %q", filename))
+			table_insert(notfound, string_format("\n\tno file %q", filename))
 		end
 	end
-	return nil, table.concat(notfound)
+	return nil, table_concat(notfound)
 end
 
 local function lua_searcher(name)
@@ -114,15 +114,15 @@ local function c_searcher(name, name_override)
 	open_file_or_err:close()
 	local func_suffix = (name_override or name):gsub('%.', '_')
 	-- Split module name if a "-" is found
-	local igmark = string.find(func_suffix, '-', 1, false)
+	local igmark = string_find(func_suffix, '-', 1, false)
 	if igmark then
 		local funcname = 'luaopen_' .. func_suffix:sub(1, igmark - 1)
-		local f = package.loadlib(filename, funcname)
+		local f = package_loadlib(filename, funcname)
 		if f then return f end
 		func_suffix = func_suffix:sub(igmark + 1)
 	end
-	local f, err = package.loadlib(filename, 'luaopen_' .. func_suffix)
-	return assert(f, string.format('error loading module %q from file %q:\n\t%s', name_override or name, filename, err))
+	local f, err = package_loadlib(filename, 'luaopen_' .. func_suffix)
+	return assert(f, string_format('error loading module %q from file %q:\n\t%s', name_override or name, filename, err))
 end
 
 local function c_root_searcher(name)

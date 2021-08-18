@@ -20,16 +20,11 @@
 -- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 -- FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 -- IN THE SOFTWARE.
-local loadstring = loadstring or load
-local unpack = table.unpack or unpack
-
-local weak_k = { __mode = 'k' }
-
 local lps_scripts = {}
 local lps_instances = setmetatable({}, weak_k)
 
 local function pointer_to_index(ptr)
-	return tonumber(ffi.cast('uintptr_t', ptr))
+	return tonumber(ffi_cast('uintptr_t', ptr))
 end
 
 local function wrap_callback(f)
@@ -97,7 +92,7 @@ clib.lps_script_init_cb = wrap_callback(function(manifest, path, source, err)
 		end
 	end
 
-	manifest.data = ffi.cast('void *', metadata_index)
+	manifest.data = ffi_cast('void *', metadata_index)
 	err[0] = GD.OK
 end)
 
@@ -153,7 +148,7 @@ clib.lps_instance_get_prop_cb = wrap_callback(function(data, name, ret)
 	elseif script._get then
 		local unboxed_ret = script._get(self, name)
 		if unboxed_ret ~= nil then
-			ret[0] = ffi.gc(Variant(unboxed_ret), nil)
+			ret[0] = ffi_gc(Variant(unboxed_ret), nil)
 			return true
 		else
 			return false
@@ -165,7 +160,7 @@ end)
 
 -- void (*lps_instance_call_method_cb)(godot_pluginscript_instance_data *data, const godot_string_name *method, const godot_variant **args, int argcount, godot_variant *ret, godot_variant_call_error *error);
 
--- Reuse this coroutine for every method until `GD.yield`/`coroutine.yield` is called
+-- Reuse this coroutine for every method until `GD.yield` / `coroutine.yield` is called
 local method_coroutine_cache
 
 clib.lps_instance_call_method_cb = wrap_callback(function(data, name, args, argcount, ret, err)
@@ -179,11 +174,11 @@ clib.lps_instance_call_method_cb = wrap_callback(function(data, name, args, argc
 		end
 		local co = setthreadfunc(method_coroutine_cache, method)
 		method_coroutine_cache = nil  -- clear coroutine cache because it cannot be reused if method errors
-		local success, unboxed_ret = assert(coroutine.resume(co, self, unpack(args_table)))
-		if coroutine.status(co) == 'dead' then  -- reuse dead coroutines
+		local success, unboxed_ret = assert(coroutine_resume(co, self, unpack(args_table)))
+		if coroutine_status(co) == 'dead' then  -- reuse dead coroutines
 			method_coroutine_cache = co
 		end
-		ret[0] = ffi.gc(Variant(unboxed_ret), nil)
+		ret[0] = ffi_gc(Variant(unboxed_ret), nil)
 		if err ~= nil then
 			err.error = GD.CALL_OK
 		end

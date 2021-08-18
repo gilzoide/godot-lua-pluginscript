@@ -32,6 +32,7 @@ DIST_DEST = $(addprefix build/,$(DIST_SRC)) $(addprefix build/$(GDNLIB_ENTRY_PRE
 # Note that the order is important!
 LUA_INIT_SCRIPT_SRC = \
 	src/godot_ffi.lua \
+	src/cache_lua_libs.lua \
 	src/godot_globals.lua \
 	src/godot_class.lua \
 	src/godot_variant.lua \

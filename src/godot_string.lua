@@ -21,7 +21,7 @@
 -- FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 -- IN THE SOFTWARE.
 local function consume_char_string(cs)
-	local lua_str = ffi.string(api.godot_char_string_get_data(cs), api.godot_char_string_length(cs))
+	local lua_str = ffi_string(api.godot_char_string_get_data(cs), api.godot_char_string_length(cs))
 	api.godot_char_string_destroy(cs)
 	return lua_str
 end
@@ -49,7 +49,7 @@ local string_methods = {
 		end
 	end,
 	bigrams = function(self)
-		return ffi.gc(api.godot_string_bigrams(self), api.godot_array_destroy)
+		return ffi_gc(api.godot_string_bigrams(self), api.godot_array_destroy)
 	end,
 	ends_with = function(self, str)
 		return api.godot_string_ends_with(self, str(str))
@@ -64,7 +64,7 @@ local string_methods = {
 		return api.godot_string_find_from(self, str(what), from or 0)
 	end,
 	findmk = function(self, keys, from)
-		local r_key = ffi.new(int)
+		local r_key = ffi_new(int)
 		local ret = api.godot_string_findmk_from_in_place(self, keys, from or 0, r_key)
 		return ret, r_key
 	end,
@@ -75,15 +75,15 @@ local string_methods = {
 		return api.godot_string_find_last(self, str(what))
 	end,
 	format = function(self, values, placeholder)
-		return ffi.gc(api.godot_string_format_with_custom_placeholder(self, Variant(values), placeholder or String("{_}")), api.godot_string_destroy)
+		return ffi_gc(api.godot_string_format_with_custom_placeholder(self, Variant(values), placeholder or String("{_}")), api.godot_string_destroy)
 	end,
 	hex_encode_buffer = function(buffer, len)
-		return ffi.gc(api.godot_string_hex_encode_buffer(buffer, len), api.godot_string_destroy)
+		return ffi_gc(api.godot_string_hex_encode_buffer(buffer, len), api.godot_string_destroy)
 	end,
 	hex_to_int = api.godot_string_hex_to_int,
 	hex_to_int_without_prefix = api.godot_string_hex_to_int_without_prefix,
 	insert = function(self, position, what)
-		return ffi.gc(api.godot_string_insert(self, position, str(what)), api.godot_string_destroy)
+		return ffi_gc(api.godot_string_insert(self, position, str(what)), api.godot_string_destroy)
 	end,
 	is_numeric = api.godot_string_is_numeric,
 	is_subsequence_of = function(self, str)
@@ -93,7 +93,7 @@ local string_methods = {
 		return api.godot_string_is_subsequence_ofi(self, str(str))
 	end,
 	lpad = function(self, min_length, character)
-		return ffi.gc(api.godot_string_lpad_with_custom_character(self, min_length, character and str(character) or String(" ")), api.godot_string_destroy)
+		return ffi_gc(api.godot_string_lpad_with_custom_character(self, min_length, character and str(character) or String(" ")), api.godot_string_destroy)
 	end,
 	match = function(self, expr)
 		return api.godot_string_match(self, str(expr))
@@ -102,13 +102,13 @@ local string_methods = {
 		return api.godot_string_matchn(self, str(expr))
 	end,
 	replace_first = function(self, what, forwhat)
-		return ffi.gc(api.godot_string_replace_first(self, str(what), str(forwhat)), api.godot_string_destroy)
+		return ffi_gc(api.godot_string_replace_first(self, str(what), str(forwhat)), api.godot_string_destroy)
 	end,
 	replace = function(self, what, forwhat)
-		return ffi.gc(api.godot_string_replace(self, str(what), str(forwhat)), api.godot_string_destroy)
+		return ffi_gc(api.godot_string_replace(self, str(what), str(forwhat)), api.godot_string_destroy)
 	end,
 	replacen = function(self, what, forwhat)
-		return ffi.gc(api.godot_string_replacen(self, str(what), str(forwhat)), api.godot_string_destroy)
+		return ffi_gc(api.godot_string_replacen(self, str(what), str(forwhat)), api.godot_string_destroy)
 	end,
 	rfind = function(self, what, from)
 		return api.godot_string_rfind_from(self, str(what), from or -1)
@@ -117,13 +117,13 @@ local string_methods = {
 		return api.godot_string_rfindn_from(self, str(what), from or -1)
 	end,
 	rpad = function(self, min_length, character)
-		return ffi.gc(api.godot_string_rpad_with_custom_character(self, min_length, character and str(character) or String(" ")), api.godot_string_destroy)
+		return ffi_gc(api.godot_string_rpad_with_custom_character(self, min_length, character and str(character) or String(" ")), api.godot_string_destroy)
 	end,
 	similarity = function(self, str)
 		return api.godot_string_similarity(self, str(str))
 	end,
 	sprintf = function(self, values, ...)
-		local r_error = ffi.new(bool)
+		local r_error = ffi_new(bool)
 		if select('#', ...) > 0 or not ffi.istype(Array, values) then
 			values = Array(values, ...)
 		end
@@ -135,81 +135,81 @@ local string_methods = {
 		end
 	end,
 	substr = function(self, from, len)
-		return ffi.gc(api.godot_string_substr(self, from or 0, len or -1), api.godot_string_destroy)
+		return ffi_gc(api.godot_string_substr(self, from or 0, len or -1), api.godot_string_destroy)
 	end,
 	to_double = api.godot_string_to_double,
 	to_float = api.godot_string_to_float,
 	to_int = api.godot_string_to_int,
 	camelcase_to_underscore = function(self)
-		return ffi.gc(api.godot_string_camelcase_to_underscore(self), api.godot_string_destroy)
+		return ffi_gc(api.godot_string_camelcase_to_underscore(self), api.godot_string_destroy)
 	end,
 	camelcase_to_underscore_lowercased = function(self)
-		return ffi.gc(api.godot_string_camelcase_to_underscore_lowercased(self), api.godot_string_destroy)
+		return ffi_gc(api.godot_string_camelcase_to_underscore_lowercased(self), api.godot_string_destroy)
 	end,
 	capitalize = function(self)
-		return ffi.gc(api.godot_string_capitalize(self), api.godot_string_destroy)
+		return ffi_gc(api.godot_string_capitalize(self), api.godot_string_destroy)
 	end,
 	get_slice_count = function(self, splitter)
 		return api.godot_string_get_slice_count(self, str(splitter))
 	end,
 	get_slice = function(self, splitter, slice)
-		return ffi.gc(api.godot_string_get_slice(self, str(splitter), slice), api.godot_string_destroy)
+		return ffi_gc(api.godot_string_get_slice(self, str(splitter), slice), api.godot_string_destroy)
 	end,
 	get_slicec = function(self, splitter, slice)
-		return ffi.gc(api.godot_string_get_slicec(self, splitter, slice), api.godot_string_destroy)
+		return ffi_gc(api.godot_string_get_slicec(self, splitter, slice), api.godot_string_destroy)
 	end,
 	split = function(self, splitter, allow_empty)
 		if allow_empty == nil then allow_empty = true end
-		return ffi.gc(api.godot_string_split_allow_empty(self, str(splitter), allow_empty), api.godot_array_destroy)
+		return ffi_gc(api.godot_string_split_allow_empty(self, str(splitter), allow_empty), api.godot_array_destroy)
 	end,
 	split_floats = function(self, splitter, allow_empty)
 		if allow_empty == nil then allow_empty = true end
-		if ffi.istype(Array, splitter) then
-			return ffi.gc(api.godot_string_split_floats_mk_allows_empty(self, splitter, allow_empty), api.godot_array_destroy)
+		if ffi_istype(Array, splitter) then
+			return ffi_gc(api.godot_string_split_floats_mk_allows_empty(self, splitter, allow_empty), api.godot_array_destroy)
 		else
-			return ffi.gc(api.godot_string_split_floats_allows_empty(self, str(splitter), allow_empty), api.godot_array_destroy)
+			return ffi_gc(api.godot_string_split_floats_allows_empty(self, str(splitter), allow_empty), api.godot_array_destroy)
 		end
 	end,
 	split_ints = function(self, splitter, allow_empty)
 		if allow_empty == nil then allow_empty = true end
-		if ffi.istype(Array, splitter) then
-			return ffi.gc(api.godot_string_split_ints_mk_allows_empty(self, splitter, allow_empty), api.godot_array_destroy)
+		if ffi_istype(Array, splitter) then
+			return ffi_gc(api.godot_string_split_ints_mk_allows_empty(self, splitter, allow_empty), api.godot_array_destroy)
 		else
-			return ffi.gc(api.godot_string_split_ints_allows_empty(self, str(splitter), allow_empty), api.godot_array_destroy)
+			return ffi_gc(api.godot_string_split_ints_allows_empty(self, str(splitter), allow_empty), api.godot_array_destroy)
 		end
 	end,
 	split_spaces = function(self)
-		return ffi.gc(api.godot_string_split_spaces(self), api.godot_array_destroy)
+		return ffi_gc(api.godot_string_split_spaces(self), api.godot_array_destroy)
 	end,
 	to_lower = function(self)
-		return ffi.gc(api.godot_string_to_lower(self), api.godot_string_destroy)
+		return ffi_gc(api.godot_string_to_lower(self), api.godot_string_destroy)
 	end,
 	to_upper = function(self)
-		return ffi.gc(api.godot_string_to_upper(self), api.godot_string_destroy)
+		return ffi_gc(api.godot_string_to_upper(self), api.godot_string_destroy)
 	end,
 	get_basename = function(self)
-		return ffi.gc(api.godot_string_get_basename(self), api.godot_string_destroy)
+		return ffi_gc(api.godot_string_get_basename(self), api.godot_string_destroy)
 	end,
 	get_extension = function(self)
-		return ffi.gc(api.godot_string_get_extension(self), api.godot_string_destroy)
+		return ffi_gc(api.godot_string_get_extension(self), api.godot_string_destroy)
 	end,
 	left = function(self)
-		return ffi.gc(api.godot_string_left(self), api.godot_string_destroy)
+		return ffi_gc(api.godot_string_left(self), api.godot_string_destroy)
 	end,
 	ord_at = api.godot_string_ord_at,
 	plus_file = function(self, file)
-		return ffi.gc(api.godot_string_plus_file(self, str(file)), api.godot_string_destroy)
+		return ffi_gc(api.godot_string_plus_file(self, str(file)), api.godot_string_destroy)
 	end,
 	right = function(self)
-		return ffi.gc(api.godot_string_right(self), api.godot_string_destroy)
+		return ffi_gc(api.godot_string_right(self), api.godot_string_destroy)
 	end,
 	strip_edges = function(self, left, right)
 		if left == nil then left = true end
 		if right == nil then right = true end
-		return ffi.gc(api.godot_string_strip_edges(self, left, right), api.godot_string_destroy)
+		return ffi_gc(api.godot_string_strip_edges(self, left, right), api.godot_string_destroy)
 	end,
 	strip_escapes = function(self)
-		return ffi.gc(api.godot_string_strip_escapes(self), api.godot_string_destroy)
+		return ffi_gc(api.godot_string_strip_escapes(self), api.godot_string_destroy)
 	end,
 	erase = api.godot_string_erase,
 	ascii = function(self)
@@ -224,74 +224,74 @@ local string_methods = {
 	hash = api.godot_string_hash,
 	hash64 = api.godot_string_hash64,
 	md5_buffer = function(self)
-		return ffi.gc(api.godot_string_md5_buffer(self), api.godot_pool_byte_array_destroy)
+		return ffi_gc(api.godot_string_md5_buffer(self), api.godot_pool_byte_array_destroy)
 	end,
 	md5_text = function(self)
-		return ffi.gc(api.godot_string_md5_text(self), api.godot_string_destroy)
+		return ffi_gc(api.godot_string_md5_text(self), api.godot_string_destroy)
 	end,
 	sha256_buffer = function(self)
-		return ffi.gc(api.godot_string_sha256_buffer(self), api.godot_pool_byte_array_destroy)
+		return ffi_gc(api.godot_string_sha256_buffer(self), api.godot_pool_byte_array_destroy)
 	end,
 	sha256_text = function(self)
-		return ffi.gc(api.godot_string_sha256_text(self), api.godot_string_destroy)
+		return ffi_gc(api.godot_string_sha256_text(self), api.godot_string_destroy)
 	end,
 	empty = api.godot_string_empty,
 	get_base_dir = function(self)
-		return ffi.gc(api.godot_string_get_base_dir(self), api.godot_string_destroy)
+		return ffi_gc(api.godot_string_get_base_dir(self), api.godot_string_destroy)
 	end,
 	get_file = function(self)
-		return ffi.gc(api.godot_string_get_file(self), api.godot_string_destroy)
+		return ffi_gc(api.godot_string_get_file(self), api.godot_string_destroy)
 	end,
 	humanize_size = function(size)
-		return ffi.gc(api.godot_string_humanize_size(size), api.godot_string_destroy)
+		return ffi_gc(api.godot_string_humanize_size(size), api.godot_string_destroy)
 	end,
 	is_abs_path = api.godot_string_is_abs_path,
 	is_rel_path = api.godot_string_is_rel_path,
 	is_resource_file = api.godot_string_is_resource_file,
 	path_to = function(self, path)
-		return ffi.gc(api.godot_string_path_to(self, str(path)), api.godot_string_destroy)
+		return ffi_gc(api.godot_string_path_to(self, str(path)), api.godot_string_destroy)
 	end,
 	path_to_file = function(self, path)
-		return ffi.gc(api.godot_string_path_to_file(self, str(path)), api.godot_string_destroy)
+		return ffi_gc(api.godot_string_path_to_file(self, str(path)), api.godot_string_destroy)
 	end,
 	simplify_path = function(self)
-		return ffi.gc(api.godot_string_simplify_path(self), api.godot_string_destroy)
+		return ffi_gc(api.godot_string_simplify_path(self), api.godot_string_destroy)
 	end,
 	c_escape = function(self)
-		return ffi.gc(api.godot_string_c_escape(self), api.godot_string_destroy)
+		return ffi_gc(api.godot_string_c_escape(self), api.godot_string_destroy)
 	end,
 	c_escape_multiline = function(self)
-		return ffi.gc(api.godot_string_c_escape_multiline(self), api.godot_string_destroy)
+		return ffi_gc(api.godot_string_c_escape_multiline(self), api.godot_string_destroy)
 	end,
 	c_unescape = function(self)
-		return ffi.gc(api.godot_string_c_unescape(self), api.godot_string_destroy)
+		return ffi_gc(api.godot_string_c_unescape(self), api.godot_string_destroy)
 	end,
 	http_escape = function(self)
-		return ffi.gc(api.godot_string_http_escape(self), api.godot_string_destroy)
+		return ffi_gc(api.godot_string_http_escape(self), api.godot_string_destroy)
 	end,
 	http_unescape = function(self)
-		return ffi.gc(api.godot_string_http_unescape(self), api.godot_string_destroy)
+		return ffi_gc(api.godot_string_http_unescape(self), api.godot_string_destroy)
 	end,
 	json_escape = function(self)
-		return ffi.gc(api.godot_string_json_escape(self), api.godot_string_destroy)
+		return ffi_gc(api.godot_string_json_escape(self), api.godot_string_destroy)
 	end,
 	word_wrap = function(self)
-		return ffi.gc(api.godot_string_word_wrap(self), api.godot_string_destroy)
+		return ffi_gc(api.godot_string_word_wrap(self), api.godot_string_destroy)
 	end,
 	xml_escape = function(self)
-		return ffi.gc(api.godot_string_xml_escape(self), api.godot_string_destroy)
+		return ffi_gc(api.godot_string_xml_escape(self), api.godot_string_destroy)
 	end,
 	xml_escape_with_quotes = function(self)
-		return ffi.gc(api.godot_string_xml_escape_with_quotes(self), api.godot_string_destroy)
+		return ffi_gc(api.godot_string_xml_escape_with_quotes(self), api.godot_string_destroy)
 	end,
 	xml_unescape = function(self)
-		return ffi.gc(api.godot_string_xml_unescape(self), api.godot_string_destroy)
+		return ffi_gc(api.godot_string_xml_unescape(self), api.godot_string_destroy)
 	end,
 	percent_decode = function(self)
-		return ffi.gc(api.godot_string_percent_decode(self), api.godot_string_destroy)
+		return ffi_gc(api.godot_string_percent_decode(self), api.godot_string_destroy)
 	end,
 	percent_encode = function(self)
-		return ffi.gc(api.godot_string_percent_encode(self), api.godot_string_destroy)
+		return ffi_gc(api.godot_string_percent_encode(self), api.godot_string_destroy)
 	end,
 	is_valid_float = api.godot_string_is_valid_float,
 	is_valid_hex_number = function(self, with_prefix)
@@ -305,15 +305,15 @@ local string_methods = {
 
 -- Implement some of the Lua string API
 string_methods.byte = function(self, i, j)
-	return string.byte(tostring(self), i, j)
+	return string_byte(tostring(self), i, j)
 end
 
 string_methods.gmatch = function(self, patt, init)
-	return string.gmatch(tostring(self), patt, init)
+	return string_gmatch(tostring(self), patt, init)
 end
 
 string_methods.gsub = function(self, patt, repl, n)
-	return string.gsub(tostring(self), patt, repl, n)
+	return string_gsub(tostring(self), patt, repl, n)
 end
 
 string_methods.len = string_methods.length
@@ -321,15 +321,15 @@ string_methods.lower = string_methods.to_lower
 string_methods.upper = string_methods.to_upper
 
 string_methods.match = function(self, patt, init)
-	return string.match(tostring(self), patt, init)
+	return string_match(tostring(self), patt, init)
 end
 
 string_methods.rep = function(self, n, sep)
-	return string.rep(tostring(self), n, sep)
+	return string_rep(tostring(self), n, sep)
 end
 
 string_methods.reverse = function(self)
-	return string.reverse(tostring(self))
+	return string_reverse(tostring(self))
 end
 
 string_methods.sub = function(self, i, j)
@@ -344,20 +344,20 @@ end
 
 if api_1_1 then
 	string_methods.dedent = function(self)
-		return ffi.gc(api_1_1.godot_string_dedent(self), api.godot_string_destroy)
+		return ffi_gc(api_1_1.godot_string_dedent(self), api.godot_string_destroy)
 	end
 	string_methods.trim_prefix = function(self, prefix)
-		return ffi.gc(api_1_1.godot_string_trim_prefix(self, str(prefix)), api.godot_string_destroy)
+		return ffi_gc(api_1_1.godot_string_trim_prefix(self, str(prefix)), api.godot_string_destroy)
 	end
 	string_methods.trim_suffix = function(self, suffix)
-		return ffi.gc(api_1_1.godot_string_trim_suffix(self, str(suffix)), api.godot_string_destroy)
+		return ffi_gc(api_1_1.godot_string_trim_suffix(self, str(suffix)), api.godot_string_destroy)
 	end
 	string_methods.rstrip = function(self, chars)
-		return ffi.gc(api_1_1.godot_string_rstrip(self, str(chars)), api.godot_string_destroy)
+		return ffi_gc(api_1_1.godot_string_rstrip(self, str(chars)), api.godot_string_destroy)
 	end
 	string_methods.rsplit = function(self, delimiter, allow_empty, maxsplit)
 		if allow_empty == nil then allow_empty = true end
-		return ffi.gc(api_1_1.godot_string_rsplit(self, str(delimiter), allow_empty, maxsplit or 0), api.godot_pool_string_array_destroy)
+		return ffi_gc(api_1_1.godot_string_rsplit(self, str(delimiter), allow_empty, maxsplit or 0), api.godot_pool_string_array_destroy)
 	end
 end
 
@@ -366,23 +366,23 @@ String = ffi.metatype('godot_string', {
 		local text, length = ...
 		if select('#', ...) == 0 then
 			return api.godot_string_chars_to_utf8('')
-		elseif ffi.istype(mt, text) then
-			local self = ffi.new(mt)
+		elseif ffi_istype(mt, text) then
+			local self = ffi_new(mt)
 			api.godot_string_new_copy(self, text)
 			return self
-		elseif ffi.istype(StringName, text) then
+		elseif ffi_istype(StringName, text) then
 			return text:get_name()
-		elseif ffi.istype('char *', text) then
+		elseif ffi_istype('char *', text) then
 			if length then
 				return api.godot_string_chars_to_utf8_with_len(text, length)
 			else
 				return api.godot_string_chars_to_utf8(text)
 			end
-		elseif ffi.istype('wchar_t *', text) then
-			local self = ffi.new(mt)
+		elseif ffi_istype('wchar_t *', text) then
+			local self = ffi_new(mt)
 			api.godot_string_new_with_wide_string(self, text, length or -1)
 			return self
-		elseif ffi.istype('wchar_t', text) or ffi.istype('char', text) then
+		elseif ffi_istype('wchar_t', text) or ffi_istype('char', text) then
 			return api.godot_string_chr(text)
 		else
 			text = tostring(text)
@@ -412,7 +412,7 @@ local string_name_methods = {
 		api.godot_variant_new_string(var, api.godot_string_name_get_name(self))
 	end,
 	get_name = function(self)
-		return ffi.gc(api.godot_string_name_get_name(self), api.godot_string_destroy)
+		return ffi_gc(api.godot_string_name_get_name(self), api.godot_string_destroy)
 	end,
 	get_hash = api.godot_string_name_get_hash,
 	get_data_unique_pointer = api.godot_string_name_get_data_unique_pointer,
@@ -420,8 +420,8 @@ local string_name_methods = {
 StringName = ffi.metatype('godot_string_name', {
 	__new = function(mt, text)
 		text = text or ''
-		local self = ffi.new(mt)
-		if ffi.istype(String, text) then
+		local self = ffi_new(mt)
+		if ffi_istype(String, text) then
 			api.godot_string_name_new(self, text)
 		else
 			api.godot_string_name_new_data(self, text)

@@ -22,15 +22,16 @@
 -- IN THE SOFTWARE.
 local ClassDB = api.godot_global_get_singleton("ClassDB")
 
-local Variant_p_array = ffi.typeof('godot_variant *[?]')
-local const_Variant_pp = ffi.typeof('const godot_variant **')
-local VariantCallError = ffi.typeof('godot_variant_call_error')
+local Variant_p_array = ffi_typeof('godot_variant *[?]')
+local const_Variant_pp = ffi_typeof('const godot_variant **')
+local VariantCallError = ffi_typeof('godot_variant_call_error')
 
 local _Object  -- forward local declaration
 local Object_call = api.godot_method_bind_get_method('Object', 'call')
 local Object_get = api.godot_method_bind_get_method('Object', 'get')
 local Object_has_method = api.godot_method_bind_get_method('Object', 'has_method')
 local Object_is_class = api.godot_method_bind_get_method('Object', 'is_class')
+
 local function Object_gc(obj)
 	if Object_call(obj, 'unreference') then
 		api.godot_object_destroy(obj)
@@ -40,13 +41,13 @@ end
 local MethodBind = ffi.metatype('godot_method_bind', {
 	__call = function(self, obj, ...)
 		local argc = select('#', ...)
-		local argv = ffi.new(Variant_p_array, argc)
+		local argv = ffi_new(Variant_p_array, argc)
 		for i = 1, argc do
 			local arg = select(i, ...)
 			argv[i - 1] = Variant(arg)
 		end
-		local r_error = ffi.new(VariantCallError)
-		local value = ffi.gc(api.godot_method_bind_call(self, _Object(obj), ffi.cast(const_Variant_pp, argv), argc, r_error), api.godot_variant_destroy)
+		local r_error = ffi_new(VariantCallError)
+		local value = ffi_gc(api.godot_method_bind_call(self, _Object(obj), ffi_cast(const_Variant_pp, argv), argc, r_error), api.godot_variant_destroy)
 		if r_error.error == GD.CALL_OK then
 			return value:unbox()
 		else
@@ -68,7 +69,7 @@ local class_methods = {
 	new = function(self, ...)
 		local obj = self.constructor()
 		if Object_call(obj, 'init_ref') then
-			ffi.gc(obj, Object_gc)
+			ffi_gc(obj, Object_gc)
 		end
 		Object_call(obj, '_init', ...)
 		return obj

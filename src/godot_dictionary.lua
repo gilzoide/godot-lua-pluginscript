@@ -45,7 +45,7 @@ local methods = {
 	keys = api.godot_dictionary_keys,
 	values = api.godot_dictionary_values,
 	get = function(self, key)
-		local var = ffi.gc(api.godot_dictionary_get(self, Variant(key)), api.godot_variant_destroy)
+		local var = ffi_gc(api.godot_dictionary_get(self, Variant(key)), api.godot_variant_destroy)
 		return var:unbox()
 	end,
 	set = function(self, key, value)
@@ -74,15 +74,15 @@ if api_1_1 then
 		return api_1_1.godot_dictionary_erase_with_return(self, Variant(key))
 	end
 	methods.get_with_default = function(self, key, default)
-		local var = ffi.gc(api_1_1.godot_dictionary_get_with_default(self, Variant(key), Variant(default)), api.godot_variant_destroy)
+		local var = ffi_gc(api_1_1.godot_dictionary_get_with_default(self, Variant(key), Variant(default)), api.godot_variant_destroy)
 		return var:unbox()
 	end
 end
 
-Dictionary = ffi.metatype('godot_dictionary', {
+Dictionary = ffi_metatype('godot_dictionary', {
 	__new = function(mt, value)
-		local self = ffi.new('godot_dictionary')
-		if ffi.istype(mt, value) then
+		local self = ffi_new('godot_dictionary')
+		if ffi_istype(mt, value) then
 			api.godot_dictionary_new_copy(self, value)
 		else
 			api.godot_dictionary_new(self)

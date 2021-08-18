@@ -20,7 +20,7 @@
 -- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 -- FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 -- IN THE SOFTWARE.
-local byte = ffi.typeof('uint8_t')
+local byte = ffi_typeof('uint8_t')
 
 local function register_pool_array(kind, element_ctype)
 	local name = 'Pool' .. kind:sub(1, 1):upper() .. kind:sub(2) .. 'Array'
@@ -30,14 +30,12 @@ local function register_pool_array(kind, element_ctype)
 	local godot_pool_array_read_access_copy = api[ctype .. '_read_access_copy']
 	local godot_pool_array_read_access_ptr = api[ctype .. '_read_access_ptr']
 	local godot_pool_array_read_access_destroy = api[ctype .. '_read_access_destroy']
-	local ReadAccess = ffi.metatype(ctype .. '_read_access', {
+	local ReadAccess = ffi_metatype(ctype .. '_read_access', {
 		__index = {
 			copy = function(self)
-				return ffi.gc(godot_pool_array_read_access_copy(self), godot_pool_array_read_access_destroy)
+				return ffi_gc(godot_pool_array_read_access_copy(self), godot_pool_array_read_access_destroy)
 			end,
-			ptr = function(self)
-				return godot_pool_array_read_access_ptr(self)
-			end,
+			ptr = godot_pool_array_read_access_ptr,
 			assign = api[ctype .. '_read_access_operator_assign'],
 		},
 	})
@@ -45,14 +43,12 @@ local function register_pool_array(kind, element_ctype)
 	local godot_pool_array_write_access_copy = api[ctype .. '_write_access_copy']
 	local godot_pool_array_write_access_ptr = api[ctype .. '_write_access_ptr']
 	local godot_pool_array_write_access_destroy = api[ctype .. '_write_access_destroy']
-	local WriteAccess = ffi.metatype(ctype .. '_write_access', {
+	local WriteAccess = ffi_metatype(ctype .. '_write_access', {
 		__index = {
 			copy = function(self)
-				return ffi.gc(godot_pool_array_write_access_copy(self), godot_pool_array_write_access_destroy)
+				return ffi_gc(godot_pool_array_write_access_copy(self), godot_pool_array_write_access_destroy)
 			end,
-			ptr = function(self)
-				return godot_pool_array_write_access_ptr(self)
-			end,
+			ptr = godot_pool_array_write_access_ptr,
 			assign = api[ctype .. '_write_access_operator_assign'],
 		},
 	})
@@ -69,7 +65,7 @@ local function register_pool_array(kind, element_ctype)
 		varianttype = GD['TYPE_POOL_' .. kind:upper() .. '_ARRAY'],
 
 		toarray = function(self)
-			local array = ffi.new(Array)
+			local array = ffi_new(Array)
 			godot_array_new_pool_array(array, self)
 			return array
 		end,
@@ -83,17 +79,17 @@ local function register_pool_array(kind, element_ctype)
 		remove = api[ctype .. '_remove'],
 		resize = api[ctype .. '_resize'],
 		read = function(self)
-			return ffi.gc(godot_pool_array_read(self), godot_pool_array_read_access_destroy)
+			return ffi_gc(godot_pool_array_read(self), godot_pool_array_read_access_destroy)
 		end,
 		write = function(self)
-			return ffi.gc(godot_pool_array_write(self), godot_pool_array_write_access_destroy)
+			return ffi_gc(godot_pool_array_write(self), godot_pool_array_write_access_destroy)
 		end,
 		size = api[ctype .. '_size'],
 	}
 
 	if element_ctype == byte then
 		methods.get_string = function(self)
-			return ffi.string(self:read():ptr(), #self)
+			return ffi_string(self:read():ptr(), #self)
 		end
 		methods.hex_encode = function(self)
 			return String.hex_encode_buffer(self:read():ptr(), #self)
@@ -113,13 +109,13 @@ local function register_pool_array(kind, element_ctype)
 		methods.empty = api_1_2[ctype .. '_empty']
 	end
 
-	_G[name] = ffi.metatype(ctype, {
+	_G[name] = ffi_metatype(ctype, {
 		__new = function(mt, ...)
 			local self = ffi.new(mt)
 			local value = ...
-			if ffi.istype(mt, value) then
+			if ffi_istype(mt, value) then
 				godot_pool_array_new_copy(self, value)
-			elseif ffi.istype(Array, value) then
+			elseif ffi_istype(Array, value) then
 				godot_pool_array_new_with_array(self, value)
 			else
 				godot_pool_array_new(self)

@@ -61,7 +61,7 @@ local function get_property_type(value)
 		return GD.TYPE_BOOL
 	elseif t == 'string' then
 		return GD.TYPE_STRING
-	elseif ffi.istype(int, value) then
+	elseif ffi_istype(int, value) then
 		return GD.TYPE_INT
 	elseif t == 'number' or tonumber(value) then
 		return GD.TYPE_REAL

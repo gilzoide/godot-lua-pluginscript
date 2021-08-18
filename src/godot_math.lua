@@ -26,7 +26,7 @@ local vector2_methods = {
 
 	new = api.godot_vector2_new,
 	as_string = function(self)
-		return ffi.gc(api.godot_vector2_as_string(self), api.godot_string_destroy)
+		return ffi_gc(api.godot_vector2_as_string(self), api.godot_string_destroy)
 	end,
 	normalized = api.godot_vector2_normalized,
 	length = api.godot_vector2_length,
@@ -57,12 +57,12 @@ if api_1_2 then
 	vector2_methods.direction_to = api_1_2.godot_vector2_direction_to
 end
 
-Vector2 = ffi.metatype('godot_vector2', {
+Vector2 = ffi_metatype('godot_vector2', {
 	__new = function(mt, x, y)
-		if ffi.istype(mt, x) then
-			return ffi.new(mt, x)
+		if ffi_istype(mt, x) then
+			return ffi_new(mt, x)
 		else
-			return ffi.new(mt, { elements = { x, y }})
+			return ffi_new(mt, { elements = { x, y }})
 		end
 	end,
 	__tostring = GD.tostring,
@@ -116,7 +116,7 @@ local vector3_methods = {
 
 	new = api.godot_vector3_new,
 	as_string = function(self)
-		return ffi.gc(api.godot_vector3_as_string(self), api.godot_string_destroy)
+		return ffi_gc(api.godot_vector3_as_string(self), api.godot_string_destroy)
 	end,
 	min_axis = api.godot_vector3_min_axis,
 	max_axis = api.godot_vector3_max_axis,
@@ -149,19 +149,19 @@ if api_1_2 then
 	vector3_methods.direction_to = api_1_2.godot_vector3_direction_to
 end
 
-Vector3 = ffi.metatype('godot_vector3', {
+Vector3 = ffi_metatype('godot_vector3', {
 	__new = function(mt, x, y, z)
 		-- (Vector3)
-		if ffi.istype(mt, x) then
-			return ffi.new(mt, x)
+		if ffi_istype(mt, x) then
+			return ffi_new(mt, x)
 		-- (Vector2, float?)
-		elseif ffi.istype(Vector2, x) then
+		elseif ffi_istype(Vector2, x) then
 			x, y, z = x.x, x.y, y
 		-- (float, Vector2)
-		elseif ffi.istype(Vector2, y) then
+		elseif ffi_istype(Vector2, y) then
 			x, y, z = x, y.x, y.y
 		end
-		return ffi.new(mt, { elements = { x, y, z }})
+		return ffi_new(mt, { elements = { x, y, z }})
 	end,
 	__tostring = GD.tostring,
 	__index = vector3_methods,
@@ -222,7 +222,7 @@ local color_methods = {
 	get_s = api.godot_color_get_s,
 	get_v = api.godot_color_get_v,
 	as_string = function(self)
-		return ffi.gc(api.godot_color_as_string(self), api.godot_string_destroy)
+		return ffi_gc(api.godot_color_as_string(self), api.godot_string_destroy)
 	end,
 	to_rgba32 = api.godot_color_to_rgba32,
 	to_argb32 = api.godot_color_to_argb32,
@@ -232,7 +232,7 @@ local color_methods = {
 	linear_interpolate = api.godot_color_linear_interpolate,
 	blend = api.godot_color_blend,
 	to_html = function(self)
-		return ffi.gc(api.godot_color_to_html(self), api.godot_string_destroy)
+		return ffi_gc(api.godot_color_to_html(self), api.godot_string_destroy)
 	end,
 }
 
@@ -246,32 +246,32 @@ if api_1_1 then
 	color_methods.lightened = api_1_1.godot_color_lightened
 end
 
-Color = ffi.metatype('godot_color', {
+Color = ffi_metatype('godot_color', {
 	__new = function(mt, r, g, b, a)
-		if ffi.istype(mt, r) then
+		if ffi_istype(mt, r) then
 			return ffi.new(mt, r)
-		elseif ffi.istype(Vector2, r) then
+		elseif ffi_istype(Vector2, r) then
 			-- (Vector2, Vector2)
-			if ffi.istype(Vector2, g) then
+			if ffi_istype(Vector2, g) then
 				r, g, b, a = r.x, r.y, g.x, g.y
 			-- (Vector2, float?, float?)
 			else
 				r, g, b, a = r.x, r.y, g, b
 			end
 		-- (Vector3, float?)
-		elseif ffi.istype(Vector3, r) then
+		elseif ffi_istype(Vector3, r) then
 			r, g, b, a = r.x, r.y, r.z, g
 		-- (float, Vector2, float?)
-		elseif ffi.istype(Vector2, g) then
+		elseif ffi_istype(Vector2, g) then
 			r, g, b, a = r, g.x, g.y, b
 		-- (float, float, Vector2)
-		elseif ffi.istype(Vector2, b) then
+		elseif ffi_istype(Vector2, b) then
 			r, g, b, a = r, g, b.x, b.y
 		-- (float, Vector3)
-		elseif ffi.istype(Vector3, g) then
+		elseif ffi_istype(Vector3, g) then
 			r, g, b, a = r, g.x, g.y, g.z
 		end
-		return ffi.new(mt, { elements = { r or 0, g or 0, b or 0, a or 1 }})
+		return ffi_new(mt, { elements = { r or 0, g or 0, b or 0, a or 1 }})
 	end,
 	__tostring = GD.tostring,
 	__index = color_methods,
@@ -303,7 +303,7 @@ local rect2_methods = {
 	new_with_position_and_size = api.godot_rect2_new_with_position_and_size,
 	new = api.godot_rect2_new,
 	as_string = function(self)
-		return ffi.gc(api.godot_rect2_as_string(self), api.godot_string_destroy)
+		return ffi_gc(api.godot_rect2_as_string(self), api.godot_string_destroy)
 	end,
 	get_area = api.godot_rect2_get_area,
 	intersects = api.godot_rect2_intersects,
@@ -322,23 +322,23 @@ if api_1_1 then
 	rect2_methods.abs = api_1_1.godot_rect2_abs
 end
 
-Rect2 = ffi.metatype('godot_rect2', {
+Rect2 = ffi_metatype('godot_rect2', {
 	__new = function(mt, x, y, width, height)
-		if ffi.istype(mt, x) then
-			return ffi.new(mt, x)
-		elseif ffi.istype(Vector2, x) then
+		if ffi_istype(mt, x) then
+			return ffi_new(mt, x)
+		elseif ffi_istype(Vector2, x) then
 			-- (Vector2, Vector2)
-			if ffi.istype(Vector2, y) then
+			if ffi_istype(Vector2, y) then
 				x, y, width, height = x.x, x.y, y.x, y.y
 			-- (Vector2, float?, float?)
 			else
 				x, y, width, height = x.x, x.y, y, width
 			end
 		-- (float, float, Vector2)
-		elseif ffi.istype(Vector2, width) then
+		elseif ffi_istype(Vector2, width) then
 			x, y, width, height = x, y, width.x, width.y
 		end
-		return ffi.new(mt, { x = x, y = y, width = width, height = height })
+		return ffi_new(mt, { x = x, y = y, width = width, height = height })
 	end,
 	__tostring = GD.tostring,
 	__index = rect2_methods,
@@ -356,7 +356,7 @@ local plane_methods = {
 	new_with_vectors = api.godot_plane_new_with_vectors,
 	new_with_normal = api.godot_plane_new_with_normal,
 	as_string = function(self)
-		return ffi.gc(api.godot_plane_as_string(self), api.godot_string_destroy)
+		return ffi_gc(api.godot_plane_as_string(self), api.godot_string_destroy)
 	end,
 	normalized = api.godot_plane_normalized,
 	center = api.godot_plane_center,
@@ -391,13 +391,13 @@ local plane_methods = {
 	end,
 }
 
-Plane = ffi.metatype('godot_plane', {
+Plane = ffi_metatype('godot_plane', {
 	__new = function(mt, a, b, c, d)
-		if ffi.istype(mt, a) then
-			return ffi.new(mt, a)
+		if ffi_istype(mt, a) then
+			return ffi_new(mt, a)
 		end
-		local self = ffi.new(mt)
-		if ffi.istype(Vector3, a) then
+		local self = ffi_new(mt)
+		if ffi_istype(Vector3, a) then
 			if ffi.istype(Vector3, b) then
 				self:new_with_vectors(self, a, b, c)
 			else
@@ -426,7 +426,7 @@ local quat_methods = {
 	new = api.godot_quat_new,
 	new_with_axis_angle = api.godot_quat_new_with_axis_angle,
 	as_string = function(self)
-		return ffi.gc(api.godot_quat_as_string(self), api.godot_string_destroy)
+		return ffi_gc(api.godot_quat_as_string(self), api.godot_string_destroy)
 	end,
 	length = api.godot_quat_length,
 	length_squared = api.godot_quat_length_squared,
@@ -448,17 +448,17 @@ end
 
 Quat = ffi.metatype('godot_quat', {
 	__new = function(mt, x, y, z, w)
-		if ffi.istype(mt, x) then
-			return ffi.new(mt, x)
+		if ffi_istype(mt, x) then
+			return ffi_new(mt, x)
 		end
-		local self = ffi.new(mt)
-		if ffi.istype(Vector3, x) then
+		local self = ffi_new(mt)
+		if ffi_istype(Vector3, x) then
 			if y then
 				self:new_with_axis_angle(x, y)
 			else
 				self:new_with_euler(x)
 			end
-		elseif ffi.istype(Basis, x) then
+		elseif ffi_istype(Basis, x) then
 			self:new_with_basis(self, x)
 		else
 			self:new(x, y, z, w or 1)
@@ -498,7 +498,7 @@ local basis_methods = {
 	new_with_euler = api.godot_basis_new_with_euler,
 	new_with_euler_quat = api.godot_basis_new_with_euler_quat,
 	as_string = function(self)
-		return ffi.gc(api.godot_basis_as_string(self), api.godot_string_destroy)
+		return ffi_gc(api.godot_basis_as_string(self), api.godot_string_destroy)
 	end,
 	inverse = api.godot_basis_inverse,
 	transposed = api.godot_basis_transposed,
@@ -531,19 +531,19 @@ end
 
 Basis = ffi.metatype('godot_basis', {
 	__new = function(mt, x, y, z)
-		if ffi.istype(mt, x) then
-			return ffi.new(mt, x)
+		if ffi_istype(mt, x) then
+			return ffi_new(mt, x)
 		end
-		local self = ffi.new(mt)
-		if ffi.istype(Vector3, x) then
-			if ffi.istype(Vector3, y) then
+		local self = ffi_new(mt)
+		if ffi_istype(Vector3, x) then
+			if ffi_istype(Vector3, y) then
 				self:new_with_rows(x, y, z)
 			elseif y then
 				self:new_with_axis_and_angle(x, y)
 			else
 				self:new_with_euler(x)
 			end
-		elseif ffi.istype(Quat, x) then
+		elseif ffi_istype(Quat, x) then
 			self:new_with_euler_quat(x)
 		else
 			self:new()
@@ -563,8 +563,8 @@ Basis = ffi.metatype('godot_basis', {
 		return Basis(a.elements[0] - b.elements[0], a.elements[1] - b.elements[1], a.elements[2] - b.elements[2])
 	end,
 	__mul = function(a, b)
-		if ffi.istype(Basis, a) then
-			if ffi.istype(Basis, b) then
+		if ffi_istype(Basis, a) then
+			if ffi_istype(Basis, b) then
 				return api.godot_basis_operator_multiply_vector(a, b)
 			else
 				return Basis(a.elements[0] * b, a.elements[1] * b, a.elements[2] * b)
@@ -581,7 +581,7 @@ local aabb_methods = {
 
 	new = api.godot_aabb_new,
 	as_string = function(self)
-		return ffi.gc(api.godot_aabb_as_string(self), api.godot_string_destroy)
+		return ffi_gc(api.godot_aabb_as_string(self), api.godot_string_destroy)
 	end,
 	get_area = api.godot_aabb_get_area,
 	has_no_area = api.godot_aabb_has_no_area,
@@ -605,7 +605,7 @@ local aabb_methods = {
 	get_endpoint = api.godot_aabb_get_endpoint,
 }
 
-AABB = ffi.metatype('godot_aabb', {
+AABB = ffi_metatype('godot_aabb', {
 	__tostring = GD.tostring,
 	__index = aabb_methods,
 	__concat = concat_gdvalues,
@@ -621,7 +621,7 @@ local transform2d_methods = {
 	new = api.godot_transform2d_new,
 	new_axis_origin = api.godot_transform2d_new_axis_origin,
 	as_string = function(self)
-		return ffi.gc(api.godot_transform2d_as_string(self), api.godot_string_destroy)
+		return ffi_gc(api.godot_transform2d_as_string(self), api.godot_string_destroy)
 	end,
 	inverse = api.godot_transform2d_inverse,
 	affine_inverse = api.godot_transform2d_affine_inverse,
@@ -641,11 +641,11 @@ local transform2d_methods = {
 	xform_rect2 = api.godot_transform2d_xform_rect2,
 	xform_inv_rect2 = api.godot_transform2d_xform_inv_rect2,
 	xform = function(self, value)
-		if ffi.istype(Vector2, value) then
+		if ffi_istype(Vector2, value) then
 			return self:xform_vector2(value)
-		elseif ffi.istype(Rect2, value) then
+		elseif ffi_istype(Rect2, value) then
 			return self:xform_rect2(value)
-		elseif ffi.istype(PoolVector2Array, value) then
+		elseif ffi_istype(PoolVector2Array, value) then
 			local array = PoolVector2Array()
 			array:resize(#value)
 			for i, v in ipairs(value) do
@@ -655,11 +655,11 @@ local transform2d_methods = {
 		end
 	end,
 	xform_inv = function(self, value)
-		if ffi.istype(Vector2, value) then
+		if ffi_istype(Vector2, value) then
 			return self:xform_inv_vector2(value)
-		elseif ffi.istype(Rect2, value) then
+		elseif ffi_istype(Rect2, value) then
 			return self:xform_inv_rect2(value)
-		elseif ffi.istype(PoolVector2Array, value) then
+		elseif ffi_istype(PoolVector2Array, value) then
 			local array = PoolVector2Array()
 			array:resize(#value)
 			for i, v in ipairs(value) do
@@ -670,12 +670,12 @@ local transform2d_methods = {
 	end,
 }
 
-Transform2D = ffi.metatype('godot_transform2d', {
+Transform2D = ffi_metatype('godot_transform2d', {
 	__new = function(mt, x, y, origin)
-		if ffi.istype(mt, x) then
-			return ffi.new(mt, x)
+		if ffi_istype(mt, x) then
+			return ffi_new(mt, x)
 		end
-		local self = ffi.new(mt)
+		local self = ffi_new(mt)
 		if not x then
 			self:new_identity()
 		elseif tonumber(x) then
@@ -701,7 +701,7 @@ local transform_methods = {
 	new_with_axis_origin = api.godot_transform_new_with_axis_origin,
 	new = api.godot_transform_new,
 	as_string = function(self)
-		return ffi.gc(api.godot_transform_as_string(self), api.godot_string_destroy)
+		return ffi_gc(api.godot_transform_as_string(self), api.godot_string_destroy)
 	end,
 	inverse = api.godot_transform_inverse,
 	affine_inverse = api.godot_transform_affine_inverse,
@@ -720,13 +720,13 @@ local transform_methods = {
 	xform_aabb = api.godot_transform_xform_aabb,
 	xform_inv_aabb = api.godot_transform_xform_inv_aabb,
 	xform = function(self, value)
-		if ffi.istype(Vector3, value) then
+		if ffi_istype(Vector3, value) then
 			return self:xform_vector3(value)
-		elseif ffi.istype(Plane, value) then
+		elseif ffi_istype(Plane, value) then
 			return self:xform_plane(value)
-		elseif ffi.istype(AABB, value) then
+		elseif ffi_istype(AABB, value) then
 			return self:xform_aabb(value)
-		elseif ffi.istype(PoolVector3Array, value) then
+		elseif ffi_istype(PoolVector3Array, value) then
 			local array = PoolVector3Array()
 			array:resize(#value)
 			for i, v in ipairs(value) do
@@ -736,13 +736,13 @@ local transform_methods = {
 		end
 	end,
 	xform_inv = function(self, value)
-		if ffi.istype(Vector3, value) then
+		if ffi_istype(Vector3, value) then
 			return self:xform_inv_vector3(value)
-		elseif ffi.istype(Plane, value) then
+		elseif ffi_istype(Plane, value) then
 			return self:xform_inv_plane(value)
-		elseif ffi.istype(AABB, value) then
+		elseif ffi_istype(AABB, value) then
 			return self:xform_inv_aabb(value)
-		elseif ffi.istype(PoolVector3Array, value) then
+		elseif ffi_istype(PoolVector3Array, value) then
 			local array = PoolVector3Array()
 			array:resize(#value)
 			for i, v in ipairs(value) do
@@ -757,19 +757,19 @@ if api_1_1 then
 	transform_methods.new_with_quat = api_1_1.godot_transform_new_with_quat
 end
 
-Transform = ffi.metatype('godot_transform', {
+Transform = ffi_metatype('godot_transform', {
 	__new = function(mt, x, y, z, origin)
-		if ffi.istype(mt, x) then
-			return ffi.new(mt, x)
+		if ffi_istype(mt, x) then
+			return ffi_new(mt, x)
 		end
-		local self = ffi.new(mt)
+		local self = ffi_new(mt)
 		if not x then
 			self:new_identity()
-		elseif ffi.istype(Vector3, x) then
+		elseif ffi_istype(Vector3, x) then
 			self:new_with_axis_origin(x, y, z, origin)
-		elseif ffi.istype(Basis, x) then
+		elseif ffi_istype(Basis, x) then
 			self:new_with_basis(x, y or Vector3())
-		elseif ffi.istype(Quat, x) then
+		elseif ffi_istype(Quat, x) then
 			self:new_with_quat(x)
 		end
 		return self

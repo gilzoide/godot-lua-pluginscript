@@ -21,7 +21,7 @@
 -- FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 -- IN THE SOFTWARE.
 local function str(value)
-	if ffi.istype(String, value) then
+	if ffi_istype(String, value) then
 		return value
 	else
 		return Variant(value):as_string()
@@ -29,7 +29,7 @@ local function str(value)
 end
 
 local function concat_gdvalues(a, b)
-	return ffi.gc(api.godot_string_operator_plus(str(a), str(b)), api.godot_string_destroy)
+	return ffi_gc(api.godot_string_operator_plus(str(a), str(b)), api.godot_string_destroy)
 end
 
 GD = {
@@ -189,9 +189,9 @@ GD = {
 	PROPERTY_USAGE_NOEDITOR = clib.GODOT_PROPERTY_USAGE_NOEDITOR,
 }
 
-bool = ffi.typeof('godot_bool')
-int = ffi.typeof('godot_int')
-float = ffi.typeof('godot_real')
+bool = ffi_typeof('godot_bool')
+int = ffi_typeof('godot_int')
+float = ffi_typeof('godot_real')
 
 if api_1_1 then
 	GD.is_instance_valid = api_1_1.godot_is_instance_valid
@@ -206,9 +206,9 @@ end
 local function join_str(sep, ...)
 	local result = {}
 	for i = 1, select('#', ...) do
-		table.insert(result, tostring(select(i, ...)))
+		table_insert(result, tostring(select(i, ...)))
 	end
-	return table.concat(result, sep)
+	return table_concat(result, sep)
 end
 
 function GD.print(...)
@@ -218,13 +218,13 @@ end
 _G.print = GD.print
 
 function GD.print_warning(...)
-	local info = debug.getinfo(2, 'nSl')
+	local info = debug_getinfo(2, 'nSl')
 	local message = join_str('\t', ...)
 	api.godot_print_warning(message, info.name, info.short_src, info.currentline)
 end
 
 function GD.print_error(...)
-	local info = debug.getinfo(2, 'nSl')
+	local info = debug_getinfo(2, 'nSl')
 	local message = join_str('\t', ...)
 	api.godot_print_error(message, info.name, info.short_src, info.currentline)
 end

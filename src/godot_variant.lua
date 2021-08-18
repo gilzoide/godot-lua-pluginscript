@@ -27,7 +27,7 @@ local methods = {
 	as_int = api.godot_variant_as_int,
 	as_real = api.godot_variant_as_real,
 	as_string = function(self)
-		return ffi.gc(api.godot_variant_as_string(self), api.godot_string_destroy)
+		return ffi_gc(api.godot_variant_as_string(self), api.godot_string_destroy)
 	end,
 	as_vector2 = api.godot_variant_as_vector2,
 	as_rect2 = api.godot_variant_as_rect2,
@@ -40,53 +40,53 @@ local methods = {
 	as_transform = api.godot_variant_as_transform,
 	as_color = api.godot_variant_as_color,
 	as_node_path = function(self)
-		return ffi.gc(api.godot_variant_as_node_path(self), api.godot_node_path_destroy)
+		return ffi_gc(api.godot_variant_as_node_path(self), api.godot_node_path_destroy)
 	end,
 	as_rid = api.godot_variant_as_rid,
 	as_object = function(self)
 		local obj = api.godot_variant_as_object(self)
 		if obj ~= nil and obj:call('reference') then
-			ffi.gc(obj, Object_gc)
+			ffi_gc(obj, Object_gc)
 		end
 		return obj
 	end,
 	as_dictionary = function(self)
-		return ffi.gc(api.godot_variant_as_dictionary(self), api.godot_dictionary_destroy)
+		return ffi_gc(api.godot_variant_as_dictionary(self), api.godot_dictionary_destroy)
 	end,
 	as_array = function(self)
-		return ffi.gc(api.godot_variant_as_array(self), api.godot_array_destroy)
+		return ffi_gc(api.godot_variant_as_array(self), api.godot_array_destroy)
 	end,
 	as_pool_byte_array = function(self)
-		return ffi.gc(api.godot_variant_as_pool_byte_array(self), api.godot_pool_byte_array_destroy)
+		return ffi_gc(api.godot_variant_as_pool_byte_array(self), api.godot_pool_byte_array_destroy)
 	end,
 	as_pool_int_array = function(self)
-		return ffi.gc(api.godot_variant_as_pool_int_array(self), api.godot_pool_int_array_destroy)
+		return ffi_gc(api.godot_variant_as_pool_int_array(self), api.godot_pool_int_array_destroy)
 	end,
 	as_pool_real_array = function(self)
-		return ffi.gc(api.godot_variant_as_pool_real_array(self), api.godot_pool_real_array_destroy)
+		return ffi_gc(api.godot_variant_as_pool_real_array(self), api.godot_pool_real_array_destroy)
 	end,
 	as_pool_string_array = function(self)
-		return ffi.gc(api.godot_variant_as_pool_string_array(self), api.godot_pool_string_array_destroy)
+		return ffi_gc(api.godot_variant_as_pool_string_array(self), api.godot_pool_string_array_destroy)
 	end,
 	as_pool_vector2_array = function(self)
-		return ffi.gc(api.godot_variant_as_pool_vector2_array(self), api.godot_pool_vector2_array_destroy)
+		return ffi_gc(api.godot_variant_as_pool_vector2_array(self), api.godot_pool_vector2_array_destroy)
 	end,
 	as_pool_vector3_array = function(self)
-		return ffi.gc(api.godot_variant_as_pool_vector3_array(self), api.godot_pool_vector3_array_destroy)
+		return ffi_gc(api.godot_variant_as_pool_vector3_array(self), api.godot_pool_vector3_array_destroy)
 	end,
 	as_pool_color_array = function(self)
-		return ffi.gc(api.godot_variant_as_pool_color_array(self), api.godot_pool_color_array_destroy)
+		return ffi_gc(api.godot_variant_as_pool_color_array(self), api.godot_pool_color_array_destroy)
 	end,
 	get_type = api.godot_variant_get_type,
 	pcall = function(self, method, ...)
 		local argc = select('#', ...)
-		local argv = ffi.new(Variant_p_array, argc)
+		local argv = ffi_new(Variant_p_array, argc)
 		for i = 1, argc do
 			local arg = select(i, ...)
 			argv[i - 1] = Variant(arg)
 		end
-		local r_error = ffi.new(VariantCallError)
-		local value = ffi.gc(api.godot_variant_call(self, String(method), ffi.cast(const_Variant_pp, argv), argc, r_error), api.godot_variant_destroy)
+		local r_error = ffi_new(VariantCallError)
+		local value = ffi_gc(api.godot_variant_call(self, String(method), ffi_cast(const_Variant_pp, argv), argc, r_error), api.godot_variant_destroy)
 		if r_error.error == GD.CALL_OK then
 			return true, value:unbox()
 		else
@@ -168,16 +168,16 @@ local methods = {
 	end,
 }
 
-Variant = ffi.metatype("godot_variant", {
+Variant = ffi_metatype("godot_variant", {
 	__new = function(mt, value)
-		local self = ffi.new(mt)
+		local self = ffi_new(mt)
 		local t = type(value)
 		if t == 'boolean' then
 			api.godot_variant_new_bool(self, value)
-		elseif t == 'string' or ffi.istype('char *', value) or ffi.istype('wchar_t *', value) then
+		elseif t == 'string' or ffi_istype('char *', value) or ffi_istype('wchar_t *', value) then
 			local s = String(value)
 			api.godot_variant_new_string(self, s)
-		elseif ffi.istype(int, value) then
+		elseif ffi_istype(int, value) then
 			api.godot_variant_new_int(self, value)
 		elseif t == 'number' or tonumber(value) then
 			api.godot_variant_new_real(self, value)

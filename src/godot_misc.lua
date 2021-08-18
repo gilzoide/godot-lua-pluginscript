@@ -25,29 +25,29 @@ local node_path_methods = {
 	varianttype = GD.TYPE_NODE_PATH,
 
 	as_string = function(self)
-		return ffi.gc(api.godot_node_path_as_string(self), api.godot_string_destroy)
+		return ffi_gc(api.godot_node_path_as_string(self), api.godot_string_destroy)
 	end,
 	path_is_absolute = api.godot_node_path_is_absolute,
 	path_get_name_count = api.godot_node_path_get_name_count,
 	path_get_name = function(self, idx)
-		return ffi.gc(api.godot_node_path_get_name(self, idx), api.godot_string_destroy)
+		return ffi_gc(api.godot_node_path_get_name(self, idx), api.godot_string_destroy)
 	end,
 	path_get_subname_count = api.godot_node_path_get_subname_count,
 	path_get_subname = function(self, idx)
-		return ffi.gc(api.godot_node_path_get_subname(self, idx), api.godot_string_destroy)
+		return ffi_gc(api.godot_node_path_get_subname(self, idx), api.godot_string_destroy)
 	end,
 	path_get_concatenated_subnames = function(self)
-		return ffi.gc(api.godot_node_path_get_concatenated_subnames(self), api.godot_string_destroy)
+		return ffi_gc(api.godot_node_path_get_concatenated_subnames(self), api.godot_string_destroy)
 	end,
 	path_is_empty = api.godot_node_path_is_empty,
 	path_get_as_property_path = function(self)
-		return ffi.gc(api.godot_node_path_get_as_property_path(self), api.godot_node_path_destroy)
+		return ffi_gc(api.godot_node_path_get_as_property_path(self), api.godot_node_path_destroy)
 	end,
 }
-NodePath = ffi.metatype('godot_node_path', {
+NodePath = ffi_metatype('godot_node_path', {
 	__new = function(mt, text_or_nodepath)
-		local self = ffi.new(mt)
-		if ffi.istype(mt, text_or_nodepath) then
+		local self = ffi_new(mt)
+		if ffi_istype(mt, text_or_nodepath) then
 			api.godot_node_path_new_copy(self, text_or_nodepath)
 		else
 			api.godot_node_path_new(self, str(text_or_nodepath))
@@ -65,9 +65,9 @@ NodePath = ffi.metatype('godot_node_path', {
 	end,
 })
 
-RID = ffi.metatype('godot_rid', {
+RID = ffi_metatype('godot_rid', {
 	__new = function(mt, resource)
-		local self = ffi.new(mt)
+		local self = ffi_new(mt)
 		if resource then
 			api.godot_rid_new_with_resource(self, resource)
 		else
@@ -149,9 +149,9 @@ object_methods.pcall = function(self, method, ...)
 	end
 end
 
-_Object = ffi.metatype('godot_object', {
+_Object = ffi_metatype('godot_object', {
 	__new = function(mt, init)
-		if ffi.istype(mt, init) then
+		if ffi_istype(mt, init) then
 			return init
 		else
 			return init.__owner
