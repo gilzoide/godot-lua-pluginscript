@@ -164,6 +164,10 @@ clib.lps_instance_get_prop_cb = wrap_callback(function(data, name, ret)
 end)
 
 -- void (*lps_instance_call_method_cb)(godot_pluginscript_instance_data *data, const godot_string_name *method, const godot_variant **args, int argcount, godot_variant *ret, godot_variant_call_error *error);
+
+-- Reuse this coroutine for every method until `GD.yield`/`coroutine.yield` is called
+local method_coroutine_cache
+
 clib.lps_instance_call_method_cb = wrap_callback(function(data, name, args, argcount, ret, err)
 	local self = get_lua_instance(data)
 	name = tostring(name)
@@ -173,12 +177,16 @@ clib.lps_instance_call_method_cb = wrap_callback(function(data, name, args, argc
 		for i = 1, argcount do
 			args_table[i] = args[i - 1]:unbox()
 		end
-		local co = coroutine.create(method)
+		local co = setthreadfunc(method_coroutine_cache, method)
+		method_coroutine_cache = nil  -- clear coroutine cache because it cannot be reused if method errors
 		local success, unboxed_ret = assert(coroutine.resume(co, self, unpack(args_table)))
+		if coroutine.status(co) == 'dead' then  -- reuse dead coroutines
+			method_coroutine_cache = co
+		end
 		ret[0] = ffi.gc(Variant(unboxed_ret), nil)
-		err.error = GD.CALL_OK
-	else
-		err.error = GD.CALL_ERROR_INVALID_METHOD
+		if err ~= nil then
+			err.error = GD.CALL_OK
+		end
 	end
 end)
 

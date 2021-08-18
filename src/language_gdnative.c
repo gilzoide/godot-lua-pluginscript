@@ -59,9 +59,26 @@ static int lps_lua_touserdata(lua_State *L) {
 	return 1;
 }
 
+static int lps_lua_set_thread_func(lua_State *L) {
+	lua_State *co;
+	if (lua_isthread(L, 1)) {
+		co = lua_tothread(L, 1);
+		lua_settop(co, 0);
+		// return reused thread
+		lua_pushvalue(L, 1);
+	}
+	else {
+		co = lua_newthread(L);
+	}
+	lua_pushvalue(L, 2);
+	lua_xmove(L, co, 1);
+	return 1;
+}
+
 static godot_pluginscript_language_data *lps_language_init() {
 	lua_State *L = lua_newstate(&lps_alloc, NULL);
 	lua_register(L, "touserdata", &lps_lua_touserdata);
+	lua_register(L, "setthreadfunc", &lps_lua_set_thread_func);
 	luaL_openlibs(L);
 	if (luaL_loadstring(L, LUA_INIT_SCRIPT) != 0) {
 		const char *error_msg = lua_tostring(L, -1);
@@ -130,6 +147,9 @@ static godot_bool lps_instance_get_prop(godot_pluginscript_instance_data *data, 
 
 static godot_variant lps_instance_call_method(godot_pluginscript_instance_data *data, const godot_string_name *method, const godot_variant **args, int argcount, godot_variant_call_error *error) {
 	godot_variant var = hgdn_new_nil_variant();
+	if (error) {
+		error->error = GODOT_CALL_ERROR_CALL_ERROR_INVALID_METHOD;
+	}
 	lps_instance_call_method_cb(data, method, args, argcount, &var, error);
 	return var;
 }
