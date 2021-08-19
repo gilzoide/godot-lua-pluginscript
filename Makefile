@@ -22,7 +22,7 @@ BUILT_OBJS = $(addprefix build/%/,$(OBJS))
 MAKE_LUAJIT_OUTPUT = build/%/luajit/src/luajit build/%/luajit/src/lua51.dll build/%/luajit/src/libluajit.a
 
 GDNLIB_ENTRY_PREFIX = addons/godot-lua-pluginscript
-BUILD_FOLDERS = build build/common build/windows_x86 build/windows_x86_64 build/linux_x86 build/linux_x86_64 build/osx_x86_64 build/osx_arm64 build/osx_universal64 build/$(GDNLIB_ENTRY_PREFIX)
+BUILD_FOLDERS = build build/windows_x86 build/windows_x86_64 build/linux_x86 build/linux_x86_64 build/osx_x86_64 build/osx_arm64 build/osx_universal64 build/$(GDNLIB_ENTRY_PREFIX)
 
 DIST_SRC = LICENSE
 DIST_ADDONS_SRC = LICENSE lps_coroutine.lua lua_pluginscript.gdnlib $(wildcard build/*/lua*.*)
@@ -72,12 +72,12 @@ $(MAKE_LUAJIT_OUTPUT): | build/%/luajit
 build/%/lua51.dll: build/%/luajit/src/lua51.dll
 	cp $< $@
 
-build/common/init_script.lua: $(LUA_INIT_SCRIPT_SRC) | build/common
+build/init_script.lua: $(LUA_INIT_SCRIPT_SRC) | build
 	cat $^ > $@
-build/%/init_script.c: build/common/init_script.lua $(INIT_SCRIPT_SED)
-	echo "const char LUA_INIT_SCRIPT[] =" > $@
+build/%/init_script.c: build/init_script.lua $(INIT_SCRIPT_SED) | build/%
+	echo -e "#include<stdlib.h>\nconst char LUA_INIT_SCRIPT[] =" > $@
 	sed $(addprefix -f ,$(INIT_SCRIPT_SED)) $< >> $@
-	echo ";" >> $@
+	echo -e ";\nconst size_t LUA_INIT_SCRIPT_SIZE = sizeof(LUA_INIT_SCRIPT);" >> $@
 
 build/%/init_script.o: build/%/init_script.c
 	$(_CC) -o $@ $< -c $(CFLAGS)

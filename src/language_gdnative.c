@@ -80,7 +80,7 @@ static godot_pluginscript_language_data *lps_language_init() {
 	lua_register(L, "touserdata", &lps_lua_touserdata);
 	lua_register(L, "setthreadfunc", &lps_lua_set_thread_func);
 	luaL_openlibs(L);
-	if (luaL_loadstring(L, LUA_INIT_SCRIPT) != 0) {
+	if (luaL_loadbufferx(L, LUA_INIT_SCRIPT, LUA_INIT_SCRIPT_SIZE - 1, "lps_init_script", "t") != LUA_OK) {
 		const char *error_msg = lua_tostring(L, -1);
 		HGDN_PRINT_ERROR("Error loading initialization script: %s", error_msg);
 		return L;

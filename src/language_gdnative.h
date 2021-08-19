@@ -4,6 +4,7 @@
 #include "hgdn.h"
 
 extern const char LUA_INIT_SCRIPT[];
+extern const size_t LUA_INIT_SCRIPT_SIZE;
 
 // Language callbacks, to be patched in Lua via FFI
 extern void (*lps_language_add_global_constant_cb)(const godot_string *name, const godot_variant *value);

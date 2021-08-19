@@ -12,7 +12,7 @@ project is being designed.
 - Be able to seamlessly communicate with any other language supported by Godot,
   like GDScript, Visual Script and C#, in an idiomatic way
 - Simple script description interface that doesn't need `require`ing anything
-- Support for Lua 5.1+ and LuaJIT
+- Support for Lua 5.2+ and LuaJIT
 - Have a simple build process, where anyone with the cloned source code and
   installed build system + toolchain can build the project in a single step
 
