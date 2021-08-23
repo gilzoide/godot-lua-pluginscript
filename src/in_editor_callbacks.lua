@@ -31,7 +31,7 @@ if Engine:is_editor_hint() then
 	clib.lps_validate_cb = wrap_callback(function(script, line_error, col_error, test_error, path, functions)
 		local f, err = loadstring(tostring(script), tostring(path))
 		if not f then
-			local line, msg = err:match(":(%d+):%s*(.*)")
+			local line, msg = string_match(err, ERROR_LINE_MESSAGE_PATT)
 			line_error[0] = tonumber(line)
 			test_error[0] = String(msg)
 		end

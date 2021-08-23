@@ -83,7 +83,6 @@ local function property_to_dictionary(prop)
 	local dict, default_value = Dictionary(), nil
 	if not is_property(prop) then
 		default_value = prop
-		dict.default_value = prop
 		dict.type = get_property_type(prop)
 	else
 		default_value = prop[1] or prop.default or prop.default_value
