@@ -291,8 +291,8 @@ With the base of our PluginScript ready, we can now focus on
 implementing the functionality.
 The version of the project built in this article is available [here](https://github.com/gilzoide/godot-lua-pluginscript/tree/blog-2-infrastructure).
 
-In the next post we'll link the project with LuaJIT and start
-implementing the plugin callbacks.
+In the [next post](3-luajit-callbacks-en.md) we'll link the project with
+LuaJIT and start implementing the plugin callbacks.
 I'll be using some Lua/C API and LuaJIT's FFI for this, so it will be a
 very interesting adventure!
 

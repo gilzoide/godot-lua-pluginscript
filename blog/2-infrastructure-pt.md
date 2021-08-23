@@ -300,8 +300,8 @@ Com a base do nosso *PluginScript* pronto, podemos focar em implementar
 sua funcionalidade.
 A versão do projeto construído nesse artigo está disponível [aqui](https://github.com/gilzoide/godot-lua-pluginscript/tree/blog-2-infrastructure).
 
-No próximo artigo adicionaremos LuaJIT ao projeto e começaremos a
-implementar os *callbacks* necessários.
+No [próximo artigo](3-luajit-callbacks-pt.md) adicionaremos LuaJIT ao
+projeto e começaremos a implementar os *callbacks* necessários.
 Usarei um pouco da API C de Lua e a FFI do LuaJIT pra isso, vai ser uma
 aventura e tanto!
 
