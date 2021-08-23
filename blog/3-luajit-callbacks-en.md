@@ -67,11 +67,11 @@ downloaded and built for your platform.
 
 Ok, now let's implement the first two callbacks: language initialization and
 finalization.
-To do that, we include Lua headers in `language_gdnative.c` and
+To do that, we include Lua headers in `src/language_gdnative.c` and
 initialize/finalize the `lua_State`:
 
 ```c
-// language_gdnative.c
+// src/language_gdnative.c
 #include "lua.h"
 #include "lualib.h"
 #include "lauxlib.h"
@@ -197,8 +197,8 @@ target("lua_pluginscript")
 target_end()
 ```
 
-Now all we have to do is define the `const char LUA_INIT_SCRIPT[]`
-string in C and call it:
+Now all we have to do is run the code defined in
+`const char LUA_INIT_SCRIPT[]`:
 
 ```c
 extern const char LUA_INIT_SCRIPT[];
@@ -207,7 +207,7 @@ extern const char LUA_INIT_SCRIPT[];
 godot_pluginscript_language_data *lps_language_init() {
     lua_State *L = lua_newstate(&lps_alloc, NULL);
     luaL_openlibs(L);  // Load core Lua libraries
-    if (luaL_dostring(L, LUA_INIT_SCRIPT) != 0) {
+    if (luaL_dostring(L, LUA_INIT_SCRIPT) != LUA_OK) {
         const char *error_msg = lua_tostring(L, -1);
         HGDN_PRINT_ERROR("Error running initialization script: %s", error_msg);
     }
@@ -220,8 +220,6 @@ from Lua! \o/` should be printed!
 
 ```
 Godot Engine v3.3.2.stable.arch_linux - https://godotengine.org
-OpenGL ES 2.0 Renderer: NVIDIA GeForce MX150/PCIe/SSE2
-OpenGL ES Batching: ON
 
 Hello world from Lua! \o/
 ```
@@ -318,7 +316,7 @@ api.godot_print(message)
 -- We have to destroy all objects that we own, just like in C
 api.godot_string_destroy(message)
 -- If we don't know exactly when it should be destroyed, register the object
--- in the Garbage-Collector: `ffi.gc(message, api.godot_string_destroy)`
+-- in the Garbage Collector (GC): `ffi.gc(message, api.godot_string_destroy)`
 -- Ref: https://luajit.org/ext_ffi_api.html#ffi_gc
 ```
 
@@ -333,11 +331,12 @@ C code.
 All other methods for binding C and Lua are susceptible to these, so
 going for the FFI is still a good idea.
 
-LuaJIT will track and garbage-collect data created from Lua code, e.g.:
+LuaJIT will track and garbage collect data created from Lua code, e.g.:
 `local some_array = ffi.new('int[1024]')`, but to run a custom
 destructor, like `api.godot_string_destroy`, we need to either
-explicitly call it or register the garbage-collection callback with
+explicitly call it or register the garbage collection callback with
 `ffi.gc`.
+
 Doing this manually is really cumbersome, so we'll bring the GDNative
 API closer to the Lua world by declaring [metatypes](https://luajit.org/ext_ffi_api.html#ffi_metatype).
 With metatypes, we can define a [metatable](https://www.lua.org/manual/5.4/manual.html#2.4)
@@ -367,6 +366,7 @@ local string_methods = {
         local char_string = api.godot_string_utf8(self)
         local pointer = api.godot_char_string_get_data(char_string)
         local length = api.godot_char_string_length(char_string)
+        -- Ref: https://luajit.org/ext_ffi_api.html#ffi_string
         local lua_string = ffi.string(pointer, length)
         -- Just as in C, we need to destroy the objects we own
         api.godot_char_string_destroy(char_string)
@@ -411,7 +411,7 @@ String = ffi.metatype('godot_string', {
         -- `42 .. some_godot_string .. " some Lua string "` possible
         local str = api.godot_string_operator_plus(String(a), String(b))
         -- LuaJIT can't be sure if data returned from a C function must
-        -- be garbage-collected or not, since C APIs may require the
+        -- be garbage collected or not, since C APIs may require the
         -- caller to clean the memory up or not.
         -- Explicitly track the return in cases where we own the data,
         -- such as this one: in the GDNative API, when a function
@@ -448,10 +448,10 @@ rule_end()
 target("lua_pluginscript")
     -- ...
     add_files(
-        -- Notice that the order is important!
+        -- The order is important!
         -- First, FFI declarations
         "src/ffi.lua",
-        -- Then String implementation
+        -- Then String metatype implementation
         "src/string.lua",
         -- Finally, our test code
         "src/test.lua",
@@ -512,6 +512,8 @@ godot_pluginscript_script_manifest lps_script_init(godot_pluginscript_language_d
     hgdn_core_api->godot_array_new(&manifest.signals);
     hgdn_core_api->godot_array_new(&manifest.properties);
 
+    // Mark error by default: the implementation is responsible for
+    // marking success, when the call has actually succeeded
     godot_error cb_error = GODOT_ERR_SCRIPT_FAILED;
     lps_script_init_cb(&manifest, path, source, &cb_error);
     if (error) {
@@ -696,4 +698,5 @@ The version of the project build in this article is available [here](https://git
 
 In the next article, we'll implement script initialization and
 finalization.
+
 Good luck for all of us, and see you next time!
