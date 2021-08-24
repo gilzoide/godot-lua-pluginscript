@@ -54,18 +54,19 @@ local function print_coroutine_error(co, err)
 	api.godot_print_error(msg, debug_getinfo(co, 0, 'n').name, filename, tonumber(line))
 end
 
-local function wrap_callback(f)
+local function wrap_callback(f, error_return)
 	return function(...)
 		local co = lps_coroutine_pool:acquire(f)
 		local success, result = coroutine_resume(co, ...)
 		if success then
 			lps_coroutine_pool:release(co)
+			lps_callstack:pop()
+			return result
 		else
 			print_coroutine_error(co, result)
-			result = nil
+			lps_callstack:pop()
+			return error_return
 		end
-		lps_callstack:pop()
-		return result
 	end
 end
 
@@ -182,7 +183,7 @@ clib.lps_instance_set_prop_cb = wrap_callback(function(data, name, value)
 		end
 	end
 	return false
-end)
+end, false)
 
 -- godot_bool (*lps_instance_get_prop_cb)(godot_pluginscript_instance_data *data, const godot_string *name, godot_variant *ret);
 clib.lps_instance_get_prop_cb = wrap_callback(function(data, name, ret)
@@ -205,7 +206,7 @@ clib.lps_instance_get_prop_cb = wrap_callback(function(data, name, ret)
 		end
 	end
 	return false
-end)
+end, false)
 
 -- void (*lps_instance_call_method_cb)(godot_pluginscript_instance_data *data, const godot_string_name *method, const godot_variant **args, int argcount, godot_variant *ret, godot_variant_call_error *error);
 
