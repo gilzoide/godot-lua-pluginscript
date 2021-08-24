@@ -49,11 +49,7 @@ local methods = {
 		return var:unbox()
 	end,
 	set = function(self, key, value)
-		if type(value) == 'nil' then
-			api.godot_dictionary_erase(self, Variant(key))
-		else
-			api.godot_dictionary_set(self, Variant(key), Variant(value))
-		end
+		api.godot_dictionary_set(self, Variant(key), Variant(value))
 	end,
 	next = function(self, key)  -- behave like `next(table [, index])` for __pairs
 		if key ~= nil then
@@ -100,7 +96,13 @@ Dictionary = ffi_metatype('godot_dictionary', {
 	__index = function(self, key)
 		return methods[key] or methods.get(self, key)
 	end,
-	__newindex = methods.set,
+	__newindex = function(self, key, value)
+		if type(value) == 'nil' then
+			api.godot_dictionary_erase(self, Variant(key))
+		else
+			api.godot_dictionary_set(self, Variant(key), Variant(value))
+		end
+	end,
 	__len = methods.size,
 	__pairs = function(self)
 		return methods.next, self, nil
