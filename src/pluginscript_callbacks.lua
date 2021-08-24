@@ -81,7 +81,7 @@ end
 -- void (*lps_language_add_global_constant_cb)(const godot_string *name, const godot_variant *value);
 clib.lps_language_add_global_constant_cb = wrap_callback(function(name, value)
 	name = tostring(name)
-	lps_callstack:push('add_global', name)
+	lps_callstack:push('add_global', string_quote(name))
 	_G[name] = value:unbox()
 end)
 
@@ -89,7 +89,7 @@ end)
 clib.lps_script_init_cb = wrap_callback(function(manifest, path, source, err)
 	path = tostring(path)
 	source = tostring(source)
-	lps_callstack:push(path)
+	lps_callstack:push(string_quote(path))
 	local script, err_message = loadstring(source, path)
 	if not script then
 		local line, msg = string_match(err_message, ERROR_LINE_MESSAGE_PATT)
@@ -108,6 +108,8 @@ clib.lps_script_init_cb = wrap_callback(function(manifest, path, source, err)
 		return
 	end
 	metadata.__path = path
+	metadata.__getter = {}
+	metadata.__setter = {}
 	local metadata_index = pointer_to_index(touserdata(metadata))
 	lps_scripts[metadata_index] = metadata
 	for k, v in pairs(metadata) do
@@ -126,10 +128,16 @@ clib.lps_script_init_cb = wrap_callback(function(manifest, path, source, err)
 			sig.name = String(k)
 			manifest.signals:append(sig)
 		else
-			local prop, default_value = property_to_dictionary(v)
+			local prop, default_value, get, set = property_to_dictionary(v)
 			prop.name = String(k)
 			-- Maintain default value directly for __indexing
 			metadata[k] = default_value
+			if get then
+				metadata.__getter[k] = get
+			end
+			if set then
+				metadata.__setter[k] = set
+			end
 			manifest.properties:append(prop)
 		end
 	end
@@ -147,7 +155,7 @@ end)
 -- godot_pluginscript_instance_data *(*lps_instance_init_cb)(godot_pluginscript_script_data *data, godot_object *owner);
 clib.lps_instance_init_cb = wrap_callback(function(script_data, owner)
 	local script = lps_scripts[pointer_to_index(script_data)]
-	lps_callstack:push('_init', '@', script.__path)
+	lps_callstack:push('_init', '@', string_quote(script.__path))
 	local instance = setmetatable({
 		__owner = owner,
 		__script = script,
@@ -171,9 +179,12 @@ clib.lps_instance_set_prop_cb = wrap_callback(function(data, name, value)
 	name = tostring(name)
 	local self = get_lua_instance(data)
 	local script = self.__script
-	lps_callstack:push('set', name, '@', script.__path)
-	local prop = script[name]
-	if prop ~= nil then
+	lps_callstack:push('set', string_quote(name), '@', string_quote(script.__path))
+	local setter = script.__setter[name]
+	if setter then
+		setter(self, name, value:unbox())
+		return true
+	elseif script[name] ~= nil then
 		self[name] = value:unbox()
 		return true
 	else
@@ -190,10 +201,13 @@ clib.lps_instance_get_prop_cb = wrap_callback(function(data, name, ret)
 	name = tostring(name)
 	local self = get_lua_instance(data)
 	local script = self.__script
-	lps_callstack:push('get', name, '@', script.__path)
-	local prop = script[name]
-	if prop ~= nil then
-		ret[0] = Variant(self[name])
+	lps_callstack:push('get', string_quote(name), '@', string_quote(script.__path))
+	local getter = script.__getter[name]
+	if getter then
+		ret[0] = ffi_gc(Variant(getter(self)), nil)
+		return true
+	elseif script[name] ~= nil then
+		ret[0] = ffi_gc(Variant(self[name]), nil)
 		return true
 	else
 		local _get = script._get

@@ -80,7 +80,7 @@ local function is_property(value)
 end
 
 local function property_to_dictionary(prop)
-	local dict, default_value = Dictionary(), nil
+	local dict, default_value, get, set = Dictionary(), nil, nil, nil
 	if not is_property(prop) then
 		default_value = prop
 		dict.type = get_property_type(prop)
@@ -88,9 +88,11 @@ local function property_to_dictionary(prop)
 		default_value = prop[1] or prop.default or prop.default_value
 		local explicit_type = prop[2] or prop.type
 		dict.type = property_types[explicit_type] or explicit_type or get_property_type(default_value) or GD.TYPE_NIL
+		get = prop.get or prop.getter
+		set = prop.set or prop.setter
 	end
 	dict.default_value = default_value
-	return dict, default_value
+	return dict, default_value, get, set
 end
 
 function property(metadata)
