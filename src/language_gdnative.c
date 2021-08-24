@@ -53,6 +53,13 @@ static void *lps_alloc(void *userdata, void *ptr, size_t osize, size_t nsize) {
 	}
 }
 
+static int lps_atpanic(lua_State *L) {
+	luaL_traceback(L, L, lua_tostring(L, -1), 1);
+	const char *error_msg_plus_traceback = lua_tostring(L, -1);
+	HGDN_PRINT_ERROR("LUA PANIC: %s", error_msg_plus_traceback);
+	return 1;
+}
+
 static int lps_lua_touserdata(lua_State *L) {
 	const void *ptr = lua_topointer(L, 1);
 	lua_pushlightuserdata(L, (void *) ptr);
@@ -77,6 +84,7 @@ static int lps_lua_set_thread_func(lua_State *L) {
 
 static godot_pluginscript_language_data *lps_language_init() {
 	lua_State *L = lua_newstate(&lps_alloc, NULL);
+	lua_atpanic(L, &lps_atpanic);
 	lua_register(L, "touserdata", &lps_lua_touserdata);
 	lua_register(L, "setthreadfunc", &lps_lua_set_thread_func);
 	luaL_openlibs(L);
