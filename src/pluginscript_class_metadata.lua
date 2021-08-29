@@ -106,12 +106,6 @@ function property(metadata)
 	return setmetatable(metadata, Property)
 end
 
-function export(metadata)
-	local prop = property(metadata)
-	prop.export = true
-	return prop
-end
-
 local Signal = {}
 
 local function is_signal(value)
