@@ -1,3 +1,4 @@
+# NOTE: using actual newlines instead of "\n" for BSD/OSX version of sed
 # Text before first line
 1 i\
 #include<stdlib.h>\

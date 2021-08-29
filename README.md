@@ -1,9 +1,10 @@
 # Godot Lua PluginScript
 
 
-## Design
-Check out the [design article](blog/1-design-en.md) for insight in how this
-project is being designed.
+## Articles
+1. [Designing Godot Lua PluginScript](blog/1-design-en.md)
+2. [Implementing the library's skeleton](blog/2-infrastructure-en.md)
+3. [Integrating LuaJIT and FFI](blog/3-luajit-callbacks-en.md)
 
 
 ## Goals

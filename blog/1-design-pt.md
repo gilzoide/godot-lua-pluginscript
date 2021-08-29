@@ -38,7 +38,7 @@ precompilada de Godot possa utilizá-lo! =D
 - Possibilitar que *scripts* Lua se comuniquem transparentemente com
   quaisquer outras linguagens suportadas, como GDScript, Visual Script e C#
 - Ter uma interface descritiva simples para declarar *scripts*
-- Suporte a Lua 5.1+ e LuaJIT
+- Suporte a Lua 5.2+ e LuaJIT
 - Ter um processo de construção simples, onde qualquer um com o
   código-fonte em mãos e o sistema de construção + *toolchain*
   instalados possam compilar o projeto em um único passo
@@ -85,6 +85,7 @@ MinhaClasse.uma_propriedade_com_detalhes = property {
   -- o mesmo nome em GDScript, como bool, int, float, String, Array, etc...
   -- Note que Lua <= 5.2 não diferencia números inteiros de reais,
   -- então devemos especificar `int` sempre que apropriado
+  -- ou usar `int(5)` no lugar do valor padrão
   type = int,
   -- ["set"] ou ["setter"] = função setter, opcional
   set = function(self, valor)
@@ -97,13 +98,19 @@ MinhaClasse.uma_propriedade_com_detalhes = property {
   get = function(self)
     return self.uma_propriedade_com_detalhes
   end,
-  -- ["export"] = sinaliza propriedade como exportada, opcional, padrão false
-  -- Propriedades exportadas são editáveis pelo Inspetor
-  export = true,
-  -- TODO: usage, hint/hint_text, rset_mode
+  -- ["usage"] = flag de uso da propriedade, do enum godot_property_usage_flags
+  -- opcional, usa GD.PROPERTY_USAGE_DEFAULT por padrão
+  usage = GD.PROPERTY_USAGE_DEFAULT,
+  -- ["hint"] = flag de dica da propriedade, do enum godot_property_hint
+  -- opcional, usa GD.PROPERTY_HINT_NONE por padrão
+  hint = GD.PROPERTY_HINT_RANGE,
+  -- ["hint_string"] = texto da dica da propriedade, somente necessária
+  -- para algumas dicas
+  hint_string = '1,10',
+  -- ["rset_mode"] = flag de RPC da propriedade, do enum godot_method_rpc_mode
+  -- opcional, usa GD.RPC_MODE_DISABLED por padrão
+  rset_mode = GD.RPC_MODE_MASTER,
 }
--- `export` é uma versão de `property` com `export = true`
-MinhaClasse.uma_propriedade_exportada = export { "hello world!" }
 
 -- Funções definidas na tabela são registrados como métodos
 function MinhaClasse:_init()  -- `function t:f(...)` é uma abreviação de `function t.f(self, ...)`

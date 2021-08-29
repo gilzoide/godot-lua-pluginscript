@@ -37,7 +37,7 @@ so anyone with a standard prebuilt version of Godot can use it! =D
 - Be able to seamlessly communicate with any other language supported by Godot,
   like GDScript, Visual Script and C#, in an idiomatic way
 - Simple script description interface that doesn't need `require`ing anything
-- Support for Lua 5.1+ and LuaJIT
+- Support for Lua 5.2+ and LuaJIT
 - Have a simple build process, where anyone with the cloned source code and
   installed build system + toolchain can build the project in a single step
 
@@ -81,6 +81,7 @@ MyClass.some_prop_with_details = property {
   -- GDScript, like bool, int, float, String, Array, Vector2, etc...
   -- Notice that Lua <= 5.2 does not differentiate integers from float
   -- numbers, so we should always specify `int` where appropriate
+  -- or use `int(5)` in the default value instead
   type = int,
   -- ["set"] or ["setter"] = setter function, optional
   set = function(self, value)
@@ -93,13 +94,18 @@ MyClass.some_prop_with_details = property {
   get = function(self)
     return self.some_prop_with_details
   end,
-  -- ["export"] = export flag, optional, defaults to false
-  -- Exported properties are editable in the Inspector
-  export = true,
-  -- TODO: usage, hint/hint_text, rset_mode
+  -- ["usage"] = property usage, from enum godot_property_usage_flags
+  -- optional, default to GD.PROPERTY_USAGE_DEFAULT
+  usage = GD.PROPERTY_USAGE_DEFAULT,
+  -- ["hint"] = property hint, from enum godot_property_hint
+  -- optional, default to GD.PROPERTY_HINT_NONE
+  hint = GD.PROPERTY_HINT_RANGE,
+  -- ["hint_string"] = property hint text, only required for some hints
+  hint_string = '1,10',
+  -- ["rset_mode"] = property remote set mode, from enum godot_method_rpc_mode
+  -- optional, default to GD.RPC_MODE_DISABLED
+  rset_mode = GD.RPC_MODE_MASTER,
 }
--- `export` is an alias for `property` with `export = true`
-MyClass.some_exported_prop = export { "hello world!" }
 
 -- Functions defined in table are public methods
 function MyClass:_init()  -- `function t:f(...)` is an alias for `function t.f(self, ...)`
