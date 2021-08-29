@@ -89,7 +89,7 @@ local function property_to_dictionary(prop)
 		local explicit_type = prop[2] or prop.type
 		dict.type = property_types[explicit_type] or explicit_type or get_property_type(default_value) or GD.TYPE_NIL
 		dict.hint = prop.hint
-		dict.hint_text = prop.hint_text
+		dict.hint_string = prop.hint_string
 		dict.usage = prop.usage
 		dict.rset_mode = prop.rset_mode
 		get = prop.get or prop.getter
