@@ -48,9 +48,10 @@ LUA_INIT_SCRIPT_SRC = \
 	src/in_editor_callbacks.lua
 
 ifneq (1,$(DEBUG))
-	INIT_SCRIPT_SED := src/tools/compact_lua_script.sed
+	EMBED_SCRIPT_SED := src/tools/compact_lua_script.sed
 endif
-INIT_SCRIPT_SED += src/tools/embed_to_c.sed
+EMBED_SCRIPT_SED += src/tools/embed_to_c.sed
+INIT_SCRIPT_SED = src/tools/add_script_c_decl.sed
 
 # Avoid removing intermediate files created by chained implicit rules
 .PRECIOUS: build/%/luajit build/%/init_script.c $(BUILT_OBJS) build/%/lua51.dll $(MAKE_LUAJIT_OUTPUT)
@@ -74,10 +75,8 @@ build/%/lua51.dll: build/%/luajit/src/lua51.dll
 
 build/init_script.lua: $(LUA_INIT_SCRIPT_SRC) | build
 	cat $^ > $@
-build/%/init_script.c: build/init_script.lua $(INIT_SCRIPT_SED) | build/%
-	echo -e "#include<stdlib.h>\nconst char LUA_INIT_SCRIPT[] =" > $@
-	sed $(addprefix -f ,$(INIT_SCRIPT_SED)) $< >> $@
-	echo -e ";\nconst size_t LUA_INIT_SCRIPT_SIZE = sizeof(LUA_INIT_SCRIPT);" >> $@
+build/%/init_script.c: build/init_script.lua $(EMBED_SCRIPT_SED) $(INIT_SCRIPT_SED) | build/%
+	sed $(addprefix -f ,$(EMBED_SCRIPT_SED)) $< | sed -f $(INIT_SCRIPT_SED) > $@
 
 build/%/init_script.o: build/%/init_script.c
 	$(_CC) -o $@ $< -c $(CFLAGS)
