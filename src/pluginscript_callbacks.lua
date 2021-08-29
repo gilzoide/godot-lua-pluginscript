@@ -107,11 +107,7 @@ clib.lps_script_init_cb = wrap_callback(function(manifest, path, source, err)
 		api.godot_print_error('Script must return a table', path, path, -1)
 		return
 	end
-	metadata.__path = path
-	metadata.__getter = {}
-	metadata.__setter = {}
-	local metadata_index = pointer_to_index(touserdata(metadata))
-	lps_scripts[metadata_index] = metadata
+	local getters, setters = {}, {}
 	for k, v in pairs(metadata) do
 		if k == 'class_name' then
 			manifest.name = StringName(v)
@@ -133,15 +129,20 @@ clib.lps_script_init_cb = wrap_callback(function(manifest, path, source, err)
 			-- Maintain default value directly for __indexing
 			metadata[k] = default_value
 			if get then
-				metadata.__getter[k] = get
+				getters[k] = get
 			end
 			if set then
-				metadata.__setter[k] = set
+				setters[k] = set
 			end
 			manifest.properties:append(prop)
 		end
 	end
+	metadata.__path = path
+	metadata.__getter = getters
+	metadata.__setter = setters
 
+	local metadata_index = pointer_to_index(touserdata(metadata))
+	lps_scripts[metadata_index] = metadata
 	manifest.data = ffi_cast('void *', metadata_index)
 	err[0] = GD.OK
 end)
