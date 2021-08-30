@@ -1,10 +1,24 @@
 # Godot Lua PluginScript
+GDNative + PluginScript library that adds support for [Lua](https://www.lua.org/)
+as a scripting language in [Godot](https://godotengine.org/).
+
+Being a GDNative library, recompiling the engine is not required, so anyone
+with a built release copied to their project can use it.
+Being a PluginScript language, Lua can seamlessly communicate with scripts
+written in GDScript/C#/Visual Script and vice-versa.
+
+
+## Installing
+Put a built release of the library into the project folder and restart Godot.
+Make sure the `lua_pluginscript.gdnlib` file is located at the
+`res://addons/godot-lua-pluginscript` folder.
 
 
 ## Articles
 1. [Designing Godot Lua PluginScript](blog/1-design-en.md)
 2. [Implementing the library's skeleton](blog/2-infrastructure-en.md)
 3. [Integrating LuaJIT and FFI](blog/3-luajit-callbacks-en.md)
+4. Initializing and finalizing scripts (TODO)
 
 
 ## Goals
@@ -13,7 +27,9 @@
 - Be able to seamlessly communicate with any other language supported by Godot,
   like GDScript, Visual Script and C#, in an idiomatic way
 - Simple script description interface that doesn't need `require`ing anything
-- Support for Lua 5.2+ and LuaJIT
+- Support for LuaJIT and Lua 5.2+
+- Support paths relative to `res://*` and exported game executable path for
+  `require`ing Lua modules
 - Have a simple build process, where anyone with the cloned source code and
   installed build system + toolchain can build the project in a single step
 
@@ -84,10 +100,10 @@ MyClass.some_prop_with_details = property {
 }
 
 -- Functions defined in table are public methods
-function MyClass:_init()  -- `function t:f(...)` is an alias for `function t.f(self, ...)`
+function MyClass:_ready()  -- `function t:f(...)` is an alias for `function t.f(self, ...)`
   -- Singletons are available globally
   local os_name = OS:get_name()
-  print("MyClass instance initialized! Running on a " .. os_name .. " system")
+  print("MyClass instance is ready! Running on a " .. os_name .. " system")
 end
 
 function MyClass:some_prop_doubled()
@@ -97,6 +113,26 @@ end
 -- In the end, table with class declaration must be returned from script
 return MyClass
 ```
+
+
+## Status
+- [X] LuaJIT support
+- [ ] Lua 5.2+ support
+- [X] Useful definitions for all GDNative objects, with methods and metamethods
+- [X] A `yield` function similar to GDScript's, to resume after a signal is
+      emitted (`GD.yield`)
+- [X] Working PluginScript language definition
+- [X] PluginScript script validation and template source code
+- [ ] PluginScript code editor callbacks
+- [ ] PluginScript debug callbacks
+- [ ] PluginScript profiling callbacks
+- [X] Package searcher for Lua and C modules that work with paths relative to
+      the `res://` folder and/or exported games' executable path
+- [ ] Lua REPL
+- [ ] API documentation
+- [ ] Example projects
+- [ ] Drop-in binary release in GitHub
+- [ ] Submit to Asset Library
 
 
 ## Building
@@ -128,7 +164,8 @@ make osx64      # "universal" multiarch x86_64 + amd64 dylib
 
 The GDNativeLibrary file `lua_pluginscript.gdnlib` is already configured to use
 the built files stored in the `build` folder, so that one can use this
-repository directly inside a Godot project.
+repository directly inside a Godot project under the folder
+`addons/godot-lua-pluginscript`.
 
 
 ## Third-party software
