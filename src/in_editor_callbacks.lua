@@ -27,7 +27,7 @@ if Engine.editor_hint then
 		ret[0] = ffi_gc(String('local ' .. class_name .. ' = {\n\textends = "' .. base_class_name .. '",\n}\n\nreturn ' .. class_name), nil)
 	end)
 
-	-- godot_bool (*lps_validate_cb)(const godot_string *script, int *line_error, int *col_error, godot_string *test_error, const godot_string *path, godot_pool_string_array *functions);
+	-- godot_bool (*lps_validate_cb)(const godot_string *script, int *line_error, int *col_error, godot_string *test_error, const godot_string *path, godot_pool_string_array *functions)
 	clib.lps_validate_cb = wrap_callback(function(script, line_error, col_error, test_error, path, functions)
 		local f, err = loadstring(tostring(script), tostring(path))
 		if not f then
@@ -37,4 +37,10 @@ if Engine.editor_hint then
 		end
 		return f ~= nil
 	end, true)
+
+	-- void (*lps_make_function_cb)(const godot_string *class_name, const godot_string *name, const godot_pool_string_array *args, godot_string *ret)
+	clib.lps_make_function_cb = wrap_callback(function(class_name, name, args, ret)
+		local code = string_format('function %s:%s(%s)\n\t\nend', tostring(class_name), tostring(name), tostring(args:join(', ')))
+		ret[0] = ffi_gc(String(code), nil)
+	end)
 end
