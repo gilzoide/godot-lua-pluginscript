@@ -56,7 +56,7 @@ NodePath = ffi_metatype('godot_node_path', {
 	end,
 	__gc = api.godot_node_path_destroy,
 	__tostring = function(self)
-		return tostring(api.godot_node_path_as_string(self))
+		return tostring(node_path_methods.as_string(self))
 	end,
 	__index = node_path_methods,
 	__concat = concat_gdvalues,

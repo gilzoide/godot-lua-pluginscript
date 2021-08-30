@@ -110,11 +110,11 @@ clib.lps_script_init_cb = wrap_callback(function(manifest, path, source, err)
 	local getter, setter = {}, {}
 	for k, v in pairs(metadata) do
 		if k == 'class_name' then
-			manifest.name = StringName(v)
+			api.godot_string_name_new_data(manifest.name, v)
 		elseif k == 'is_tool' then
 			manifest.is_tool = bool(v)
 		elseif k == 'extends' then
-			manifest.base = StringName(v)
+			api.godot_string_name_new_data(manifest.base, v)
 		elseif type(v) == 'function' then
 			local method = method_to_dictionary(v)
 			method.name = String(k)

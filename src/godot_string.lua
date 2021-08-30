@@ -365,7 +365,9 @@ String = ffi.metatype('godot_string', {
 	__new = function(mt, ...)
 		local text, length = ...
 		if select('#', ...) == 0 then
-			return api.godot_string_chars_to_utf8('')
+			local self = ffi_new(mt)
+			api.godot_string_new(self)
+			return self
 		elseif ffi_istype(mt, text) then
 			local self = ffi_new(mt)
 			api.godot_string_new_copy(self, text)
@@ -374,19 +376,19 @@ String = ffi.metatype('godot_string', {
 			return text:get_name()
 		elseif ffi_istype('char *', text) then
 			if length then
-				return api.godot_string_chars_to_utf8_with_len(text, length)
+				return ffi_gc(api.godot_string_chars_to_utf8_with_len(text, length), api.godot_string_destroy)
 			else
-				return api.godot_string_chars_to_utf8(text)
+				return ffi_gc(api.godot_string_chars_to_utf8(text), api.godot_string_destroy)
 			end
 		elseif ffi_istype('wchar_t *', text) then
 			local self = ffi_new(mt)
 			api.godot_string_new_with_wide_string(self, text, length or -1)
 			return self
 		elseif ffi_istype('wchar_t', text) or ffi_istype('char', text) then
-			return api.godot_string_chr(text)
+			return ffi_gc(api.godot_string_chr(text), api.godot_string_destroy)
 		else
 			text = tostring(text)
-			return api.godot_string_chars_to_utf8_with_len(text, length or #text)
+			return ffi_gc(api.godot_string_chars_to_utf8_with_len(text, length or #text), api.godot_string_destroy)
 		end
 	end,
 	__gc = api.godot_string_destroy,
@@ -409,7 +411,7 @@ String = ffi.metatype('godot_string', {
 
 local string_name_methods = {
 	fillvariant = function(var, self)
-		api.godot_variant_new_string(var, api.godot_string_name_get_name(self))
+		api.godot_variant_new_string(var, self:get_name())
 	end,
 	get_name = function(self)
 		return ffi_gc(api.godot_string_name_get_name(self), api.godot_string_destroy)

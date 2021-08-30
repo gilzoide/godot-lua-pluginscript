@@ -20,9 +20,11 @@
 -- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 -- FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 -- IN THE SOFTWARE.
-for k, v in pairs(api.godot_get_global_constants()) do
+local global_constants = api.godot_get_global_constants()
+for k, v in pairs(global_constants) do
 	GD[k:ascii()] = v
 end
+api.godot_dictionary_destroy(global_constants)
 
 local library_resource_dir = clib.hgdn_library.resource_path:get_base_dir()
 local CoroutineObject = GD.load(library_resource_dir:plus_file('lps_coroutine.lua'))
