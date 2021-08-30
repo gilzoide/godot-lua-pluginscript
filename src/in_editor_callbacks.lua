@@ -24,7 +24,7 @@ if Engine.editor_hint then
 	-- void (*lps_get_template_source_code_cb)(const godot_string *class_name, const godot_string *base_class_name, godot_string *ret)
 	clib.lps_get_template_source_code_cb = wrap_callback(function(class_name, base_class_name, ret)
 		class_name = class_name:gsub("[^_%w]", "_")
-		ret[0] = String('local ' .. class_name .. ' = {\n\textends = "' .. base_class_name .. '",\n}\n\nreturn ' .. class_name)
+		ret[0] = ffi_gc(String('local ' .. class_name .. ' = {\n\textends = "' .. base_class_name .. '",\n}\n\nreturn ' .. class_name), nil)
 	end)
 
 	-- godot_bool (*lps_validate_cb)(const godot_string *script, int *line_error, int *col_error, godot_string *test_error, const godot_string *path, godot_pool_string_array *functions);
@@ -33,7 +33,7 @@ if Engine.editor_hint then
 		if not f then
 			local line, msg = string_match(err, ERROR_LINE_MESSAGE_PATT)
 			line_error[0] = tonumber(line)
-			test_error[0] = String(msg)
+			test_error[0] = ffi_gc(String(msg), nil)
 		end
 		return f ~= nil
 	end, true)

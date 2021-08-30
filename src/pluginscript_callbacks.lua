@@ -110,11 +110,11 @@ clib.lps_script_init_cb = wrap_callback(function(manifest, path, source, err)
 	local getter, setter = {}, {}
 	for k, v in pairs(metadata) do
 		if k == 'class_name' then
-			api.godot_string_name_new_data(manifest.name, v)
+			manifest.name = ffi_gc(StringName(v), nil)
 		elseif k == 'is_tool' then
 			manifest.is_tool = bool(v)
 		elseif k == 'extends' then
-			api.godot_string_name_new_data(manifest.base, v)
+			manifest.base = ffi_gc(StringName(v), nil)
 		elseif type(v) == 'function' then
 			local method = method_to_dictionary(v)
 			method.name = String(k)
