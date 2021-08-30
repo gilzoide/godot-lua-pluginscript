@@ -96,6 +96,9 @@ local function register_pool_array(kind, element_ctype)
 		end
 	elseif element_ctype == String then
 		methods.join = function(self, delimiter)
+			if #self == 0 then
+				return String()
+			end
 			local result = String(self[0])
 			delimiter = String(delimiter)
 			for i = 1, #self - 1 do
