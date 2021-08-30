@@ -87,7 +87,7 @@ local function searchpath(name, path, sep, rep)
 	local notfound = {}
 	local f = File:new()
 	for template in path:gmatch('[^;]+') do
-		local filename = template:gsub('%?', name):gsub('%!', execdir_repl)
+		local filename = template:gsub('%?', name):gsub('%!', execdir_repl, 1)
 		if f:open(filename, File.READ) == GD.OK then
 			return filename, f
 		else

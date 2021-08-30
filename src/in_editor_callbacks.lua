@@ -20,7 +20,7 @@
 -- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 -- FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 -- IN THE SOFTWARE.
-if Engine:is_editor_hint() then
+if Engine.editor_hint then
 	-- void (*lps_get_template_source_code_cb)(const godot_string *class_name, const godot_string *base_class_name, godot_string *ret)
 	clib.lps_get_template_source_code_cb = wrap_callback(function(class_name, base_class_name, ret)
 		class_name = class_name:gsub("[^_%w]", "_")
@@ -36,5 +36,5 @@ if Engine:is_editor_hint() then
 			test_error[0] = String(msg)
 		end
 		return f ~= nil
-	end)
+	end, true)
 end
