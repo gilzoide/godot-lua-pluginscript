@@ -120,6 +120,10 @@ local function register_pool_array(kind, element_ctype)
 				godot_pool_array_new_copy(self, value)
 			elseif ffi_istype(Array, value) then
 				godot_pool_array_new_with_array(self, value)
+			elseif element_ctype == byte and type(value) == 'string' then
+				godot_pool_array_new(self)
+				self:resize(#value)
+				ffi_copy(self:write():ptr(), value, #value)
 			else
 				godot_pool_array_new(self)
 				for i = 1, select('#', ...) do
