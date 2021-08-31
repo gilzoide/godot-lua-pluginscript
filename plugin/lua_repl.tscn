@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://addons/godot-lua-pluginscript/plugin/repl/lua_repl.lua" type="Script" id=1]
+[ext_resource path="res://addons/godot-lua-pluginscript/plugin/lua_repl.lua" type="Script" id=1]
 
 [node name="LuaREPL" type="VBoxContainer"]
 anchor_right = 1.0
