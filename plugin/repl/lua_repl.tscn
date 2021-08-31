@@ -1,0 +1,60 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/godot-lua-pluginscript/plugin/repl/lua_repl.lua" type="Script" id=1]
+
+[node name="LuaREPL" type="VBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Header" type="HBoxContainer" parent="."]
+margin_right = 1024.0
+margin_bottom = 20.0
+
+[node name="Title" type="Label" parent="Header"]
+margin_top = 3.0
+margin_right = 976.0
+margin_bottom = 17.0
+size_flags_horizontal = 3
+text = "Lua PluginScript REPL:"
+
+[node name="ClearButton" type="Button" parent="Header"]
+margin_left = 980.0
+margin_right = 1024.0
+margin_bottom = 20.0
+text = "Clear"
+
+[node name="Output" type="RichTextLabel" parent="."]
+margin_top = 24.0
+margin_right = 1024.0
+margin_bottom = 572.0
+rect_min_size = Vector2( 0, 100 )
+focus_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+scroll_following = true
+selection_enabled = true
+
+[node name="Footer" type="HBoxContainer" parent="."]
+margin_top = 576.0
+margin_right = 1024.0
+margin_bottom = 600.0
+
+[node name="LineEdit" type="LineEdit" parent="Footer"]
+margin_right = 984.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+clear_button_enabled = true
+
+[node name="RunButton" type="Button" parent="Footer"]
+margin_left = 988.0
+margin_right = 1024.0
+margin_bottom = 24.0
+text = "Run"
+
+[connection signal="pressed" from="Header/ClearButton" to="." method="_on_ClearButton_pressed"]
+[connection signal="text_entered" from="Footer/LineEdit" to="." method="_on_LineEdit_text_entered"]
+[connection signal="pressed" from="Footer/RunButton" to="." method="_on_RunButton_pressed"]

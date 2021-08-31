@@ -128,9 +128,10 @@ return MyClass
 - [ ] PluginScript profiling callbacks
 - [X] Package searcher for Lua and C modules that work with paths relative to
       the `res://` folder and/or exported games' executable path
-- [ ] Lua REPL
+- [X] Lua REPL
 - [ ] API documentation
 - [ ] Example projects
+- [ ] EditorImportPlugin to minify or compile Lua scripts
 - [ ] Drop-in binary release in GitHub
 - [ ] Submit to Asset Library
 
