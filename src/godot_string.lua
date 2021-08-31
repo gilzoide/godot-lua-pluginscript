@@ -32,27 +32,27 @@ local string_methods = {
 
 	wide_str = api.godot_string_wide_str,
 	length = api.godot_string_length,
-	casecmp_to = function(self, str)
-		return api.godot_string_casecmp_to(self, str(str))
+	casecmp_to = function(self, s)
+		return api.godot_string_casecmp_to(self, str(s))
 	end,
-	nocasecmp_to = function(self, str)
-		return api.godot_string_nocasecmp_to(self, str(str))
+	nocasecmp_to = function(self, s)
+		return api.godot_string_nocasecmp_to(self, str(s))
 	end,
-	naturalnocasecmp_to = function(self, str)
-		return api.godot_string_naturalnocasecmp_to(self, str(str))
+	naturalnocasecmp_to = function(self, s)
+		return api.godot_string_naturalnocasecmp_to(self, str(s))
 	end,
-	begins_with = function(self, str)
-		if ffi.istype(String, str) then
-			return api.godot_string_begins_with(self, str)
+	begins_with = function(self, s)
+		if ffi.istype(String, s) then
+			return api.godot_string_begins_with(self, s)
 		else
-			return api.godot_string_begins_with_char_array(self, tostring(str))
+			return api.godot_string_begins_with_char_array(self, tostring(s))
 		end
 	end,
 	bigrams = function(self)
 		return ffi_gc(api.godot_string_bigrams(self), api.godot_array_destroy)
 	end,
-	ends_with = function(self, str)
-		return api.godot_string_ends_with(self, str(str))
+	ends_with = function(self, s)
+		return api.godot_string_ends_with(self, str(s))
 	end,
 	count = function(self, what, from, to)
 		return api.godot_string_count(self, str(what), from or 0, to or 0)
@@ -86,11 +86,11 @@ local string_methods = {
 		return ffi_gc(api.godot_string_insert(self, position, str(what)), api.godot_string_destroy)
 	end,
 	is_numeric = api.godot_string_is_numeric,
-	is_subsequence_of = function(self, str)
-		return api.godot_string_is_subsequence_of(self, str(str))
+	is_subsequence_of = function(self, s)
+		return api.godot_string_is_subsequence_of(self, str(s))
 	end,
-	is_subsequence_ofi = function(self, str)
-		return api.godot_string_is_subsequence_ofi(self, str(str))
+	is_subsequence_ofi = function(self, s)
+		return api.godot_string_is_subsequence_ofi(self, str(s))
 	end,
 	lpad = function(self, min_length, character)
 		return ffi_gc(api.godot_string_lpad_with_custom_character(self, min_length, character and str(character) or String(" ")), api.godot_string_destroy)
@@ -119,8 +119,8 @@ local string_methods = {
 	rpad = function(self, min_length, character)
 		return ffi_gc(api.godot_string_rpad_with_custom_character(self, min_length, character and str(character) or String(" ")), api.godot_string_destroy)
 	end,
-	similarity = function(self, str)
-		return api.godot_string_similarity(self, str(str))
+	similarity = function(self, s)
+		return api.godot_string_similarity(self, str(s))
 	end,
 	sprintf = function(self, values, ...)
 		local r_error = ffi_new(bool)
