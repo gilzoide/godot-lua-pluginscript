@@ -22,6 +22,7 @@
 -- IN THE SOFTWARE.
 local methods = {
 	fillvariant = api.godot_variant_new_copy,
+
 	as_bool = api.godot_variant_as_bool,
 	as_uint = api.godot_variant_as_uint,
 	as_int = api.godot_variant_as_int,

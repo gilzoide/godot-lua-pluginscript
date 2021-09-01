@@ -34,6 +34,7 @@ LUA_INIT_SCRIPT_SRC = \
 	src/godot_ffi.lua \
 	src/cache_lua_libs.lua \
 	src/godot_globals.lua \
+	src/lua_globals.lua \
 	src/godot_class.lua \
 	src/godot_variant.lua \
 	src/godot_string.lua \

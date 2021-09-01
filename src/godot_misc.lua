@@ -177,3 +177,10 @@ _Object = ffi_metatype('godot_object', {
 })
 
 Object = Class:new 'Object'
+
+if api_1_1 ~= nil then
+	--- Check if an Object is a valid instance
+	-- @function Object.is_instance_valid
+	-- @tparam godot_object object  Object to be checked for
+	Object.is_instance_valid = api_1_1.godot_is_instance_valid
+end

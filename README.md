@@ -1,4 +1,5 @@
 # Godot Lua PluginScript
+
 GDNative + PluginScript library that adds support for [Lua](https://www.lua.org/)
 as a scripting language in [Godot](https://godotengine.org/).
 
@@ -9,12 +10,14 @@ written in GDScript/C#/Visual Script and vice-versa.
 
 
 ## Installing
+
 Put a built release of the library into the project folder and restart Godot.
 Make sure the `lua_pluginscript.gdnlib` file is located at the
 `res://addons/godot-lua-pluginscript` folder.
 
 
 ## Articles
+
 1. [Designing Godot Lua PluginScript](blog/1-design-en.md)
 2. [Implementing the library's skeleton](blog/2-infrastructure-en.md)
 3. [Integrating LuaJIT and FFI](blog/3-luajit-callbacks-en.md)
@@ -22,6 +25,7 @@ Make sure the `lua_pluginscript.gdnlib` file is located at the
 
 
 ## Goals
+
 - Provide support for Lua as a scripting language in Godot in a way that does
   not require compiling the engine from scratch
 - Be able to seamlessly communicate with any other language supported by Godot,
@@ -35,11 +39,13 @@ Make sure the `lua_pluginscript.gdnlib` file is located at the
 
 
 ## Non-goals
+
 - Provide calls to all core Godot classes' methods via native method bindings
 - Support multithreading on the Lua side
 
 
 ## Script example
+
 This is an example of how a Lua script looks like. There are comments regarding
 some design decisions, which may change during development.
 
@@ -116,6 +122,7 @@ return MyClass
 
 
 ## Status
+
 - [X] LuaJIT support
 - [ ] Lua 5.2+ support
 - [X] Useful definitions for all GDNative objects, with methods and metamethods
@@ -131,12 +138,13 @@ return MyClass
 - [X] Lua REPL
 - [ ] API documentation
 - [ ] Example projects
-- [ ] EditorImportPlugin to minify or compile Lua scripts
+- [ ] Editor plugin to minify Lua scripts
 - [ ] Drop-in binary release in GitHub
 - [ ] Submit to Asset Library
 
 
 ## Building
+
 This project uses git submodules for its dependencies, so be sure to activate
 submodules before building.
 
@@ -170,6 +178,7 @@ repository directly inside a Godot project under the folder
 
 
 ## Third-party software
+
 This project uses the following software:
 
 - [godot-headers](https://github.com/godotengine/godot-headers): headers for
@@ -181,6 +190,7 @@ This project uses the following software:
 
 
 ## Other projects for using Lua in Godot
+
 - https://github.com/perbone/luascript
 - https://github.com/Trey2k/lua
 - https://github.com/zozer/godot-lua-module
