@@ -20,6 +20,9 @@
 -- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 -- FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 -- IN THE SOFTWARE.
+
+--- String metatype, wrapper for `godot_string`
+-- @classmod String
 local function consume_char_string(cs)
 	local lua_str = ffi_string(api.godot_char_string_get_data(cs), api.godot_char_string_length(cs))
 	api.godot_char_string_destroy(cs)
@@ -30,105 +33,228 @@ local string_methods = {
 	fillvariant = api.godot_variant_new_string,
 	varianttype = GD.TYPE_STRING,
 
+	--- Return the String as a wide char string (`const wchar_t *`).
+	-- @function wide_str
+	-- @return `const wchar_t *`
 	wide_str = api.godot_string_wide_str,
+	--- Returns the String's amount of characters
+	-- @function length
+	-- @treturn int
 	length = api.godot_string_length,
+	--- Performs a case-sensitive comparison to another string.
+	-- @function casecmp_to
+	-- @param s  Other value, stringified with `GD.str`
+	-- @treturn int  -1 if less than, 1 if greater than, or 0 if equal
 	casecmp_to = function(self, s)
 		return api.godot_string_casecmp_to(self, str(s))
 	end,
+	--- Performs a case-insensitive comparison to another string.
+	-- @function nocasecmp_to
+	-- @param s  Other value, stringified with `GD.str`
+	-- @treturn int  -1 if less than, 1 if greater than, or 0 if equal
 	nocasecmp_to = function(self, s)
 		return api.godot_string_nocasecmp_to(self, str(s))
 	end,
+	--- Performs a case-insensitive natural order comparison to another string
+	-- @function naturalnocasecmp_to
+	-- @param s  Other value, stringified with `GD.str`
+	-- @treturn int  -1 if less than, 1 if greater than, or 0 if equal
 	naturalnocasecmp_to = function(self, s)
 		return api.godot_string_naturalnocasecmp_to(self, str(s))
 	end,
+	--- Returns `true` if the String begins with the given string.
+	-- @function begins_with
+	-- @param s  Other value, stringified with `GD.str`
+	-- @treturn bool
 	begins_with = function(self, s)
-		if ffi.istype(String, s) then
-			return api.godot_string_begins_with(self, s)
-		else
-			return api.godot_string_begins_with_char_array(self, tostring(s))
-		end
+		return api.godot_string_begins_with(self, str(s))
 	end,
+	--- Returns the bigrams (pairs of consecutive letters) of this string.
+	-- @function bigrams
+	-- @treturn PoolStringArray
 	bigrams = function(self)
 		return ffi_gc(api.godot_string_bigrams(self), api.godot_array_destroy)
 	end,
+	--- Returns `true` if the String ends with the given string.
+	-- @function ends_with
+	-- @param s  Other value, stringified with `GD.str`
+	-- @treturn bool
 	ends_with = function(self, s)
 		return api.godot_string_ends_with(self, str(s))
 	end,
+	--- Returns the number of occurrences of substring `what` between `from` and `to` positions.
+	-- If `from` and `to` equals 0 the whole string will be used. If only `to` equals 0 the remained substring will be used.
+	-- @function count
+	-- @param what  Substring, stringified with `GD.str`
+	-- @param[opt=0] from
+	-- @param[opt=0] to
+	-- @treturn int
 	count = function(self, what, from, to)
 		return api.godot_string_count(self, str(what), from or 0, to or 0)
 	end,
+	--- Returns the number of occurrences of substring `what` (ignoring case) between `from` and `to` positions.
+	-- If `from` and `to` equals 0 the whole string will be used. If only `to` equals 0 the remained substring will be used.
+	-- @function countn
+	-- @param what  Substring, stringified with `GD.str`
+	-- @param[opt=0] from
+	-- @param[opt=0] to
+	-- @treturn int
 	countn = function(self, what, from, to)
 		return api.godot_string_countn(self, str(what), from or 0, to or 0)
 	end,
+	--- Finds the first occurrence of a substring.
+	-- @function find
+	-- @param what  Substring, stringified with `GD.str`
+	-- @param[opt=0] from
+	-- @treturn int  Starting position of the substring or -1 if not found
 	find = function(self, what, from)
 		return api.godot_string_find_from(self, str(what), from or 0)
 	end,
+	--- Finds the first occurrence of one of the substrings provided in `keys`.
+	-- @function findmk
+	-- @tparam Array keys  Array of substrings
+	-- @param[opt=0] from
+	-- @treturn int  Starting position of the substring or -1 if not found
+	-- @treturn int  Index of the key found
 	findmk = function(self, keys, from)
 		local r_key = ffi_new(int)
 		local ret = api.godot_string_findmk_from_in_place(self, keys, from or 0, r_key)
 		return ret, r_key
 	end,
+	--- Finds the first occurrence of a substring, ignoring case.
+	-- @function findn
+	-- @param what  Substring, stringified with `GD.str`
+	-- @param[opt=0] from
+	-- @treturn int  Starting position of the substring or -1 if not found
 	findn = function(self, what, from)
 		return api.godot_string_findn_from(self, str(what), from or 0)
 	end,
+	--- Finds the last occurrence of a substring.
+	-- @function find_last
+	-- @param what  Substring, stringified with `GD.str`
+	-- @treturn int  Starting position of the substring or -1 if not found
 	find_last = function(self, what)
 		return api.godot_string_find_last(self, str(what))
 	end,
+	--- Formats the string by replacing all occurrences of `placeholder` with `values`.
+	-- @function format
+	-- @param values
+	-- @param[opt="{_}"] placeholder
+	-- @treturn String
 	format = function(self, values, placeholder)
 		return ffi_gc(api.godot_string_format_with_custom_placeholder(self, Variant(values), placeholder or String("{_}")), api.godot_string_destroy)
 	end,
-	hex_encode_buffer = function(buffer, len)
-		return ffi_gc(api.godot_string_hex_encode_buffer(buffer, len), api.godot_string_destroy)
+	--- Return Lua's `tonumber` applied to self.
+	-- @function to_number
+	-- @param[opt] base  Number base
+	-- @treturn number|nil
+	to_number = function(self, base)
+		return tonumber(tostring(self), base)
 	end,
-	hex_to_int = api.godot_string_hex_to_int,
-	hex_to_int_without_prefix = api.godot_string_hex_to_int_without_prefix,
+	--- Returns a copy of the String with the substring `what` inserted at the given position.
+	-- @function insert
+	-- @tparam int position
+	-- @param what  Value to be inserted, stringified with `GD.str`
+	-- @treturn String
 	insert = function(self, position, what)
 		return ffi_gc(api.godot_string_insert(self, position, str(what)), api.godot_string_destroy)
 	end,
+	--- Returns whether String contents is a number
+	-- @function is_numeric
+	-- @treturn bool
 	is_numeric = api.godot_string_is_numeric,
+	--- Returns `true` if this String is a subsequence of the given string.
+	-- @function is_subsequence_of
+	-- @param s  Other value, stringified with `GD.str`
+	-- @treturn bool
 	is_subsequence_of = function(self, s)
 		return api.godot_string_is_subsequence_of(self, str(s))
 	end,
+	--- Returns `true` if this String is a subsequence of the given string, without considering case.
+	-- @function is_subsequence_ofi
+	-- @param s  Other value, stringified with `GD.str`
+	-- @treturn bool
 	is_subsequence_ofi = function(self, s)
 		return api.godot_string_is_subsequence_ofi(self, str(s))
 	end,
+	--- Left-pad String with the given character.
+	-- @function lpad
+	-- @tparam int  min_length  Desired minimum length
+	-- @param[opt=" "] character  Pad character, stringified with `GD.str`
+	-- @treturn String
 	lpad = function(self, min_length, character)
 		return ffi_gc(api.godot_string_lpad_with_custom_character(self, min_length, character and str(character) or String(" ")), api.godot_string_destroy)
 	end,
-	match = function(self, expr)
-		return api.godot_string_match(self, str(expr))
-	end,
-	matchn = function(self, expr)
-		return api.godot_string_matchn(self, str(expr))
-	end,
+	--- Replaces the first occurrence of a case-sensitive substring with the given one inside the String.
+	-- @function replace_first
+	-- @param what  Substring to be replaced, stringified with `GD.str`
+	-- @param forwhat  Replacement, stringified with `GD.str`
+	-- @treturn String
 	replace_first = function(self, what, forwhat)
 		return ffi_gc(api.godot_string_replace_first(self, str(what), str(forwhat)), api.godot_string_destroy)
 	end,
+	--- Replaces occurrences of a case-sensitive substring with the given one inside the String.
+	-- @function replace
+	-- @param what  Substring to be replaced, stringified with `GD.str`
+	-- @param forwhat  Replacement, stringified with `GD.str`
+	-- @treturn String
 	replace = function(self, what, forwhat)
 		return ffi_gc(api.godot_string_replace(self, str(what), str(forwhat)), api.godot_string_destroy)
 	end,
+	--- Replaces occurrences of a case-insensitive substring with the given one inside the String.
+	-- @function replacen
+	-- @param what  Substring to be replaced, stringified with `GD.str`
+	-- @param forwhat  Replacement, stringified with `GD.str`
+	-- @treturn String
 	replacen = function(self, what, forwhat)
 		return ffi_gc(api.godot_string_replacen(self, str(what), str(forwhat)), api.godot_string_destroy)
 	end,
+	--- Performs a case-sensitive search for a substring, but starts from the end of the String instead of the beginning.
+	-- @function rfind
+	-- @param what  Substring to be searched, stringified with `GD.str`
+	-- @tparam[opt=-1] int from  Search start position
+	-- @treturn int  Position of substring, if it was found, -1 otherwise
 	rfind = function(self, what, from)
 		return api.godot_string_rfind_from(self, str(what), from or -1)
 	end,
+	--- Performs a case-insensitive search for a substring, but starts from the end of the String instead of the beginning.
+	-- @function rfindn
+	-- @param what  Substring to be searched, stringified with `GD.str`
+	-- @tparam[opt=-1] int from  Search start position
+	-- @treturn int  Position of substring, if it was found, -1 otherwise
 	rfindn = function(self, what, from)
 		return api.godot_string_rfindn_from(self, str(what), from or -1)
 	end,
+	--- Right-pad String with the given character.
+	-- @function rpad
+	-- @tparam int  min_length  Desired minimum length
+	-- @param[opt=" "] character  Pad character, stringified with `GD.str`
+	-- @treturn String
 	rpad = function(self, min_length, character)
 		return ffi_gc(api.godot_string_rpad_with_custom_character(self, min_length, character and str(character) or String(" ")), api.godot_string_destroy)
 	end,
+	--- Returns the similarity index of the text compared to this string.
+	-- 1 means totally similar and 0 means totally dissimilar.
+	-- @function similarity
+	-- @param s  Other value, stringified with `GD.str`
+	-- @treturn float
 	similarity = function(self, s)
 		return api.godot_string_similarity(self, str(s))
 	end,
+	--- Formats the String by substituting placeholder character-sequences with the given values
+	-- ([reference documentation](https://docs.godotengine.org/en/stable/getting_started/scripting/gdscript/gdscript_format_string.html))
+	-- @function sprintf
+	-- @param ...  If only an `Array` value is passed, each value will correspond to a placeholder
+	-- @treturn[1] String  Formatted String
+	-- @treturn[2] nil
+	-- @treturn[2] String  Error message, in case format is not compatible with the given values
 	sprintf = function(self, values, ...)
 		local r_error = ffi_new(bool)
 		if select('#', ...) > 0 or not ffi.istype(Array, values) then
 			values = Array(values, ...)
 		end
 		local ret = ffi.gc(api.godot_string_sprintf(self, values, r_error), api.godot_string_destroy)
-		if r_error then
+		if r_error == 0 then
 			return nil, ret
 		else
 			return ret
@@ -242,9 +368,6 @@ local string_methods = {
 	get_file = function(self)
 		return ffi_gc(api.godot_string_get_file(self), api.godot_string_destroy)
 	end,
-	humanize_size = function(size)
-		return ffi_gc(api.godot_string_humanize_size(size), api.godot_string_destroy)
-	end,
 	is_abs_path = api.godot_string_is_abs_path,
 	is_rel_path = api.godot_string_is_rel_path,
 	is_resource_file = api.godot_string_is_resource_file,
@@ -301,6 +424,24 @@ local string_methods = {
 	is_valid_identifier = api.godot_string_is_valid_identifier,
 	is_valid_integer = api.godot_string_is_valid_integer,
 	is_valid_ip_address = api.godot_string_is_valid_ip_address,
+	--- Static Functions.
+	-- These don't receive `self` and should be called directly as `String.static_function(...)`
+	-- @section static_funcs
+
+	--- Encode a sized byte buffer into a String with hexadecimal numbers.
+	-- @function String.hex_encode_buffer
+	-- @param buffer  Lua string or pointer convertible to `const uint8_t *`
+	-- @param[opt=#buffer] len  Buffer length
+	-- @treturn String  String with hexadecimal representation of buffer
+	hex_encode_buffer = function(buffer, len)
+		return ffi_gc(api.godot_string_hex_encode_buffer(buffer, len or #buffer), api.godot_string_destroy)
+	end,
+	--- Converts `size` represented as number of bytes to human-readable format using internationalized set of data size units, namely: B, KiB, MiB, GiB, TiB, PiB, EiB.
+	-- Note that the next smallest unit is picked automatically to hold at most 1024 units.
+	-- @treturn String
+	humanize_size = function(size)
+		return ffi_gc(api.godot_string_humanize_size(size), api.godot_string_destroy)
+	end,
 }
 
 -- Implement some of the Lua string API
@@ -421,13 +562,8 @@ local string_name_methods = {
 }
 StringName = ffi.metatype('godot_string_name', {
 	__new = function(mt, text)
-		text = text or ''
 		local self = ffi_new(mt)
-		if ffi_istype(String, text) then
-			api.godot_string_name_new(self, text)
-		else
-			api.godot_string_name_new_data(self, text)
-		end
+		api.godot_string_name_new(self, str(text or ''))
 		return self
 	end,
 	__gc = api.godot_string_name_destroy,

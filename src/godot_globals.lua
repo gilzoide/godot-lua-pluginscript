@@ -338,7 +338,7 @@ GD = {
 -- Otherwise, constructs a Variant and calls `as_string` on it.
 -- @function GD.str
 -- @param value  Value to be stringified
--- @treturn godot_string
+-- @treturn String
 GD.str = str
 
 local function join_str(sep, ...)

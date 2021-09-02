@@ -87,7 +87,7 @@ local methods = {
 			argv[i - 1] = Variant(arg)
 		end
 		local r_error = ffi_new(VariantCallError)
-		local value = ffi_gc(api.godot_variant_call(self, String(method), ffi_cast(const_Variant_pp, argv), argc, r_error), api.godot_variant_destroy)
+		local value = ffi_gc(api.godot_variant_call(self, str(method), ffi_cast(const_Variant_pp, argv), argc, r_error), api.godot_variant_destroy)
 		if r_error.error == GD.CALL_OK then
 			return true, value:unbox()
 		else
@@ -103,7 +103,7 @@ local methods = {
 		end
 	end,
 	has_method = function(self, method)
-		return api.godot_variant_has_method(self, String(method))
+		return api.godot_variant_has_method(self, str(method))
 	end,
 	hash_compare = function(self, other)
 		return api.godot_variant_hash_compare(self, Variant(other))
