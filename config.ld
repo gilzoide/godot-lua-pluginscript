@@ -3,4 +3,5 @@ topics = { "README.md" }
 format = "markdown"
 file = "src"
 boilerplate = true
+sort = true
 dir = "docs"

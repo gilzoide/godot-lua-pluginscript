@@ -110,11 +110,14 @@ build/lua_pluginscript.zip: $(DIST_DEST)
 	cd build && zip lua_pluginscript $(DIST_ZIP_SRC)
 
 # Phony targets
-.PHONY: clean dist
+.PHONY: clean dist docs
 clean:
 	$(RM) -r build/*/
 
 dist: build/lua_pluginscript.zip
+
+docs:
+	ldoc .
 
 # Targets by OS + arch
 linux32: MAKE_LUAJIT_ARGS += CC="$(CC) -m32 -fPIC"
