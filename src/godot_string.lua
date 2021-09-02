@@ -412,14 +412,27 @@ local string_methods = {
 	strip_escapes = function(self)
 		return ffi_gc(api.godot_string_strip_escapes(self), api.godot_string_destroy)
 	end,
+	--- Erases `chars` characters from the String starting from `position`.
+	-- @function erase
+	-- @tparam int position
+	-- @tparam int chars
 	erase = api.godot_string_erase,
-	ascii = function(self)
+	--- Converts the String to a Lua string, assuming all characters are encoded in ASCII.
+	-- @function to_ascii
+	-- @treturn string
+	to_ascii = function(self)
 		return consume_char_string(api.godot_string_ascii(self))
 	end,
-	ascii_extended = function(self)
+	--- Converts the String to a Lua string, assuming all characters are encoded in extended ASCII.
+	-- @function to_ascii_extended
+	-- @treturn string
+	to_ascii_extended = function(self)
 		return consume_char_string(api.godot_string_ascii_extended(self))
 	end,
-	utf8 = function(self)
+	--- Converts the String to a Lua string, assuming all characters are encoded in UTF-8.
+	-- @function to_utf8
+	-- @treturn string
+	to_utf8 = function(self)
 		return consume_char_string(api.godot_string_utf8(self))
 	end,
 	hash = api.godot_string_hash,
@@ -608,7 +621,7 @@ String = ffi.metatype('godot_string', {
 		end
 	end,
 	__gc = api.godot_string_destroy,
-	__tostring = string_methods.utf8,
+	__tostring = string_methods.to_utf8,
 	__len = function(self)
 		return string_methods.length(self)
 	end,

@@ -22,7 +22,7 @@
 -- IN THE SOFTWARE.
 local global_constants = api.godot_get_global_constants()
 for k, v in pairs(global_constants) do
-	GD[k:ascii()] = v
+	GD[k:to_ascii()] = v
 end
 api.godot_dictionary_destroy(global_constants)
 
