@@ -59,6 +59,7 @@ StringName = ffi.metatype('godot_string_name', {
 	--- Returns a Lua string representation of this StringName.
 	-- @function __tostring
 	-- @treturn string
+	-- @see get_name
 	__tostring = function(self)
 		return tostring(self:get_name())
 	end,
