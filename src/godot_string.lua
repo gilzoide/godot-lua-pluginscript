@@ -1,4 +1,4 @@
--- @file godot_string.lua  Wrapper for GDNative's CharString, String and StringName
+-- @file godot_string.lua  Wrapper for GDNative's String
 -- This file is part of Godot Lua PluginScript: https://github.com/gilzoide/godot-lua-pluginscript
 --
 -- Copyright (C) 2021 Gil Barbosa Reis.
@@ -41,7 +41,7 @@ local string_methods = {
 
 	--- Return the String as a wide char string (`const wchar_t *`).
 	-- @function wide_str
-	-- @return `const wchar_t *`
+	-- @return[type=const wchar_t *]
 	wide_str = api.godot_string_wide_str,
 	--- Returns the String's amount of characters
 	-- @function length
@@ -842,8 +842,10 @@ String = ffi.metatype('godot_string', {
 		return string_methods.length(self)
 	end,
 	__index = string_methods,
-	--- Concatenates values stringified with `GD.str`
+	--- Concatenates values.
 	-- @function __concat
+	-- @param a  First value, stringified with `GD.str`
+	-- @param b  First value, stringified with `GD.str`
 	-- @treturn String
 	__concat = concat_gdvalues,
 	--- Equality comparison (`a == b`).
@@ -877,32 +879,4 @@ String = ffi.metatype('godot_string', {
 	__mod = function(self, values)
 		return assert(string_methods.sprintf(self, values))
 	end,
-})
-
-local string_name_methods = {
-	fillvariant = function(var, self)
-		api.godot_variant_new_string(var, self:get_name())
-	end,
-
-	get_name = function(self)
-		return ffi_gc(api.godot_string_name_get_name(self), api.godot_string_destroy)
-	end,
-	get_hash = api.godot_string_name_get_hash,
-	get_data_unique_pointer = api.godot_string_name_get_data_unique_pointer,
-}
-StringName = ffi.metatype('godot_string_name', {
-	__new = function(mt, text)
-		local self = ffi_new(mt)
-		api.godot_string_name_new(self, str(text or ''))
-		return self
-	end,
-	__gc = api.godot_string_name_destroy,
-	__tostring = function(self)
-		return tostring(self:get_name())
-	end,
-	__len = function(self)
-		return #self:get_name()
-	end,
-	__index = string_name_methods,
-	__concat = concat_gdvalues,
 })

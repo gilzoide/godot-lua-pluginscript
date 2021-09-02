@@ -166,6 +166,7 @@ local methods = {
 	-- @treturn RID
 	as_rid = api.godot_variant_as_rid,
 	--- Return the Variant as an `Object`.
+	-- If object is a Reference, it is automatically referenced and marked for unreferencing upon garbage-collection.
 	-- @function as_object
 	-- @treturn Object
 	as_object = function(self)
@@ -398,8 +399,10 @@ Variant = ffi_metatype("godot_variant", {
 	__tostring = function(self)
 		return tostring(self:as_string())
 	end,
-	--- Concatenates values stringified with `GD.str`
+	--- Concatenates values.
 	-- @function __concat
+	-- @param a  First value, stringified with `GD.str`
+	-- @param b  First value, stringified with `GD.str`
 	-- @treturn String
 	__concat = concat_gdvalues,
 	__index = methods,

@@ -38,6 +38,7 @@ LUA_INIT_SCRIPT_SRC = \
 	src/godot_class.lua \
 	src/godot_variant.lua \
 	src/godot_string.lua \
+	src/godot_string_name.lua \
 	src/godot_math.lua \
 	src/godot_misc.lua \
 	src/godot_dictionary.lua \
