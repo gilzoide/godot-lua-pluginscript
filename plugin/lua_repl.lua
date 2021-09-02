@@ -4,9 +4,11 @@ local LuaREPL = {
 }
 
 local index_G = { __index = _G }
+local unpack = table.unpack or unpack
 
 local function get_error(text)
-	return 'Error: ' .. text:match(":%d+:%s*(.+)")
+	text = tostring(text)
+	return 'Error: ' .. (text:match(":%d+:%s*(.+)") or text)
 end
 
 function LuaREPL:_init()
@@ -40,15 +42,15 @@ function LuaREPL:dostring(text)
 		f, err_msg = load(text, nil, nil, self.env)
 	end
 	if f then
-		local success, result = pcall(f)
-		if not success then
-			result = get_error(result)
+		local result = { pcall(f) }
+		if not result[1] then
+			self:print(get_error(result[2]))
+		else
+			self:print(unpack(result))
 		end
-		self.output:add_text(String(result))
 	else
-		self.output:add_text(get_error(err_msg))
+		self:print(get_error(err_msg))
 	end
-	self.output:add_text('\n')
 	self.line_edit:clear()
 end
 
