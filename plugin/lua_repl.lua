@@ -34,8 +34,7 @@ function LuaREPL:print(...)
 end
 
 function LuaREPL:dostring(text)
-	self.output:add_text('> ' .. text)
-	self.output:add_text('\n')
+	self:print('> ' .. text)
 	text = tostring(text):gsub('^%s*%=', '', 1)
 	local f, err_msg = load('return ' .. text, nil, nil, self.env)
 	if not f then
@@ -45,8 +44,8 @@ function LuaREPL:dostring(text)
 		local result = { pcall(f) }
 		if not result[1] then
 			self:print(get_error(result[2]))
-		else
-			self:print(unpack(result))
+		elseif #result > 1 then
+			self:print(unpack(result, 2))
 		end
 	else
 		self:print(get_error(err_msg))
