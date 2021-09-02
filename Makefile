@@ -42,7 +42,7 @@ LUA_INIT_SCRIPT_SRC = \
 	src/godot_math.lua \
 	src/godot_object.lua \
 	src/godot_rid.lua \
-	src/godot_misc.lua \
+	src/godot_node_path.lua \
 	src/godot_dictionary.lua \
 	src/godot_array.lua \
 	src/godot_pool_arrays.lua \
