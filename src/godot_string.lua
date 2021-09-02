@@ -794,6 +794,7 @@ String = ffi.metatype('godot_string', {
 	--  If `text` is not a `String`, `StringName`, Lua `string`, `wchar_t *`, `char *`, `wchar_t` or `char`, 
 	--  constructs it based on the value returned by `tostring(text)`.
 	-- @param[opt] length  If present, new String will have at most `length` characters.
+	-- @treturn String
 	__new = function(mt, ...)
 		local text, length = ...
 		if select('#', ...) == 0 or length == 0 then
