@@ -144,7 +144,7 @@ Array = ffi_metatype('godot_array', {
 		return self
 	end,
 	__gc = api.godot_array_destroy,
-	__tostring = GD.tostring,
+	__tostring = gd_tostring,
 	__index = function(self, key)
 		local numeric_index = tonumber(key)
 		if numeric_index then

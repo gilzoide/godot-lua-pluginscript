@@ -28,6 +28,10 @@ local function str(value)
 	end
 end
 
+local function gd_tostring(value)
+	return tostring(str(value))
+end
+
 local function concat_gdvalues(a, b)
 	return ffi_gc(api.godot_string_operator_plus(str(a), str(b)), api.godot_string_destroy)
 end

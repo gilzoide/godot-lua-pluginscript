@@ -91,7 +91,7 @@ Dictionary = ffi_metatype('godot_dictionary', {
 		return self
 	end,
 	__gc = api.godot_dictionary_destroy,
-	__tostring = GD.tostring,
+	__tostring = gd_tostring,
 	__concat = concat_gdvalues,
 	__index = function(self, key)
 		return methods[key] or methods.get(self, key)

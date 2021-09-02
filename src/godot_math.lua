@@ -65,7 +65,7 @@ Vector2 = ffi_metatype('godot_vector2', {
 			return ffi_new(mt, { elements = { x, y }})
 		end
 	end,
-	__tostring = GD.tostring,
+	__tostring = gd_tostring,
 	__index = vector2_methods,
 	__concat = concat_gdvalues,
 	__add = function(a, b)
@@ -163,7 +163,7 @@ Vector3 = ffi_metatype('godot_vector3', {
 		end
 		return ffi_new(mt, { elements = { x, y, z }})
 	end,
-	__tostring = GD.tostring,
+	__tostring = gd_tostring,
 	__index = vector3_methods,
 	__concat = concat_gdvalues,
 	__add = function(a, b)
@@ -273,7 +273,7 @@ Color = ffi_metatype('godot_color', {
 		end
 		return ffi_new(mt, { elements = { r or 0, g or 0, b or 0, a or 1 }})
 	end,
-	__tostring = GD.tostring,
+	__tostring = gd_tostring,
 	__index = color_methods,
 	__concat = concat_gdvalues,
 	__eq = function(a, b)
@@ -340,7 +340,7 @@ Rect2 = ffi_metatype('godot_rect2', {
 		end
 		return ffi_new(mt, { x = x, y = y, width = width, height = height })
 	end,
-	__tostring = GD.tostring,
+	__tostring = gd_tostring,
 	__index = rect2_methods,
 	__concat = concat_gdvalues,
 	__eq = function(a, b)
@@ -408,7 +408,7 @@ Plane = ffi_metatype('godot_plane', {
 		end
 		return self
 	end,
-	__tostring = GD.tostring,
+	__tostring = gd_tostring,
 	__index = plane_methods,
 	__concat = concat_gdvalues,
 	__unm = function(self)
@@ -465,7 +465,7 @@ Quat = ffi.metatype('godot_quat', {
 		end
 		return self
 	end,
-	__tostring = GD.tostring,
+	__tostring = gd_tostring,
 	__index = quat_methods,
 	__concat = concat_gdvalues,
 	__eq = function(a, b)
@@ -550,7 +550,7 @@ Basis = ffi.metatype('godot_basis', {
 		end
 		return self
 	end,
-	__tostring = GD.tostring,
+	__tostring = gd_tostring,
 	__index = basis_methods,
 	__concat = concat_gdvalues,
 	__eq = function(a, b)
@@ -606,7 +606,7 @@ local aabb_methods = {
 }
 
 AABB = ffi_metatype('godot_aabb', {
-	__tostring = GD.tostring,
+	__tostring = gd_tostring,
 	__index = aabb_methods,
 	__concat = concat_gdvalues,
 	__eq = function(a, b)
@@ -685,7 +685,7 @@ Transform2D = ffi_metatype('godot_transform2d', {
 		end
 		return self
 	end,
-	__tostring = GD.tostring,
+	__tostring = gd_tostring,
 	__index = transform2d_methods,
 	__concat = concat_gdvalues,
 	__eq = function(a, b)
@@ -774,7 +774,7 @@ Transform = ffi_metatype('godot_transform', {
 		end
 		return self
 	end,
-	__tostring = GD.tostring,
+	__tostring = gd_tostring,
 	__index = transform_methods,
 	__concat = concat_gdvalues,
 	__eq = function(a, b)

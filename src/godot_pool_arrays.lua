@@ -134,7 +134,7 @@ local function register_pool_array(kind, element_ctype)
 			return self
 		end,
 		__gc = godot_pool_array_destroy,
-		__tostring = GD.tostring,
+		__tostring = gd_tostring,
 		__concat = concat_gdvalues,
 		__index = function(self, key)
 			local numeric_index = tonumber(key)

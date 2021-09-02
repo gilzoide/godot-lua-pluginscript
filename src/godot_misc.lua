@@ -64,25 +64,3 @@ NodePath = ffi_metatype('godot_node_path', {
 		return api.godot_node_path_operator_equal(NodePath(a), NodePath(b))
 	end,
 })
-
-RID = ffi_metatype('godot_rid', {
-	__new = function(mt, resource)
-		local self = ffi_new(mt)
-		if resource then
-			api.godot_rid_new_with_resource(self, resource)
-		else
-			api.godot_rid_new(self)
-		end
-		return self
-	end,
-	__tostring = GD.tostring,
-	__index = {
-		fillvariant = api.godot_variant_new_rid,
-		varianttype = GD.TYPE_RID,
-		get_id = api.godot_rid_get_id,
-	},
-	__concat = concat_gdvalues,
-	__eq = api.godot_rid_operator_equal,
-	__lt = api.godot_rid_operator_less,
-})
-

@@ -830,6 +830,7 @@ String = ffi.metatype('godot_string', {
 		end
 	end,
 	__gc = api.godot_string_destroy,
+	__index = methods,
 	--- Alias for `to_utf8`
 	-- @function __tostring
 	-- @treturn string
@@ -842,7 +843,6 @@ String = ffi.metatype('godot_string', {
 	__len = function(self)
 		return methods.length(self)
 	end,
-	__index = methods,
 	--- Concatenates values.
 	-- @function __concat
 	-- @param a  First value, stringified with `GD.str`
