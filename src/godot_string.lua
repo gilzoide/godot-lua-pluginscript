@@ -23,6 +23,7 @@
 
 --- String metatype, wrapper for `godot_string`.
 -- Construct using the idiom `String(...)`, which calls `__new`.
+-- It is compatible with [Lua's string library API](#Methods_compatible_with_Lua_s_string_library).
 -- @classmod String
 
 local function consume_char_string(cs)
@@ -35,7 +36,7 @@ local function is_a_string(v)
 	return type(v) == 'string' or ffi_istype(String, v)
 end
 
-local string_methods = {
+local methods = {
 	fillvariant = api.godot_variant_new_string,
 	varianttype = GD.TYPE_STRING,
 
@@ -625,19 +626,19 @@ if api_1_1 ~= nil then
 	--- Returns a copy of the string with indentation (leading tabs and spaces) removed.
 	-- @function dedent
 	-- @treturn String
-	string_methods.dedent = function(self)
+	methods.dedent = function(self)
 		return ffi_gc(api_1_1.godot_string_dedent(self), api.godot_string_destroy)
 	end
 	--- Removes a given String from the start if it starts with it or leaves it unchanged.
 	-- @function trim_prefix
 	-- @treturn String
-	string_methods.trim_prefix = function(self, prefix)
+	methods.trim_prefix = function(self, prefix)
 		return ffi_gc(api_1_1.godot_string_trim_prefix(self, str(prefix)), api.godot_string_destroy)
 	end
 	--- Removes a given String from the end if it ends with it or leaves it unchanged.
 	-- @function trim_suffix
 	-- @treturn String
-	string_methods.trim_suffix = function(self, suffix)
+	methods.trim_suffix = function(self, suffix)
 		return ffi_gc(api_1_1.godot_string_trim_suffix(self, str(suffix)), api.godot_string_destroy)
 	end
 	--- Returns a copy of the String with characters removed from the right.
@@ -645,7 +646,7 @@ if api_1_1 ~= nil then
 	-- @function rstrip
 	-- @param chars  Characters to be removed, stringified with `GD.str`
 	-- @treturn String
-	string_methods.rstrip = function(self, chars)
+	methods.rstrip = function(self, chars)
 		return ffi_gc(api_1_1.godot_string_rstrip(self, str(chars)), api.godot_string_destroy)
 	end
 	--- Splits the String by a `delimiter` String and returns an array of the substrings, starting from right.
@@ -654,7 +655,7 @@ if api_1_1 ~= nil then
 	-- @param[opt=true] allow_empty  If absent or truthy, inserts empty substrings in the resulting Array
 	-- @tparam[opt=0] int maxsplit  Maximum number of splits. The default value of 0 means that all items are split.
 	-- @treturn Array
-	string_methods.rsplit = function(self, delimiter, allow_empty, maxsplit)
+	methods.rsplit = function(self, delimiter, allow_empty, maxsplit)
 		return ffi_gc(api_1_1.godot_string_rsplit(self, str(delimiter), allow_empty == nil or allow_empty, maxsplit or 0), api.godot_pool_string_array_destroy)
 	end
 end
@@ -666,8 +667,8 @@ end
 -- @function byte
 -- @param[opt] i
 -- @param[opt] j
--- @return Tnternal numerical codes of the characters
-string_methods.byte = function(self, ...)
+-- @return Internal numerical codes of the characters
+methods.byte = function(self, ...)
 	return string_byte(tostring(self), ...)
 end
 
@@ -680,7 +681,7 @@ end
 -- @return[1] Ending index of found pattern
 -- @return[1] Captures...
 -- @treturn[2] nil  If pattern is not found
-string_methods.find = function(self, ...)
+methods.find = function(self, ...)
 	return string_find(tostring(self), ...)
 end
 
@@ -688,7 +689,7 @@ end
 -- @function gmatch
 -- @param pattern
 -- @treturn function
-string_methods.gmatch = function(self, ...)
+methods.gmatch = function(self, ...)
 	return string_gmatch(tostring(self), ...)
 end
 
@@ -698,7 +699,7 @@ end
 -- @param repl
 -- @param[opt] n
 -- @treturn string
-string_methods.gsub = function(self, ...)
+methods.gsub = function(self, ...)
 	return string_gsub(tostring(self), ...)
 end
 
@@ -706,19 +707,19 @@ end
 -- @function len
 -- @treturn int
 -- @see length
-string_methods.len = string_methods.length
+methods.len = methods.length
 
 --- Wrapper for `string.lower`
 -- @function lower
 -- @treturn string
-string_methods.lower = function(self)
+methods.lower = function(self)
 	return string_lower(tostring(self))
 end
 
 --- Wrapper for `string.upper`
 -- @function upper
 -- @treturn string
-string_methods.upper = function(self)
+methods.upper = function(self)
 	return string_upper(tostring(self))
 end
 
@@ -727,7 +728,7 @@ end
 -- @param pattern
 -- @param[opt] init
 -- @return Captures...
-string_methods.match = function(self, ...)
+methods.match = function(self, ...)
 	return string_match(tostring(self), ...)
 end
 
@@ -736,14 +737,14 @@ end
 -- @param n
 -- @param[opt] sep
 -- @treturn string
-string_methods.rep = function(self, ...)
+methods.rep = function(self, ...)
 	return string_rep(tostring(self), ...)
 end
 
 --- Wrapper for `string.reverse`
 -- @function reverse
 -- @treturn string
-string_methods.reverse = function(self)
+methods.reverse = function(self)
 	return string_reverse(tostring(self))
 end
 
@@ -753,14 +754,14 @@ end
 -- @param[opt] j
 -- @treturn String
 -- @see substr
-string_methods.sub = function(self, i, j)
+methods.sub = function(self, i, j)
 	i = i or 1
 	j = j or -1
 	if i < 0 then i = i + #self + 1 end
 	if i <= 0 then i = 1 end
 	if j < 0 then j = j + #self + 1 end
 	i = i - 1
-	return string_methods.substr(self, i, j - i)
+	return methods.substr(self, i, j - i)
 end
 
 --- Static Functions.
@@ -772,7 +773,7 @@ end
 -- @param buffer  Lua string or pointer convertible to `const uint8_t *`
 -- @param[opt=#buffer] len  Buffer length
 -- @treturn String  String with hexadecimal representation of buffer
-string_methods.hex_encode_buffer = function(buffer, len)
+methods.hex_encode_buffer = function(buffer, len)
 	return ffi_gc(api.godot_string_hex_encode_buffer(buffer, len or #buffer), api.godot_string_destroy)
 end
 
@@ -780,7 +781,7 @@ end
 -- Note that the next smallest unit is picked automatically to hold at most 1024 units.
 -- @function humanize_size
 -- @treturn String
-string_methods.humanize_size = function(size)
+methods.humanize_size = function(size)
 	return ffi_gc(api.godot_string_humanize_size(size), api.godot_string_destroy)
 end
 
@@ -803,14 +804,14 @@ String = ffi.metatype('godot_string', {
 			return self
 		elseif ffi_istype(mt, text) then
 			if length then
-				return string_methods.substr(text, 0, length)
+				return methods.substr(text, 0, length)
 			else
 				local self = ffi_new(mt)
 				api.godot_string_new_copy(self, text)
 				return self
 			end
 		elseif ffi_istype(StringName, text) then
-			return string_methods.substr(text:get_name(), 0, length or -1)
+			return methods.substr(text:get_name(), 0, length or -1)
 		elseif ffi_istype('char *', text) then
 			if length then
 				return ffi_gc(api.godot_string_chars_to_utf8_with_len(text, length), api.godot_string_destroy)
@@ -833,15 +834,15 @@ String = ffi.metatype('godot_string', {
 	-- @function __tostring
 	-- @treturn string
 	-- @see to_utf8
-	__tostring = string_methods.to_utf8,
+	__tostring = methods.to_utf8,
 	--- Alias for `length`
 	-- @function __len
 	-- @treturn int
 	-- @see length
 	__len = function(self)
-		return string_methods.length(self)
+		return methods.length(self)
 	end,
-	__index = string_methods,
+	__index = methods,
 	--- Concatenates values.
 	-- @function __concat
 	-- @param a  First value, stringified with `GD.str`
@@ -877,6 +878,6 @@ String = ffi.metatype('godot_string', {
 	-- @raise If `sprintf` returns an error
 	-- @see sprintf
 	__mod = function(self, values)
-		return assert(string_methods.sprintf(self, values))
+		return assert(methods.sprintf(self, values))
 	end,
 })
