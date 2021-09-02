@@ -213,7 +213,8 @@ local string_methods = {
 	-- @function rfind
 	-- @param what  Substring to be searched, stringified with `GD.str`
 	-- @tparam[opt=-1] int from  Search start position
-	-- @treturn int  Position of substring, if it was found, -1 otherwise
+	-- @treturn[1] int  Position of substring, if it was found
+	-- @treturn[2] int  -1 otherwise
 	rfind = function(self, what, from)
 		return api.godot_string_rfind_from(self, str(what), from or -1)
 	end,
@@ -221,7 +222,8 @@ local string_methods = {
 	-- @function rfindn
 	-- @param what  Substring to be searched, stringified with `GD.str`
 	-- @tparam[opt=-1] int from  Search start position
-	-- @treturn int  Position of substring, if it was found, -1 otherwise
+	-- @treturn[1] int  Position of substring, if it was found
+	-- @treturn[2] int  -1 otherwise
 	rfindn = function(self, what, from)
 		return api.godot_string_rfindn_from(self, str(what), from or -1)
 	end,
@@ -260,80 +262,153 @@ local string_methods = {
 			return ret
 		end
 	end,
+	--- Returns part of the String from the position `from` with length `len`.
+	-- Passing -1 to `len` will return remaining characters from given position.
+	-- @function substr
+	-- @tparam[opt=0] int from
+	-- @tparam[opt=-1] int len
+	-- @treturn String
 	substr = function(self, from, len)
 		return ffi_gc(api.godot_string_substr(self, from or 0, len or -1), api.godot_string_destroy)
 	end,
-	to_double = api.godot_string_to_double,
-	to_float = api.godot_string_to_float,
-	to_int = api.godot_string_to_int,
-	camelcase_to_underscore = function(self)
-		return ffi_gc(api.godot_string_camelcase_to_underscore(self), api.godot_string_destroy)
+	--- Returns a copy of String with Camel cased words separated by underscores.
+	-- If `lowercased` is absent or truthy, result is converted to lower case.
+	-- @function camelcase_to_underscore
+	-- @param[opt=true] lowercased
+	-- @treturn String
+	camelcase_to_underscore = function(self, lowercased)
+		if lowercased == nil or lowercased then
+			return ffi_gc(api.godot_string_camelcase_to_underscore_lowercased(self), api.godot_string_destroy)
+		else
+			return ffi_gc(api.godot_string_camelcase_to_underscore(self), api.godot_string_destroy)
+		end
 	end,
-	camelcase_to_underscore_lowercased = function(self)
-		return ffi_gc(api.godot_string_camelcase_to_underscore_lowercased(self), api.godot_string_destroy)
-	end,
+	--- Changes the case of some letters.
+	-- Replaces underscores with spaces, adds spaces before in-word uppercase characters, converts all letters to lowercase, then capitalizes the first letter and every letter following a space character.
+	-- For `capitalize camelCase mixed_with_underscores`, it will return `Capitalize Camel Case Mixed With Underscores`.
+	-- @function capitalize
+	-- @treturn String
 	capitalize = function(self)
 		return ffi_gc(api.godot_string_capitalize(self), api.godot_string_destroy)
 	end,
+	--- Returns the number of slices when splitting String with `splitter`.
+	-- @function get_slice_count
+	-- @param splitter  Splitter substring, stringified with `GD.str`
+	-- @treturn int  Number of slices
 	get_slice_count = function(self, splitter)
 		return api.godot_string_get_slice_count(self, str(splitter))
 	end,
+	--- Returns the Nth slice when splitting String with `splitter`.
+	-- @function get_slice
+	-- @param splitter  Splitter substring, stringified with `GD.str`
+	-- @tparam int n  Slice index
+	-- @treturn[1] String
+	-- @return[2] Empty string, if there is no Nth slice
 	get_slice = function(self, splitter, slice)
 		return ffi_gc(api.godot_string_get_slice(self, str(splitter), slice), api.godot_string_destroy)
 	end,
-	get_slicec = function(self, splitter, slice)
-		return ffi_gc(api.godot_string_get_slicec(self, splitter, slice), api.godot_string_destroy)
-	end,
+	--- Splits the String by a `delimiter` string and returns an array of the substrings.
+	-- The `delimiter` can be of any length.
+	-- @function split
+	-- @param delimiter  Delimiter substring, stringified with `GD.str`
+	-- @param[opt=true] allow_empty  If absent or truthy, inserts empty substrings in the resulting Array
+	-- @treturn String
 	split = function(self, splitter, allow_empty)
-		if allow_empty == nil then allow_empty = true end
-		return ffi_gc(api.godot_string_split_allow_empty(self, str(splitter), allow_empty), api.godot_array_destroy)
+		return ffi_gc(api.godot_string_split_allow_empty(self, str(splitter), allow_empty == nil or allow_empty), api.godot_array_destroy)
 	end,
+	--- Splits the String in numbers by using a delimiter and returns an array of reals.
+	-- @function split_floats
+	-- @param delimiter  If an Array is passed, all values are used as delimiters. Otherwise, it is stringified with `GD.str`
+	-- @param[opt=true] allow_empty  If absent or truthy, inserts a number for empty substrings
+	-- @treturn PoolRealArray
 	split_floats = function(self, splitter, allow_empty)
-		if allow_empty == nil then allow_empty = true end
+		allow_empty = allow_empty == nil or allow_empty
 		if ffi_istype(Array, splitter) then
 			return ffi_gc(api.godot_string_split_floats_mk_allows_empty(self, splitter, allow_empty), api.godot_array_destroy)
 		else
 			return ffi_gc(api.godot_string_split_floats_allows_empty(self, str(splitter), allow_empty), api.godot_array_destroy)
 		end
 	end,
+	--- Splits the String in integers by using a delimiter string and returns an array of integers.
+	-- @function split_floats
+	-- @param delimiter  If an Array is passed, all values are used as delimiters. Otherwise, it is stringified with `GD.str`
+	-- @param[opt=true] allow_empty  If absent or truthy, inserts a number for empty substrings
+	-- @treturn PoolIntArray
 	split_ints = function(self, splitter, allow_empty)
-		if allow_empty == nil then allow_empty = true end
+		allow_empty = allow_empty == nil or allow_empty
 		if ffi_istype(Array, splitter) then
 			return ffi_gc(api.godot_string_split_ints_mk_allows_empty(self, splitter, allow_empty), api.godot_array_destroy)
 		else
 			return ffi_gc(api.godot_string_split_ints_allows_empty(self, str(splitter), allow_empty), api.godot_array_destroy)
 		end
 	end,
+	--- Splits the String by whitespace and returns an array of the substrings.
+	-- @function split_spaces
+	-- @treturn Array
 	split_spaces = function(self)
 		return ffi_gc(api.godot_string_split_spaces(self), api.godot_array_destroy)
 	end,
+	--- Returns the string converted to lowercase.
+	-- @function to_lower
+	-- @treturn String
 	to_lower = function(self)
 		return ffi_gc(api.godot_string_to_lower(self), api.godot_string_destroy)
 	end,
+	--- Returns the string converted to uppercase.
+	-- @function to_upper
+	-- @treturn String
 	to_upper = function(self)
 		return ffi_gc(api.godot_string_to_upper(self), api.godot_string_destroy)
 	end,
+	--- If the string is a valid file path, returns the full file path without the extension.
+	-- @function get_basename
+	-- @treturn String
 	get_basename = function(self)
 		return ffi_gc(api.godot_string_get_basename(self), api.godot_string_destroy)
 	end,
+	--- If the string is a valid file path, returns the extension.
+	-- @function get_extension
+	-- @treturn String
 	get_extension = function(self)
 		return ffi_gc(api.godot_string_get_extension(self), api.godot_string_destroy)
 	end,
-	left = function(self)
-		return ffi_gc(api.godot_string_left(self), api.godot_string_destroy)
+	--- Returns a number of characters from the left of the String.
+	-- @function left
+	-- @tparam[opt=0] int position
+	-- @treturn String
+	left = function(self, position)
+		return ffi_gc(api.godot_string_left(self, position or 0), api.godot_string_destroy)
 	end,
+	--- Returns the character code at position `at`.
+	-- @function ord_at
+	-- @treturn String
 	ord_at = api.godot_string_ord_at,
+	--- If the String is a path, concatenates `file` at the end of the String as a subpath.
+	-- @function plus_file
+	-- @param file  File path to be concatenated, stringified with `GD.str`
+	-- @treturn String
 	plus_file = function(self, file)
 		return ffi_gc(api.godot_string_plus_file(self, str(file)), api.godot_string_destroy)
 	end,
-	right = function(self)
-		return ffi_gc(api.godot_string_right(self), api.godot_string_destroy)
+	--- Returns the right side of the String from a given position.
+	-- @function right
+	-- @tparam[opt=0] int position
+	-- @treturn String
+	right = function(self, position)
+		return ffi_gc(api.godot_string_right(self, position or 0), api.godot_string_destroy)
 	end,
+	--- Returns a copy of the String stripped of any non-printable character (including tabulations, spaces and line breaks) at the beginning and the end.
+	-- @function strip_edges
+	-- @param[opt=true] left  Toggle strip left edge
+	-- @param[opt=true] right  Toggle strip right edge
+	-- @treturn String
 	strip_edges = function(self, left, right)
-		if left == nil then left = true end
-		if right == nil then right = true end
-		return ffi_gc(api.godot_string_strip_edges(self, left, right), api.godot_string_destroy)
+		return ffi_gc(api.godot_string_strip_edges(self, left == nil or left, right == nil or right), api.godot_string_destroy)
 	end,
+	--- Returns a copy of the String stripped of any escape character.
+	-- These include all non-printable control characters of the first page of the ASCII table (< 32), such as tabulation (`\t`) and newline ( `\n` and `\r`) characters, but not spaces.
+	-- @function strip_escapes
+	-- @treturn String
 	strip_escapes = function(self)
 		return ffi_gc(api.godot_string_strip_escapes(self), api.godot_string_destroy)
 	end,
@@ -554,6 +629,7 @@ local string_name_methods = {
 	fillvariant = function(var, self)
 		api.godot_variant_new_string(var, self:get_name())
 	end,
+
 	get_name = function(self)
 		return ffi_gc(api.godot_string_name_get_name(self), api.godot_string_destroy)
 	end,
