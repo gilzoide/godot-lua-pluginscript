@@ -130,9 +130,16 @@ Array = ffi_metatype('godot_array', {
 	__new = function(mt, ...)
 		local self = ffi_new(mt)
 		api.godot_array_new(self)
-		for i = 1, select('#', ...) do
-			local v = select(i, ...)
-			self:append(v)
+		local argc = select('#', ...)
+		if argc == 1 and type(...) == 'table' then
+			for _, v in ipairs(...) do
+				self:append(v)
+			end
+		else
+			for i = 1, select('#', ...) do
+				local v = select(i, ...)
+				self:append(v)
+			end
 		end
 		return self
 	end,
