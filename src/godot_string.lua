@@ -252,10 +252,10 @@ local methods = {
 	-- @treturn[2] String  Error message, in case format is not compatible with the given values
 	sprintf = function(self, values, ...)
 		local r_error = ffi_new('bool[1]')
-		if select('#', ...) > 0 or not ffi.istype(Array, values) then
+		if select('#', ...) > 0 or not ffi_istype(Array, values) then
 			values = Array(values, ...)
 		end
-		local ret = ffi.gc(api.godot_string_sprintf(self, values, r_error), api.godot_string_destroy)
+		local ret = ffi_gc(api.godot_string_sprintf(self, values, r_error), api.godot_string_destroy)
 		if not r_error[0] then
 			return ret
 		else
@@ -787,7 +787,7 @@ end
 
 --- Metamethods
 -- @section metamethods
-String = ffi.metatype('godot_string', {
+String = ffi_metatype('godot_string', {
 	--- String constructor, called by the idiom `String(...)`
 	-- @function __new
 	-- @param[opt] text
