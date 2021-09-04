@@ -27,7 +27,7 @@
 local byte = ffi_typeof('uint8_t')
 
 --- PoolByteArray.Read access metatype, wrapper for `godot_pool_byte_array_read_access`.
--- @type Read
+-- @type PoolByteArray.Read
 local Read = ffi_metatype('godot_pool_byte_array_read_access', {
 	__index = {
 		--- Create a copy of Read access.
@@ -56,7 +56,7 @@ local Read = ffi_metatype('godot_pool_byte_array_read_access', {
 })
 
 --- PoolByteArray.Write access metatype, wrapper for `godot_pool_byte_array_write_access`.
--- @type Write
+-- @type PoolByteArray.Write
 local Write = ffi_metatype('godot_pool_byte_array_write_access', {
 	__index = {
 		--- Create a copy of Write access.
@@ -160,13 +160,13 @@ local methods = {
 	empty = function(self)
 		return #self == 0
 	end,
-	--- Returns the [Read](#Class_Read) access for the array.
+	--- Returns the [Read](#Class_PoolByteArray._Read) access for the array.
 	-- @function read
 	-- @treturn Read
 	read = function(self)
 		return ffi_gc(api.godot_pool_byte_array_read(self), Read.destroy)
 	end,
-	--- Returns the [Write](#Class_Write) access for the array.
+	--- Returns the [Write](#Class_PoolByteArray_Write) access for the array.
 	-- @function write
 	-- @treturn Write
 	write = function(self)

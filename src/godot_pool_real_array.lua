@@ -25,7 +25,7 @@
 -- @classmod PoolRealArray
 
 --- PoolRealArray.Read access metatype, wrapper for `godot_pool_real_array_read_access`.
--- @type Read
+-- @type PoolRealArray.Read
 local Read = ffi_metatype('godot_pool_real_array_read_access', {
 	__index = {
 		--- Create a copy of Read access.
@@ -54,7 +54,7 @@ local Read = ffi_metatype('godot_pool_real_array_read_access', {
 })
 
 --- PoolRealArray.Write access metatype, wrapper for `godot_pool_real_array_write_access`.
--- @type Write
+-- @type PoolRealArray.Write
 local Write = ffi_metatype('godot_pool_real_array_write_access', {
 	__index = {
 		--- Create a copy of Write access.
@@ -158,13 +158,13 @@ local methods = {
 	empty = function(self)
 		return #self == 0
 	end,
-	--- Returns the [Read](#Class_Read) access for the array.
+	--- Returns the [Read](#Class_PoolRealArray_Read) access for the array.
 	-- @function read
 	-- @treturn Read
 	read = function(self)
 		return ffi_gc(api.godot_pool_real_array_read(self), Read.destroy)
 	end,
-	--- Returns the [Write](#Class_Write) access for the array.
+	--- Returns the [Write](#Class_PoolRealArray_Write) access for the array.
 	-- @function write
 	-- @treturn Write
 	write = function(self)

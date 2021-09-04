@@ -25,7 +25,7 @@
 -- @classmod PoolIntArray
 
 --- PoolIntArray.Read access metatype, wrapper for `godot_pool_int_array_read_access`.
--- @type Read
+-- @type PoolIntArray.Read
 local Read = ffi_metatype('godot_pool_int_array_read_access', {
 	__index = {
 		--- Create a copy of Read access.
@@ -54,7 +54,7 @@ local Read = ffi_metatype('godot_pool_int_array_read_access', {
 })
 
 --- PoolIntArray.Write access metatype, wrapper for `godot_pool_int_array_write_access`.
--- @type Write
+-- @type PoolIntArray.Write
 local Write = ffi_metatype('godot_pool_int_array_write_access', {
 	__index = {
 		--- Create a copy of Write access.
@@ -158,13 +158,13 @@ local methods = {
 	empty = function(self)
 		return #self == 0
 	end,
-	--- Returns the [Read](#Class_Read) access for the array.
+	--- Returns the [Read](#Class_PoolIntArray_Read) access for the array.
 	-- @function read
 	-- @treturn Read
 	read = function(self)
 		return ffi_gc(api.godot_pool_int_array_read(self), Read.destroy)
 	end,
-	--- Returns the [Write](#Class_Write) access for the array.
+	--- Returns the [Write](#Class_PoolIntArray_Write) access for the array.
 	-- @function write
 	-- @treturn Write
 	write = function(self)
