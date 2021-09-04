@@ -180,8 +180,7 @@ methods.append = methods.push_back
 
 --- Append all ints of `iterable` at the end of Array.
 -- @function extend
--- @param iterable  If a Lua string is passed, its ints are appended.
---  Otherwise, it must be an object iterable by `ipairs`, including Lua tables, `Array`s and `Pool*Array`s.
+-- @param iterable  Any object iterable by `ipairs`, including Lua tables, `Array`s and `Pool*Array`s.
 methods.extend = function(self, iterable)
 	if ffi_istype(PoolIntArray, iterable) then
 		api.godot_pool_int_array_append_array(self, iterable)
