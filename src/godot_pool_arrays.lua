@@ -156,5 +156,4 @@ local function register_pool_array(kind, element_ctype)
 end
 
 register_pool_array('string', String)
-register_pool_array('vector3', Vector3)
 register_pool_array('color', Color)
