@@ -45,8 +45,8 @@ local loadstring = loadstring or load
 local unpack = table.unpack or unpack
 
 -- FFI
-local ffi_cast, ffi_copy, ffi_gc, ffi_istype, ffi_metatype, ffi_new, ffi_string, ffi_typeof
-    = ffi.cast, ffi.copy, ffi.gc, ffi.istype, ffi.metatype, ffi.new, ffi.string, ffi.typeof
+local ffi_cast, ffi_copy, ffi_gc, ffi_istype, ffi_metatype, ffi_new, ffi_sizeof, ffi_string, ffi_typeof
+    = ffi.cast, ffi.copy, ffi.gc, ffi.istype, ffi.metatype, ffi.new, ffi.sizeof, ffi.string, ffi.typeof
 
 -- Weak tables
 local weak_k = { __mode = 'k' }
