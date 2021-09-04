@@ -330,7 +330,7 @@ end
 Array = ffi_metatype('godot_array', {
 	--- Array constructor, called by the idiom `Array(...)`.
 	-- @function __new
-	-- @param ...  Initial elements
+	-- @param ...  Initial elements, added with `push_back`
 	__new = function(mt, ...)
 		local self = ffi_new(mt)
 		api.godot_array_new(self)
@@ -338,9 +338,19 @@ Array = ffi_metatype('godot_array', {
 		return self
 	end,
 	__gc = api.godot_array_destroy,
+	--- Returns method named `index` or the result of `safe_get`.
+	-- @function __index
+	-- @param index
+	-- @return Method or element or `nil`
+	-- @see safe_get
 	__index = function(self, index)
 		return methods[index] or methods.safe_get(self, index)
 	end,
+	--- Alias for `safe_set`.
+	-- @function __newindex
+	-- @tparam int index
+	-- @param value
+	-- @see safe_set
 	__newindex = methods.safe_set,
 	--- Returns a Lua string representation of this Array.
 	-- @function __tostring

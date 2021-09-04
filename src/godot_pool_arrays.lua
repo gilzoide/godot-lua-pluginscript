@@ -155,7 +155,6 @@ local function register_pool_array(kind, element_ctype)
 	})
 end
 
-register_pool_array('byte', byte)
 register_pool_array('int', int)
 register_pool_array('real', float)
 register_pool_array('string', String)

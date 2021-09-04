@@ -786,42 +786,36 @@ String = ffi_metatype('godot_string', {
 	-- @function __new
 	-- @param[opt] text
 	--  If absent, creates an empty String.
-	--  If `text` is not a `String`, `StringName`, Lua `string`, `wchar_t *`, `char *`, `wchar_t` or `char`, 
+	--  If `text` is not a `String`, `StringName`, Lua `string`, `wchar_t *` or `char *`, 
 	--  constructs it based on the value returned by `tostring(text)`.
 	-- @param[opt] length  If present, new String will have at most `length` characters.
 	-- @treturn String
 	__new = function(mt, ...)
+		local self = ffi_new(mt)
 		local text, length = ...
 		if select('#', ...) == 0 or length == 0 then
-			local self = ffi_new(mt)
 			api.godot_string_new(self)
-			return self
 		elseif ffi_istype(mt, text) then
 			if length then
-				return methods.substr(text, 0, length)
+				self = methods.substr(text, 0, length)
 			else
-				local self = ffi_new(mt)
 				api.godot_string_new_copy(self, text)
-				return self
 			end
 		elseif ffi_istype(StringName, text) then
-			return methods.substr(text:get_name(), 0, length or -1)
+			self = methods.substr(text:get_name(), 0, length or -1)
 		elseif ffi_istype('char *', text) then
 			if length then
-				return ffi_gc(api.godot_string_chars_to_utf8_with_len(text, length), api.godot_string_destroy)
+				api.godot_string_parse_utf8_with_len(self, text, length)
 			else
-				return ffi_gc(api.godot_string_chars_to_utf8(text), api.godot_string_destroy)
+				api.godot_string_parse_utf8(self, text)
 			end
 		elseif ffi_istype('wchar_t *', text) then
-			local self = ffi_new(mt)
 			api.godot_string_new_with_wide_string(self, text, length or -1)
-			return self
-		elseif ffi_istype('wchar_t', text) or ffi_istype('char', text) then
-			return ffi_gc(api.godot_string_chr(text), api.godot_string_destroy)
 		else
 			text = tostring(text)
-			return ffi_gc(api.godot_string_chars_to_utf8_with_len(text, length or #text), api.godot_string_destroy)
+			api.godot_string_parse_utf8_with_len(self, text, length or #text)
 		end
+		return self
 	end,
 	__gc = api.godot_string_destroy,
 	__index = methods,
