@@ -30,24 +30,22 @@ local methods = {
 	varianttype = GD.TYPE_ARRAY,
 
 	--- Returns the value at `index`.
-	-- The idiom `array[index]` also calls this method.
+	-- If `index` is invalid (`index < 0` or `index >= size()`), the application will crash.
+	-- For a safe version that returns `nil` if `index` is invalid, use `safe_get` or the idiom `array[index]` instead.
 	-- @function get
 	-- @tparam int index
-	-- @return[1] Value
-	-- @treturn[2] nil  If index is invalid (`index < 0` or `index >= size()`)
-	-- @see __index
+	-- @return Value
+	-- @see safe_get
 	get = function(self, index)
-		if index >= 0 and index < #self then
-			return ffi_gc(api.godot_array_get(self, index), api.godot_variant_destroy):unbox()
-		end
+		return ffi_gc(api.godot_array_get(self, index), api.godot_variant_destroy):unbox()
 	end,
 	--- Set a new `value` for `index`.
-	-- This will error if an invalid `index` (`< 0` or `>= size()`) is passed.
-	-- For a safe approach that `resize`s if `index >= size()`, use the idiom [`array[index] = value`](#Array:__newindex) instead.
+	-- If `index` is invalid (`index < 0` or `index >= size()`), the application will crash.
+	-- For a safe approach that `resize`s if `index >= size()`, use `safe_set` or the idiom `array[index] = value` instead.
 	-- @function set
 	-- @tparam int index
 	-- @param value
-	-- @see __newindex
+	-- @see safe_set
 	set = function(self, index, value)
 		api.godot_array_set(self, index, Variant(value))
 	end,
@@ -235,6 +233,35 @@ local methods = {
 	end,
 }
 
+--- Returns the value at `index`.
+-- The idiom `array[index]` also calls this method.
+-- @function safe_get
+-- @tparam int index
+-- @return[1] Value
+-- @treturn[2] nil  If index is invalid (`index < 0` or `index >= size()`)
+-- @see get
+methods.safe_get = function(self, index)
+	if index >= 0 and index < #self then
+		return self:get(index)
+	end
+end
+
+--- Set a new `value` for `index`.
+-- If `index >= size()`, the Array is `resize`d first.
+-- The idiom `array[index] = value` also calls this method.
+-- @function safe_set
+-- @tparam int index
+-- @param value
+-- @raise If `index < 0`
+-- @see set
+methods.safe_set = function(self, index, value)
+	assert(index >= 0, "Array index must be non-negative")
+	if index >= #self then
+		self:resize(index + 1)
+	end
+	self:set(index, value)
+end
+
 --- Alias of `push_back`.
 -- @function append
 -- @param ...
@@ -246,11 +273,11 @@ methods.append = methods.push_back
 -- @param iterable  Any object iterable by `ipairs`, including Lua tables, `Array`s and `Pool*Array`s.
 methods.extend = function(self, iterable)
 	for _, value in ipairs(iterable) do
-		self:append(value)
+		self:push_back(value)
 	end
 end
 
-if api_1_1 then
+if api_1_1 ~= nil then
 	--- Returns the maximum value contained in the Array if all elements are of comparable types.
 	-- @function max
 	-- @return[1] Maximum value
@@ -298,15 +325,6 @@ local function array_ipairs(self)
 	return array_next, self, -1
 end
 
-local function array_newindex(self, index, value)
-	index = assert(tonumber(index), "Array index must be a number")
-	assert(index >= 0, "Array index must be non-negative")
-	if index >= #self then
-		self:resize(index + 1)
-	end
-	self:set(index, value)
-end
-
 --- Metamethods
 -- @section metamethods
 Array = ffi_metatype('godot_array', {
@@ -320,20 +338,10 @@ Array = ffi_metatype('godot_array', {
 		return self
 	end,
 	__gc = api.godot_array_destroy,
-	--- If `index` is a method name, return it.
-	-- Otherwise, returns the result of `get`.
-	-- @function __index
-	-- @param index
-	-- @return Method or element or `nil`
 	__index = function(self, index)
-		return methods[index] or methods.get(self, index)
+		return methods[index] or methods.safe_get(self, index)
 	end,
-	--- `set` `value` in Array, `resize`ing first if `index >= size()`.
-	-- @function __newindex
-	-- @param index
-	-- @param value
-	-- @raise If `index` is not a number or `index < 0`
-	__newindex = array_newindex,
+	__newindex = methods.safe_set,
 	--- Returns a Lua string representation of this Array.
 	-- @function __tostring
 	-- @treturn string
