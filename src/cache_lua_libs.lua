@@ -32,8 +32,8 @@ local debug_getinfo, debug_traceback
     = debug.getinfo, debug.traceback
 local package_loadlib
     = package.loadlib
-local string_byte, string_find, string_format, string_gmatch, string_gsub, string_lower, string_match, string_rep, string_reverse, string_upper
-    = string.byte, string.find, string.format, string.gmatch, string.gsub, string.lower, string.match, string.rep, string.reverse, string.upper
+local string_byte, string_find, string_format, string_gmatch, string_gsub, string_lower, string_match, string_rep, string_reverse, string_sub, string_upper
+    = string.byte, string.find, string.format, string.gmatch, string.gsub, string.lower, string.match, string.rep, string.reverse, string.sub, string.upper
 local table_concat, table_insert, table_remove = table.concat, table.insert, table.remove
 
 -- custom globals from `src/language_gdnative.c`

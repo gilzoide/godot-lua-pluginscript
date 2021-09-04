@@ -703,11 +703,12 @@ methods.gsub = function(self, ...)
 	return string_gsub(tostring(self), ...)
 end
 
---- Alias for `length`
+--- Wrapper for `string.len`
 -- @function len
 -- @treturn int
--- @see length
-methods.len = methods.length
+methods.len = function(self)
+	return #tostring(self)
+end
 
 --- Wrapper for `string.lower`
 -- @function lower
@@ -748,20 +749,13 @@ methods.reverse = function(self)
 	return string_reverse(tostring(self))
 end
 
---- Alias for `substr`, but accepting arguments compatible with Lua's `string.sub`
+--- Wrapper for `string.sub`
 -- @function sub
 -- @param[opt] i
 -- @param[opt] j
--- @treturn String
--- @see substr
-methods.sub = function(self, i, j)
-	i = i or 1
-	j = j or -1
-	if i < 0 then i = i + #self + 1 end
-	if i <= 0 then i = 1 end
-	if j < 0 then j = j + #self + 1 end
-	i = i - 1
-	return methods.substr(self, i, j - i)
+-- @treturn string
+methods.sub = function(self, ...)
+	return string_sub(tostring(self), ...)
 end
 
 --- Static Functions.
