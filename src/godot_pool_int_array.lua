@@ -44,7 +44,7 @@ local Read = ffi_metatype('godot_pool_int_array_read_access', {
 		end,
 		--- Get Read access pointer.
 		-- @function Read:ptr
-		-- @return[type=const int *]
+		-- @return[type=const godot_int *]
 		ptr = api.godot_pool_int_array_read_access_ptr,
 		--- Assign a new Read access.
 		-- @function Read:assign
@@ -73,7 +73,7 @@ local Write = ffi_metatype('godot_pool_int_array_write_access', {
 		end,
 		--- Get Write access pointer.
 		-- @function Write:ptr
-		-- @return[type=int *]
+		-- @return[type=godot_int *]
 		ptr = api.godot_pool_int_array_write_access_ptr,
 		--- Assign a new Write access.
 		-- @function Write:assign
@@ -113,7 +113,7 @@ local methods = {
 	set = api.godot_pool_int_array_set,
 	--- Set a new int for `index`.
 	-- If `index >= size()`, the array is `resize`d first.
-	-- The idiom `array[index] = int` also calls this method.
+	-- The idiom `array[index] = value` also calls this method.
 	-- @function safe_set
 	-- @tparam int index
 	-- @param value
@@ -121,7 +121,7 @@ local methods = {
 	-- @see set
 	safe_set = Array.safe_set,
 	--- Inserts a new element at a given position in the array.
-	-- The position must be valid, or at the end of the array (`idx == size()`).
+	-- The position must be valid, or at the end of the array (`index == size()`).
 	-- @function insert
 	-- @tparam int index
 	-- @tparam int int
