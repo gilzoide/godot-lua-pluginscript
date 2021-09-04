@@ -48,9 +48,10 @@ LUA_INIT_SCRIPT_SRC = \
 	src/godot_pool_byte_array.lua \
 	src/godot_pool_int_array.lua \
 	src/godot_pool_real_array.lua \
+	src/godot_pool_string_array.lua \
 	src/godot_pool_vector2_array.lua \
 	src/godot_pool_vector3_array.lua \
-	src/godot_pool_arrays.lua \
+	src/godot_pool_color_array.lua \
 	src/pluginscript_class_metadata.lua \
 	src/pluginscript_callbacks.lua \
 	src/late_globals.lua \
