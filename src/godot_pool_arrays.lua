@@ -146,14 +146,7 @@ local function register_pool_array(kind, element_ctype)
 				return methods[key]
 			end
 		end,
-		__newindex = function(self, key, value)
-			key = assert(tonumber(key), "Array indices must be numeric")
-			if key == #self then
-				methods.append(self, value)
-			else
-				methods.set(self, key, value)
-			end
-		end,
+		__newindex = array_newindex,
 		__len = function(self)
 			return methods.size(self)
 		end,

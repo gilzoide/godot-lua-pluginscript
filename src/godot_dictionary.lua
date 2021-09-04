@@ -202,14 +202,16 @@ Dictionary = ffi_metatype('godot_dictionary', {
 	__len = function(self)
 		return methods.size(self)
 	end,
-	--- Returns the `next` iterator and `self`.
+	--- Returns the `next` iterator and `self`, called by the idiom `pairs(dictionary)`.
 	-- @usage
 	--     for k, v in pairs(dictionary) do
 	--         -- do something
 	--     end
 	-- @function __pairs
+	-- @treturn function
+	-- @treturn Dictionary  self
 	__pairs = function(self)
-		return methods.next, self, nil
+		return methods.next, self
 	end,
 })
 
