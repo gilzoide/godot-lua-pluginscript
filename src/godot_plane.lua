@@ -190,7 +190,7 @@ Plane = ffi_metatype('godot_plane', {
 		return Plane(-self.normal, -self.d)
 	end,
 	--- Equality operation
-	-- If either `a` or `b` are of type `Plane`, always return `false`.
+	-- If either `a` or `b` are not of type `Plane`, always return `false`.
 	-- @function __eq
 	-- @tparam Plane a
 	-- @tparam Plane b

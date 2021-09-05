@@ -246,7 +246,7 @@ Color = ffi_metatype('godot_color', {
 		return 1 - self
 	end,
 	--- Equality operation
-	-- If either `a` or `b` are of type `Color`, always return `false`.
+	-- If either `a` or `b` are not of type `Color`, always return `false`.
 	-- @function __eq
 	-- @tparam Color a
 	-- @tparam Color b

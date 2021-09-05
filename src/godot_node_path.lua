@@ -115,7 +115,7 @@ NodePath = ffi_metatype('godot_node_path', {
 	-- @treturn String
 	__concat = concat_gdvalues,
 	--- Equality comparison (`a == b`).
-	-- If either `a` or `b` are not `NodePath`, `String` or Lua `string`, always return `false`.
+	-- If either `a` or `b` are not of type `NodePath`, `String` or Lua `string`, always return `false`.
 	-- @function __eq
 	-- @param a
 	-- @param b

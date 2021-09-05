@@ -190,21 +190,24 @@ typedef union godot_quat {
 	struct { godot_real _3; godot_vector3 yzw; };
 } godot_quat;
 
-typedef struct godot_basis {
-	godot_vector3 elements[3];
+typedef union godot_basis {
+	godot_real elements[9];
+	godot_vector3 rows[3];
 } godot_basis;
 
-typedef struct godot_aabb {
-	godot_vector3 position, size;
+typedef union godot_aabb {
+	godot_real elements[6];
+	struct { godot_vector3 position, size; };
 } godot_aabb;
 
-typedef struct godot_transform2d {
-	godot_vector2 elements[3];
+typedef union godot_transform2d {
+	godot_real elements[6];
+	godot_vector2 columns[3];
 } godot_transform2d;
 
-typedef struct godot_transform {
-	godot_basis basis;
-	godot_vector3 origin;
+typedef union godot_transform {
+	godot_real elements[12];
+	struct { godot_basis basis; godot_vector3 origin; };
 } godot_transform;
 
 // Enums

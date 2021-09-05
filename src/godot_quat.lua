@@ -98,6 +98,16 @@ local methods = {
 	cubic_slerp = api.godot_quat_cubic_slerp,
 }
 
+--- Returns all elements.
+-- @function unpack
+-- @treturn number X
+-- @treturn number Y
+-- @treturn number Z
+-- @treturn number W
+methods.unpack = function(self)
+	return self.x, self.y, self.z, self.w
+end
+
 --- Constants
 -- @section constants
 
@@ -174,10 +184,15 @@ Quat = ffi.metatype('godot_quat', {
 	--- Multiplication operation
 	-- @function __mul
 	-- @tparam Quat a
-	-- @tparam number s
-	-- @treturn Quat
-	__mul = function(self, s)
-		return Quat(self.x * s, self.y * s, self.z * s, self.w * s)
+	-- @tparam Vector3|number b  If a Vector3 is passed, calls `xform`.
+	--  Otherwise, returns a Quat with each component multiplied by `b`.
+	-- @treturn Quat|Vector3
+	__mul = function(self, b)
+		if ffi_istype(Vector3, b) then
+			return self:xform(b)
+		else
+			return Quat(self.x * b, self.y * b, self.z * b, self.w * b)
+		end
 	end,
 	--- Division operation
 	-- @function __div
@@ -194,7 +209,7 @@ Quat = ffi.metatype('godot_quat', {
 		return Quat(-self.x, -self.y, -self.z, -self.w)
 	end,
 	--- Equality operation
-	-- If either `a` or `b` are of type `Quat`, always return `false`.
+	-- If either `a` or `b` are not of type `Quat`, always return `false`.
 	-- @function __eq
 	-- @tparam Quat a
 	-- @tparam Quat b

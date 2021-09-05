@@ -73,7 +73,6 @@ RID = ffi_metatype('godot_rid', {
 	-- @param a
 	-- @param b
 	-- @treturn bool
-	-- @raise If either `a` or `b` are not of type RID.
 	__lt = api.godot_rid_operator_less,
 })
 
