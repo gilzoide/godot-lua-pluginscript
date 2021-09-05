@@ -4,7 +4,6 @@ local LuaREPL = {
 }
 
 local index_G = { __index = _G }
-local unpack = table.unpack or unpack
 
 local function get_error(text)
 	text = tostring(text)
@@ -41,11 +40,11 @@ function LuaREPL:dostring(text)
 		f, err_msg = load(text, nil, nil, self.env)
 	end
 	if f then
-		local result = { pcall(f) }
+		local result = table.pack(pcall(f))
 		if not result[1] then
 			self:print(get_error(result[2]))
-		elseif #result > 1 then
-			self:print(unpack(result, 2))
+		elseif result.n > 1 then
+			self:print(table.unpack(result, 2, result.n))
 		end
 	else
 		self:print(get_error(err_msg))

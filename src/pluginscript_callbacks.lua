@@ -237,7 +237,7 @@ clib.lps_instance_call_method_cb = wrap_callback(function(data, name, args, argc
 			args_table[i] = args[i - 1]:unbox()
 		end
 		local co = lps_coroutine_pool:acquire(method)
-		local success, unboxed_ret = coroutine_resume(co, self, unpack(args_table))
+		local success, unboxed_ret = coroutine_resume(co, self, table_unpack(args_table))
 		if success then
 			lps_coroutine_pool:release(co)
 			ret[0] = ffi_gc(Variant(unboxed_ret), nil)
