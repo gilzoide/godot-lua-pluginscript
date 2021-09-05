@@ -28,24 +28,24 @@
 -- `x/y/z`, `r/g/b`, `s/t/p`, `width/height/depth`, the pair `u/v`. `Vector2` with
 -- two adjacent components may be get/set with pairs like `xy` or `yz`:
 --     typedef union godot_vector3 {
---         godot_real elements[3];
+--         float elements[3];
 --         // xyz
---         struct { godot_real x, y, z; };
---         struct { godot_vector2 xy; godot_real _0; };
---         struct { godot_real _1; godot_vector2 yz; };
+--         struct { float x, y, z; };
+--         struct { Vector2 xy; float _; };
+--         struct { float _; Vector2 yz; };
 --         // rgb
---         struct { godot_real r, g, b; };
---         struct { godot_vector2 rg; godot_real _2; };
---         struct { godot_real _3; godot_vector2 gb; };
+--         struct { float r, g, b; };
+--         struct { Vector2 rg; float _; };
+--         struct { float _; Vector2 gb; };
 --         // stp
---         struct { godot_real s, t, p; };
---         struct { godot_vector2 st; godot_real _6; };
---         struct { godot_real _7; godot_vector2 tp; };
+--         struct { float s, t, p; };
+--         struct { Vector2 st; float _; };
+--         struct { float _; Vector2 tp; };
 --         // uv
---         struct { godot_real u, v, _4; };
---         struct { godot_vector2 uv; godot_real _5; };
+--         struct { float u, v, _; };
+--         struct { Vector2 uv; float _; };
 --         // 3D Size: width/height/depth
---         struct { godot_real width, height, depth; };
+--         struct { float width, height, depth; };
 --     } godot_vector3;
 -- @classmod Vector3
 
@@ -269,7 +269,7 @@ Vector3 = ffi_metatype('godot_vector3', {
 	-- * A single number: all components are initialized to it (`Vector3(1) == Vector3(1, 1, 1)`)
 	-- * 2 numbers: Z is set to 0 (`Vector3(1, 2) == Vector3(1, 2, 0)`)
 	-- * 3 numbers (`Vector3(1, 2, 3)`)
-	-- * A number and a Vector2 (`Vector3(1, Vector2(2, 3)) == Vector3(Vector2(1, 2), 3) == Vector3(1, 2, 3)`)
+	-- * Numbers may be packed as Vector2 (`Vector3(1, Vector2(2, 3)) == Vector3(Vector2(1, 2), 3) == Vector3(1, 2, 3)`)
 	-- @function __new
 	-- @tparam[opt] Vector3|Vector2|number x
 	-- @tparam[opt] Vector2|number y

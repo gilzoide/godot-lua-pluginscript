@@ -163,24 +163,11 @@ typedef union godot_vector3 {
 
 typedef union godot_color {
 	godot_real elements[4];
-	// xyzw
-	struct { godot_real x, y, z, w; };
-	struct { godot_vector2 xy; godot_vector2 zw; };
-	struct { godot_vector3 xyz; godot_real _0; };
-	struct { godot_real _1; godot_vector3 yzw; };
-	// rgba
 	struct { godot_real r, g, b, a; };
 	struct { godot_vector2 rg; godot_vector2 ba; };
+	struct { godot_real _0; godot_vector2 gb; godot_real _1; };
 	struct { godot_vector3 rgb; godot_real _2; };
 	struct { godot_real _3; godot_vector3 gba; };
-	// stpq
-	struct { godot_real s, t, p, q; };
-	struct { godot_vector2 st; godot_vector2 pq; };
-	struct { godot_vector3 stp; godot_real _6; };
-	struct { godot_real _7; godot_vector3 tpq; };
-	// uv
-	struct { godot_real u, v; godot_real _4[2]; };
-	struct { godot_vector2 uv; godot_real _5[2]; };
 } godot_color;
 
 typedef union godot_rect2 {
@@ -198,8 +185,9 @@ typedef union godot_quat {
 	godot_real elements[4];
 	struct { godot_real x, y, z, w; };
 	struct { godot_vector2 xy; godot_vector2 zw; };
-	struct { godot_vector3 xyz; godot_real _0; };
-	struct { godot_real _1; godot_vector3 yzw; };
+	struct { godot_real _0; godot_vector2 yz; godot_real _1; };
+	struct { godot_vector3 xyz; godot_real _2; };
+	struct { godot_real _3; godot_vector3 yzw; };
 } godot_quat;
 
 typedef struct godot_basis {

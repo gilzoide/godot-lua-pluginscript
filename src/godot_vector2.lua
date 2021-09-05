@@ -27,17 +27,17 @@
 -- The X and Y components may be accessed through `elements` or the pairs
 -- `x/y`, `r/g`, `s/t`, `u/v`, `width/height`:
 --     typedef union godot_vector2 {
---         godot_real elements[2];
+--         float elements[2];
 --         // xy
---         struct { godot_real x, y; };
+--         struct { float x, y; };
 --         // rg
---         struct { godot_real r, g; };
+--         struct { float r, g; };
 --         // st
---         struct { godot_real s, t; };
+--         struct { float s, t; };
 --         // uv
---         struct { godot_real u, v; };
+--         struct { float u, v; };
 --         // Size: width/height
---         struct { godot_real width, height; };
+--         struct { float width, height; };
 --     } godot_vector2;
 -- @classmod Vector2
 
