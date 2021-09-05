@@ -210,15 +210,6 @@ Transform = ffi_metatype('godot_transform', {
 	-- @param b  First value, stringified with `GD.str`
 	-- @treturn String
 	__concat = concat_gdvalues,
-	--- Equality operation
-	-- If either `a` or `b` are not of type `Transform`, always return `false`.
-	-- @function __eq
-	-- @tparam Transform a
-	-- @tparam Transform b
-	-- @treturn bool
-	__eq = function(a, b)
-		return ffi_istype(Transform, a) and ffi_istype(Transform, b) and a.basis == b.basis and a.origin == b.origin
-	end,
 	--- Multiplication operation.
 	-- Either multiply another Transform or `xform` value.
 	-- @tparam Transform self
@@ -230,5 +221,14 @@ Transform = ffi_metatype('godot_transform', {
 		else
 			return self:xform(b)
 		end
+	end,
+	--- Equality operation
+	-- If either `a` or `b` are not of type `Transform`, always return `false`.
+	-- @function __eq
+	-- @tparam Transform a
+	-- @tparam Transform b
+	-- @treturn bool
+	__eq = function(a, b)
+		return ffi_istype(Transform, a) and ffi_istype(Transform, b) and a.basis == b.basis and a.origin == b.origin
 	end,
 })

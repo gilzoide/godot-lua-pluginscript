@@ -36,14 +36,47 @@
 -- @tparam function|table|userdata f  Function or other callable
 -- @treturn thread  Reused or created thread
 
---- Bool type `godot_bool`
-bool = ffi_typeof('godot_bool')
---- Int type `godot_int`
-int = ffi_typeof('godot_int')
---- Float type `godot_real`
-float = ffi_typeof('godot_real')
-
 --- Alias for `GD.print`
 -- @function print
 -- @param ...
 _G.print = GD.print
+
+--- Scalar types
+-- @section scalar_types
+
+--- Bool type `godot_bool`
+bool = ffi_typeof('godot_bool')
+--- Integer type `godot_int`
+int = ffi_typeof('godot_int')
+--- Float type `godot_real`
+float = ffi_typeof('godot_real')
+
+
+--- Extra math
+-- @section extra_math
+
+--- Returns the value `x` clamped between an upper (`max`) and lower bounds (`min`).
+-- Any values comparable by order, that is, with a less than operator, can be passed in.
+-- @tparam Vector2|Vector3|Color|number x
+-- @tparam Vector2|Vector3|Color|number min
+-- @tparam Vector2|Vector3|Color|number max
+-- @treturn Vector2|Vector3|Color|number
+function math.clamp(x, min, max)
+	if x < min then
+		return min
+	elseif x > max then
+		return max
+	else
+		return x
+	end
+end
+
+--- Linearly interpolates values `from` and `to` by `amount`.
+-- Equivalent to `from + (amount * (to - from))`.
+-- @tparam Vector2|Vector3|Color|Quat|number from
+-- @tparam Vector2|Vector3|Color|Quat|number to
+-- @tparam number amount
+-- @treturn Vector2|Vector3|Color|Quat|number
+function math.lerp(from, to, amount)
+	return from + (amount * (to - from))
+end
