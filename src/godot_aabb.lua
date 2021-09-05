@@ -23,8 +23,6 @@
 
 --- AABB metatype, wrapper for `godot_aabb`.
 -- Constructed using the idiom `AABB(...)`, which calls `__new`.
---
--- The matrix rows may be accessed through `rows` or in bulk through `elements`:
 --     typedef union godot_aabb {
 --         float elements[6];
 --         struct { Vector3 position, size; };
@@ -132,12 +130,19 @@ local methods = {
 
 AABB = ffi_metatype('godot_aabb', {
 	--- AABB constructor, called by the idiom `AABB(...)`.
+	--
+	-- * `AABB()`: all zeros (`AABB() == AABB(Vector3.ZERO, Vector3.ZERO)`)
+	-- * `AABB(Vector3 position, Vector3 size)`: set position and size
+	-- * `AABB(AABB other)`: copy values from `other`
 	-- @function __new
-	-- @tparam Vector3 position
-	-- @tparam Vector3 size
+	-- @param ...
 	-- @treturn AABB
 	__new = function(mt, position, size)
-		return ffi_new(mt, { position = position, size = size })
+		if ffi_istype(mt, position) then
+			return ffi_new(mt, position)
+		else
+			return ffi_new(mt, { position = position, size = size })
+		end
 	end,
 	__index = methods,
 	--- Returns a Lua string representation of this AABB.

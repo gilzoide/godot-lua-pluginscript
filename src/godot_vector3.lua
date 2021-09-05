@@ -258,18 +258,15 @@ methods.BACK = ffi_new('godot_vector3', { elements = { 0, 0, 1 } })
 -- @section metamethods
 Vector3 = ffi_metatype('godot_vector3', {
 	--- Vector3 constructor, called by the idiom `Vector3(...)`.
-	-- May be called with:
 	--
-	-- * No arguments: all components are zeroed (`Vector3() == Vector3(0, 0, 0)`)
-	-- * A single number: all components are initialized to it (`Vector3(1) == Vector3(1, 1, 1)`)
-	-- * 2 numbers: Z is set to 0 (`Vector3(1, 2) == Vector3(1, 2, 0)`)
-	-- * 3 numbers (`Vector3(1, 2, 3)`)
-	-- * Numbers may be packed as Vector2 (`Vector3(1, Vector2(2, 3)) == Vector3(Vector2(1, 2), 3) == Vector3(1, 2, 3)`)
-	-- * Another Vector3: creates a copy
+	-- * `Vector3()`: all zeros (`Vector3() == Vector3(0, 0, 0)`)
+	-- * `Vector3(number x)`: all components are set to `x` (`Vector3(1) == Vector3(1, 1, 1)`)
+	-- * `Vector3(number x, number y[, number z = 0])`: set XYZ
+	-- * `Vector3(Vector2 xy[, number z = 0])`: set XYZ
+	-- * `Vector3(number x, Vector2 yz)`: set XYZ
+	-- * `Vector3(Vector3 other)`: copy values from `other`
 	-- @function __new
-	-- @tparam[opt] Vector3|Vector2|number x
-	-- @tparam[opt] Vector2|number y
-	-- @tparam[opt] number z
+	-- @param ...
 	-- @treturn Vector3
 	__new = function(mt, x, y, z)
 		-- (Vector3)

@@ -134,20 +134,20 @@ end
 -- @section metamethods
 Color = ffi_metatype('godot_color', {
 	--- Color constructor, called by the idiom `Color(...)`.
-	-- May be called with:
 	--
-	-- * No arguments: RGB are zeroed, A is 1 (`Color() == Color(0, 0, 0, 1)`)
-	-- * A single number: RGB are initialized to it, A is 1 (`Color(0.5) == Color(0.5, 0.5, 0.5, 1)`)
-	-- * 2 numbers: initialize RG, B is 0, A is 1 (`Color(0.1, 0.2) == Color(0.1, 0.2, 0, 1)`)
-	-- * 3 numbers: initialize RGB, A is 1 (`Color(0.1, 0.2, 0.3) == Color(0.1, 0.2, 0.3, 1)`)
-	-- * Numbers may be packed as Vector2 and Vector3
-	-- * Another Color: creates a copy
+	-- * `Color()`: RGB are set to 0, A is set to 1 (`Color() == Color(0, 0, 0, 1)`)
+	-- * `Color(number r)`: RGB are set to `r`, A is set to 1 (`Color(0.5) == Color(0.5, 0.5, 0.5, 1)`)
+	-- * `Color(number r, number g[, number b = 0[, number a = 1]])`: set RGBA
+	-- * `Color(number r, number g, Vector2 ba)`: set RGBA
+	-- * `Color(number r, Vector2 gb[, number a = 1])`: set RGBA
+	-- * `Color(number r, Vector3 gba)`: set RGBA
+	-- * `Color(Vector2 rg[, number b = 0[, number a = 1]])`: set RGBA
+	-- * `Color(Vector2 rg, Vector2 ba)`: set RGBA
+	-- * `Color(Vector3 rgb[, number a = 1])`: set RGBA
+	-- * `Color(Color other)`: copy values from `other`
 	-- @function __new
-	-- @tparam[opt] Color|Vector3|Vector2|number r
-	-- @tparam[opt] Vector3|Vector2|number g
-	-- @tparam[opt] Vector2|number b
-	-- @tparam[opt] number a
-	-- @treturn Vector3
+	-- @param ...
+	-- @treturn Color
 	__new = function(mt, r, g, b, a)
 		if ffi_istype(mt, r) then
 			return ffi.new(mt, r)

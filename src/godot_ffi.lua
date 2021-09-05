@@ -203,6 +203,7 @@ typedef union godot_aabb {
 typedef union godot_transform2d {
 	godot_real elements[6];
 	godot_vector2 columns[3];
+	struct { godot_vector2 x, y, origin; };
 } godot_transform2d;
 
 typedef union godot_transform {

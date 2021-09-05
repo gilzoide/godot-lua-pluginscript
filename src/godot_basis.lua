@@ -171,18 +171,16 @@ methods.FLIP_Z = ffi_new('godot_basis', { elements = { 1, 0, 0, 0, 1, 0, 0, 0, -
 -- @section metamethods
 Basis = ffi.metatype('godot_basis', {
 	--- Basis constructor, called by the idiom `Basis(...)`.
-	-- May be called with:
 	--
-	-- * `Quat`: Constructs a pure rotation basis matrix from the given quaternion
-	-- * `euler` `Vector3`: constructs a pure rotation basis matrix from the given Euler angles (in the YXZ convention: when *composing*, first Y, then X, and Z last), given in the vector format as (X angle, Y angle, Z angle).
-	-- * `axis` `Vector3` and `angle` number: constructs a pure rotation basis matrix, rotated around the given `axis` by `angle`, in radians. The `axis` must be a normalized vector.
-	-- * 3 `Vector3`: constructs a basis matrix from 3 row vectors
-	-- * Another Basis: creates a copy
+	-- * `Basis()`: `IDENTITY` basis matrix
+	-- * `Basis(Quat quat)`: pure rotation basis matrix from the given quaternion
+	-- * `Basis(Vector3 euler)`: pure rotation basis matrix from the given Euler angles (in the YXZ convention: when *composing*, first Y, then X, and Z last)
+	-- * `Basis(Vector3 axis, number angle)`: pure rotation basis matrix, rotated around the given axis by angle, in radians. The axis must be a normalized vector
+	-- * `Basis(Vector3 x, Vector3 y, Vector3 z)`: basis matrix from 3 row vectors
+	-- * `Basis(Basis other)`: copy values from `other`
 	-- @function __new
-	-- @tparam Basis|Quat|Vector3 x
-	-- @tparam[opt] Vector3|number y
-	-- @tparam[opt] Vector3 z
-	-- @treturn Quat
+	-- @param ...
+	-- @treturn Basis
 	__new = function(mt, x, y, z)
 		if ffi_istype(mt, x) then
 			return ffi_new(mt, x)
@@ -232,7 +230,7 @@ Basis = ffi.metatype('godot_basis', {
 	end,
 	--- Multiplication operation
 	-- @function __mul
-	-- @tparam Basis a
+	-- @tparam Basis self
 	-- @tparam Basis|Vector3|number b  If a Basis is passed, returns the multiplied matrices.
 	--  If a Vector3 is passed, calls `xform`.
 	--  Otherwise, returns a Basis with each component multiplied by `b`.

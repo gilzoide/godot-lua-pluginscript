@@ -224,15 +224,13 @@ methods.DOWN = ffi_new('godot_vector2', { elements = { 0, 1 } })
 -- @section metamethods
 Vector2 = ffi_metatype('godot_vector2', {
 	--- Vector2 constructor, called by the idiom `Vector2(...)`.
-	-- May be called with:
-	--
-	-- * No arguments: all components are zeroed (`Vector2() == Vector2(0, 0)`)
-	-- * A single number: all components are initialized to it (`Vector2(1) == Vector2(1, 1)`)
-	-- * 2 numbers (`Vector2(1, 2)`)
-	-- * Another Vector2: creates a copy
+	-- 
+	-- * `Vector2()`: all zeros (`Vector2() == Vector2(0, 0)`)
+	-- * `Vector2(number x)`: all components are set to `x` (`Vector2(1) == Vector2(1, 1)`)
+	-- * `Vector2(number x, number y)`: set XY
+	-- * `Vector2(Vector2 other)`: copy values from `other`
 	-- @function __new
-	-- @tparam[opt] Vector2|number x
-	-- @tparam[opt] number y
+	-- @param ...
 	-- @treturn Vector2
 	__new = function(mt, x, y)
 		if ffi_istype(mt, x) then

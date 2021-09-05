@@ -123,18 +123,15 @@ methods.IDENTITY = ffi_new('godot_quat', { elements = { 0, 0, 0, 1 } })
 -- @section metamethods
 Quat = ffi.metatype('godot_quat', {
 	--- Quat constructor, called by the idiom `Quat(...)`.
-	-- May be called with:
 	--
-	-- * 4 numbers `x/y/z/w`: constructs a quaternion defined by the given values.
-	-- * `axis` `Vector3` and `angle` number: constructs a quaternion that will rotate around the given axis by the specified angle. The axis must be a normalized vector.
-	-- * `euler` `Vector3`: constructs a quaternion that will perform a rotation specified by Euler angles (in the YXZ convention: when decomposing, first Z, then X, and Y last), given in the vector format as (X angle, Y angle, Z angle).
-	-- * `Basis`: constructs a quaternion from the given Basis
-	-- * Another Quat: creates a copy
+	-- * `Quat()`: `IDENTITY` quaternion (`Quat() == Quat(0, 0, 0, 1)`)
+	-- * `Quat(number x[, number y = 0[, number z = 0[, number w = 1]]])`: set XYZW
+	-- * `Quat(Basis basis)`: construct from basis
+	-- * `Quat(Vector3 euler)`: rotation specified by Euler angles (in the YXZ convention: when decomposing, first Z, then X, and Y last)
+	-- * `Quat(Vector3 axis, number angle)`: rotates around the given axis by the specified angle. The axis must be a normalized vector.
+	-- * `Quat(Quat other)`: copy values from `other`
 	-- @function __new
-	-- @tparam Quat|Basis|Vector3|number x
-	-- @tparam[opt] number y
-	-- @tparam[opt] number z
-	-- @tparam[opt] number w
+	-- @param ...
 	-- @treturn Quat
 	__new = function(mt, x, y, z, w)
 		if ffi_istype(mt, x) then
@@ -150,7 +147,7 @@ Quat = ffi.metatype('godot_quat', {
 		elseif ffi_istype(Basis, x) then
 			api_1_1.godot_quat_new_with_basis(self, x)
 		else
-			api.godot_quat_new(self, x, y, z, w)
+			api.godot_quat_new(self, x or 0, y or 0, z or 0, w or 1)
 		end
 		return self
 	end,

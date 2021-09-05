@@ -144,17 +144,13 @@ methods.XY = ffi_new('godot_plane', { elements = { 0, 0, 1, 0 } })
 -- @section metamethods
 Plane = ffi_metatype('godot_plane', {
 	--- Plane constructor, called by the idiom `Plane(...)`.
-	-- May be called with:
 	--
-	-- * 4 numbers `a/b/c/d`: the three components of the resulting plane's normal are `a`, `b` and `c`, and the plane has a distance of `d` from the origin
-	-- * `normal` `Vector3` and `d` number: creates a plane from the normal and the plane's distance to the origin
-	-- * 3 `Vector3`: creates a plane from the three points, given in clockwise order
-	-- * Another Plane: creates a copy
+	-- * `Plane(Vector3 normal, number d)`: set the normal and the plane's distance to the origin
+	-- * `Plane(number a, number b, number c, number d)`: normal is set to `Vector3(a, b, c)`, distance is set to `d`
+	-- * `Plane(Vector3 a, Vector3 b, Vector3 c)`: creates a plane from the three points, given in clockwise order
+	-- * `Plane(Plane other)`: copy values from `other`
 	-- @function __new
-	-- @tparam Vector3|number a
-	-- @tparam Vector3|number b
-	-- @tparam[opt] Vector3|number c
-	-- @tparam[opt] number d
+	-- @param ...
 	-- @treturn Plane
 	__new = function(mt, a, b, c, d)
 		if ffi_istype(mt, a) then

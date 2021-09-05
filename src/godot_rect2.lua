@@ -118,18 +118,14 @@ end
 
 Rect2 = ffi_metatype('godot_rect2', {
 	--- Rect2 constructor, called by the idiom `Rect2(...)`.
-	-- May be called with:
 	--
-	-- * No arguments: all components are zeroed (`Rect2() == Rect2(0, 0, 0, 0)`)
-	-- * 1-3 numbers: missing values are set to 0 (`Rect2(1) == Rect2(1, 0, 0, 0)`)
-	-- * 4 numbers (`Rect2(1, 2, 3, 4)`)
-	-- * Both `position` and `size` may be packed as `Vector2` (`Rect2(Vector2(1, 2), 3, 4)` or `Rect2(1, 2, Vector2(3, 4))`)
-	-- * Another Rect2: creates a copy
+	-- * `Rect2()`: all zeros (`Rect2() == Rect2(0, 0, 0, 0)`)
+	-- * `Rect2(number x, number y, number width, number height)`: set XY and width/height
+	-- * `Rect2(Vector2 position, Vector2 size)`: set position and size
+	-- * `Rect2(Rect2 other)`: copy values from `other`
 	-- @function __new
-	-- @tparam[opt] Rect2|Vector2|number x
-	-- @tparam[opt] Vector2|number y
-	-- @tparam[opt] Vector2|number width
-	-- @tparam[opt] number height
+	-- @param ...
+	-- @treturn Rect2
 	__new = function(mt, x, y, width, height)
 		if ffi_istype(mt, x) then
 			return ffi_new(mt, x)
