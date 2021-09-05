@@ -48,7 +48,7 @@ LUA_INIT_SCRIPT_SRC = \
 	src/godot_basis.lua \
 	src/godot_aabb.lua \
 	src/godot_transform2d.lua \
-	src/godot_math.lua \
+	src/godot_transform.lua \
 	src/godot_object.lua \
 	src/godot_rid.lua \
 	src/godot_node_path.lua \

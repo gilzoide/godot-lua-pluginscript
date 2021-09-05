@@ -118,8 +118,8 @@ local methods = {
 	xform_inv_rect2 = api.godot_transform2d_xform_inv_rect2,
 	--- Transforms the given `Vector2`, `Rect2`, or `PoolVector2Array` by this transform.
 	-- @function xform
-	-- @param value
-	-- @return Transformed value
+	-- @tparam Vector2|Rect2|PoolVector2Array value
+	-- @treturn Vector2|Rect2|PoolVector2Array Transformed value
 	xform = function(self, value)
 		if ffi_istype(Vector2, value) then
 			return self:xform_vector2(value)
@@ -136,8 +136,8 @@ local methods = {
 	end,
 	--- Inverse-transforms the given `Vector2`, `Rect2`, or `PoolVector2Array` by this transform.
 	-- @function xform_inv
-	-- @param value
-	-- @return Transformed value
+	-- @tparam Vector2|Rect2|PoolVector2Array value
+	-- @treturn Vector2|Rect2|PoolVector2Array Transformed value
 	xform_inv = function(self, value)
 		if ffi_istype(Vector2, value) then
 			return self:xform_inv_vector2(value)
@@ -172,12 +172,14 @@ methods.IDENTITY = ffi_new('godot_transform2d', { elements = { 1, 0, 0, 1, 0, 0 
 methods.FLIP_X = ffi_new('godot_transform2d', { elements = { -1, 0, 0, 1, 0, 0 } })
 methods.FLIP_Y = ffi_new('godot_transform2d', { elements = { 1, 0, 0, -1, 0, 0 } })
 
+--- Metamethods
+-- @section metamethods
 Transform2D = ffi_metatype('godot_transform2d', {
 	--- Transform2D constructor, called by the idiom `Transform2D(...)`.
 	--
 	-- * `Transform2D()`: creates an `IDENTITY` transform.
 	-- * `Transform2D(number angle, Vector2 position)`: constructs the transform from a given angle (in radians) and position.
-	-- * `Transform2D(Vector2 x, Vector2 y, Vector2, origin)`: constructs the transform from the three column vectors.
+	-- * `Transform2D(Vector2 x, Vector2 y, Vector2 origin)`: constructs the transform from the three column vectors.
 	-- * `Transform2D(Transform2D other)`: returns a copy of `other`
 	-- @function __new
 	-- @param ...
@@ -211,7 +213,7 @@ Transform2D = ffi_metatype('godot_transform2d', {
 	-- Either multiply another Transform2D or `xform` value.
 	-- @tparam Transform2D self
 	-- @tparam Transform2D|Vector2|Rect2|PoolVector2Array b
-	-- @return Transformed value
+	-- @treturn Transform2D|Vector2|Rect2|PoolVector2Array Transformed value
 	__mul = function(self, b)
 		if ffi_istype(Transform2D, b) then
 			return api.godot_transform2d_operator_multiply(self, b)
