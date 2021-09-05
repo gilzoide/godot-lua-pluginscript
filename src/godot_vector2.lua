@@ -230,6 +230,7 @@ Vector2 = ffi_metatype('godot_vector2', {
 	-- * No arguments: all components are zeroed (`Vector2() == Vector2(0, 0)`)
 	-- * A single number: all components are initialized to it (`Vector2(1) == Vector2(1, 1)`)
 	-- * 2 numbers (`Vector2(1, 2)`)
+	-- * Another Vector2: creates a copy
 	-- @function __new
 	-- @tparam[opt] Vector2|number x
 	-- @tparam[opt] number y

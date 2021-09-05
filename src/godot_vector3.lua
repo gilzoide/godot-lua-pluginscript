@@ -270,6 +270,7 @@ Vector3 = ffi_metatype('godot_vector3', {
 	-- * 2 numbers: Z is set to 0 (`Vector3(1, 2) == Vector3(1, 2, 0)`)
 	-- * 3 numbers (`Vector3(1, 2, 3)`)
 	-- * Numbers may be packed as Vector2 (`Vector3(1, Vector2(2, 3)) == Vector3(Vector2(1, 2), 3) == Vector3(1, 2, 3)`)
+	-- * Another Vector3: creates a copy
 	-- @function __new
 	-- @tparam[opt] Vector3|Vector2|number x
 	-- @tparam[opt] Vector2|number y

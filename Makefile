@@ -41,6 +41,7 @@ LUA_INIT_SCRIPT_SRC = \
 	src/godot_string_name.lua \
 	src/godot_vector2.lua \
 	src/godot_vector3.lua \
+	src/godot_rect2.lua \
 	src/godot_color.lua \
 	src/godot_math.lua \
 	src/godot_object.lua \

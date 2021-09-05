@@ -131,6 +131,7 @@ Color = ffi_metatype('godot_color', {
 	-- * 2 numbers: initialize RG, B is 0, A is 1 (`Color(0.1, 0.2) == Color(0.1, 0.2, 0, 1)`)
 	-- * 3 numbers: initialize RGB, A is 1 (`Color(0.1, 0.2, 0.3) == Color(0.1, 0.2, 0.3, 1)`)
 	-- * Numbers may be packed as Vector2 and Vector3
+	-- * Another Color: creates a copy
 	-- @function __new
 	-- @tparam[opt] Color|Vector3|Vector2|number r
 	-- @tparam[opt] Vector3|Vector2|number g
