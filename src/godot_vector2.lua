@@ -55,7 +55,7 @@ local methods = {
 	-- @treturn number
 	length = api.godot_vector2_length,
 	--- Returns the squared length (squared magnitude) of this vector.
-	-- This method runs faster than length, so prefer it if you need to compare vectors or need the squared distance for some formula.
+	-- This method runs faster than `length`, so prefer it if you need to compare vectors or need the squared distance for some formula.
 	-- @function length_squared
 	-- @treturn number
 	length_squared = api.godot_vector2_length_squared,
@@ -73,7 +73,7 @@ local methods = {
 	-- @treturn number
 	distance_to = api.godot_vector2_distance_to,
 	--- Returns the squared distance between this vector and `to`.
-	-- This method runs faster than distance_to, so prefer it if you need to compare vectors or need the squared distance for some formula.
+	-- This method runs faster than `distance_to`, so prefer it if you need to compare vectors or need the squared distance for some formula.
 	-- @function distance_squared_to
 	-- @tparam Vector2 to
 	-- @treturn number
@@ -125,9 +125,9 @@ local methods = {
 	-- @function aspect
 	-- @treturn number
 	aspect = api.godot_vector2_aspect,
-	--- Returns the dot product of this vector and `with`.
+	--- Returns the dot product of this vector and `b`.
 	-- @function dot
-	-- @tparam Vector2 with
+	-- @tparam Vector2 b
 	-- @treturn number
 	dot = api.godot_vector2_dot,
 	--- Returns this vector slid along a plane defined by the given `normal`.
@@ -182,29 +182,37 @@ end
 --- Constants
 -- @section constants
 
+--- Enumerated value for the X axis.
+-- @field AXIS_X 0
+
+--- Enumerated value for the Y axis.
+-- @field AXIS_Y 1
+
 --- Zero vector, a vector with all components set to 0.
--- @field ZERO
+-- @field ZERO Vector2(0)
 
 --- One vector, a vector with all components set to 1.
--- @field ONE
+-- @field ONE Vector2(1)
 
 --- Infinity vector, a vector with all components set to `inf`.
--- @field INF
+-- @field INF Vector2(1 / 0)
 
 --- Left unit vector. Represents the direction of left.
--- @field LEFT
+-- @field LEFT Vector2(-1, 0)
 
 --- Right unit vector. Represents the direction of right.
--- @field RIGHT
+-- @field RIGHT Vector2(1, 0)
 
 --- Up unit vector. Y is down in 2D, so this vector points -Y.
--- @field UP
+-- @field UP Vector2(0, -1)
 
 --- Down unit vector. Y is down in 2D, so this vector points +Y.
--- @field DOWN
+-- @field DOWN Vector2(0, 1)
 
 --- @section end
 
+methods.AXIS_X = 0
+methods.AXIS_Y = 1
 methods.ZERO = __new('godot_vector2', 0)
 methods.ONE = __new('godot_vector2', 1)
 methods.INF = __new('godot_vector2', 1 / 0)
@@ -216,11 +224,15 @@ methods.DOWN = __new('godot_vector2', 0, 1)
 --- Metamethods
 -- @section metamethods
 Vector2 = ffi_metatype('godot_vector2', {
-	--- Vector2 constructor, called by the idiom `Vector2(x, y)` or `Vector2(other)`.
+	--- Vector2 constructor, called by the idiom `Vector2(x, y)`.
+	-- May be called with:
+	--
+	-- * No arguments: all components are zeroed (`Vector2() == Vector2(0, 0)`)
+	-- * A single number: all components are initialized to it (`Vector2(1) == Vector2(1, 1)`)
+	-- * 2 numbers (`Vector2(1, 2)`)
 	-- @function __new
-	-- @tparam[opt] Vector2|number x  If another Vector2 is passed, just create a copy of it.
-	--  Otherwise, it will become the X component.
-	-- @tparam[opt] number y  Y component
+	-- @tparam[opt] Vector2|number x
+	-- @tparam[opt] number y
 	-- @treturn Vector2
 	__new = __new,
 	__index = methods,
