@@ -122,23 +122,6 @@ methods.unpack = function(self)
 	return self.normal.x, self.normal.y, self.normal.z, self.d
 end
 
-local __new = function(mt, a, b, c, d)
-	if ffi_istype(mt, a) then
-		return ffi_new(mt, a)
-	end
-	local self = ffi_new(mt)
-	if ffi_istype(Vector3, a) then
-		if ffi.istype(Vector3, b) then
-			api.godot_plane_new_with_vectors(self, a, b, c)
-		else
-			api.godot_plane_new_with_normal(self, a, b)
-		end
-	else
-		api.godot_plane_new_with_reals(self, a, b, c, d)
-	end
-	return self
-end
-
 --- Constants
 -- @section constants
 
@@ -153,9 +136,9 @@ end
 
 --- @section end
 
-methods.YZ = __new('godot_plane', 1, 0, 0, 0)
-methods.XZ = __new('godot_plane', 0, 1, 0, 0)
-methods.XY = __new('godot_plane', 0, 0, 1, 0)
+methods.YZ = ffi_new('godot_plane', { elements = { 1, 0, 0, 0 } })
+methods.XZ = ffi_new('godot_plane', { elements = { 0, 1, 0, 0 } })
+methods.XY = ffi_new('godot_plane', { elements = { 0, 0, 1, 0 } })
 
 --- Metamethods
 -- @section metamethods
@@ -166,13 +149,29 @@ Plane = ffi_metatype('godot_plane', {
 	-- * 4 numbers `a/b/c/d`: the three components of the resulting plane's normal are `a`, `b` and `c`, and the plane has a distance of `d` from the origin
 	-- * `normal` `Vector3` and `d` number: creates a plane from the normal and the plane's distance to the origin
 	-- * 3 `Vector3`: creates a plane from the three points, given in clockwise order
+	-- * Another Plane: creates a copy
 	-- @function __new
 	-- @tparam Vector3|number a
 	-- @tparam Vector3|number b
 	-- @tparam[opt] Vector3|number c
 	-- @tparam[opt] number d
 	-- @treturn Plane
-	__new = __new,
+	__new = function(mt, a, b, c, d)
+		if ffi_istype(mt, a) then
+			return ffi_new(mt, a)
+		end
+		local self = ffi_new(mt)
+		if ffi_istype(Vector3, a) then
+			if ffi.istype(Vector3, b) then
+				api.godot_plane_new_with_vectors(self, a, b, c)
+			else
+				api.godot_plane_new_with_normal(self, a, b)
+			end
+		else
+			api.godot_plane_new_with_reals(self, a, b, c, d)
+		end
+		return self
+	end,
 	__index = methods,
 	--- Returns a Lua string representation of this plane.
 	-- @function __tostring
@@ -191,6 +190,7 @@ Plane = ffi_metatype('godot_plane', {
 		return Plane(-self.normal, -self.d)
 	end,
 	--- Equality operation
+	-- If either `a` or `b` are of type `Plane`, always return `false`.
 	-- @function __eq
 	-- @tparam Plane a
 	-- @tparam Plane b

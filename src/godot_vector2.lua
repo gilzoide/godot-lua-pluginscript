@@ -178,14 +178,6 @@ if api_1_2 ~= nil then
 	methods.direction_to = api_1_2.godot_vector2_direction_to
 end
 
-local __new = function(mt, x, y)
-	if ffi_istype(mt, x) then
-		return ffi_new(mt, x)
-	else
-		return ffi_new(mt, { elements = { x, y }})
-	end
-end
-
 --- Constants
 -- @section constants
 
@@ -220,13 +212,13 @@ end
 
 methods.AXIS_X = 0
 methods.AXIS_Y = 1
-methods.ZERO = __new('godot_vector2', 0)
-methods.ONE = __new('godot_vector2', 1)
-methods.INF = __new('godot_vector2', 1 / 0)
-methods.LEFT = __new('godot_vector2', -1, 0)
-methods.RIGHT = __new('godot_vector2', 1, 0)
-methods.UP = __new('godot_vector2', 0, -1)
-methods.DOWN = __new('godot_vector2', 0, 1)
+methods.ZERO = ffi_new('godot_vector2', { elements = { 0 } })
+methods.ONE = ffi_new('godot_vector2', { elements = { 1 } })
+methods.INF = ffi_new('godot_vector2', { elements = { 1 / 0 } })
+methods.LEFT = ffi_new('godot_vector2', { elements = { -1, 0 } })
+methods.RIGHT = ffi_new('godot_vector2', { elements = { 1, 0 } })
+methods.UP = ffi_new('godot_vector2', { elements = { 0, -1 } })
+methods.DOWN = ffi_new('godot_vector2', { elements = { 0, 1 } })
 
 --- Metamethods
 -- @section metamethods
@@ -242,7 +234,13 @@ Vector2 = ffi_metatype('godot_vector2', {
 	-- @tparam[opt] Vector2|number x
 	-- @tparam[opt] number y
 	-- @treturn Vector2
-	__new = __new,
+	__new = function(mt, x, y)
+		if ffi_istype(mt, x) then
+			return ffi_new(mt, x)
+		else
+			return ffi_new(mt, { elements = { x, y }})
+		end
+	end,
 	__index = methods,
 	--- Returns a Lua string representation of this vector.
 	-- @function __tostring

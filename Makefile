@@ -44,6 +44,7 @@ LUA_INIT_SCRIPT_SRC = \
 	src/godot_color.lua \
 	src/godot_rect2.lua \
 	src/godot_plane.lua \
+	src/godot_quat.lua \
 	src/godot_math.lua \
 	src/godot_object.lua \
 	src/godot_rid.lua \

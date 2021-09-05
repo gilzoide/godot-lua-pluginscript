@@ -246,12 +246,13 @@ Color = ffi_metatype('godot_color', {
 		return 1 - self
 	end,
 	--- Equality operation
+	-- If either `a` or `b` are of type `Color`, always return `false`.
 	-- @function __eq
 	-- @tparam Color a
 	-- @tparam Color b
 	-- @treturn bool
 	__eq = function(a, b)
-		return a.r == b.r and a.g == b.g and a.b == b.b and a.a == b.a
+		return ffi_istype(Color, a) and ffi_istype(Color, b) and a.r == b.r and a.g == b.g and a.b == b.b and a.a == b.a
 	end,
 	--- Less than operation
 	-- @function __lt

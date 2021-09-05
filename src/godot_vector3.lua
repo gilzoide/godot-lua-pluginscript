@@ -200,20 +200,6 @@ if api_1_2 ~= nil then
 	methods.direction_to = api_1_2.godot_vector3_direction_to
 end
 
-local __new = function(mt, x, y, z)
-	-- (Vector3)
-	if ffi_istype(mt, x) then
-		return ffi_new(mt, x)
-	-- (Vector2, float?)
-	elseif ffi_istype(Vector2, x) then
-		x, y, z = x.x, x.y, y
-	-- (float, Vector2)
-	elseif ffi_istype(Vector2, y) then
-		x, y, z = x, y.x, y.y
-	end
-	return ffi_new(mt, { elements = { x, y, z }})
-end
-
 --- Constants
 -- @section constants
 
@@ -258,15 +244,15 @@ end
 methods.AXIS_X = 0
 methods.AXIS_Y = 1
 methods.AXIS_Z = 2
-methods.ZERO = __new('godot_vector3', 0)
-methods.ONE = __new('godot_vector3', 1)
-methods.INF = __new('godot_vector3', 1 / 0)
-methods.LEFT = __new('godot_vector3', -1, 0, 0)
-methods.RIGHT = __new('godot_vector3', 1, 0, 0)
-methods.UP = __new('godot_vector3', 0, 1, 0)
-methods.DOWN = __new('godot_vector3', 0, -1, 0)
-methods.FORWARD = __new('godot_vector3', 0, 0, -1)
-methods.BACK = __new('godot_vector3', 0, 0, 1)
+methods.ZERO = ffi_new('godot_vector3', { elements = { 0 } })
+methods.ONE = ffi_new('godot_vector3', { elements = { 1 } })
+methods.INF = ffi_new('godot_vector3', { elements = { 1 / 0 } })
+methods.LEFT = ffi_new('godot_vector3', { elements = { -1, 0, 0 } })
+methods.RIGHT = ffi_new('godot_vector3', { elements = { 1, 0, 0 } })
+methods.UP = ffi_new('godot_vector3', { elements = { 0, 1, 0 } })
+methods.DOWN = ffi_new('godot_vector3', { elements = { 0, -1, 0 } })
+methods.FORWARD = ffi_new('godot_vector3', { elements = { 0, 0, -1 } })
+methods.BACK = ffi_new('godot_vector3', { elements = { 0, 0, 1 } })
 
 --- Metamethods
 -- @section metamethods
@@ -285,7 +271,19 @@ Vector3 = ffi_metatype('godot_vector3', {
 	-- @tparam[opt] Vector2|number y
 	-- @tparam[opt] number z
 	-- @treturn Vector3
-	__new = __new,
+	__new = function(mt, x, y, z)
+		-- (Vector3)
+		if ffi_istype(mt, x) then
+			return ffi_new(mt, x)
+		-- (Vector2, float?)
+		elseif ffi_istype(Vector2, x) then
+			x, y, z = x.x, x.y, y
+		-- (float, Vector2)
+		elseif ffi_istype(Vector2, y) then
+			x, y, z = x, y.x, y.y
+		end
+		return ffi_new(mt, { elements = { x, y, z }})
+	end,
 	__index = methods,
 	--- Returns a Lua string representation of this vector.
 	-- @function __tostring
