@@ -22,7 +22,7 @@
 -- IN THE SOFTWARE.
 
 --- Vector3 metatype, wrapper for `godot_vector3`.
--- Construct using the idiom `Vector3(x, y, z)`, which calls `__new`.
+-- Construct using the idiom `Vector3(...)`, which calls `__new`.
 --
 -- The X, Y and Z components may be accessed through `elements` or the triplets
 -- `x/y/z`, `r/g/b`, `s/t/p`, `width/height/depth`, the pair `u/v`. `Vector2` with
@@ -218,40 +218,40 @@ end
 -- @section constants
 
 --- Enumerated value for the X axis.
--- @field AXIS_X 0
+-- @field AXIS_X  0
 
 --- Enumerated value for the Y axis.
--- @field AXIS_Y 1
+-- @field AXIS_Y  1
 
 --- Enumerated value for the Z axis.
--- @field AXIS_Z 2
+-- @field AXIS_Z  2
 
 --- Zero vector, a vector with all components set to 0.
--- @field ZERO
+-- @field ZERO  Vector3(0)
 
 --- One vector, a vector with all components set to 1.
--- @field ONE
+-- @field ONE  Vector3(1)
 
 --- Infinity vector, a vector with all components set to `inf`.
--- @field INF
+-- @field INF  Vector3(1 / 0)
 
 --- Left unit vector. Represents the local direction of left, and the global direction of west.
--- @field LEFT
+-- @field LEFT  Vector3(-1, 0, 0)
 
 --- Right unit vector. Right unit vector. Represents the local direction of right, and the global direction of east.
--- @field RIGHT
+-- @field RIGHT  Vector3(1, 0, 0)
 
 --- Up unit vector.
--- @field UP
+-- @field UP  Vector3(0, 1, 0)
 
 --- Down unit vector.
--- @field DOWN
+-- @field DOWN  Vector3(0, -1, 0)
 
 --- Forward unit vector. Represents the local direction of forward, and the global direction of north.
--- @field FORWARD
+-- @field FORWARD  Vector3(0, 0, -1)
 
 --- Back unit vector. Represents the local direction of back, and the global direction of south.
--- @field BACK
+-- @field BACK  Vector3(0, 0, 1)
 
 --- @section end
 
@@ -271,7 +271,7 @@ methods.BACK = __new('godot_vector3', 0, 0, 1)
 --- Metamethods
 -- @section metamethods
 Vector3 = ffi_metatype('godot_vector3', {
-	--- Vector3 constructor, called by the idiom `Vector3(x, y, z)`.
+	--- Vector3 constructor, called by the idiom `Vector3(...)`.
 	-- May be called with:
 	--
 	-- * No arguments: all components are zeroed (`Vector3() == Vector3(0, 0, 0)`)

@@ -22,7 +22,7 @@
 -- IN THE SOFTWARE.
 
 --- Color metatype, wrapper for `godot_rect2`.
--- Construct using the idiom `Rect2(x, y, width, height)`, which calls `__new`.
+-- Construct using the idiom `Rect2(...)`, which calls `__new`.
 --
 -- Components may be accessed through `elements`, individually using
 -- `x/y/width/height` or as `Vector2` `position/size`:
@@ -117,7 +117,7 @@ if api_1_1 then
 end
 
 Rect2 = ffi_metatype('godot_rect2', {
-	--- Rect2 constructor, called by the idiom `Rect2(x, y, width, height)`.
+	--- Rect2 constructor, called by the idiom `Rect2(...)`.
 	-- May be called with:
 	--
 	-- * No arguments: all components are zeroed (`Rect2() == Rect2(0, 0, 0, 0)`)

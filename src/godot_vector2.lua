@@ -22,7 +22,7 @@
 -- IN THE SOFTWARE.
 
 --- Vector2 metatype, wrapper for `godot_vector2`.
--- Construct using the idiom `Vector2(x, y)`, which calls `__new`.
+-- Construct using the idiom `Vector2(...)`, which calls `__new`.
 --
 -- The X and Y components may be accessed through `elements` or the pairs
 -- `x/y`, `r/g`, `s/t`, `u/v`, `width/height`:
@@ -186,36 +186,35 @@ local __new = function(mt, x, y)
 	end
 end
 
-
 --- Constants
 -- @section constants
 
 --- Enumerated value for the X axis.
--- @field AXIS_X 0
+-- @field AXIS_X  0
 
 --- Enumerated value for the Y axis.
--- @field AXIS_Y 1
+-- @field AXIS_Y  1
 
 --- Zero vector, a vector with all components set to 0.
--- @field ZERO Vector2(0)
+-- @field ZERO  Vector2(0)
 
 --- One vector, a vector with all components set to 1.
--- @field ONE Vector2(1)
+-- @field ONE  Vector2(1)
 
 --- Infinity vector, a vector with all components set to `inf`.
--- @field INF Vector2(1 / 0)
+-- @field INF  Vector2(1 / 0)
 
 --- Left unit vector. Represents the direction of left.
--- @field LEFT Vector2(-1, 0)
+-- @field LEFT  Vector2(-1, 0)
 
 --- Right unit vector. Represents the direction of right.
--- @field RIGHT Vector2(1, 0)
+-- @field RIGHT  Vector2(1, 0)
 
 --- Up unit vector. Y is down in 2D, so this vector points -Y.
--- @field UP Vector2(0, -1)
+-- @field UP  Vector2(0, -1)
 
 --- Down unit vector. Y is down in 2D, so this vector points +Y.
--- @field DOWN Vector2(0, 1)
+-- @field DOWN  Vector2(0, 1)
 
 --- @section end
 
@@ -232,7 +231,7 @@ methods.DOWN = __new('godot_vector2', 0, 1)
 --- Metamethods
 -- @section metamethods
 Vector2 = ffi_metatype('godot_vector2', {
-	--- Vector2 constructor, called by the idiom `Vector2(x, y)`.
+	--- Vector2 constructor, called by the idiom `Vector2(...)`.
 	-- May be called with:
 	--
 	-- * No arguments: all components are zeroed (`Vector2() == Vector2(0, 0)`)

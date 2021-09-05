@@ -22,7 +22,7 @@
 -- IN THE SOFTWARE.
 
 --- Color metatype, wrapper for `godot_color`.
--- Construct using the idiom `Color(r, g, b, a)`, which calls `__new`.
+-- Construct using the idiom `Color(...)`, which calls `__new`.
 --
 -- The R, G, B and A components may be accessed through `elements` or individually
 -- with `r/g/b/a`. `Vector2` with two adjacent components may be get/set with the
@@ -133,7 +133,7 @@ end
 --- Metamethods
 -- @section metamethods
 Color = ffi_metatype('godot_color', {
-	--- Color constructor, called by the idiom `Color(r, g, b, a)`.
+	--- Color constructor, called by the idiom `Color(...)`.
 	-- May be called with:
 	--
 	-- * No arguments: RGB are zeroed, A is 1 (`Color() == Color(0, 0, 0, 1)`)
