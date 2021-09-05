@@ -249,8 +249,8 @@ Basis = ffi.metatype('godot_basis', {
 	--- Equality operation
 	-- If either `a` or `b` are not of type `Basis`, always return `false`.
 	-- @function __eq
-	-- @tparam Quat a
-	-- @tparam Quat b
+	-- @tparam Basis a
+	-- @tparam Basis b
 	-- @treturn bool
 	__eq = function(a, b)
 		return ffi_istype(Basis, a) and ffi_istype(Basis, b) and a.elements[0] == b.elements[0] and a.elements[1] == b.elements[1] and a.elements[2] == b.elements[2]

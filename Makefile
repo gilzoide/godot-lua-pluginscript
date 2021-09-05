@@ -46,6 +46,7 @@ LUA_INIT_SCRIPT_SRC = \
 	src/godot_plane.lua \
 	src/godot_quat.lua \
 	src/godot_basis.lua \
+	src/godot_aabb.lua \
 	src/godot_math.lua \
 	src/godot_object.lua \
 	src/godot_rid.lua \
