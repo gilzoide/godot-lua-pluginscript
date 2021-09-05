@@ -85,6 +85,16 @@ local methods = {
 	expand = api.godot_rect2_expand,
 }
 
+--- Returns all elements.
+-- @function unpack
+-- @treturn number X
+-- @treturn number Y
+-- @treturn number width
+-- @treturn number height
+methods.unpack = function(self)
+	return self.x, self.y, self.width, self.height
+end
+
 if api_1_1 then
 	--- Returns a copy of the Rect2 grown a given amount of units towards each direction individually.
 	-- @function grow_individual

@@ -155,6 +155,14 @@ local methods = {
 	clamped = api.godot_vector2_clamped,
 }
 
+--- Returns all elements.
+-- @function unpack
+-- @treturn number X
+-- @treturn number Y
+methods.unpack = function(self)
+	return self.x, self.y
+end
+
 if api_1_2 ~= nil then
 	--- Moves the vector toward `to` by the fixed `delta` amount.
 	-- @function move_toward

@@ -92,6 +92,16 @@ local methods = {
 	end,
 }
 
+--- Returns all elements.
+-- @function unpack
+-- @treturn number R
+-- @treturn number G
+-- @treturn number B
+-- @treturn number A
+methods.unpack = function(self)
+	return self.r, self.g, self.b, self.a
+end
+
 if api_1_1 ~= nil then
 	--- Returns a new color resulting from making this color darker by the specified percentage (ratio from 0 to 1).
 	-- @function darkened

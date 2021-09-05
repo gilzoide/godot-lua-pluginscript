@@ -176,6 +176,15 @@ local methods = {
 	reflect = api.godot_vector3_reflect,
 }
 
+--- Returns all elements.
+-- @function unpack
+-- @treturn number X
+-- @treturn number Y
+-- @treturn number Z
+methods.unpack = function(self)
+	return self.x, self.y, self.z
+end
+
 if api_1_2 ~= nil then
 	--- Moves this vector toward `to` by the fixed `delta` amount.
 	-- @function move_toward
