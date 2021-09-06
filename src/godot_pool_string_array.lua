@@ -85,7 +85,7 @@ local Write = ffi_metatype('godot_pool_string_array_write_access', {
 
 local methods = {
 	fillvariant = api.godot_variant_new_pool_string_array,
-	varianttype = GD.TYPE_POOL_STRING_ARRAY,
+	varianttype = VariantType.PoolStringArray,
 
 	--- Get the string at `index`.
 	-- If `index` is invalid (`index < 0` or `index >= size()`), the application will crash.

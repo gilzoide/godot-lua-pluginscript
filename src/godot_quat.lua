@@ -40,7 +40,7 @@
 
 local methods = {
 	fillvariant = api.godot_variant_new_quat,
-	varianttype = GD.TYPE_QUAT,
+	varianttype = VariantType.Quat,
 
 	--- Returns the length of the quaternion.
 	-- @function length

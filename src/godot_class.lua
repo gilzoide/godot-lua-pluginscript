@@ -20,6 +20,25 @@
 -- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 -- FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 -- IN THE SOFTWARE.
+
+-- Stringification helpers
+local function str(value)
+	if ffi_istype(String, value) then
+		return value
+	else
+		return Variant(value):as_string()
+	end
+end
+
+local function gd_tostring(value)
+	return tostring(str(value))
+end
+
+local function concat_gdvalues(a, b)
+	return ffi_gc(api.godot_string_operator_plus(str(a), str(b)), api.godot_string_destroy)
+end
+
+-- Class/Object definitions
 local ClassDB = api.godot_global_get_singleton("ClassDB")
 
 local Variant_p_array = ffi_typeof('godot_variant *[?]')
@@ -48,7 +67,7 @@ local MethodBind = ffi.metatype('godot_method_bind', {
 		end
 		local r_error = ffi_new(VariantCallError)
 		local value = ffi_gc(api.godot_method_bind_call(self, _Object(obj), ffi_cast(const_Variant_pp, argv), argc, r_error), api.godot_variant_destroy)
-		if r_error.error == GD.CALL_OK then
+		if r_error.error == CallError.OK then
 			return value:unbox()
 		else
 			return nil
@@ -111,5 +130,7 @@ local Instance = {
 		if script_value ~= nil then return script_value end
 		return rawget(self, '__owner')[key]
 	end,
+	__tostring = gd_tostring,
+	__concat = concat_gdvalues,
 }
 

@@ -33,7 +33,7 @@
 
 local methods = {
 	fillvariant = api.godot_variant_new_basis,
-	varianttype = GD.TYPE_BASIS,
+	varianttype = VariantType.Basis,
 
 	--- Returns the inverse of the matrix.
 	-- @function inverse

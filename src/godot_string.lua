@@ -38,7 +38,7 @@ end
 
 local methods = {
 	fillvariant = api.godot_variant_new_string,
-	varianttype = GD.TYPE_STRING,
+	varianttype = VariantType.String,
 
 	--- Return the String as a wide char string (`const wchar_t *`).
 	-- @function wide_str

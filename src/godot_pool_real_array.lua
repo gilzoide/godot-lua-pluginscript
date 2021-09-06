@@ -85,7 +85,7 @@ local Write = ffi_metatype('godot_pool_real_array_write_access', {
 
 local methods = {
 	fillvariant = api.godot_variant_new_pool_real_array,
-	varianttype = GD.TYPE_POOL_REAL_ARRAY,
+	varianttype = VariantType.PoolRealArray,
 
 	--- Get the number at `index`.
 	-- If `index` is invalid (`index < 0` or `index >= size()`), the application will crash.

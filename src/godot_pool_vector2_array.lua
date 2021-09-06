@@ -85,7 +85,7 @@ local Write = ffi_metatype('godot_pool_vector2_array_write_access', {
 
 local methods = {
 	fillvariant = api.godot_variant_new_pool_vector2_array,
-	varianttype = GD.TYPE_POOL_VECTOR2_ARRAY,
+	varianttype = VariantType.PoolVector2Array,
 
 	--- Get the vector at `index`.
 	-- If `index` is invalid (`index < 0` or `index >= size()`), the application will crash.

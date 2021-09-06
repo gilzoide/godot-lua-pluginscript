@@ -26,72 +26,11 @@
 -- Construct using the idiom `Variant(value)`, which calls `__new`.
 -- @classmod Variant
 
---- Enum `godot_variant_type`, mapping names to ordinal value and vice-versa.
---     assert(Variant.Type.Nil == GD.TYPE_NIL and Variant.Type[GD.TYPE_NIL] == 'Nil')
---     assert(Variant.Type.Bool == GD.TYPE_BOOL and Variant.Type[GD.TYPE_BOOL] == 'Bool')
---     ...
--- @table Type
--- @field Nil  Nil Variant type enum value
--- @field Bool  Bool Variant type enum value
--- @field Int  Int Variant type enum value
--- @field Real  Real Variant type enum value
--- @field String  String Variant type enum value
--- @field Vector2  Vector2 Variant type enum value
--- @field Rect2  Rect2 Variant type enum value
--- @field Vector3  Vector3 Variant type enum value
--- @field Transform2D  Transform2D Variant type enum value
--- @field Plane  Plane Variant type enum value
--- @field Quat  Quat Variant type enum value
--- @field AABB  AABB Variant type enum value
--- @field Basis  Basis Variant type enum value
--- @field Transform  Transform Variant type enum value
--- @field Color  Color Variant type enum value
--- @field NodePath  NodePath Variant type enum value
--- @field RID  RID Variant type enum value
--- @field Object  Object Variant type enum value
--- @field Dictionary  Dictionary Variant type enum value
--- @field Array  Array Variant type enum value
--- @field PoolByteArray  PoolByteArray Variant type enum value
--- @field PoolIntArray  PoolIntArray Variant type enum value
--- @field PoolRealArray  PoolRealArray Variant type enum value
--- @field PoolStringArray  PoolStringArray Variant type enum value
--- @field PoolVector2Array  PoolVector2Array Variant type enum value
--- @field PoolVector3Array  PoolVector3Array Variant type enum value
--- @field PoolColorArray  PoolColorArray Variant type enum value
-local variant_type = {
-	Nil = GD.TYPE_NIL,
-	Bool = GD.TYPE_BOOL,
-	Int = GD.TYPE_INT,
-	Real = GD.TYPE_REAL,
-	String = GD.TYPE_STRING,
-	Vector2 = GD.TYPE_VECTOR2,
-	Rect2 = GD.TYPE_RECT2,
-	Vector3 = GD.TYPE_VECTOR3,
-	Transform2D = GD.TYPE_TRANSFORM2D,
-	Plane = GD.TYPE_PLANE,
-	Quat = GD.TYPE_QUAT,
-	AABB = GD.TYPE_AABB,
-	Basis = GD.TYPE_BASIS,
-	Transform = GD.TYPE_TRANSFORM,
-	Color = GD.TYPE_COLOR,
-	NodePath = GD.TYPE_NODE_PATH,
-	RID = GD.TYPE_RID,
-	Object = GD.TYPE_OBJECT,
-	Dictionary = GD.TYPE_DICTIONARY,
-	Array = GD.TYPE_ARRAY,
-	PoolByteArray = GD.TYPE_POOL_BYTE_ARRAY,
-	PoolIntArray = GD.TYPE_POOL_INT_ARRAY,
-	PoolRealArray = GD.TYPE_POOL_REAL_ARRAY,
-	PoolStringArray = GD.TYPE_POOL_STRING_ARRAY,
-	PoolVector2Array = GD.TYPE_POOL_VECTOR2_ARRAY,
-	PoolVector3Array = GD.TYPE_POOL_VECTOR3_ARRAY,
-	PoolColorArray = GD.TYPE_POOL_COLOR_ARRAY,
-}
-for k, v in pairs(variant_type) do variant_type[v] = k end
-
 local methods = {
 	fillvariant = api.godot_variant_new_copy,
-	Type = variant_type,
+	--- Alias for `GD.VariantType`
+	-- @table Type
+	Type = VariantType,
 
 	--- Return the Variant as a boolean.
 	-- @function as_bool
@@ -261,7 +200,7 @@ local methods = {
 		end
 		local r_error = ffi_new(VariantCallError)
 		local value = ffi_gc(api.godot_variant_call(self, str(method), ffi_cast(const_Variant_pp, argv), argc, r_error), api.godot_variant_destroy)
-		if r_error.error == GD.CALL_OK then
+		if r_error.error == CallError.OK then
 			return true, value:unbox()
 		else
 			return false, r_error
@@ -303,59 +242,59 @@ local methods = {
 	-- @treturn nil|bool|number|String|Vector2|Rect2|Vector3|Transform2D|Plane|Quat|AABB|Basis|Transform|Color|NodePath|RID|Object|Dictionary|Array|PoolByteArray|PoolIntArray|PoolRealArray|PoolStringArray|PoolVector2Array|PoolVector3Array|PoolColorArray
 	unbox = function(self)
 		local t = self:get_type()
-		if t == GD.TYPE_NIL then
+		if t == VariantType.Nil then
 			return nil
-		elseif t == GD.TYPE_BOOL then
+		elseif t == VariantType.Bool then
 			return api.godot_variant_as_bool(self)
-		elseif t == GD.TYPE_INT then
+		elseif t == VariantType.Int then
 			return tonumber(api.godot_variant_as_int(self))
-		elseif t == GD.TYPE_REAL then
+		elseif t == VariantType.Real then
 			return tonumber(api.godot_variant_as_real(self))
-		elseif t == GD.TYPE_STRING then
+		elseif t == VariantType.String then
 			return self:as_string()
-		elseif t == GD.TYPE_VECTOR2 then
+		elseif t == VariantType.Vector2 then
 			return api.godot_variant_as_vector2(self)
-		elseif t == GD.TYPE_RECT2 then
+		elseif t == VariantType.Rect2 then
 			return api.godot_variant_as_rect2(self)
-		elseif t == GD.TYPE_VECTOR3 then
+		elseif t == VariantType.Vector3 then
 			return api.godot_variant_as_vector3(self)
-		elseif t == GD.TYPE_TRANSFORM2D then
+		elseif t == VariantType.Transform2D then
 			return api.godot_variant_as_transform2d(self)
-		elseif t == GD.TYPE_PLANE then
+		elseif t == VariantType.Plane then
 			return api.godot_variant_as_plane(self)
-		elseif t == GD.TYPE_QUAT then
+		elseif t == VariantType.Quat then
 			return api.godot_variant_as_quat(self)
-		elseif t == GD.TYPE_AABB then
+		elseif t == VariantType.AABB then
 			return api.godot_variant_as_aabb(self)
-		elseif t == GD.TYPE_BASIS then
+		elseif t == VariantType.Basis then
 			return api.godot_variant_as_basis(self)
-		elseif t == GD.TYPE_TRANSFORM then
+		elseif t == VariantType.Transform then
 			return api.godot_variant_as_transform(self)
-		elseif t == GD.TYPE_COLOR then
+		elseif t == VariantType.Color then
 			return api.godot_variant_as_color(self)
-		elseif t == GD.TYPE_NODE_PATH then
+		elseif t == VariantType.NodePath then
 			return self:as_node_path()
-		elseif t == GD.TYPE_RID then
+		elseif t == VariantType.RID then
 			return api.godot_variant_as_rid(self)
-		elseif t == GD.TYPE_OBJECT then
+		elseif t == VariantType.Object then
 			return self:as_object()
-		elseif t == GD.TYPE_DICTIONARY then
+		elseif t == VariantType.Dictionary then
 			return self:as_dictionary()
-		elseif t == GD.TYPE_ARRAY then
+		elseif t == VariantType.Array then
 			return self:as_array()
-		elseif t == GD.TYPE_POOL_BYTE_ARRAY then
+		elseif t == VariantType.PoolByteArray then
 			return self:as_pool_byte_array()
-		elseif t == GD.TYPE_POOL_INT_ARRAY then
+		elseif t == VariantType.PoolIntArray then
 			return self:as_pool_int_array()
-		elseif t == GD.TYPE_POOL_REAL_ARRAY then
+		elseif t == VariantType.PoolRealArray then
 			return self:as_pool_real_array()
-		elseif t == GD.TYPE_POOL_STRING_ARRAY then
+		elseif t == VariantType.PoolStringArray then
 			return self:as_pool_string_array()
-		elseif t == GD.TYPE_POOL_VECTOR2_ARRAY then
+		elseif t == VariantType.PoolVector2Array then
 			return self:as_pool_vector2_array()
-		elseif t == GD.TYPE_POOL_VECTOR3_ARRAY then
+		elseif t == VariantType.PoolVector3Array then
 			return self:as_pool_vector3_array()
-		elseif t == GD.TYPE_POOL_COLOR_ARRAY then
+		elseif t == VariantType.PoolColorArray then
 			return self:as_pool_color_array()
 		end
 	end,

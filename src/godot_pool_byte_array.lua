@@ -87,7 +87,7 @@ local Write = ffi_metatype('godot_pool_byte_array_write_access', {
 
 local methods = {
 	fillvariant = api.godot_variant_new_pool_byte_array,
-	varianttype = GD.TYPE_POOL_BYTE_ARRAY,
+	varianttype = VariantType.PoolByteArray,
 
 	--- Get the byte at `index`.
 	-- If `index` is invalid (`index < 0` or `index >= size()`), the application will crash.

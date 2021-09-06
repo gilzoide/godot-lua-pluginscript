@@ -51,7 +51,7 @@
 
 local methods = {
 	fillvariant = api.godot_variant_new_vector3,
-	varianttype = GD.TYPE_VECTOR3,
+	varianttype = VariantType.Vector3,
 
 	--- Returns the axis of the vector's smallest value.
 	-- If all components are equal, this method returns `AXIS_Z`.

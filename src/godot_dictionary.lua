@@ -29,7 +29,7 @@ local Dictionary_erase = api_1_1 ~= nil and api_1_1.godot_dictionary_erase_with_
 
 local methods = {
 	fillvariant = api.godot_variant_new_dictionary,
-	varianttype = GD.TYPE_DICTIONARY,
+	varianttype = VariantType.Dictionary,
 
 	--- Creates a copy of the dictionary, and returns it.
 	-- The `deep` parameter causes inner Dictionaries and Arrays to be copied recursively, but does not apply to Objects.

@@ -32,7 +32,7 @@
 
 local methods = {
 	fillvariant = api.godot_variant_new_transform2d,
-	varianttype = GD.TYPE_TRANSFORM2D,
+	varianttype = VariantType.Transform2D,
 
 	--- Returns the inverse of the transform, under the assumption that the transformation is composed of rotation and translation (no scaling, use `affine_inverse` for transforms with scaling).
 	-- @function inverse

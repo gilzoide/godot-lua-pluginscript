@@ -94,7 +94,7 @@ clib.lps_script_init_cb = wrap_callback(function(manifest, path, source, err)
 	if not script then
 		local line, msg = string_match(err_message, ERROR_LINE_MESSAGE_PATT)
 		api.godot_print_error('Error parsing script: ' .. msg, path, path, tonumber(line))
-		err[0] = GD.ERR_PARSE_ERROR
+		err[0] = Error.PARSE_ERROR
 		return
 	end
 	local success, metadata = pcall(script)
@@ -144,7 +144,7 @@ clib.lps_script_init_cb = wrap_callback(function(manifest, path, source, err)
 	local metadata_index = pointer_to_index(touserdata(metadata))
 	lps_scripts[metadata_index] = metadata
 	manifest.data = ffi_cast('void *', metadata_index)
-	err[0] = GD.OK
+	err[0] = Error.OK
 end)
 
 -- void (*lps_script_finish_cb)(godot_pluginscript_script_data *data);
@@ -242,7 +242,7 @@ clib.lps_instance_call_method_cb = wrap_callback(function(data, name, args, argc
 			lps_coroutine_pool:release(co)
 			ret[0] = ffi_gc(Variant(unboxed_ret), nil)
 			if err ~= nil then
-				err.error = GD.CALL_OK
+				err.error = CallError.OK
 			end
 		else
 			print_coroutine_error(co, unboxed_ret)

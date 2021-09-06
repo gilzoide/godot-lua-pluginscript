@@ -34,7 +34,7 @@
 
 local methods = {
 	fillvariant = api.godot_variant_new_plane,
-	varianttype = GD.TYPE_PLANE,
+	varianttype = VariantType.Plane,
 
 	--- Returns a copy of the plane, normalized.
 	-- @function normalized

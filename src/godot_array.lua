@@ -27,7 +27,7 @@
 
 local methods = {
 	fillvariant = api.godot_variant_new_array,
-	varianttype = GD.TYPE_ARRAY,
+	varianttype = VariantType.Array,
 
 	--- Returns the value at `index`.
 	-- If `index` is invalid (`index < 0` or `index >= size()`), the application will crash.

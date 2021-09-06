@@ -35,7 +35,7 @@
 
 local methods = {
 	fillvariant = api.godot_variant_new_rect2,
-	varianttype = GD.TYPE_RECT2,
+	varianttype = VariantType.Rect2,
 
 	--- Returns the area of the Rect2.
 	-- @function get_area

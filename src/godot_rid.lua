@@ -27,7 +27,7 @@
 
 local methods = {
 	fillvariant = api.godot_variant_new_rid,
-	varianttype = GD.TYPE_RID,
+	varianttype = VariantType.RID,
 
 	--- Returns the ID of the referenced resource.
 	-- @function get_id

@@ -31,7 +31,7 @@
 
 local methods = {
 	fillvariant = api.godot_variant_new_aabb,
-	varianttype = GD.TYPE_AABB,
+	varianttype = VariantType.AABB,
 
 	--- Returns the volume of the AABB.
 	-- @function get_area

@@ -66,7 +66,7 @@ static int lps_lua_touserdata(lua_State *L) {
 	return 1;
 }
 
-static int lps_lua_set_thread_func(lua_State *L) {
+static int lps_lua_setthreadfunc(lua_State *L) {
 	lua_State *co;
 	if (lua_isthread(L, 1)) {
 		co = lua_tothread(L, 1);
@@ -86,7 +86,7 @@ static godot_pluginscript_language_data *lps_language_init() {
 	lua_State *L = lua_newstate(&lps_alloc, NULL);
 	lua_atpanic(L, &lps_atpanic);
 	lua_register(L, "touserdata", &lps_lua_touserdata);
-	lua_register(L, "setthreadfunc", &lps_lua_set_thread_func);
+	lua_register(L, "setthreadfunc", &lps_lua_setthreadfunc);
 	luaL_openlibs(L);
 	if (luaL_loadbufferx(L, LUA_INIT_SCRIPT, LUA_INIT_SCRIPT_SIZE - 1, "lps_init_script", "t") != LUA_OK) {
 		const char *error_msg = lua_tostring(L, -1);

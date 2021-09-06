@@ -24,11 +24,7 @@ function LuaREPL:_ready()
 end
 
 function LuaREPL:print(...)
-	local msg = {}
-	for i = 1, select('#', ...) do
-		table.insert(msg, tostring(select(i, ...)))
-	end
-	self.output:add_text(table.concat(msg, '\t'))
+	self.output:add_text(string.join('\t', ...))
 	self.output:add_text('\n')
 end
 

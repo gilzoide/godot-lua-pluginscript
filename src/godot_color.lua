@@ -41,7 +41,7 @@
 
 local methods = {
 	fillvariant = api.godot_variant_new_color,
-	varianttype = GD.TYPE_COLOR,
+	varianttype = VariantType.Color,
 
 	--- Returns the HSV hue of this color, on the range 0 to 1.
 	-- @function get_h

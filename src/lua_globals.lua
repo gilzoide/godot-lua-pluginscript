@@ -39,12 +39,12 @@
 --- Alias for `GD.print`
 -- @function print
 -- @param ...
-_G.print = GD.print
+
 
 --- Scalar types
 -- @section scalar_types
 
---- Bool type `godot_bool`
+--- Boolean type `godot_bool`
 bool = ffi_typeof('godot_bool')
 --- Integer type `godot_int`
 int = ffi_typeof('godot_int')
@@ -52,8 +52,29 @@ int = ffi_typeof('godot_int')
 float = ffi_typeof('godot_real')
 
 
---- Extra math
--- @section extra_math
+--- string extras
+-- @section string_extras
+
+local function string_join(sep, ...)
+	local result = {}
+	for i = 1, select('#', ...) do
+		local s = select(i, ...)
+		table_insert(result, tostring(s))
+	end
+	return table_concat(result, sep)
+end
+
+--- Returns a Lua string with all values joined by `separator`.
+-- `tostring` is called to each of the passed values before joining.
+-- @function string.join
+-- @tparam string sep
+-- @param ...  Values to be joined, stringified by `tostring`.
+-- @treturn string
+string.join = string_join
+
+
+--- math extras
+-- @section math_extras
 
 --- Returns the value `x` clamped between an upper (`max`) and lower bounds (`min`).
 -- Any values comparable by order, that is, with a less than operator, can be passed in.

@@ -29,6 +29,7 @@ local methods = {
 	fillvariant = function(var, self)
 		api.godot_variant_new_string(var, self:get_name())
 	end,
+	varianttype = VariantType.String,
 
 	--- Returns this StringName as a `String`.
 	-- @function get_name

@@ -26,7 +26,7 @@
 
 local methods = {
 	fillvariant = api.godot_variant_new_object,
-	varianttype = GD.TYPE_OBJECT,
+	varianttype = VariantType.Object,
 
 	--- Adds a user-defined signal.
 	-- @function add_user_signal

@@ -20,16 +20,83 @@
 -- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 -- FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 -- IN THE SOFTWARE.
+
+--- Godot enumerations and functions, available globally as the `GD` table.
+-- Godot global constants from `godot_get_global_constants` are also available,
+-- like `OK`, `ERR_ALREADY_EXISTS`, `TYPE_NIL`, `KEY_A`, `BUTTON_LEFT`,
+-- `JOY_START`, `HALIGN_CENTER` and `MIDI_MESSAGE_NOTE_OFF`.
+-- @module GD
+
+GD = {
+	--- (`const godot_gdnative_core_api_struct *`) GDNative core API 1.0
+	api = api,
+	--- (`const godot_gdnative_core_1_1_api_struct *`) GDNative core API 1.1
+	api_1_1 = api_1_1,
+	--- (`const godot_gdnative_core_1_2_api_struct *`) GDNative core API 1.2
+	api_1_2 = api_1_2,
+	--- `Enumerations.Error`
+	Error = Error,
+	--- `Enumerations.VariantType`
+	VariantType = VariantType,
+	--- `Enumerations.CallError`
+	CallError = CallError,
+	--- `Enumerations.RPCMode`
+	RPCMode = RPCMode,
+	--- `Enumerations.PropertyHint`
+	PropertyHint = PropertyHint,
+	--- `Enumerations.PropertyUsage`
+	PropertyUsage = PropertyUsage,
+}
+
 local global_constants = api.godot_get_global_constants()
 for k, v in pairs(global_constants) do
 	GD[k:to_ascii()] = v
 end
 api.godot_dictionary_destroy(global_constants)
 
+--- Convert any value to a `godot_string`.
+-- If `value` is already a `godot_string`, return it unmodified.
+-- Otherwise, constructs a Variant and calls `as_string` on it.
+-- @function GD.str
+-- @param value  Value to be stringified
+-- @treturn String
+GD.str = str
+
+--- Print a message to Godot's Output panel, with values separated by tabs
+function GD.print(...)
+	local message = String(string_join('\t', ...))
+	api.godot_print(message)
+end
+_G.print = GD.print
+
+--- Print a warning to Godot's Output panel, with values separated by tabs
+function GD.print_warning(...)
+	local info = debug_getinfo(2, 'nSl')
+	local message = string_join('\t', ...)
+	api.godot_print_warning(message, info.name, info.short_src, info.currentline)
+end
+
+--- Print an error to Godot's Output panel, with values separated by tabs
+function GD.print_error(...)
+	local info = debug_getinfo(2, 'nSl')
+	local message = string_join('\t', ...)
+	api.godot_print_error(message, info.name, info.short_src, info.currentline)
+end
+
+local ResourceLoader = api.godot_global_get_singleton("ResourceLoader")
+--- Loads a Resource by path, similar to GDScript's [load](https://docs.godotengine.org/en/stable/classes/class_%40gdscript.html#class-gdscript-method-load)
+function GD.load(path)
+	return ResourceLoader:load(path)
+end
+
 local library_resource_dir = clib.hgdn_library.resource_path:get_base_dir()
 local CoroutineObject = GD.load(library_resource_dir:plus_file('lps_coroutine.lua'))
 
-function GD.yield(obj, signal_name)
+--- Yield
+-- @tparam[opt] Object object
+-- @param[opt] signal_name
+-- @treturn Object Coroutine object
+function GD.yield(object, signal_name)
 	local co, is_main = coroutine_running()
 	assert(co and not is_main, "GD.yield can be called only from script methods")
 	local co_obj = lps_instances[co]
@@ -39,8 +106,8 @@ function GD.yield(obj, signal_name)
 		co_obj_table.coroutine = co
 		lps_instances[co] = co_obj_table
 	end
-	if obj and signal_name then
-		obj:connect(signal_name, co_obj, "resume", Array(), Object.CONNECT_ONESHOT)
+	if object and signal_name then
+		object:connect(signal_name, co_obj, "resume", Array(), Object.CONNECT_ONESHOT)
 	end
 	coroutine_yield(co_obj)
 end
@@ -91,7 +158,7 @@ local function searchpath(name, path, sep, rep)
 	local f = File:new()
 	for template in path:gmatch('[^;]+') do
 		local filename = template:gsub('%?', name):gsub('%!', execdir_repl, 1)
-		if f:open(filename, File.READ) == GD.OK then
+		if f:open(filename, File.READ) == Error.OK then
 			return filename, f
 		else
 			table_insert(notfound, string_format("\n\tno file %q", filename))

@@ -43,7 +43,7 @@
 
 local methods = {
 	fillvariant = api.godot_variant_new_vector2,
-	varianttype = GD.TYPE_VECTOR2,
+	varianttype = VariantType.Vector2,
 
 	--- Returns the vector scaled to unit length.
 	-- Equivalent to `v / v:length()`.

@@ -31,7 +31,7 @@ end
 
 local methods = {
 	fillvariant = api.godot_variant_new_node_path,
-	varianttype = GD.TYPE_NODE_PATH,
+	varianttype = VariantType.NodePath,
 
 	--- Gets a `String` that represents this NodePath.
 	-- @function as_string
