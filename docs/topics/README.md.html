@@ -32,11 +32,11 @@
 
 <h2>Contents</h2>
 <ul>
-<li><a href="#Documentation">Documentation </a></li>
 <li><a href="#Installing">Installing </a></li>
-<li><a href="#Articles">Articles </a></li>
 <li><a href="#Goals">Goals </a></li>
 <li><a href="#Non_goals">Non-goals </a></li>
+<li><a href="#Documentation">Documentation </a></li>
+<li><a href="#Articles">Articles </a></li>
 <li><a href="#Script_example">Script example </a></li>
 <li><a href="#Status">Status </a></li>
 <li><a href="#Building">Building </a></li>
@@ -57,6 +57,7 @@
   <li><a href="../modules/OOP.html">OOP</a></li>
   <li><a href="../modules/math_extras.html">math_extras</a></li>
   <li><a href="../modules/package_extras.html">package_extras</a></li>
+  <li><a href="../modules/script_metadata.html">script_metadata</a></li>
   <li><a href="../modules/string_extras.html">string_extras</a></li>
 </ul>
 <h2>Scripts</h2>
@@ -110,20 +111,13 @@ as a scripting language in <a href="https://godotengine.org/">Godot</a>.</p>
 <p>Being a GDNative library, recompiling the engine is not required, so anyone
 with a built release copied to their project can use it.
 Being a PluginScript language, Lua can seamlessly communicate with scripts
-written in GDScript/C#/Visual Script and vice-versa.</p>
+written in GDScript / C# / Visual Script and vice-versa.
+This way, one can use the language that best suits the implementation for each
+script and all of them can understand each other.</p>
 
+<p>Currently, only LuaJIT is supported, since the implementation is based on its
+<a href="https://luajit.org/ext_ffi.html">FFI</a> library.</p>
 
-<p><a name="Documentation"></a></p>
-<h2>Documentation</h2>
-<p>The API is documented using <a href="https://stevedonovan.github.io/ldoc/manual/doc.md.html">LDoc</a>
-and is available online at <a href="https://gilzoide.github.io/godot-lua-pluginscript/topics/README.md.html">github pages</a>.</p>
-
-<p>Generate the documentation with the following command:</p>
-
-
-<pre>
-# make docs
-</pre>
 
 <p><a name="Installing"></a></p>
 <h2>Installing</h2>
@@ -131,17 +125,6 @@ and is available online at <a href="https://gilzoide.github.io/godot-lua-plugins
 <p>Put a built release of the library into the project folder and restart Godot.
 Make sure the <code>lua_pluginscript.gdnlib</code> file is located at the
 <code>res://addons/godot-lua-pluginscript</code> folder.</p>
-
-
-<p><a name="Articles"></a></p>
-<h2>Articles</h2>
-
-<ol>
-    <li><a href="blog/1-design-en.md">Designing Godot Lua PluginScript</a></li>
-    <li><a href="blog/2-infrastructure-en.md">Implementing the library's skeleton</a></li>
-    <li><a href="blog/3-luajit-callbacks-en.md">Integrating LuaJIT and FFI</a></li>
-    <li>Initializing and finalizing scripts (TODO)</li>
-</ol>
 
 
 <p><a name="Goals"></a></p>
@@ -154,7 +137,7 @@ Make sure the <code>lua_pluginscript.gdnlib</code> file is located at the
     like GDScript, Visual Script and C#, in an idiomatic way</li>
     <li>Simple script description interface that doesn't need <a href="https://www.lua.org/manual/5.1/manual.html#pdf-require">require</a>ing anything</li>
     <li>Support for LuaJIT and Lua 5.2+</li>
-    <li>Support paths relative to <code>res://*</code> and exported game executable path for
+    <li>Support paths relative to <code>res://*</code> and exported game/app executable path for
     <a href="https://www.lua.org/manual/5.1/manual.html#pdf-require">require</a>ing Lua modules</li>
     <li>Have a simple build process, where anyone with the cloned source code and
     installed build system + toolchain can build the project in a single step</li>
@@ -168,6 +151,29 @@ Make sure the <code>lua_pluginscript.gdnlib</code> file is located at the
     <li>Provide calls to all core Godot classes' methods via native method bindings</li>
     <li>Support multithreading on the Lua side</li>
 </ul>
+
+
+<p><a name="Documentation"></a></p>
+<h2>Documentation</h2>
+<p>The API is documented using <a href="https://stevedonovan.github.io/ldoc/manual/doc.md.html">LDoc</a>
+and is available online at <a href="https://gilzoide.github.io/godot-lua-pluginscript/topics/README.md.html">github pages</a>.</p>
+
+<p>Documentation may be generated with the following command:</p>
+
+
+<pre>
+# make docs
+</pre>
+
+<p><a name="Articles"></a></p>
+<h2>Articles</h2>
+
+<ol>
+    <li><a href="https://github.com/gilzoide/godot-lua-pluginscript/blob/main/blog/1-design-en.md">Designing Godot Lua PluginScript</a></li>
+    <li><a href="https://github.com/gilzoide/godot-lua-pluginscript/blob/main/blog/2-infrastructure-en.md">Implementing the library's skeleton</a></li>
+    <li><a href="https://github.com/gilzoide/godot-lua-pluginscript/blob/main/blog/3-luajit-callbacks-en.md">Integrating LuaJIT and FFI</a></li>
+    <li>Initializing and finalizing scripts (TODO)</li>
+</ol>
 
 
 <p><a name="Script_example"></a></p>
@@ -200,37 +206,32 @@ MyClass.something_happened_with_args = signal(<span class="string">"arg1"</span>
 <span class="comment">-- The <code>property</code> function adds metadata to defined properties,
 </span><span class="comment">-- like setter and getter functions
 </span>MyClass.some_prop_with_details = property {
-  <span class="comment">-- [1] or ["default"] or ["default_value"] = property default value
+  <span class="comment">-- ["default_value"] or ["default"] or [1] = property default value
 </span>  <span class="number">5</span>,
-  <span class="comment">-- [2] or ["type"] = variant type, optional, inferred from default value
+  <span class="comment">-- ["type"] or [2] = variant type, optional, inferred from default value
 </span>  <span class="comment">-- All Godot variant type names are defined globally as written in
 </span>  <span class="comment">-- GDScript, like bool, int, float, String, Array, Vector2, etc...
 </span>  <span class="comment">-- Notice that Lua &lt;= 5.2 does not differentiate integers from float
 </span>  <span class="comment">-- numbers, so we should always specify <code>int</code> where appropriate
 </span>  <span class="comment">-- or use <code>int(5)</code> in the default value instead
 </span>  <span class="global">type</span> = int,
-  <span class="comment">-- ["set"] or ["setter"] = setter function, optional
-</span>  set = <span class="keyword">function</span>(self, value)
-    self.some_prop_with_details = value
-    <span class="comment">-- Indexing <code>self</code> with keys undefined in script will search base
-</span>    <span class="comment">-- class for methods and properties
-</span>    self:emit_signal(<span class="string">"something_happened_with_args"</span>, <span class="string">"some_prop_with_details"</span>, value)
-  <span class="keyword">end</span>,
-  <span class="comment">-- ["get"] or ["getter"] = getter function, optional
+  <span class="comment">-- ["get"] or ["getter"] = getter function or method name, optional
 </span>  get = <span class="keyword">function</span>(self)
     <span class="keyword">return</span> self.some_prop_with_details
   <span class="keyword">end</span>,
-  <span class="comment">-- ["usage"] = property usage, from enum godot_property_usage_flags
-</span>  <span class="comment">-- optional, default to GD.PROPERTY_USAGE_DEFAULT
-</span>  usage = GD.PROPERTY_USAGE_DEFAULT,
-  <span class="comment">-- ["hint"] = property hint, from enum godot_property_hint
-</span>  <span class="comment">-- optional, default to GD.PROPERTY_HINT_NONE
-</span>  hint = GD.PROPERTY_HINT_RANGE,
+  <span class="comment">-- ["set"] or ["setter"] = setter function or method name, optional
+</span>  set = <span class="string">'set_some_prop_with_details'</span>,
+  <span class="comment">-- ["usage"] = property usage, from <code>enum godot_property_usage_flags</code>
+</span>  <span class="comment">-- optional, default to <code>PropertyUsage.DEFAULT</code>
+</span>  usage = PropertyUsage.DEFAULT,
+  <span class="comment">-- ["hint"] = property hint, from <code>enum godot_property_hint</code>
+</span>  <span class="comment">-- optional, default to <code>PropertyHint.NONE</code>
+</span>  hint = PropertyHint.RANGE,
   <span class="comment">-- ["hint_string"] = property hint text, only required for some hints
 </span>  hint_string = <span class="string">'1,10'</span>,
-  <span class="comment">-- ["rset_mode"] = property remote set mode, from enum godot_method_rpc_mode
-</span>  <span class="comment">-- optional, default to GD.RPC_MODE_DISABLED
-</span>  rset_mode = GD.RPC_MODE_MASTER,
+  <span class="comment">-- ["rset_mode"] = property remote set mode, from <code>enum godot_method_rpc_mode</code>
+</span>  <span class="comment">-- optional, default to <code>RPCMode.DISABLED</code>
+</span>  rset_mode = RPCMode.MASTER,
 }
 
 <span class="comment">-- Functions defined in table are public methods
@@ -240,7 +241,14 @@ MyClass.something_happened_with_args = signal(<span class="string">"arg1"</span>
   <span class="global">print</span>(<span class="string">"MyClass instance is ready! Running on a "</span> .. os_name .. <span class="string">" system"</span>)
 <span class="keyword">end</span>
 
-<span class="keyword">function</span> MyClass:some_prop_doubled()
+<span class="keyword">function</span> MyClass:set_some_prop_with_details(value)
+    self.some_prop_with_details = value
+    <span class="comment">-- Indexing <code>self</code> with keys undefined in script will search base
+</span>    <span class="comment">-- class for methods and properties
+</span>    self:emit_signal(<span class="string">"something_happened_with_args"</span>, <span class="string">"some_prop_with_details"</span>, value)
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> MyClass:get_some_prop_doubled()
   <span class="keyword">return</span> self.some_prop * <span class="number">2</span>
 <span class="keyword">end</span>
 
@@ -343,7 +351,7 @@ repository directly inside a Godot project under the folder
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2021-09-07 13:21:23 </i>
+<i style="float:right;">Last updated 2021-09-07 18:11:01 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>
