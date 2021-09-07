@@ -152,12 +152,12 @@ local function searchpath(name, path, sep, rep)
 	sep = sep or '.'
 	rep = rep or '/'
 	if sep ~= '' then
-		name = name:gsub(sep:gsub('.', '%%%0'), rep)
+		name = name:replace(sep, rep)
 	end
 	local notfound = {}
 	local f = File:new()
 	for template in path:gmatch('[^;]+') do
-		local filename = template:gsub('%?', name):gsub('%!', execdir_repl, 1)
+		local filename = template:replace('?', name):replace('!', execdir_repl)
 		if f:open(filename, File.READ) == Error.OK then
 			return filename, f
 		else

@@ -62,6 +62,24 @@ int = ffi_typeof('godot_int')
 float = ffi_typeof('godot_real')
 
 
+--- package extras
+-- @section package_extras
+
+--- Searches for the given `name` in the given `path`. 
+-- Similar to Lua's [package.searchpath](https://www.lua.org/manual/5.2/manual.html#pdf-package.searchpath),
+-- but using Godot Files instead, so that paths like `res://` and `user://` are
+-- supported.
+--
+-- `!` characters in `path` templates are replaced by the directory of the game/app
+-- executable when running a standalone build (when `OS:has_feature("standalone")`)
+-- or by the project's resource path otherwise (`ProjectSettings:globalize_path("res://")`).
+-- @function package.searchpath
+-- @param name
+-- @param path
+-- @param[opt="."] separator
+-- @param[opt="/"] replacement
+
+
 --- string extras
 -- @section string_extras
 
@@ -81,6 +99,13 @@ end
 -- @param ...  Values to be joined, stringified by `tostring`.
 -- @treturn string
 string.join = string_join
+
+--- Performs plain substring substitution, with no characters in `pattern` or `replacement` being considered magic.
+-- @function string.replace
+-- @tparam string str
+-- @tparam string pattern
+-- @tparam string replacement
+-- @treturn string
 
 
 --- math extras

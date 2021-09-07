@@ -696,11 +696,20 @@ end
 --- Wrapper for `string.gsub`
 -- @function gsub
 -- @param pattern
--- @param repl
+-- @param replacement
 -- @param[opt] n
 -- @treturn string
 methods.gsub = function(self, ...)
 	return string_gsub(tostring(self), ...)
+end
+
+--- Wrapper for `string.join`.
+-- @function join
+-- @param ...
+-- @treturn string
+-- @see Globals.string_extras
+methods.join = function(self, ...)
+	return string_join(tostring(self), ...)
 end
 
 --- Wrapper for `string.len`

@@ -82,12 +82,26 @@ static int lps_lua_setthreadfunc(lua_State *L) {
 	return 1;
 }
 
+static int lps_lua_string_replace(lua_State *L) {
+	const char *s = luaL_checkstring(L, 1);
+	const char *p = luaL_checkstring(L, 2);
+	const char *r = luaL_checkstring(L, 3);
+	luaL_gsub(L, s, p, r);
+	return 1;
+}
+
 static godot_pluginscript_language_data *lps_language_init() {
 	lua_State *L = lua_newstate(&lps_alloc, NULL);
 	lua_atpanic(L, &lps_atpanic);
+	luaL_openlibs(L);
 	lua_register(L, "touserdata", &lps_lua_touserdata);
 	lua_register(L, "setthreadfunc", &lps_lua_setthreadfunc);
-	luaL_openlibs(L);
+	// string.replace = &lps_lua_string_replace
+	lua_getglobal(L, "string");
+	lua_pushcfunction(L, &lps_lua_string_replace);
+	lua_setfield(L, -2, "replace");
+	lua_pop(L, 1);  // pop string
+
 	if (luaL_loadbufferx(L, LUA_INIT_SCRIPT, LUA_INIT_SCRIPT_SIZE - 1, "lps_init_script", "t") != LUA_OK) {
 		const char *error_msg = lua_tostring(L, -1);
 		HGDN_PRINT_ERROR("Error loading initialization script: %s", error_msg);
