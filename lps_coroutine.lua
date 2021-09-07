@@ -31,6 +31,11 @@ local co_resume, co_status = coroutine.resume, coroutine.status
 local LuaCoroutine = {
 	--- `signal completed(result)`: signal emitted by `resume` when the coroutine body is completed.
 	completed = signal('result'),
+	--- Result of `coroutine.status`
+	status = property {
+		type = string,
+		get = 'get_status',
+	},
 }
 
 --- Returns the `coroutine.status`.
