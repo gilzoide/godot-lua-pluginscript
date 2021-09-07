@@ -128,17 +128,10 @@ clib.lps_script_init_cb = wrap_callback(function(manifest, path, source, err)
 			prop.name = String(k)
 			-- Maintain default value directly for __indexing
 			metadata[k] = default_value
-			-- TODO: support strings for get/set
 			if get then
-				if is_a_string(get) then
-					get = MethodBindByName:new(get)
-				end
 				getter[k] = get
 			end
 			if set then
-				if is_a_string(set) then
-					set = MethodBindByName:new(set)
-				end
 				setter[k] = set
 			end
 			manifest.properties:append(prop)

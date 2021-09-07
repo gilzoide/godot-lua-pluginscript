@@ -22,7 +22,7 @@
 -- IN THE SOFTWARE.
 
 --- StringName metatype, wrapper for `godot_string_name`.
--- Construct using the idiom `StringName(...)`, which calls `__new`.
+-- Construct using the idiom `StringName(name)`, which calls `__new`.
 -- @classmod StringName
 
 local methods = {
