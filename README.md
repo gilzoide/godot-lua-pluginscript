@@ -127,14 +127,14 @@ return MyClass
 - [ ] Lua 5.2+ support
 - [X] Useful definitions for all GDNative objects, with methods and metamethods
 - [X] A `yield` function similar to GDScript's, to resume after a signal is
-      emitted (`GD.yield`)
+  emitted (`GD.yield`)
 - [X] Working PluginScript language definition
 - [X] PluginScript script validation and template source code
 - [ ] PluginScript code editor callbacks
 - [ ] PluginScript debug callbacks
 - [ ] PluginScript profiling callbacks
 - [X] Package searcher for Lua and C modules that work with paths relative to
-      the `res://` folder and/or exported games' executable path
+  the `res://` folder and/or exported games' executable path
 - [X] Lua REPL
 - [ ] API documentation
 - [ ] Example projects

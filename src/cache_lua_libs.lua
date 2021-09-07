@@ -22,8 +22,8 @@
 -- IN THE SOFTWARE.
 
 -- Lua globals
-local assert, getmetatable, ipairs, pairs, rawget, select, setmetatable, tonumber, tostring, type, xpcall
-    = assert, getmetatable, ipairs, pairs, rawget, select, setmetatable, tonumber, tostring, type, xpcall
+local assert, getmetatable, ipairs, pairs, rawget, select, setmetatable, tonumber, tostring, type
+    = assert, getmetatable, ipairs, pairs, rawget, select, setmetatable, tonumber, tostring, type
 
 -- Lua globals with fallback for 5.1
 local loadstring = loadstring or load
