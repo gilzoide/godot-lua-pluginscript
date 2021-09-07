@@ -262,6 +262,14 @@ local methods = {
 	tr = api.godot_method_bind_get_method('Object', 'tr'),
 }
 
+if api_1_1 ~= nil then
+	--- Check if an Object is a valid instance.
+	-- Can also be called as `Object.is_instance_valid(some_object_or_nil)`
+	-- @function is_instance_valid
+	-- @treturn bool
+	methods.is_instance_valid = api_1_1.godot_is_instance_valid
+end
+
 --- Calls the `method` on the Object and returns the result.
 -- @function pcall
 -- @param method  Method name
@@ -302,6 +310,12 @@ _Object = ffi_metatype('godot_object', {
 			or (Object_has_method(self, key) and MethodBindByName:new(key))
 			or Object_get(self, key)
 	end,
+	--- Alias for `set`, so that the idiom `object.property = value` sets a property.
+	-- @function __newindex
+	-- @param property
+	-- @param value
+	-- @see set
+	__newindex = methods.set,
 	--- Concatenates values.
 	-- @function __concat
 	-- @param a  First value, stringified with `GD.str`
@@ -311,12 +325,4 @@ _Object = ffi_metatype('godot_object', {
 })
 
 Object = Class:new 'Object'
-
-if api_1_1 ~= nil then
-	--- Check if an Object is a valid instance.
-	-- Can also be called as `Object.is_instance_valid(some_object_or_nil)`
-	-- @function is_instance_valid
-	-- @treturn bool
-	Object.is_instance_valid = api_1_1.godot_is_instance_valid
-end
-
+Object.is_instance_valid = methods.is_instance_valid
