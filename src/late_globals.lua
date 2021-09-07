@@ -121,7 +121,7 @@ setmetatable(_G, {
 			return singleton
 		end
 		if ClassDB:class_exists(key) then
-			local cls = Class:new(key)
+			local cls = ClassWrapper:new(key)
 			rawset(self, key, cls)
 			return cls
 		end
@@ -133,11 +133,11 @@ _G.Engine = Engine
 _G.ClassDB = ClassDB
 _G.ResourceLoader = ResourceLoader
 -- These classes are registered with a prepending "_" in ClassDB
-File = Class:new("_File")
-Directory = Class:new("_Directory")
-Thread = Class:new("_Thread")
-Mutex = Class:new("_Mutex")
-Semaphore = Class:new("_Semaphore")
+File = ClassWrapper:new("_File")
+Directory = ClassWrapper:new("_Directory")
+Thread = ClassWrapper:new("_Thread")
+Mutex = ClassWrapper:new("_Mutex")
+Semaphore = ClassWrapper:new("_Semaphore")
 
 local active_library_dirsep_pos, dll_ext = active_library_path:match("()[^/]+(%.%w+)$")
 local execdir_repl =

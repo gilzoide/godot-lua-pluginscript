@@ -160,7 +160,7 @@ clib.lps_instance_init_cb = wrap_callback(function(script_data, owner)
 	local instance = setmetatable({
 		__owner = owner,
 		__script = script,
-	}, Instance)
+	}, ScriptInstance)
 	local _init = script._init
 	if _init then
 		_init(instance)

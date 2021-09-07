@@ -40,6 +40,16 @@
 -- @function print
 -- @param ...
 
+--- Search for singleton objects with `Engine:has_singleton(key)` and classes with
+-- `ClassDB:class_exists(key)`.
+-- Cache any values found, to avoid future calls.
+-- Called when indexing the global table `_G` with a currently unknown key.
+-- @function _G:__index
+-- @param key
+-- @treturn[1] Object  Singleton object, if `Engine:has_singleton(key)`
+-- @treturn[2] OOP.ClassWrapper  Class wrapper, if `ClassDB:class_exists(key)`
+-- @treturn[3] nil
+
 
 --- Scalar types
 -- @section scalar_types

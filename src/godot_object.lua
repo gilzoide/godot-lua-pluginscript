@@ -156,7 +156,7 @@ local methods = {
 	-- @param name
 	-- @treturn bool
 	has_meta = api.godot_method_bind_get_method('Object', 'has_meta'),
-	--- Returns `true` if the Object contains the given `name`.
+	--- Returns `true` if the Object contains a method with the given `name`.
 	-- @function has_method
 	-- @param name
 	-- @treturn bool
@@ -300,11 +300,13 @@ _Object = ffi_metatype('godot_object', {
 	__tostring = function(self)
 		return tostring(methods.to_string(self))
 	end,
-	--- If `key` is a method name (`self:has_method(key)`), returns a method binding.
-	-- Else returns `self:get(key)`.
+	--- Returns a method binding if `key` is a method name, otherwise returns
+	-- `self:get(key)`.
 	-- @function __index
 	-- @tparam string key
-	-- @return
+	-- @treturn[1] OOP.MethodBindByName  If `self:has_method(key)`
+	-- @return[2] Result from `self:get(key)`
+	-- @see get, has_method
 	__index = function(self, key)
 		return methods[key]
 			or (Object_has_method(self, key) and MethodBindByName:new(key))
@@ -324,5 +326,5 @@ _Object = ffi_metatype('godot_object', {
 	__concat = concat_gdvalues,
 })
 
-Object = Class:new 'Object'
+Object = ClassWrapper:new 'Object'
 Object.is_instance_valid = methods.is_instance_valid
