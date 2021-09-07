@@ -707,7 +707,7 @@ end
 -- @function join
 -- @param ...
 -- @treturn string
--- @see Globals.string_extras
+-- @see string_extras
 methods.join = function(self, ...)
 	return string_join(tostring(self), ...)
 end

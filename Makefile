@@ -34,6 +34,7 @@ LUA_INIT_SCRIPT_SRC = \
 	src/godot_ffi.lua \
 	src/cache_lua_libs.lua \
 	src/lua_globals.lua \
+	src/lua_string_extras.lua \
 	src/godot_enums.lua \
 	src/godot_class.lua \
 	src/godot_variant.lua \
@@ -64,6 +65,8 @@ LUA_INIT_SCRIPT_SRC = \
 	src/pluginscript_class_metadata.lua \
 	src/pluginscript_callbacks.lua \
 	src/late_globals.lua \
+	src/lua_package_extras.lua \
+	src/lua_math_extras.lua \
 	src/in_editor_callbacks.lua
 
 ifneq (1,$(DEBUG))

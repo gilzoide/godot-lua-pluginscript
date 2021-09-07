@@ -128,6 +128,7 @@ clib.lps_script_init_cb = wrap_callback(function(manifest, path, source, err)
 			prop.name = String(k)
 			-- Maintain default value directly for __indexing
 			metadata[k] = default_value
+			-- TODO: support strings for get/set
 			if get then
 				getter[k] = get
 			end
