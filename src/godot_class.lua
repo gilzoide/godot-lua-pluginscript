@@ -80,6 +80,19 @@ local class_methods = {
 		Object_call(obj, '_init', ...)
 		return obj
 	end,
+	--- Returns whether this Class inherits a `parent` Class.
+	-- @function inherits
+	-- @param other  Other class name
+	-- @treturn bool
+	inherits = function(self, parent)
+		return ClassDB:is_parent_class(self.class_name, parent)
+	end,
+	--- Returns the parent class.
+	-- @function get_parent_class
+	-- @treturn String
+	get_parent_class = function(self)
+		return ClassDB:get_parent_class(self.class_name)
+	end,
 }
 local ClassWrapper = {
 	new = function(self, class_name)
@@ -114,7 +127,17 @@ local ClassWrapper = {
 			return constant
 		end
 	end,
+	--- Returns `class_name`
+	-- @function __tostring
+	-- @treturn string
+	__tostring = function(self)
+		return self.class_name
+	end,
 }
+
+local function is_class_wrapper(v)
+	return getmetatable(v) == ClassWrapper
+end
 
 --- MethodBind metatype, wrapper for `godot_method_bind`.
 -- These are returned by `ClassWrapper:__index` and GDNative's `godot_method_bind_get_method`.

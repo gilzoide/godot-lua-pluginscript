@@ -21,7 +21,11 @@
 -- FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 -- IN THE SOFTWARE.
 
--- Map names and ctypes to godot_variant_type
+--- Scripts metadata.
+-- This includes properties, signals and methods.
+-- @module script_metadata
+
+-- Map names and types to godot_variant_type
 local property_types = {
 	bool = VariantType.Bool, [bool] = VariantType.Bool,
 	int = VariantType.Int, [int] = VariantType.Int,
@@ -85,23 +89,69 @@ local function property_to_dictionary(prop)
 		default_value = prop
 		dict.type = get_property_type(prop)
 	else
-		default_value = prop[1] or prop.default or prop.default_value
-		local explicit_type = prop[2] or prop.type
-		dict.type = property_types[explicit_type] or explicit_type or get_property_type(default_value)
-		dict.hint = prop.hint
-		dict.hint_string = prop.hint_string
+		default_value = prop.default_value or prop.default or prop[1]
+		local explicit_type = prop.type or prop[2]
+		if is_class_wrapper(explicit_type) and explicit_type:inherits('Resource') then
+			dict.type = VariantType.Object
+			dict.hint = PropertyHint.RESOURCE_TYPE
+			dict.hint_string = explicit_type.class_name
+		else
+			dict.type = property_types[explicit_type] or explicit_type or get_property_type(default_value)
+			dict.hint = prop.hint
+			dict.hint_string = prop.hint_string
+		end
 		dict.usage = prop.usage
 		dict.rset_mode = prop.rset_mode
 		get = prop.get or prop.getter
+		if is_a_string(get) then
+			get = MethodBindByName:new(get)
+		end
 		set = prop.set or prop.setter
+		if is_a_string(set) then
+			set = MethodBindByName:new(set)
+		end
 	end
 	dict.default_value = default_value
 	return dict, default_value, get, set
 end
 
+--- Adds `metadata` to a property.
+-- If `metadata` is not a table, creates a table with this value as `default_value`.
+-- The `metadata` table may include the following fields:
+--
+-- * `default_value` or `default` or `1`: default property value, returned when
+--   Object has no other value set for it.
+-- * (*optional*) `type` or `2`: property type. If absent, it is inferred from `default_value`.
+--   May be a `Enumerations.VariantType` (`VariantType.Vector2`), the type directly (`Vector2`),
+--   or a Resource class (`AudioStream`)
+-- * (*optional*) `get` or `getter`: getter function. May be a string with the method name
+--   to be called or any callable value, like functions and tables with a `__call`
+--   metamethod.
+-- * (*optional*) `set` or `setter`: setter function. May be a string with the method name
+--   to be called or any callable value, like functions and tables with a `__call`
+--   metamethod.
+-- * (*optional*) `hint`: one of `Enumerations.PropertyHint`. Default to `PropertyHint.NONE`.
+-- * (*optional*) `hint_string`: the hint text, required for some hints like `RANGE`.
+-- * (*optional*) `usage`: one of `Enumerations.PropertyUsage`. Default to `PropertyUsage.DEFAULT`.
+-- * (*optional*) `rset_mode`: one of `Enumerations.RPCMode`. Default to `RPCMode.DISABLED`.
+--
+-- TODO: accept hints directly (`range = '1,10'`; `enum = 'value1,value2,value3'`; `file = '*.png'`, etc...).
+-- @usage
+--     MyClass.some_prop = property(42)
+--     MyClass.some_prop_with_metadata = property {
+--         type = int,
+--         set = function(self, value)
+--             self.some_prop_with_metadata = value
+--             self:emit('some_prop_with_metadata_changed', value)
+--         end,
+--         hint = PropertyHint.RANGE,
+--         hint_text = '1,100',
+--     }
+-- @treturn table
+-- @see lps_coroutine.lua
 function property(metadata)
 	if type(metadata) ~= 'table' then
-		metadata = { metadata }
+		metadata = { default_value = metadata }
 	end
 	return setmetatable(metadata, Property)
 end
@@ -122,6 +172,14 @@ local function signal_to_dictionary(sig)
 	return dict
 end
 
+--- Create a signal table.
+-- This is only useful for declaring scripts' signals.
+-- @usage
+--     MyClass.something_happened = signal()
+--     MyClass.something_happened_with_args = signal('arg1', 'arg2', 'etc')
+-- @param ...  Signal argument names
+-- @treturn table
+-- @see lps_coroutine.lua
 function signal(...)
 	return setmetatable({ ... }, Signal)
 end

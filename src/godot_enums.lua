@@ -241,19 +241,19 @@ for k, v in pairs(RPCMode) do RPCMode[v] = k end
 --- Enum `godot_property_hint`, mapping UPPER_CASED names to ordinal values and vice-versa.
 -- @table PropertyHint
 -- @field NONE  None
--- @field RANGE  Range
--- @field EXP_RANGE  Exp Range
--- @field ENUM  Enum
+-- @field RANGE  Range (hint_string = `"min,max,step,slider"`; step and slider are optional)
+-- @field EXP_RANGE  Exp Range (hint_string = `"min,max,step"`; exponential edit)
+-- @field ENUM  Enum (hint_string = `"val1,val2,val3,etc"`)
 -- @field EXP_EASING  Exp Easing
--- @field LENGTH  Length
--- @field SPRITE_FRAME  Sprite Frame
--- @field KEY_ACCEL  Key Accel
--- @field FLAGS  Flags
+-- @field LENGTH  Length (hint_string = `"length"`; as integer)
+-- @field SPRITE_FRAME  Sprite Frame (Obsolete)
+-- @field KEY_ACCEL  Key Accel (hint_string = `"length"`; as integer)
+-- @field FLAGS  Flags (hint_string = `"flag1,flag2,etc"`; as bit flags)
 -- @field LAYERS_2D_RENDER  Layers 2D Render
 -- @field LAYERS_2D_PHYSICS  Layers 2D Physics
 -- @field LAYERS_3D_RENDER  Layers 3D Render
 -- @field LAYERS_3D_PHYSICS  Layers 3D Physics
--- @field FILE  File
+-- @field FILE  File (optional hint_string: file filter, e.g. `"\*.png,\*.wav"`)
 -- @field DIR  Dir
 -- @field GLOBAL_FILE  Global File
 -- @field GLOBAL_DIR  Global Dir
@@ -264,7 +264,7 @@ for k, v in pairs(RPCMode) do RPCMode[v] = k end
 -- @field IMAGE_COMPRESS_LOSSY  Image Compress Lossy
 -- @field IMAGE_COMPRESS_LOSSLESS  Image Compress Lossless
 -- @field OBJECT_ID  Object Id
--- @field TYPE_STRING  Type String
+-- @field TYPE_STRING  Type String (hint_string = `"base class name"`)
 -- @field NODE_PATH_TO_EDITED_NODE  Node Path To Edited Node
 -- @field METHOD_OF_VARIANT_TYPE  Method Of Variant Type
 -- @field METHOD_OF_BASE_TYPE  Method Of Base Type
@@ -323,8 +323,8 @@ for k, v in pairs(PropertyHint) do PropertyHint[v] = k end
 -- @field INTERNATIONALIZED  Internationalized
 -- @field GROUP  Group
 -- @field CATEGORY  Category
--- @field STORE_IF_NONZERO  Store If Nonzero
--- @field STORE_IF_NONONE  Store If Nonone
+-- @field STORE_IF_NONZERO  Store If Nonzero (Obsolete)
+-- @field STORE_IF_NONONE  Store If Nonone (Obsolete)
 -- @field NO_INSTANCE_STATE  No Instance State
 -- @field RESTART_IF_CHANGED  Restart If Changed
 -- @field SCRIPT_VARIABLE  Script Variable

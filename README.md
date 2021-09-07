@@ -6,16 +6,12 @@ as a scripting language in [Godot](https://godotengine.org/).
 Being a GDNative library, recompiling the engine is not required, so anyone
 with a built release copied to their project can use it.
 Being a PluginScript language, Lua can seamlessly communicate with scripts
-written in GDScript/C#/Visual Script and vice-versa.
+written in GDScript / C# / Visual Script and vice-versa.
+This way, one can use the language that best suits the implementation for each
+script and all of them can understand each other.
 
-
-## Documentation
-The API is documented using [LDoc](https://stevedonovan.github.io/ldoc/manual/doc.md.html)
-and is available online at [github pages](https://gilzoide.github.io/godot-lua-pluginscript/topics/README.md.html).
-
-Generate the documentation with the following command:
-
-    # make docs
+Currently, only LuaJIT is supported, since the implementation is based on its
+[FFI](https://luajit.org/ext_ffi.html) library.
 
 
 ## Installing
@@ -23,14 +19,6 @@ Generate the documentation with the following command:
 Put a built release of the library into the project folder and restart Godot.
 Make sure the `lua_pluginscript.gdnlib` file is located at the
 `res://addons/godot-lua-pluginscript` folder.
-
-
-## Articles
-
-1. [Designing Godot Lua PluginScript](blog/1-design-en.md)
-2. [Implementing the library's skeleton](blog/2-infrastructure-en.md)
-3. [Integrating LuaJIT and FFI](blog/3-luajit-callbacks-en.md)
-4. Initializing and finalizing scripts (TODO)
 
 
 ## Goals
@@ -41,7 +29,7 @@ Make sure the `lua_pluginscript.gdnlib` file is located at the
   like GDScript, Visual Script and C#, in an idiomatic way
 - Simple script description interface that doesn't need `require`ing anything
 - Support for LuaJIT and Lua 5.2+
-- Support paths relative to `res://*` and exported game executable path for
+- Support paths relative to `res://*` and exported game/app executable path for
   `require`ing Lua modules
 - Have a simple build process, where anyone with the cloned source code and
   installed build system + toolchain can build the project in a single step
@@ -51,6 +39,23 @@ Make sure the `lua_pluginscript.gdnlib` file is located at the
 
 - Provide calls to all core Godot classes' methods via native method bindings
 - Support multithreading on the Lua side
+
+
+## Documentation
+The API is documented using [LDoc](https://stevedonovan.github.io/ldoc/manual/doc.md.html)
+and is available online at [github pages](https://gilzoide.github.io/godot-lua-pluginscript/topics/README.md.html).
+
+Documentation may be generated with the following command:
+
+    # make docs
+
+
+## Articles
+
+1. [Designing Godot Lua PluginScript](https://github.com/gilzoide/godot-lua-pluginscript/blob/main/blog/1-design-en.md)
+2. [Implementing the library's skeleton](https://github.com/gilzoide/godot-lua-pluginscript/blob/main/blog/2-infrastructure-en.md)
+3. [Integrating LuaJIT and FFI](https://github.com/gilzoide/godot-lua-pluginscript/blob/main/blog/3-luajit-callbacks-en.md)
+4. Initializing and finalizing scripts (TODO)
 
 
 ## Script example
@@ -81,37 +86,32 @@ MyClass.some_prop = 42
 -- The `property` function adds metadata to defined properties,
 -- like setter and getter functions
 MyClass.some_prop_with_details = property {
-  -- [1] or ["default"] or ["default_value"] = property default value
+  -- ["default_value"] or ["default"] or [1] = property default value
   5,
-  -- [2] or ["type"] = variant type, optional, inferred from default value
+  -- ["type"] or [2] = variant type, optional, inferred from default value
   -- All Godot variant type names are defined globally as written in
   -- GDScript, like bool, int, float, String, Array, Vector2, etc...
   -- Notice that Lua <= 5.2 does not differentiate integers from float
   -- numbers, so we should always specify `int` where appropriate
   -- or use `int(5)` in the default value instead
   type = int,
-  -- ["set"] or ["setter"] = setter function, optional
-  set = function(self, value)
-    self.some_prop_with_details = value
-    -- Indexing `self` with keys undefined in script will search base
-    -- class for methods and properties
-    self:emit_signal("something_happened_with_args", "some_prop_with_details", value)
-  end,
-  -- ["get"] or ["getter"] = getter function, optional
+  -- ["get"] or ["getter"] = getter function or method name, optional
   get = function(self)
     return self.some_prop_with_details
   end,
-  -- ["usage"] = property usage, from enum godot_property_usage_flags
-  -- optional, default to GD.PROPERTY_USAGE_DEFAULT
-  usage = GD.PROPERTY_USAGE_DEFAULT,
-  -- ["hint"] = property hint, from enum godot_property_hint
-  -- optional, default to GD.PROPERTY_HINT_NONE
-  hint = GD.PROPERTY_HINT_RANGE,
+  -- ["set"] or ["setter"] = setter function or method name, optional
+  set = 'set_some_prop_with_details',
+  -- ["usage"] = property usage, from `enum godot_property_usage_flags`
+  -- optional, default to `PropertyUsage.DEFAULT`
+  usage = PropertyUsage.DEFAULT,
+  -- ["hint"] = property hint, from `enum godot_property_hint`
+  -- optional, default to `PropertyHint.NONE`
+  hint = PropertyHint.RANGE,
   -- ["hint_string"] = property hint text, only required for some hints
   hint_string = '1,10',
-  -- ["rset_mode"] = property remote set mode, from enum godot_method_rpc_mode
-  -- optional, default to GD.RPC_MODE_DISABLED
-  rset_mode = GD.RPC_MODE_MASTER,
+  -- ["rset_mode"] = property remote set mode, from `enum godot_method_rpc_mode`
+  -- optional, default to `RPCMode.DISABLED`
+  rset_mode = RPCMode.MASTER,
 }
 
 -- Functions defined in table are public methods
@@ -121,7 +121,14 @@ function MyClass:_ready()  -- `function t:f(...)` is an alias for `function t.f(
   print("MyClass instance is ready! Running on a " .. os_name .. " system")
 end
 
-function MyClass:some_prop_doubled()
+function MyClass:set_some_prop_with_details(value)
+    self.some_prop_with_details = value
+    -- Indexing `self` with keys undefined in script will search base
+    -- class for methods and properties
+    self:emit_signal("something_happened_with_args", "some_prop_with_details", value)
+end
+
+function MyClass:get_some_prop_doubled()
   return self.some_prop * 2
 end
 
