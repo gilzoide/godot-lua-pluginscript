@@ -24,6 +24,14 @@ Make sure the `lua_pluginscript.gdnlib` file is located at the
 `res://addons/godot-lua-pluginscript` folder.
 
 
+## Plugin
+
+An editor plugin is included, currently with a barebones REPL for Lua
+expressions, located in the bottom panel of the editor.
+Enable the `Lua PluginScript` plugin in `Project -> Project Settings...` menu,
+in the `Plugins` tab.
+
+
 ## Goals
 
 - Provide support for Lua as a scripting language in Godot in a way that does
