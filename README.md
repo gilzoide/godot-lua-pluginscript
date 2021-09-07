@@ -9,6 +9,15 @@ Being a PluginScript language, Lua can seamlessly communicate with scripts
 written in GDScript/C#/Visual Script and vice-versa.
 
 
+## Documentation
+The API is documented using [LDoc](https://stevedonovan.github.io/ldoc/manual/doc.md.html)
+and is available online at [github pages](https://gilzoide.github.io/godot-lua-pluginscript/topics/README.md.html).
+
+Generate the documentation with the following command:
+
+    # make docs
+
+
 ## Installing
 
 Put a built release of the library into the project folder and restart Godot.
@@ -136,9 +145,9 @@ return MyClass
 - [X] Package searcher for Lua and C modules that work with paths relative to
   the `res://` folder and/or exported games' executable path
 - [X] Lua REPL
-- [ ] API documentation
+- [X] API documentation
 - [ ] Example projects
-- [ ] Editor plugin to minify Lua scripts
+- [ ] Export plugin to minify Lua scripts
 - [ ] Drop-in binary release in GitHub
 - [ ] Submit to Asset Library
 
