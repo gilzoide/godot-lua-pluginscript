@@ -1,0 +1,258 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Godot Lua PluginScript</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+<li><a href="#Fields">Fields</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/Enumerations.html">Enumerations</a></li>
+  <li><a href="../modules/GD.html">GD</a></li>
+  <li><a href="../modules/Globals.html">Globals</a></li>
+  <li><a href="../modules/OOP.html">OOP</a></li>
+  <li><a href="../modules/math_extras.html">math_extras</a></li>
+  <li><strong>package_extras</strong></li>
+  <li><a href="../modules/string_extras.html">string_extras</a></li>
+</ul>
+<h2>Scripts</h2>
+<ul class="nowrap">
+  <li><a href="../scripts/lps_coroutine.lua.html">lps_coroutine.lua</a></li>
+</ul>
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><a href="../classes/AABB.html">AABB</a></li>
+  <li><a href="../classes/Array.html">Array</a></li>
+  <li><a href="../classes/Basis.html">Basis</a></li>
+  <li><a href="../classes/Color.html">Color</a></li>
+  <li><a href="../classes/Dictionary.html">Dictionary</a></li>
+  <li><a href="../classes/NodePath.html">NodePath</a></li>
+  <li><a href="../classes/Object.html">Object</a></li>
+  <li><a href="../classes/Plane.html">Plane</a></li>
+  <li><a href="../classes/PoolByteArray.html">PoolByteArray</a></li>
+  <li><a href="../classes/PoolColorArray.html">PoolColorArray</a></li>
+  <li><a href="../classes/PoolIntArray.html">PoolIntArray</a></li>
+  <li><a href="../classes/PoolRealArray.html">PoolRealArray</a></li>
+  <li><a href="../classes/PoolStringArray.html">PoolStringArray</a></li>
+  <li><a href="../classes/PoolVector2Array.html">PoolVector2Array</a></li>
+  <li><a href="../classes/PoolVector3Array.html">PoolVector3Array</a></li>
+  <li><a href="../classes/Quat.html">Quat</a></li>
+  <li><a href="../classes/Rect2.html">Rect2</a></li>
+  <li><a href="../classes/RID.html">RID</a></li>
+  <li><a href="../classes/String.html">String</a></li>
+  <li><a href="../classes/StringName.html">StringName</a></li>
+  <li><a href="../classes/Transform.html">Transform</a></li>
+  <li><a href="../classes/Transform2D.html">Transform2D</a></li>
+  <li><a href="../classes/Variant.html">Variant</a></li>
+  <li><a href="../classes/Vector2.html">Vector2</a></li>
+  <li><a href="../classes/Vector3.html">Vector3</a></li>
+</ul>
+<h2>Topics</h2>
+<ul class="">
+  <li><a href="../topics/README.md.html">README</a></li>
+</ul>
+<h2>Examples</h2>
+<ul class="nowrap">
+  <li><a href="../examples/lua_repl.lua.html">lua_repl.lua</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>package_extras</code></h1>
+<p>Extra functionality for Lua's <a href="https://www.lua.org/manual/5.1/manual.html#5.3">package</a> library.</p>
+<p> Patch the <code>package.loaders</code>/<a href="https://www.lua.org/manual/5.1/manual.html#pdf-package.searchers">package.searchers</a> to use <a href="../modules/package_extras.html#package.searchpath">searchpath</a>,
+ so that <a href="https://www.lua.org/manual/5.1/manual.html#pdf-require">require</a> can find files relative to the <code>res://</code> and
+ executable folder.</p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#package.searchpath">package.searchpath (name, path[, separator="."[, replacement="/"]])</a></td>
+	<td class="summary">Searches for the given <code>name</code> in the given path.</td>
+	</tr>
+</table>
+<h2><a href="#Fields">Fields</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#package.cpath">package.cpath</a></td>
+	<td class="summary">Prepend the paths <code>!/?.{dll,so,dylib}</code> and <code>!/loadall.{dll,so,dylib}</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#package.path">package.path</a></td>
+	<td class="summary">Prepend the paths <code>res://?.lua</code> and <code>res://?/init.lua</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#package.soext">package.soext</a></td>
+	<td class="summary">The shared object file extension for this system, currently either <code>.dll</code>, <code>.so</code> or <code>.dylib</code>.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "package.searchpath"></a>
+    <strong>package.searchpath (name, path[, separator="."[, replacement="/"]])</strong>
+    </dt>
+    <dd>
+    Searches for the given <code>name</code> in the given path. <br/>
+ Similar to Lua 5.2+ <a href="https://www.lua.org/manual/5.2/manual.html#pdf-package.searchpath">package.searchpath</a>,
+ but using Godot Files instead, so that paths like <code>res://</code> and <code>user://</code> are
+ supported.</p>
+
+<p> <code>!</code> characters in <a href="../modules/package_extras.html#package.path">path</a> templates are replaced by the directory of the game/app
+ executable when running a standalone build (when <code>OS:has_feature(&quot;standalone&quot;)</code>)
+ or by the project's resource path otherwise (<code>ProjectSettings:globalize_path(&quot;res://&quot;)</code>).
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">name</span>
+
+
+
+        </li>
+        <li><span class="parameter">path</span>
+
+
+
+        </li>
+        <li><span class="parameter">separator</span>
+
+
+
+         (<em>default</em> ".")
+        </li>
+        <li><span class="parameter">replacement</span>
+
+
+
+         (<em>default</em> "/")
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+        Found file name
+    </ol>
+     <h3>Or</h3>
+    <ol>
+        <li>
+           <span class="types"><span class="type">nil</span></span>
+
+
+</li>
+        <li>
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+        Error message</li>
+    </ol>
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Fields"></a>Fields</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "package.cpath"></a>
+    <strong>package.cpath</strong>
+    </dt>
+    <dd>
+    Prepend the paths <code>!/?.{dll,so,dylib}</code> and <code>!/loadall.{dll,so,dylib}</code>.
+ The shared library file extension is detected automatically.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../modules/package_extras.html#package.soext">package.soext</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "package.path"></a>
+    <strong>package.path</strong>
+    </dt>
+    <dd>
+    Prepend the paths <code>res://?.lua</code> and <code>res://?/init.lua</code>.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "package.soext"></a>
+    <strong>package.soext</strong>
+    </dt>
+    <dd>
+    The shared object file extension for this system, currently either <code>.dll</code>, <code>.so</code> or <code>.dylib</code>.
+ Detected automatically.
+
+
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2021-09-07 13:06:11 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

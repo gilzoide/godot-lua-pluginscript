@@ -1,0 +1,912 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Godot Lua PluginScript</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Methods">Methods</a></li>
+<li><a href="#Metamethods">Metamethods</a></li>
+</ul>
+
+
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><strong>AABB</strong></li>
+  <li><a href="../classes/Array.html">Array</a></li>
+  <li><a href="../classes/Basis.html">Basis</a></li>
+  <li><a href="../classes/Color.html">Color</a></li>
+  <li><a href="../classes/Dictionary.html">Dictionary</a></li>
+  <li><a href="../classes/NodePath.html">NodePath</a></li>
+  <li><a href="../classes/Object.html">Object</a></li>
+  <li><a href="../classes/Plane.html">Plane</a></li>
+  <li><a href="../classes/PoolByteArray.html">PoolByteArray</a></li>
+  <li><a href="../classes/PoolColorArray.html">PoolColorArray</a></li>
+  <li><a href="../classes/PoolIntArray.html">PoolIntArray</a></li>
+  <li><a href="../classes/PoolRealArray.html">PoolRealArray</a></li>
+  <li><a href="../classes/PoolStringArray.html">PoolStringArray</a></li>
+  <li><a href="../classes/PoolVector2Array.html">PoolVector2Array</a></li>
+  <li><a href="../classes/PoolVector3Array.html">PoolVector3Array</a></li>
+  <li><a href="../classes/Quat.html">Quat</a></li>
+  <li><a href="../classes/RID.html">RID</a></li>
+  <li><a href="../classes/Rect2.html">Rect2</a></li>
+  <li><a href="../classes/String.html">String</a></li>
+  <li><a href="../classes/StringName.html">StringName</a></li>
+  <li><a href="../classes/Transform.html">Transform</a></li>
+  <li><a href="../classes/Transform2D.html">Transform2D</a></li>
+  <li><a href="../classes/Variant.html">Variant</a></li>
+  <li><a href="../classes/Vector2.html">Vector2</a></li>
+  <li><a href="../classes/Vector3.html">Vector3</a></li>
+</ul>
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/Enumerations.html">Enumerations</a></li>
+  <li><a href="../modules/GD.html">GD</a></li>
+  <li><a href="../modules/Globals.html">Globals</a></li>
+  <li><a href="../modules/OOP.html">OOP</a></li>
+  <li><a href="../modules/math_extras.html">math_extras</a></li>
+  <li><a href="../modules/package_extras.html">package_extras</a></li>
+  <li><a href="../modules/string_extras.html">string_extras</a></li>
+</ul>
+<h2>Scripts</h2>
+<ul class="nowrap">
+  <li><a href="../scripts/lps_coroutine.lua.html">lps_coroutine.lua</a></li>
+</ul>
+<h2>Topics</h2>
+<ul class="">
+  <li><a href="../topics/README.md.html">README</a></li>
+</ul>
+<h2>Examples</h2>
+<ul class="nowrap">
+  <li><a href="../examples/lua_repl.lua.html">lua_repl.lua</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Class <code>AABB</code></h1>
+<p>AABB metatype, wrapper for <code>godot_aabb</code>.</p>
+<p>
+
+<p> Constructed using the idiom <code>AABB(...)</code>, which calls <a href="../classes/AABB.html#AABB:__new">__new</a>.</p>
+
+<pre>
+typedef union godot_aabb {
+    float elements[<span class="number">6</span>];
+    struct { Vector3 position, size; };
+} godot_aabb;
+</pre>
+
+</p>
+
+
+<h2><a href="#Methods">Methods</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#AABB:encloses">AABB:encloses (with)</a></td>
+	<td class="summary">Returns <code>true</code> if this AABB completely encloses another one.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#AABB:expand">AABB:expand (point)</a></td>
+	<td class="summary">Returns this AABB expanded to include a given <code>point</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#AABB:get_area">AABB:get_area ()</a></td>
+	<td class="summary">Returns the volume of the AABB.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#AABB:get_endpoint">AABB:get_endpoint (index)</a></td>
+	<td class="summary">Gets the position of the 8 endpoints of the AABB in space.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#AABB:get_longest_axis">AABB:get_longest_axis ()</a></td>
+	<td class="summary">Returns the normalized longest axis of the AABB.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#AABB:get_longest_axis_index">AABB:get_longest_axis_index ()</a></td>
+	<td class="summary">Returns the index of the longest axis of the AABB (according to Vector3's <code>AXIS_*</code> constants).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#AABB:get_longest_axis_size">AABB:get_longest_axis_size ()</a></td>
+	<td class="summary">Returns the scalar length of the longest axis of the AABB.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#AABB:get_shortest_axis">AABB:get_shortest_axis ()</a></td>
+	<td class="summary">Returns the normalized shortest axis of the AABB.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#AABB:get_shortest_axis_index">AABB:get_shortest_axis_index ()</a></td>
+	<td class="summary">Returns the index of the shortest axis of the AABB (according to Vector3's <code>AXIS_*</code> constants).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#AABB:get_shortest_axis_size">AABB:get_shortest_axis_size ()</a></td>
+	<td class="summary">Returns the scalar length of the shortest axis of the AABB.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#AABB:get_support">AABB:get_support (direction)</a></td>
+	<td class="summary">Returns the support point in a given <code>direction</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#AABB:grow">AABB:grow (by)</a></td>
+	<td class="summary">Returns a copy of the AABB grown a given amount of units towards all the sides.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#AABB:has_no_area">AABB:has_no_area ()</a></td>
+	<td class="summary">Returns <code>true</code> if the AABB is flat or empty.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#AABB:has_no_surface">AABB:has_no_surface ()</a></td>
+	<td class="summary">Returns <code>true</code> if the AABB is empty.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#AABB:has_point">AABB:has_point (point)</a></td>
+	<td class="summary">Returns <code>true</code> if the AABB contains a point.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#AABB:intersection">AABB:intersection (with)</a></td>
+	<td class="summary">Returns the intersection between two AABB.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#AABB:intersects">AABB:intersects (with)</a></td>
+	<td class="summary">Returns <code>true</code> if the AABB overlaps with another.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#AABB:intersects_plane">AABB:intersects_plane (plane)</a></td>
+	<td class="summary">Returns <code>true</code> if the AABB is on both sides of a plane.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#AABB:intersects_segment">AABB:intersects_segment (from, to)</a></td>
+	<td class="summary">Returns <code>true</code> if the AABB intersects the line segment between <code>from</code> and <code>to</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#AABB:merge">AABB:merge (with)</a></td>
+	<td class="summary">Returns a larger AABB that contains both this AABB and <code>with</code>.</td>
+	</tr>
+</table>
+<h2><a href="#Metamethods">Metamethods</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#AABB:__concat">AABB:__concat (a, b)</a></td>
+	<td class="summary">Concatenates values.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#AABB:__eq">AABB:__eq (a, b)</a></td>
+	<td class="summary">Equality operation
+ If either <code>a</code> or <code>b</code> are not of type <a href="../classes/AABB.html#">AABB</a>, always return <code>false</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#AABB:__new">AABB:__new (...)</a></td>
+	<td class="summary">AABB constructor, called by the idiom <code>AABB(...)</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#AABB:__tostring">AABB:__tostring ()</a></td>
+	<td class="summary">Returns a Lua string representation of this AABB.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Methods"></a>Methods</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "AABB:encloses"></a>
+    <strong>AABB:encloses (with)</strong>
+    </dt>
+    <dd>
+    Returns <code>true</code> if this AABB completely encloses another one.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">with</span>
+            <span class="types"><a class="type" href="../classes/AABB.html#">AABB</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "AABB:expand"></a>
+    <strong>AABB:expand (point)</strong>
+    </dt>
+    <dd>
+    Returns this AABB expanded to include a given <code>point</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">point</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/AABB.html#">AABB</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "AABB:get_area"></a>
+    <strong>AABB:get_area ()</strong>
+    </dt>
+    <dd>
+    Returns the volume of the AABB.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "AABB:get_endpoint"></a>
+    <strong>AABB:get_endpoint (index)</strong>
+    </dt>
+    <dd>
+    Gets the position of the 8 endpoints of the AABB in space.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">index</span>
+            <span class="types"><span class="type">int</span></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "AABB:get_longest_axis"></a>
+    <strong>AABB:get_longest_axis ()</strong>
+    </dt>
+    <dd>
+    Returns the normalized longest axis of the AABB.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "AABB:get_longest_axis_index"></a>
+    <strong>AABB:get_longest_axis_index ()</strong>
+    </dt>
+    <dd>
+    Returns the index of the longest axis of the AABB (according to Vector3's <code>AXIS_*</code> constants).
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">int</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "AABB:get_longest_axis_size"></a>
+    <strong>AABB:get_longest_axis_size ()</strong>
+    </dt>
+    <dd>
+    Returns the scalar length of the longest axis of the AABB.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "AABB:get_shortest_axis"></a>
+    <strong>AABB:get_shortest_axis ()</strong>
+    </dt>
+    <dd>
+    Returns the normalized shortest axis of the AABB.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "AABB:get_shortest_axis_index"></a>
+    <strong>AABB:get_shortest_axis_index ()</strong>
+    </dt>
+    <dd>
+    Returns the index of the shortest axis of the AABB (according to Vector3's <code>AXIS_*</code> constants).
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">int</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "AABB:get_shortest_axis_size"></a>
+    <strong>AABB:get_shortest_axis_size ()</strong>
+    </dt>
+    <dd>
+    Returns the scalar length of the shortest axis of the AABB.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "AABB:get_support"></a>
+    <strong>AABB:get_support (direction)</strong>
+    </dt>
+    <dd>
+    Returns the support point in a given <code>direction</code>.
+ This is useful for collision detection algorithms.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">direction</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "AABB:grow"></a>
+    <strong>AABB:grow (by)</strong>
+    </dt>
+    <dd>
+    Returns a copy of the AABB grown a given amount of units towards all the sides.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">by</span>
+            <span class="types"><span class="type">number</span></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/AABB.html#">AABB</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "AABB:has_no_area"></a>
+    <strong>AABB:has_no_area ()</strong>
+    </dt>
+    <dd>
+    Returns <code>true</code> if the AABB is flat or empty.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "AABB:has_no_surface"></a>
+    <strong>AABB:has_no_surface ()</strong>
+    </dt>
+    <dd>
+    Returns <code>true</code> if the AABB is empty.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "AABB:has_point"></a>
+    <strong>AABB:has_point (point)</strong>
+    </dt>
+    <dd>
+    Returns <code>true</code> if the AABB contains a point.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">point</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "AABB:intersection"></a>
+    <strong>AABB:intersection (with)</strong>
+    </dt>
+    <dd>
+    Returns the intersection between two AABB.  An empty AABB (size 0,0,0) is returned on failure.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">with</span>
+            <span class="types"><a class="type" href="../classes/AABB.html#">AABB</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/AABB.html#">AABB</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "AABB:intersects"></a>
+    <strong>AABB:intersects (with)</strong>
+    </dt>
+    <dd>
+    Returns <code>true</code> if the AABB overlaps with another.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">with</span>
+            <span class="types"><a class="type" href="../classes/AABB.html#">AABB</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "AABB:intersects_plane"></a>
+    <strong>AABB:intersects_plane (plane)</strong>
+    </dt>
+    <dd>
+    Returns <code>true</code> if the AABB is on both sides of a plane.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">plane</span>
+            <span class="types"><a class="type" href="../classes/Plane.html#">Plane</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "AABB:intersects_segment"></a>
+    <strong>AABB:intersects_segment (from, to)</strong>
+    </dt>
+    <dd>
+    Returns <code>true</code> if the AABB intersects the line segment between <code>from</code> and <code>to</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">from</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+        </li>
+        <li><span class="parameter">to</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "AABB:merge"></a>
+    <strong>AABB:merge (with)</strong>
+    </dt>
+    <dd>
+    Returns a larger AABB that contains both this AABB and <code>with</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">with</span>
+            <span class="types"><a class="type" href="../classes/AABB.html#">AABB</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/AABB.html#">AABB</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Metamethods"></a>Metamethods</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "AABB:__concat"></a>
+    <strong>AABB:__concat (a, b)</strong>
+    </dt>
+    <dd>
+    Concatenates values.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+          First value, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+        <li><span class="parameter">b</span>
+          First value, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "AABB:__eq"></a>
+    <strong>AABB:__eq (a, b)</strong>
+    </dt>
+    <dd>
+    Equality operation
+ If either <code>a</code> or <code>b</code> are not of type <a href="../classes/AABB.html#">AABB</a>, always return <code>false</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+            <span class="types"><a class="type" href="../classes/AABB.html#">AABB</a></span>
+
+
+
+        </li>
+        <li><span class="parameter">b</span>
+            <span class="types"><a class="type" href="../classes/AABB.html#">AABB</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "AABB:__new"></a>
+    <strong>AABB:__new (...)</strong>
+    </dt>
+    <dd>
+
+<p>AABB constructor, called by the idiom <code>AABB(...)</code>. </p>
+
+<ul>
+    <li><code>AABB()</code>: all zeros (<code>AABB() == AABB(Vector3.ZERO, Vector3.ZERO)</code>)</li>
+    <li><code>AABB(Vector3 position, Vector3 size)</code>: set position and size</li>
+    <li><code>AABB(AABB other)</code>: copy values from <code>other</code></li>
+</ul>
+
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/AABB.html#">AABB</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "AABB:__tostring"></a>
+    <strong>AABB:__tostring ()</strong>
+    </dt>
+    <dd>
+    Returns a Lua string representation of this AABB.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2021-09-07 13:06:11 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

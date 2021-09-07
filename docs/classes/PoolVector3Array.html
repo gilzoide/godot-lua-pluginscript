@@ -1,0 +1,1144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Godot Lua PluginScript</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Methods">Methods</a></li>
+<li><a href="#Static_Functions">Static Functions </a></li>
+<li><a href="#Metamethods">Metamethods </a></li>
+<li><a href="#Class_PoolVector3Array_Read">Class PoolVector3Array.Read </a></li>
+<li><a href="#Class_PoolVector3Array_Write">Class PoolVector3Array.Write </a></li>
+</ul>
+
+
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><a href="../classes/AABB.html">AABB</a></li>
+  <li><a href="../classes/Array.html">Array</a></li>
+  <li><a href="../classes/Basis.html">Basis</a></li>
+  <li><a href="../classes/Color.html">Color</a></li>
+  <li><a href="../classes/Dictionary.html">Dictionary</a></li>
+  <li><a href="../classes/NodePath.html">NodePath</a></li>
+  <li><a href="../classes/Object.html">Object</a></li>
+  <li><a href="../classes/Plane.html">Plane</a></li>
+  <li><a href="../classes/PoolByteArray.html">PoolByteArray</a></li>
+  <li><a href="../classes/PoolColorArray.html">PoolColorArray</a></li>
+  <li><a href="../classes/PoolIntArray.html">PoolIntArray</a></li>
+  <li><a href="../classes/PoolRealArray.html">PoolRealArray</a></li>
+  <li><a href="../classes/PoolStringArray.html">PoolStringArray</a></li>
+  <li><a href="../classes/PoolVector2Array.html">PoolVector2Array</a></li>
+  <li><strong>PoolVector3Array</strong></li>
+  <li><a href="../classes/Quat.html">Quat</a></li>
+  <li><a href="../classes/RID.html">RID</a></li>
+  <li><a href="../classes/Rect2.html">Rect2</a></li>
+  <li><a href="../classes/String.html">String</a></li>
+  <li><a href="../classes/StringName.html">StringName</a></li>
+  <li><a href="../classes/Transform.html">Transform</a></li>
+  <li><a href="../classes/Transform2D.html">Transform2D</a></li>
+  <li><a href="../classes/Variant.html">Variant</a></li>
+  <li><a href="../classes/Vector2.html">Vector2</a></li>
+  <li><a href="../classes/Vector3.html">Vector3</a></li>
+</ul>
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/Enumerations.html">Enumerations</a></li>
+  <li><a href="../modules/GD.html">GD</a></li>
+  <li><a href="../modules/Globals.html">Globals</a></li>
+  <li><a href="../modules/OOP.html">OOP</a></li>
+  <li><a href="../modules/math_extras.html">math_extras</a></li>
+  <li><a href="../modules/package_extras.html">package_extras</a></li>
+  <li><a href="../modules/string_extras.html">string_extras</a></li>
+</ul>
+<h2>Scripts</h2>
+<ul class="nowrap">
+  <li><a href="../scripts/lps_coroutine.lua.html">lps_coroutine.lua</a></li>
+</ul>
+<h2>Topics</h2>
+<ul class="">
+  <li><a href="../topics/README.md.html">README</a></li>
+</ul>
+<h2>Examples</h2>
+<ul class="nowrap">
+  <li><a href="../examples/lua_repl.lua.html">lua_repl.lua</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Class <code>PoolVector3Array</code></h1>
+<p>PoolVector3Array metatype, wrapper for <code>godot_pool_vector3_array</code></p>
+<p>
+
+</p>
+
+
+<h2><a href="#Methods">Methods</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#PoolVector3Array:append">PoolVector3Array:append (...)</a></td>
+	<td class="summary">Alias for <a href="../classes/PoolVector3Array.html#PoolVector3Array:push_back">push_back</a>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PoolVector3Array:empty">PoolVector3Array:empty ()</a></td>
+	<td class="summary">Returns <code>true</code> if the array is empty.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PoolVector3Array:extend">PoolVector3Array:extend (iterable)</a></td>
+	<td class="summary">Append all vectors of <code>iterable</code> at the end of Array.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PoolVector3Array:get">PoolVector3Array:get (index)</a></td>
+	<td class="summary">Get the vector at <code>index</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PoolVector3Array:get_buffer">PoolVector3Array:get_buffer ()</a></td>
+	<td class="summary">Returns array's buffer as a PoolByteArray.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PoolVector3Array:insert">PoolVector3Array:insert (index, value)</a></td>
+	<td class="summary">Inserts a new element at a given position in the array.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PoolVector3Array:invert">PoolVector3Array:invert ()</a></td>
+	<td class="summary">Reverses the order of the elements in the array.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PoolVector3Array:push_back">PoolVector3Array:push_back (...)</a></td>
+	<td class="summary">Append elements at the end of the array.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PoolVector3Array:read">PoolVector3Array:read ()</a></td>
+	<td class="summary">Returns the <a href="#Class_PoolVector3Array_Read">Read</a> access for the array.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PoolVector3Array:remove">PoolVector3Array:remove (index)</a></td>
+	<td class="summary">Removes an element from the array by index.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PoolVector3Array:resize">PoolVector3Array:resize (size)</a></td>
+	<td class="summary">Sets the size of the array.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PoolVector3Array:safe_get">PoolVector3Array:safe_get (index)</a></td>
+	<td class="summary">Get the vector at <code>index</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PoolVector3Array:safe_set">PoolVector3Array:safe_set (index, value)</a></td>
+	<td class="summary">Set a new vector for <code>index</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PoolVector3Array:set">PoolVector3Array:set (index, value)</a></td>
+	<td class="summary">Set a new vector for <code>index</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PoolVector3Array:size">PoolVector3Array:size ()</a></td>
+	<td class="summary">Returns the size of the array.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PoolVector3Array:write">PoolVector3Array:write ()</a></td>
+	<td class="summary">Returns the <a href="#Class_PoolVector3Array_Write">Write</a> access for the array.</td>
+	</tr>
+</table>
+<h2><a href="#Static_Functions">Static Functions </a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#PoolVector3Array:from">PoolVector3Array:from (iterable)</a></td>
+	<td class="summary">Create a new array with the elements from <code>iterable</code>.</td>
+	</tr>
+</table>
+<h2><a href="#Metamethods">Metamethods </a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#PoolVector3Array:__concat">PoolVector3Array:__concat (a, b)</a></td>
+	<td class="summary">Concatenates values.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PoolVector3Array:__index">PoolVector3Array:__index (index)</a></td>
+	<td class="summary">Returns method named <code>index</code> or the result of <a href="../classes/PoolVector3Array.html#PoolVector3Array:safe_get">safe_get</a>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PoolVector3Array:__ipairs">PoolVector3Array:__ipairs ()</a></td>
+	<td class="summary">Returns an iterator for array's elements, called by the idiom <code>ipairs(array)</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PoolVector3Array:__len">PoolVector3Array:__len ()</a></td>
+	<td class="summary">Alias for <a href="../classes/PoolVector3Array.html#PoolVector3Array:size">size</a>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PoolVector3Array:__new">PoolVector3Array:__new (...)</a></td>
+	<td class="summary">PoolVector3Array constructor, called by the idiom <code>PoolVector3Array(...)</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PoolVector3Array:__newindex">PoolVector3Array:__newindex (index, value)</a></td>
+	<td class="summary">Alias for <a href="../classes/PoolVector3Array.html#PoolVector3Array:safe_set">safe_set</a>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PoolVector3Array:__pairs">PoolVector3Array:__pairs ()</a></td>
+	<td class="summary">Alias for <a href="../classes/PoolVector3Array.html#PoolVector3Array:__ipairs">__ipairs</a>, called by the idiom <code>pairs(array)</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PoolVector3Array:__tostring">PoolVector3Array:__tostring ()</a></td>
+	<td class="summary">Returns a Lua string representation of this array.</td>
+	</tr>
+</table>
+<h2><a href="#Class_PoolVector3Array_Read">Class PoolVector3Array.Read </a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Read:assign">Read:assign (other)</a></td>
+	<td class="summary">Assign a new Read access.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Read:copy">Read:copy ()</a></td>
+	<td class="summary">Create a copy of Read access.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Read:destroy">Read:destroy ()</a></td>
+	<td class="summary">Destroy a Read access.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Read:ptr">Read:ptr ()</a></td>
+	<td class="summary">Get Read access povector3er.</td>
+	</tr>
+</table>
+<h2><a href="#Class_PoolVector3Array_Write">Class PoolVector3Array.Write </a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Write:assign">Write:assign (other)</a></td>
+	<td class="summary">Assign a new Write access.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Write:copy">Write:copy ()</a></td>
+	<td class="summary">Create a copy of Write access.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Write:destroy">Write:destroy ()</a></td>
+	<td class="summary">Destroy a Write access.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Write:ptr">Write:ptr ()</a></td>
+	<td class="summary">Get Write access pointer.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Methods"></a>Methods</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "PoolVector3Array:append"></a>
+    <strong>PoolVector3Array:append (...)</strong>
+    </dt>
+    <dd>
+    Alias for <a href="../classes/PoolVector3Array.html#PoolVector3Array:push_back">push_back</a>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/PoolVector3Array.html#PoolVector3Array:push_back">push_back</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "PoolVector3Array:empty"></a>
+    <strong>PoolVector3Array:empty ()</strong>
+    </dt>
+    <dd>
+    Returns <code>true</code> if the array is empty.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "PoolVector3Array:extend"></a>
+    <strong>PoolVector3Array:extend (iterable)</strong>
+    </dt>
+    <dd>
+    Append all vectors of <code>iterable</code> at the end of Array.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">iterable</span>
+          Any object iterable by <a href="https://www.lua.org/manual/5.1/manual.html#pdf-ipairs">ipairs</a>, including Lua tables, <a href="../classes/Array.html#">Array</a>s and <code>Pool*Array</code>s.
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "PoolVector3Array:get"></a>
+    <strong>PoolVector3Array:get (index)</strong>
+    </dt>
+    <dd>
+    Get the vector at <code>index</code>.
+ If <code>index</code> is invalid (<code>index &lt; 0</code> or <code>index &gt;= size()</code>), the application will crash.
+ For a safe version that returns <code>nil</code> if <code>index</code> is invalid, use <a href="../classes/PoolVector3Array.html#PoolVector3Array:safe_get">safe_get</a> or the idiom <code>array[index]</code> instead.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">index</span>
+            <span class="types"><span class="type">int</span></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/PoolVector3Array.html#PoolVector3Array:safe_get">safe_get</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "PoolVector3Array:get_buffer"></a>
+    <strong>PoolVector3Array:get_buffer ()</strong>
+    </dt>
+    <dd>
+    Returns array's buffer as a PoolByteArray.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/PoolByteArray.html#">PoolByteArray</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "PoolVector3Array:insert"></a>
+    <strong>PoolVector3Array:insert (index, value)</strong>
+    </dt>
+    <dd>
+    Inserts a new element at a given position in the array.
+ The position must be valid, or at the end of the array (<code>index == size()</code>).
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">index</span>
+            <span class="types"><span class="type">int</span></span>
+
+
+
+        </li>
+        <li><span class="parameter">value</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "PoolVector3Array:invert"></a>
+    <strong>PoolVector3Array:invert ()</strong>
+    </dt>
+    <dd>
+    Reverses the order of the elements in the array.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "PoolVector3Array:push_back"></a>
+    <strong>PoolVector3Array:push_back (...)</strong>
+    </dt>
+    <dd>
+    Append elements at the end of the array.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+          Vectors to be appended
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "PoolVector3Array:read"></a>
+    <strong>PoolVector3Array:read ()</strong>
+    </dt>
+    <dd>
+    Returns the <a href="#Class_PoolVector3Array_Read">Read</a> access for the array.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/PoolVector3Array.html#PoolVector3Array.Read">Read</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "PoolVector3Array:remove"></a>
+    <strong>PoolVector3Array:remove (index)</strong>
+    </dt>
+    <dd>
+    Removes an element from the array by index.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">index</span>
+            <span class="types"><span class="type">int</span></span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "PoolVector3Array:resize"></a>
+    <strong>PoolVector3Array:resize (size)</strong>
+    </dt>
+    <dd>
+    Sets the size of the array.
+ If the array is grown, reserves elements at the end of the array.
+ If the array is shrunk, truncates the array to the new size.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">size</span>
+            <span class="types"><span class="type">int</span></span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "PoolVector3Array:safe_get"></a>
+    <strong>PoolVector3Array:safe_get (index)</strong>
+    </dt>
+    <dd>
+    Get the vector at <code>index</code>.
+ The idiom <code>array[index]</code> also calls this method.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">index</span>
+            <span class="types"><span class="type">int</span></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+    </ol>
+     <h3>Or</h3>
+    <ol>
+
+           <span class="types"><span class="type">nil</span></span>
+        If index is invalid (<code>index &lt; 0</code> or <code>index &gt;= size()</code>)
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/PoolVector3Array.html#PoolVector3Array:get">get</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "PoolVector3Array:safe_set"></a>
+    <strong>PoolVector3Array:safe_set (index, value)</strong>
+    </dt>
+    <dd>
+    Set a new vector for <code>index</code>.
+ If <code>index &gt;= size()</code>, the array is <a href="../classes/PoolVector3Array.html#PoolVector3Array:resize">resize</a>d first.
+ The idiom <code>array[index] = value</code> also calls this method.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">index</span>
+            <span class="types"><span class="type">int</span></span>
+
+
+
+        </li>
+        <li><span class="parameter">value</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+        </li>
+    </ul>
+
+
+    <h3>Raises:</h3>
+    If <code>index &lt; 0</code>
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/PoolVector3Array.html#PoolVector3Array:set">set</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "PoolVector3Array:set"></a>
+    <strong>PoolVector3Array:set (index, value)</strong>
+    </dt>
+    <dd>
+    Set a new vector for <code>index</code>.
+ If <code>index</code> is invalid (<code>index &lt; 0</code> or <code>index &gt;= size()</code>), the application will crash.
+ For a safe approach that <a href="../classes/PoolVector3Array.html#PoolVector3Array:resize">resize</a>s if <code>index &gt;= size()</code>, use <a href="../classes/PoolVector3Array.html#PoolVector3Array:safe_set">safe_set</a> or the idiom <code>array[index] = value</code> instead.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">index</span>
+            <span class="types"><span class="type">int</span></span>
+
+
+
+        </li>
+        <li><span class="parameter">value</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+        </li>
+    </ul>
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/PoolVector3Array.html#PoolVector3Array:safe_set">safe_set</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "PoolVector3Array:size"></a>
+    <strong>PoolVector3Array:size ()</strong>
+    </dt>
+    <dd>
+    Returns the size of the array.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">int</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "PoolVector3Array:write"></a>
+    <strong>PoolVector3Array:write ()</strong>
+    </dt>
+    <dd>
+    Returns the <a href="#Class_PoolVector3Array_Write">Write</a> access for the array.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/PoolVector3Array.html#PoolVector3Array.Write">Write</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header has-description"><a name="Static_Functions"></a>Static Functions </h2>
+
+          <div class="section-description">
+           These don't receive <code>self</code> and should be called directly as <code>Array.static_function(...)</code>
+          </div>
+    <dl class="function">
+    <dt>
+    <a name = "PoolVector3Array:from"></a>
+    <strong>PoolVector3Array:from (iterable)</strong>
+    </dt>
+    <dd>
+    Create a new array with the elements from <code>iterable</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">iterable</span>
+          If another PoolVector3Array is passed, return a copy of it.
+  Otherwise, the new array is <a href="../classes/PoolVector3Array.html#PoolVector3Array:extend">extend</a>ed with <code>iterable</code>.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/PoolVector3Array.html#">PoolVector3Array</a></span>
+
+
+
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/PoolVector3Array.html#PoolVector3Array:extend">extend</a>
+    </ul>
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="keyword">local</span> array = PoolVector3Array.from(some_table_or_other_iterable)</pre>
+    </ul>
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Metamethods"></a>Metamethods </h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "PoolVector3Array:__concat"></a>
+    <strong>PoolVector3Array:__concat (a, b)</strong>
+    </dt>
+    <dd>
+    Concatenates values.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+          First value, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+        <li><span class="parameter">b</span>
+          First value, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "PoolVector3Array:__index"></a>
+    <strong>PoolVector3Array:__index (index)</strong>
+    </dt>
+    <dd>
+    Returns method named <code>index</code> or the result of <a href="../classes/PoolVector3Array.html#PoolVector3Array:safe_get">safe_get</a>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">index</span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        Method or element or <code>nil</code>
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/PoolVector3Array.html#PoolVector3Array:safe_get">safe_get</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "PoolVector3Array:__ipairs"></a>
+    <strong>PoolVector3Array:__ipairs ()</strong>
+    </dt>
+    <dd>
+    Returns an iterator for array's elements, called by the idiom <code>ipairs(array)</code>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+           <span class="types"><span class="type">function</span></span>
+
+
+</li>
+        <li>
+           <span class="types"><a class="type" href="../classes/PoolVector3Array.html#">PoolVector3Array</a></span>
+        self</li>
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="keyword">for</span> i, vector <span class="keyword">in</span> <span class="global">ipairs</span>(array) <span class="keyword">do</span>
+    <span class="comment">-- do something
+</span><span class="keyword">end</span></pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "PoolVector3Array:__len"></a>
+    <strong>PoolVector3Array:__len ()</strong>
+    </dt>
+    <dd>
+    Alias for <a href="../classes/PoolVector3Array.html#PoolVector3Array:size">size</a>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">int</span></span>
+
+
+
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/PoolVector3Array.html#PoolVector3Array:size">size</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "PoolVector3Array:__new"></a>
+    <strong>PoolVector3Array:__new (...)</strong>
+    </dt>
+    <dd>
+    PoolVector3Array constructor, called by the idiom <code>PoolVector3Array(...)</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+          Initial elements, added with <a href="../classes/PoolVector3Array.html#PoolVector3Array:push_back">push_back</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/PoolVector3Array.html#">PoolVector3Array</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "PoolVector3Array:__newindex"></a>
+    <strong>PoolVector3Array:__newindex (index, value)</strong>
+    </dt>
+    <dd>
+    Alias for <a href="../classes/PoolVector3Array.html#PoolVector3Array:safe_set">safe_set</a>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">index</span>
+            <span class="types"><span class="type">int</span></span>
+
+
+
+        </li>
+        <li><span class="parameter">value</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/PoolVector3Array.html#PoolVector3Array:safe_set">safe_set</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "PoolVector3Array:__pairs"></a>
+    <strong>PoolVector3Array:__pairs ()</strong>
+    </dt>
+    <dd>
+    Alias for <a href="../classes/PoolVector3Array.html#PoolVector3Array:__ipairs">__ipairs</a>, called by the idiom <code>pairs(array)</code>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+           <span class="types"><span class="type">function</span></span>
+
+
+</li>
+        <li>
+           <span class="types"><a class="type" href="../classes/PoolVector3Array.html#">PoolVector3Array</a></span>
+        self</li>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "PoolVector3Array:__tostring"></a>
+    <strong>PoolVector3Array:__tostring ()</strong>
+    </dt>
+    <dd>
+    Returns a Lua string representation of this array.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header has-description"><a name="Class_PoolVector3Array_Read"></a>Class PoolVector3Array.Read </h2>
+
+          <div class="section-description">
+          PoolVector3Array.Read access metatype, wrapper for <code>godot_pool_vector3_array_read_access</code>.
+          </div>
+    <dl class="function">
+    <dt>
+    <a name = "Read:assign"></a>
+    <strong>Read:assign (other)</strong>
+    </dt>
+    <dd>
+    Assign a new Read access.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">other</span>
+            <span class="types"><a class="type" href="../classes/PoolVector3Array.html#PoolVector3Array.Read">Read</a></span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Read:copy"></a>
+    <strong>Read:copy ()</strong>
+    </dt>
+    <dd>
+    Create a copy of Read access.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/PoolVector3Array.html#PoolVector3Array.Read">Read</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Read:destroy"></a>
+    <strong>Read:destroy ()</strong>
+    </dt>
+    <dd>
+    Destroy a Read access.
+ Holding a valid access object may lock a PoolVector3Array, so this
+ method should be called manually when access is no longer needed.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Read:ptr"></a>
+    <strong>Read:ptr ()</strong>
+    </dt>
+    <dd>
+    Get Read access povector3er.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">const Vector3 *</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header has-description"><a name="Class_PoolVector3Array_Write"></a>Class PoolVector3Array.Write </h2>
+
+          <div class="section-description">
+          PoolVector3Array.Write access metatype, wrapper for <code>godot_pool_vector3_array_write_access</code>.
+          </div>
+    <dl class="function">
+    <dt>
+    <a name = "Write:assign"></a>
+    <strong>Write:assign (other)</strong>
+    </dt>
+    <dd>
+    Assign a new Write access.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">other</span>
+            <span class="types"><a class="type" href="../classes/PoolVector3Array.html#PoolVector3Array.Write">Write</a></span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Write:copy"></a>
+    <strong>Write:copy ()</strong>
+    </dt>
+    <dd>
+    Create a copy of Write access.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/PoolVector3Array.html#PoolVector3Array.Write">Write</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Write:destroy"></a>
+    <strong>Write:destroy ()</strong>
+    </dt>
+    <dd>
+    Destroy a Write access.
+ Holding a valid access object may lock a PoolVector3Array, so this
+ method should be called manually when access is no longer needed.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Write:ptr"></a>
+    <strong>Write:ptr ()</strong>
+    </dt>
+    <dd>
+    Get Write access pointer.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3 *</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2021-09-07 13:06:11 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

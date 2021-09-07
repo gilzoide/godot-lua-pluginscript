@@ -1,0 +1,502 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Godot Lua PluginScript</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+<li><a href="#Fields">Fields</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/Enumerations.html">Enumerations</a></li>
+  <li><strong>GD</strong></li>
+  <li><a href="../modules/Globals.html">Globals</a></li>
+  <li><a href="../modules/OOP.html">OOP</a></li>
+  <li><a href="../modules/math_extras.html">math_extras</a></li>
+  <li><a href="../modules/package_extras.html">package_extras</a></li>
+  <li><a href="../modules/string_extras.html">string_extras</a></li>
+</ul>
+<h2>Scripts</h2>
+<ul class="nowrap">
+  <li><a href="../scripts/lps_coroutine.lua.html">lps_coroutine.lua</a></li>
+</ul>
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><a href="../classes/AABB.html">AABB</a></li>
+  <li><a href="../classes/Array.html">Array</a></li>
+  <li><a href="../classes/Basis.html">Basis</a></li>
+  <li><a href="../classes/Color.html">Color</a></li>
+  <li><a href="../classes/Dictionary.html">Dictionary</a></li>
+  <li><a href="../classes/NodePath.html">NodePath</a></li>
+  <li><a href="../classes/Object.html">Object</a></li>
+  <li><a href="../classes/Plane.html">Plane</a></li>
+  <li><a href="../classes/PoolByteArray.html">PoolByteArray</a></li>
+  <li><a href="../classes/PoolColorArray.html">PoolColorArray</a></li>
+  <li><a href="../classes/PoolIntArray.html">PoolIntArray</a></li>
+  <li><a href="../classes/PoolRealArray.html">PoolRealArray</a></li>
+  <li><a href="../classes/PoolStringArray.html">PoolStringArray</a></li>
+  <li><a href="../classes/PoolVector2Array.html">PoolVector2Array</a></li>
+  <li><a href="../classes/PoolVector3Array.html">PoolVector3Array</a></li>
+  <li><a href="../classes/Quat.html">Quat</a></li>
+  <li><a href="../classes/Rect2.html">Rect2</a></li>
+  <li><a href="../classes/RID.html">RID</a></li>
+  <li><a href="../classes/String.html">String</a></li>
+  <li><a href="../classes/StringName.html">StringName</a></li>
+  <li><a href="../classes/Transform.html">Transform</a></li>
+  <li><a href="../classes/Transform2D.html">Transform2D</a></li>
+  <li><a href="../classes/Variant.html">Variant</a></li>
+  <li><a href="../classes/Vector2.html">Vector2</a></li>
+  <li><a href="../classes/Vector3.html">Vector3</a></li>
+</ul>
+<h2>Topics</h2>
+<ul class="">
+  <li><a href="../topics/README.md.html">README</a></li>
+</ul>
+<h2>Examples</h2>
+<ul class="nowrap">
+  <li><a href="../examples/lua_repl.lua.html">lua_repl.lua</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>GD</code></h1>
+<p>Godot enumerations and functions, available globally as the <a href="../modules/GD.html#">GD</a> table.</p>
+<p> Godot global constants from <code>godot_get_global_constants</code> are also available,
+ like <code>OK</code>, <code>ERR_ALREADY_EXISTS</code>, <code>TYPE_NIL</code>, <code>KEY_A</code>, <code>BUTTON_LEFT</code>,
+ <code>JOY_START</code>, <code>HALIGN_CENTER</code> and <code>MIDI_MESSAGE_NOTE_OFF</code>.</p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#load">load (path)</a></td>
+	<td class="summary">Loads a Resource by path, similar to GDScript's <a href="https://docs.godotengine.org/en/stable/classes/class_%40gdscript.html#class-gdscript-method-load">load</a></td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#print">print (...)</a></td>
+	<td class="summary">Print a message to Godot's Output panel, with values separated by tabs</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#print_error">print_error (...)</a></td>
+	<td class="summary">Print an error to Godot's Output panel, with values separated by tabs</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#print_warning">print_warning (...)</a></td>
+	<td class="summary">Print a warning to Godot's Output panel, with values separated by tabs</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#str">str (value)</a></td>
+	<td class="summary">Convert any value to a <code>godot_string</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#yield">yield ([object[, signal_name]])</a></td>
+	<td class="summary">Yield the current running Lua thread, returning a wrapper Object with the <a href="../scripts/lps_coroutine.lua.html#">lps_coroutine.lua</a> script attached.</td>
+	</tr>
+</table>
+<h2><a href="#Fields">Fields</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#CallError">CallError</a></td>
+	<td class="summary"><a href="../modules/Enumerations.html#CallError">Enumerations.CallError</a></td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Error">Error</a></td>
+	<td class="summary"><a href="../modules/Enumerations.html#Error">Enumerations.Error</a></td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PropertyHint">PropertyHint</a></td>
+	<td class="summary"><a href="../modules/Enumerations.html#PropertyHint">Enumerations.PropertyHint</a></td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PropertyUsage">PropertyUsage</a></td>
+	<td class="summary"><a href="../modules/Enumerations.html#PropertyUsage">Enumerations.PropertyUsage</a></td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#RPCMode">RPCMode</a></td>
+	<td class="summary"><a href="../modules/Enumerations.html#RPCMode">Enumerations.RPCMode</a></td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#VariantType">VariantType</a></td>
+	<td class="summary"><a href="../modules/Enumerations.html#VariantType">Enumerations.VariantType</a></td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#api">api</a></td>
+	<td class="summary">(<code>const godot_gdnative_core_api_struct *</code>) GDNative core API 1.0</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#api_1_1">api_1_1</a></td>
+	<td class="summary">(<code>const godot_gdnative_core_1_1_api_struct *</code>) GDNative core API 1.1</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#api_1_2">api_1_2</a></td>
+	<td class="summary">(<code>const godot_gdnative_core_1_2_api_struct *</code>) GDNative core API 1.2</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#gdnativelibrary">gdnativelibrary</a></td>
+	<td class="summary">(<a href="../classes/Object.html#">Object</a>) <a href="https://docs.godotengine.org/en/stable/classes/class_gdnativelibrary.html">GDNativeLibrary</a> instance</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "load"></a>
+    <strong>load (path)</strong>
+    </dt>
+    <dd>
+    Loads a Resource by path, similar to GDScript's <a href="https://docs.godotengine.org/en/stable/classes/class_%40gdscript.html#class-gdscript-method-load">load</a>
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">path</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "print"></a>
+    <strong>print (...)</strong>
+    </dt>
+    <dd>
+    Print a message to Godot's Output panel, with values separated by tabs
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "print_error"></a>
+    <strong>print_error (...)</strong>
+    </dt>
+    <dd>
+    Print an error to Godot's Output panel, with values separated by tabs
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "print_warning"></a>
+    <strong>print_warning (...)</strong>
+    </dt>
+    <dd>
+    Print a warning to Godot's Output panel, with values separated by tabs
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "str"></a>
+    <strong>str (value)</strong>
+    </dt>
+    <dd>
+    Convert any value to a <code>godot_string</code>.
+ If <code>value</code> is already a <code>godot_string</code>, return it unmodified.
+ Otherwise, constructs a Variant and calls <code>as_string</code> on it.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">value</span>
+          Value to be stringified
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "yield"></a>
+    <strong>yield ([object[, signal_name]])</strong>
+    </dt>
+    <dd>
+    Yield the current running Lua thread, returning a wrapper Object with the <a href="../scripts/lps_coroutine.lua.html#">lps_coroutine.lua</a> script attached.
+ If an <code>object</code> and <code>signal</code> are passed, this coroutine will resume automatically when object emits the signal.
+ If the same coroutine yields more than once, the same object will be returned.
+ This is similar to GDScript's <a href="https://docs.godotengine.org/en/stable/classes/class_%40gdscript.html#class-gdscript-method-yield">yield</a>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">object</span>
+            <span class="types"><a class="type" href="../classes/Object.html#">Object</a></span>
+
+
+
+         (<em>optional</em>)
+        </li>
+        <li><span class="parameter">signal_name</span>
+
+
+
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Object.html#">Object</a></span>
+        Coroutine object
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../scripts/lps_coroutine.lua.html#">lps_coroutine.lua</a>
+    </ul>
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="comment">-- self is a Node
+</span>GD.yield(self:get_tree():create_timer(<span class="number">2</span>), <span class="string">"timeout"</span>)
+<span class="global">print</span>(<span class="string">'2 seconds have passed!'</span>)</pre>
+    </ul>
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Fields"></a>Fields</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "CallError"></a>
+    <strong>CallError</strong>
+    </dt>
+    <dd>
+    <a href="../modules/Enumerations.html#CallError">Enumerations.CallError</a>
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Error"></a>
+    <strong>Error</strong>
+    </dt>
+    <dd>
+    <a href="../modules/Enumerations.html#Error">Enumerations.Error</a>
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "PropertyHint"></a>
+    <strong>PropertyHint</strong>
+    </dt>
+    <dd>
+    <a href="../modules/Enumerations.html#PropertyHint">Enumerations.PropertyHint</a>
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "PropertyUsage"></a>
+    <strong>PropertyUsage</strong>
+    </dt>
+    <dd>
+    <a href="../modules/Enumerations.html#PropertyUsage">Enumerations.PropertyUsage</a>
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "RPCMode"></a>
+    <strong>RPCMode</strong>
+    </dt>
+    <dd>
+    <a href="../modules/Enumerations.html#RPCMode">Enumerations.RPCMode</a>
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "VariantType"></a>
+    <strong>VariantType</strong>
+    </dt>
+    <dd>
+    <a href="../modules/Enumerations.html#VariantType">Enumerations.VariantType</a>
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "api"></a>
+    <strong>api</strong>
+    </dt>
+    <dd>
+    (<code>const godot_gdnative_core_api_struct *</code>) GDNative core API 1.0
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "api_1_1"></a>
+    <strong>api_1_1</strong>
+    </dt>
+    <dd>
+    (<code>const godot_gdnative_core_1_1_api_struct *</code>) GDNative core API 1.1
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "api_1_2"></a>
+    <strong>api_1_2</strong>
+    </dt>
+    <dd>
+    (<code>const godot_gdnative_core_1_2_api_struct *</code>) GDNative core API 1.2
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "gdnativelibrary"></a>
+    <strong>gdnativelibrary</strong>
+    </dt>
+    <dd>
+    (<a href="../classes/Object.html#">Object</a>) <a href="https://docs.godotengine.org/en/stable/classes/class_gdnativelibrary.html">GDNativeLibrary</a> instance
+
+
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2021-09-07 13:06:11 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Godot Lua PluginScript</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+
+
+<h2>Examples</h2>
+<ul class="nowrap">
+  <li><strong>lua_repl.lua</strong></li>
+</ul>
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/Enumerations.html">Enumerations</a></li>
+  <li><a href="../modules/GD.html">GD</a></li>
+  <li><a href="../modules/Globals.html">Globals</a></li>
+  <li><a href="../modules/OOP.html">OOP</a></li>
+  <li><a href="../modules/math_extras.html">math_extras</a></li>
+  <li><a href="../modules/package_extras.html">package_extras</a></li>
+  <li><a href="../modules/string_extras.html">string_extras</a></li>
+</ul>
+<h2>Scripts</h2>
+<ul class="nowrap">
+  <li><a href="../scripts/lps_coroutine.lua.html">lps_coroutine.lua</a></li>
+</ul>
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><a href="../classes/AABB.html">AABB</a></li>
+  <li><a href="../classes/Array.html">Array</a></li>
+  <li><a href="../classes/Basis.html">Basis</a></li>
+  <li><a href="../classes/Color.html">Color</a></li>
+  <li><a href="../classes/Dictionary.html">Dictionary</a></li>
+  <li><a href="../classes/NodePath.html">NodePath</a></li>
+  <li><a href="../classes/Object.html">Object</a></li>
+  <li><a href="../classes/Plane.html">Plane</a></li>
+  <li><a href="../classes/PoolByteArray.html">PoolByteArray</a></li>
+  <li><a href="../classes/PoolColorArray.html">PoolColorArray</a></li>
+  <li><a href="../classes/PoolIntArray.html">PoolIntArray</a></li>
+  <li><a href="../classes/PoolRealArray.html">PoolRealArray</a></li>
+  <li><a href="../classes/PoolStringArray.html">PoolStringArray</a></li>
+  <li><a href="../classes/PoolVector2Array.html">PoolVector2Array</a></li>
+  <li><a href="../classes/PoolVector3Array.html">PoolVector3Array</a></li>
+  <li><a href="../classes/Quat.html">Quat</a></li>
+  <li><a href="../classes/RID.html">RID</a></li>
+  <li><a href="../classes/Rect2.html">Rect2</a></li>
+  <li><a href="../classes/String.html">String</a></li>
+  <li><a href="../classes/StringName.html">StringName</a></li>
+  <li><a href="../classes/Transform.html">Transform</a></li>
+  <li><a href="../classes/Transform2D.html">Transform2D</a></li>
+  <li><a href="../classes/Variant.html">Variant</a></li>
+  <li><a href="../classes/Vector2.html">Vector2</a></li>
+  <li><a href="../classes/Vector3.html">Vector3</a></li>
+</ul>
+<h2>Topics</h2>
+<ul class="">
+  <li><a href="../topics/README.md.html">README</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+    <h2>lua_repl.lua</h2>
+<pre>
+<span class="comment">-- @file plugin/lua_repl.lua  A tool Node for building a Lua REPL in-editor
+</span><span class="comment">-- This file is part of Godot Lua PluginScript: https://github.com/gilzoide/godot-lua-pluginscript
+</span><span class="comment">--
+</span><span class="comment">-- Copyright (C) 2021 Gil Barbosa Reis.
+</span><span class="comment">--
+</span><span class="comment">-- Permission is hereby granted, free of charge, to any person obtaining a copy
+</span><span class="comment">-- of this software and associated documentation files (the “Software”), to
+</span><span class="comment">-- deal in the Software without restriction, including without limitation the
+</span><span class="comment">-- rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+</span><span class="comment">-- sell copies of the Software, and to permit persons to whom the Software is
+</span><span class="comment">-- furnished to do so, subject to the following conditions:
+</span><span class="comment">--
+</span><span class="comment">-- The above copyright notice and this permission notice shall be included in
+</span><span class="comment">-- all copies or substantial portions of the Software.
+</span><span class="comment">--
+</span><span class="comment">-- THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+</span><span class="comment">-- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+</span><span class="comment">-- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+</span><span class="comment">-- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+</span><span class="comment">-- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+</span><span class="comment">-- FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+</span><span class="comment">-- IN THE SOFTWARE.
+</span>
+<span class="keyword">local</span> LuaREPL = {
+	is_tool = <span class="keyword">true</span>,
+	extends = <span class="string">"Node"</span>,
+}
+
+<span class="keyword">local</span> index_G = { __index = _G }
+
+<span class="keyword">local</span> <span class="keyword">function</span> get_error(text)
+	text = <span class="global">tostring</span>(text)
+	<span class="keyword">return</span> <span class="string">'Error: '</span> .. (text:match(<span class="string">":%d+:%s*(.+)"</span>) <span class="keyword">or</span> text)
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> LuaREPL:_init()
+	<span class="comment">-- Local environment, to avoid messing up _G
+</span>	self.env = <span class="global">setmetatable</span>({
+		<span class="global">print</span> = <span class="keyword">function</span>(...)
+			<span class="keyword">return</span> self:<span class="global">print</span>(...)
+		<span class="keyword">end</span>,
+	}, index_G)
+<span class="keyword">end</span>
+
+<span class="comment">-- Cache nodes
+</span><span class="keyword">function</span> LuaREPL:_ready()
+	self.output = self:get_node(<span class="string">"Output"</span>)
+	self.line_edit = self:get_node(<span class="string">"Footer/LineEdit"</span>)
+<span class="keyword">end</span>
+
+<span class="comment">-- Prints a line to output
+</span><span class="keyword">function</span> LuaREPL:<span class="global">print</span>(...)
+	self.output:add_text(<span class="global">string</span>.join(<span class="string">'\t'</span>, ...))
+	self.output:add_text(<span class="string">'\n'</span>)
+<span class="keyword">end</span>
+
+<span class="comment">-- Runs a line, printing the results/error
+</span><span class="keyword">function</span> LuaREPL:dostring(text)
+	self:<span class="global">print</span>(<span class="string">'&gt; '</span> .. text)
+	text = <span class="global">tostring</span>(text):gsub(<span class="string">'^%s*%='</span>, <span class="string">''</span>, <span class="number">1</span>)
+	<span class="keyword">local</span> f, err_msg = <span class="global">load</span>(<span class="string">'return '</span> .. text, <span class="keyword">nil</span>, <span class="keyword">nil</span>, self.env)
+	<span class="keyword">if</span> <span class="keyword">not</span> f <span class="keyword">then</span>
+		f, err_msg = <span class="global">load</span>(text, <span class="keyword">nil</span>, <span class="keyword">nil</span>, self.env)
+	<span class="keyword">end</span>
+	<span class="keyword">if</span> f <span class="keyword">then</span>
+		<span class="keyword">local</span> result = <span class="global">table</span>.pack(<span class="global">pcall</span>(f))
+		<span class="keyword">if</span> <span class="keyword">not</span> result[<span class="number">1</span>] <span class="keyword">then</span>
+			self:<span class="global">print</span>(get_error(result[<span class="number">2</span>]))
+		<span class="keyword">elseif</span> result.n &gt; <span class="number">1</span> <span class="keyword">then</span>
+			self:<span class="global">print</span>(<span class="global">table</span>.<span class="global">unpack</span>(result, <span class="number">2</span>, result.n))
+		<span class="keyword">end</span>
+	<span class="keyword">else</span>
+		self:<span class="global">print</span>(get_error(err_msg))
+	<span class="keyword">end</span>
+	self.line_edit:clear()
+<span class="keyword">end</span>
+
+<span class="comment">-- Clear output text
+</span><span class="keyword">function</span> LuaREPL:clear()
+	self.output:clear()
+<span class="keyword">end</span>
+
+<span class="comment">-- Signal handlers
+</span><span class="keyword">function</span> LuaREPL:_on_LineEdit_text_entered(text)
+	self:dostring(text)
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> LuaREPL:_on_RunButton_pressed()
+	self:dostring(self.line_edit.text)
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> LuaREPL:_on_ClearButton_pressed()
+	self:clear()
+<span class="keyword">end</span>
+
+<span class="keyword">return</span> LuaREPL</pre>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2021-09-07 13:06:11 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

@@ -1,0 +1,761 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Godot Lua PluginScript</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Methods">Methods</a></li>
+<li><a href="#Metamethods">Metamethods </a></li>
+<li><a href="#Constants">Constants </a></li>
+</ul>
+
+
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><a href="../classes/AABB.html">AABB</a></li>
+  <li><a href="../classes/Array.html">Array</a></li>
+  <li><a href="../classes/Basis.html">Basis</a></li>
+  <li><a href="../classes/Color.html">Color</a></li>
+  <li><a href="../classes/Dictionary.html">Dictionary</a></li>
+  <li><a href="../classes/NodePath.html">NodePath</a></li>
+  <li><a href="../classes/Object.html">Object</a></li>
+  <li><strong>Plane</strong></li>
+  <li><a href="../classes/PoolByteArray.html">PoolByteArray</a></li>
+  <li><a href="../classes/PoolColorArray.html">PoolColorArray</a></li>
+  <li><a href="../classes/PoolIntArray.html">PoolIntArray</a></li>
+  <li><a href="../classes/PoolRealArray.html">PoolRealArray</a></li>
+  <li><a href="../classes/PoolStringArray.html">PoolStringArray</a></li>
+  <li><a href="../classes/PoolVector2Array.html">PoolVector2Array</a></li>
+  <li><a href="../classes/PoolVector3Array.html">PoolVector3Array</a></li>
+  <li><a href="../classes/Quat.html">Quat</a></li>
+  <li><a href="../classes/RID.html">RID</a></li>
+  <li><a href="../classes/Rect2.html">Rect2</a></li>
+  <li><a href="../classes/String.html">String</a></li>
+  <li><a href="../classes/StringName.html">StringName</a></li>
+  <li><a href="../classes/Transform.html">Transform</a></li>
+  <li><a href="../classes/Transform2D.html">Transform2D</a></li>
+  <li><a href="../classes/Variant.html">Variant</a></li>
+  <li><a href="../classes/Vector2.html">Vector2</a></li>
+  <li><a href="../classes/Vector3.html">Vector3</a></li>
+</ul>
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/Enumerations.html">Enumerations</a></li>
+  <li><a href="../modules/GD.html">GD</a></li>
+  <li><a href="../modules/Globals.html">Globals</a></li>
+  <li><a href="../modules/OOP.html">OOP</a></li>
+  <li><a href="../modules/math_extras.html">math_extras</a></li>
+  <li><a href="../modules/package_extras.html">package_extras</a></li>
+  <li><a href="../modules/string_extras.html">string_extras</a></li>
+</ul>
+<h2>Scripts</h2>
+<ul class="nowrap">
+  <li><a href="../scripts/lps_coroutine.lua.html">lps_coroutine.lua</a></li>
+</ul>
+<h2>Topics</h2>
+<ul class="">
+  <li><a href="../topics/README.md.html">README</a></li>
+</ul>
+<h2>Examples</h2>
+<ul class="nowrap">
+  <li><a href="../examples/lua_repl.lua.html">lua_repl.lua</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Class <code>Plane</code></h1>
+<p>Plane metatype, wrapper for <code>godot_plane</code>.</p>
+<p>
+
+<p> Constructed using the idiom <code>Plane(...)</code>, which calls <a href="../classes/Plane.html#Plane:__new">__new</a>.</p>
+
+<p> The components may be accessed through <code>elements</code> or individually as
+ <code>normal/d</code>:</p>
+
+<pre>
+typedef union godot_plane {
+    float elements[<span class="number">4</span>];
+    struct { Vector3 normal; float d; };
+} godot_plane;
+</pre>
+
+</p>
+
+
+<h2><a href="#Methods">Methods</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Plane:center">Plane:center ()</a></td>
+	<td class="summary">Returns the center of the plane.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Plane:distance_to">Plane:distance_to (point)</a></td>
+	<td class="summary">Returns the shortest distance from the plane to the position <code>point</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Plane:has_point">Plane:has_point (point[, epsilon=1e-5])</a></td>
+	<td class="summary">Returns <code>true</code> if <code>point</code> is inside the plane.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Plane:intersect_3">Plane:intersect_3 (b, c)</a></td>
+	<td class="summary">Returns the intersection point of the three planes <code>b</code>, <code>c</code> and this plane.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Plane:intersects_ray">Plane:intersects_ray (from, dir)</a></td>
+	<td class="summary">Returns the intersection point of a ray consisting of the position <code>from</code> and the direction normal <code>dir</code> with this plane.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Plane:intersects_segment">Plane:intersects_segment (begin, end)</a></td>
+	<td class="summary">Returns the intersection point of a segment from position <code>begin</code> to position <code>end</code> with this plane.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Plane:is_point_over">Plane:is_point_over (point)</a></td>
+	<td class="summary">Returns <code>true</code> if <code>point</code> is located above the plane.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Plane:normalized">Plane:normalized ()</a></td>
+	<td class="summary">Returns a copy of the plane, normalized.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Plane:project">Plane:project (point)</a></td>
+	<td class="summary">Returns the orthogonal projection of <code>point</code> into a point in the plane.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Plane:unpack">Plane:unpack ()</a></td>
+	<td class="summary">Returns all elements.</td>
+	</tr>
+</table>
+<h2><a href="#Metamethods">Metamethods </a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Plane:__concat">Plane:__concat (a, b)</a></td>
+	<td class="summary">Concatenates values.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Plane:__eq">Plane:__eq (a, b)</a></td>
+	<td class="summary">Equality operation
+ If either <code>a</code> or <code>b</code> are not of type <a href="../classes/Plane.html#">Plane</a>, always return <code>false</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Plane:__new">Plane:__new (...)</a></td>
+	<td class="summary">Plane constructor, called by the idiom <code>Plane(...)</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Plane:__tostring">Plane:__tostring ()</a></td>
+	<td class="summary">Returns a Lua string representation of this plane.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Plane:__unm">Plane:__unm ()</a></td>
+	<td class="summary">Unary minus operation</td>
+	</tr>
+</table>
+<h2><a href="#Constants">Constants </a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Plane.XY">Plane.XY</a></td>
+	<td class="summary">A plane that extends in the X and Y axes (normal vector points +Z).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Plane.XZ">Plane.XZ</a></td>
+	<td class="summary">A plane that extends in the X and Z axes (normal vector points +Y).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Plane.YZ">Plane.YZ</a></td>
+	<td class="summary">A plane that extends in the Y and Z axes (normal vector points +X).</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Methods"></a>Methods</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Plane:center"></a>
+    <strong>Plane:center ()</strong>
+    </dt>
+    <dd>
+    Returns the center of the plane.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Plane:distance_to"></a>
+    <strong>Plane:distance_to (point)</strong>
+    </dt>
+    <dd>
+    Returns the shortest distance from the plane to the position <code>point</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">point</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Plane:has_point"></a>
+    <strong>Plane:has_point (point[, epsilon=1e-5])</strong>
+    </dt>
+    <dd>
+    Returns <code>true</code> if <code>point</code> is inside the plane.
+ Comparison uses a custom minimum <code>epsilon</code> threshold.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">point</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+        </li>
+        <li><span class="parameter">epsilon</span>
+            <span class="types"><span class="type">number</span></span>
+
+
+
+         (<em>default</em> 1e-5)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Plane:intersect_3"></a>
+    <strong>Plane:intersect_3 (b, c)</strong>
+    </dt>
+    <dd>
+    Returns the intersection point of the three planes <code>b</code>, <code>c</code> and this plane.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">b</span>
+            <span class="types"><a class="type" href="../classes/Plane.html#">Plane</a></span>
+
+
+
+        </li>
+        <li><span class="parameter">c</span>
+            <span class="types"><a class="type" href="../classes/Plane.html#">Plane</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+        Intersection point, if there is any
+    </ol>
+     <h3>Or</h3>
+    <ol>
+
+           <span class="types"><span class="type">nil</span></span>
+        If no intersection is found
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Plane:intersects_ray"></a>
+    <strong>Plane:intersects_ray (from, dir)</strong>
+    </dt>
+    <dd>
+    Returns the intersection point of a ray consisting of the position <code>from</code> and the direction normal <code>dir</code> with this plane.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">from</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+        </li>
+        <li><span class="parameter">dir</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+        Intersection point, if there is any
+    </ol>
+     <h3>Or</h3>
+    <ol>
+
+           <span class="types"><span class="type">nil</span></span>
+        If no intersection is found
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Plane:intersects_segment"></a>
+    <strong>Plane:intersects_segment (begin, end)</strong>
+    </dt>
+    <dd>
+    Returns the intersection point of a segment from position <code>begin</code> to position <code>end</code> with this plane.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">begin</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+        </li>
+        <li><span class="parameter">end</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+        Intersection point, if there is any
+    </ol>
+     <h3>Or</h3>
+    <ol>
+
+           <span class="types"><span class="type">nil</span></span>
+        If no intersection is found
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Plane:is_point_over"></a>
+    <strong>Plane:is_point_over (point)</strong>
+    </dt>
+    <dd>
+    Returns <code>true</code> if <code>point</code> is located above the plane.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">point</span>
+            <span class="types"><a class="type" href="../classes/Vector2.html#">Vector2</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Plane:normalized"></a>
+    <strong>Plane:normalized ()</strong>
+    </dt>
+    <dd>
+    Returns a copy of the plane, normalized.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Plane.html#">Plane</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Plane:project"></a>
+    <strong>Plane:project (point)</strong>
+    </dt>
+    <dd>
+    Returns the orthogonal projection of <code>point</code> into a point in the plane.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">point</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Plane:unpack"></a>
+    <strong>Plane:unpack ()</strong>
+    </dt>
+    <dd>
+    Returns all elements.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+           <span class="types"><span class="type">number</span></span>
+        normal.x</li>
+        <li>
+           <span class="types"><span class="type">number</span></span>
+        normal.y</li>
+        <li>
+           <span class="types"><span class="type">number</span></span>
+        normal.z</li>
+        <li>
+           <span class="types"><span class="type">number</span></span>
+        d</li>
+    </ol>
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Metamethods"></a>Metamethods </h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Plane:__concat"></a>
+    <strong>Plane:__concat (a, b)</strong>
+    </dt>
+    <dd>
+    Concatenates values.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+          First value, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+        <li><span class="parameter">b</span>
+          First value, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Plane:__eq"></a>
+    <strong>Plane:__eq (a, b)</strong>
+    </dt>
+    <dd>
+    Equality operation
+ If either <code>a</code> or <code>b</code> are not of type <a href="../classes/Plane.html#">Plane</a>, always return <code>false</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+            <span class="types"><a class="type" href="../classes/Plane.html#">Plane</a></span>
+
+
+
+        </li>
+        <li><span class="parameter">b</span>
+            <span class="types"><a class="type" href="../classes/Plane.html#">Plane</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Plane:__new"></a>
+    <strong>Plane:__new (...)</strong>
+    </dt>
+    <dd>
+
+<p>Plane constructor, called by the idiom <code>Plane(...)</code>. </p>
+
+<ul>
+    <li><code>Plane(Vector3 normal, number d)</code>: set the normal and the plane's distance to the origin</li>
+    <li><code>Plane(number a, number b, number c, number d)</code>: normal is set to <code>Vector3(a, b, c)</code>, distance is set to <code>d</code></li>
+    <li><code>Plane(Vector3 a, Vector3 b, Vector3 c)</code>: creates a plane from the three points, given in clockwise order</li>
+    <li><code>Plane(Plane other)</code>: copy values from <code>other</code></li>
+</ul>
+
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Plane.html#">Plane</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Plane:__tostring"></a>
+    <strong>Plane:__tostring ()</strong>
+    </dt>
+    <dd>
+    Returns a Lua string representation of this plane.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Plane:__unm"></a>
+    <strong>Plane:__unm ()</strong>
+    </dt>
+    <dd>
+    Unary minus operation
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Plane.html#">Plane</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Constants"></a>Constants </h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Plane.XY"></a>
+    <strong>Plane.XY</strong>
+    </dt>
+    <dd>
+    A plane that extends in the X and Y axes (normal vector points +Z).
+
+
+    <ul>
+        <li><span class="parameter">XY</span>
+          Plane(0, 0, 1, 0)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Plane.XZ"></a>
+    <strong>Plane.XZ</strong>
+    </dt>
+    <dd>
+    A plane that extends in the X and Z axes (normal vector points +Y).
+
+
+    <ul>
+        <li><span class="parameter">XZ</span>
+          Plane(0, 1, 0, 0)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Plane.YZ"></a>
+    <strong>Plane.YZ</strong>
+    </dt>
+    <dd>
+    A plane that extends in the Y and Z axes (normal vector points +X).
+
+
+    <ul>
+        <li><span class="parameter">YZ</span>
+          Plane(1, 0, 0, 0)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2021-09-07 13:06:11 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

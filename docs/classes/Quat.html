@@ -1,0 +1,897 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Godot Lua PluginScript</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Methods">Methods</a></li>
+<li><a href="#Metamethods">Metamethods </a></li>
+<li><a href="#Constants">Constants </a></li>
+</ul>
+
+
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><a href="../classes/AABB.html">AABB</a></li>
+  <li><a href="../classes/Array.html">Array</a></li>
+  <li><a href="../classes/Basis.html">Basis</a></li>
+  <li><a href="../classes/Color.html">Color</a></li>
+  <li><a href="../classes/Dictionary.html">Dictionary</a></li>
+  <li><a href="../classes/NodePath.html">NodePath</a></li>
+  <li><a href="../classes/Object.html">Object</a></li>
+  <li><a href="../classes/Plane.html">Plane</a></li>
+  <li><a href="../classes/PoolByteArray.html">PoolByteArray</a></li>
+  <li><a href="../classes/PoolColorArray.html">PoolColorArray</a></li>
+  <li><a href="../classes/PoolIntArray.html">PoolIntArray</a></li>
+  <li><a href="../classes/PoolRealArray.html">PoolRealArray</a></li>
+  <li><a href="../classes/PoolStringArray.html">PoolStringArray</a></li>
+  <li><a href="../classes/PoolVector2Array.html">PoolVector2Array</a></li>
+  <li><a href="../classes/PoolVector3Array.html">PoolVector3Array</a></li>
+  <li><strong>Quat</strong></li>
+  <li><a href="../classes/RID.html">RID</a></li>
+  <li><a href="../classes/Rect2.html">Rect2</a></li>
+  <li><a href="../classes/String.html">String</a></li>
+  <li><a href="../classes/StringName.html">StringName</a></li>
+  <li><a href="../classes/Transform.html">Transform</a></li>
+  <li><a href="../classes/Transform2D.html">Transform2D</a></li>
+  <li><a href="../classes/Variant.html">Variant</a></li>
+  <li><a href="../classes/Vector2.html">Vector2</a></li>
+  <li><a href="../classes/Vector3.html">Vector3</a></li>
+</ul>
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/Enumerations.html">Enumerations</a></li>
+  <li><a href="../modules/GD.html">GD</a></li>
+  <li><a href="../modules/Globals.html">Globals</a></li>
+  <li><a href="../modules/OOP.html">OOP</a></li>
+  <li><a href="../modules/math_extras.html">math_extras</a></li>
+  <li><a href="../modules/package_extras.html">package_extras</a></li>
+  <li><a href="../modules/string_extras.html">string_extras</a></li>
+</ul>
+<h2>Scripts</h2>
+<ul class="nowrap">
+  <li><a href="../scripts/lps_coroutine.lua.html">lps_coroutine.lua</a></li>
+</ul>
+<h2>Topics</h2>
+<ul class="">
+  <li><a href="../topics/README.md.html">README</a></li>
+</ul>
+<h2>Examples</h2>
+<ul class="nowrap">
+  <li><a href="../examples/lua_repl.lua.html">lua_repl.lua</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Class <code>Quat</code></h1>
+<p>Quat metatype, wrapper for <code>godot_quat</code>.</p>
+<p>
+
+<p> Constructed using the idiom <code>Quat(...)</code>, which calls <a href="../classes/Quat.html#Quat:__new">__new</a>.</p>
+
+<p> The X, Y, Z and W components may be accessed through <code>elements</code> or individually
+ with <code>x/y/z/w</code>. <a href="../classes/Vector2.html#">Vector2</a> with two adjacent components may be get/set with the
+ pairs <code>xy/yz/zw</code>. <a href="../classes/Vector3.html#">Vector3</a> with three adjacent components may be get/set with
+ the triplets <code>xyz/yzw</code>:</p>
+
+<pre>
+typedef union godot_quat {
+    float elements[<span class="number">4</span>];
+    struct { float x, y, z, w; };
+    struct { Vector2 xy; Vector2 zw; };
+    struct { float _; Vector2 yz; float _; };
+    struct { Vector3 xyz; float _; };
+    struct { float _; Vector3 yzw; };
+} godot_quat;
+</pre>
+
+</p>
+
+
+<h2><a href="#Methods">Methods</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Quat:cubic_slerp">Quat:cubic_slerp (b, preA, postB, t)</a></td>
+	<td class="summary">Performs a cubic spherical interpolation between quaternions <code>preA</code>, this vector, <code>b</code>, and <code>postB</code>, by the given amount <code>t</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Quat:dot">Quat:dot (b)</a></td>
+	<td class="summary">Returns the dot product of two quaternions.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Quat:inverse">Quat:inverse ()</a></td>
+	<td class="summary">Returns the inverse of the quaternion.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Quat:is_normalized">Quat:is_normalized ()</a></td>
+	<td class="summary">Returns whether the quaternion is normalized or not.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Quat:length">Quat:length ()</a></td>
+	<td class="summary">Returns the length of the quaternion.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Quat:length_squared">Quat:length_squared ()</a></td>
+	<td class="summary">Returns the length of the quaternion, squared.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Quat:normalized">Quat:normalized ()</a></td>
+	<td class="summary">Returns a copy of the quaternion, normalized to unit length.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Quat:slerp">Quat:slerp (to, weight)</a></td>
+	<td class="summary">Returns the result of the spherical linear interpolation between this quaternion and <code>to</code> by amount <code>weight</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Quat:slerpni">Quat:slerpni (to, weight)</a></td>
+	<td class="summary">Returns the result of the spherical linear interpolation between this quaternion and <code>to</code> by amount <code>weight</code>, but without checking if the rotation path is not bigger than 90 degrees.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Quat:unpack">Quat:unpack ()</a></td>
+	<td class="summary">Returns all elements.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Quat:xform">Quat:xform (v)</a></td>
+	<td class="summary">Returns a vector transformed (multiplied) by this quaternion.</td>
+	</tr>
+</table>
+<h2><a href="#Metamethods">Metamethods </a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Quat:__add">Quat:__add (a, b)</a></td>
+	<td class="summary">Addition operation</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Quat:__concat">Quat:__concat (a, b)</a></td>
+	<td class="summary">Concatenates values.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Quat:__div">Quat:__div (a, s)</a></td>
+	<td class="summary">Division operation</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Quat:__eq">Quat:__eq (a, b)</a></td>
+	<td class="summary">Equality operation
+ If either <code>a</code> or <code>b</code> are not of type <a href="../classes/Quat.html#">Quat</a>, always return <code>false</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Quat:__mul">Quat:__mul (a, b)</a></td>
+	<td class="summary">Multiplication operation</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Quat:__new">Quat:__new (...)</a></td>
+	<td class="summary">Quat constructor, called by the idiom <code>Quat(...)</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Quat:__sub">Quat:__sub (a, b)</a></td>
+	<td class="summary">Subtraction operation</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Quat:__tostring">Quat:__tostring ()</a></td>
+	<td class="summary">Returns a Lua string representation of this quaternion.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Quat:__unm">Quat:__unm ()</a></td>
+	<td class="summary">Unary minus operation</td>
+	</tr>
+</table>
+<h2><a href="#Constants">Constants </a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Quat.IDENTITY">Quat.IDENTITY</a></td>
+	<td class="summary">The identity quaternion, representing no rotation.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Methods"></a>Methods</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Quat:cubic_slerp"></a>
+    <strong>Quat:cubic_slerp (b, preA, postB, t)</strong>
+    </dt>
+    <dd>
+    Performs a cubic spherical interpolation between quaternions <code>preA</code>, this vector, <code>b</code>, and <code>postB</code>, by the given amount <code>t</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">b</span>
+            <span class="types"><a class="type" href="../classes/Quat.html#">Quat</a></span>
+
+
+
+        </li>
+        <li><span class="parameter">preA</span>
+            <span class="types"><a class="type" href="../classes/Quat.html#">Quat</a></span>
+
+
+
+        </li>
+        <li><span class="parameter">postB</span>
+            <span class="types"><a class="type" href="../classes/Quat.html#">Quat</a></span>
+
+
+
+        </li>
+        <li><span class="parameter">t</span>
+            <span class="types"><span class="type">number</span></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Quat.html#">Quat</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Quat:dot"></a>
+    <strong>Quat:dot (b)</strong>
+    </dt>
+    <dd>
+    Returns the dot product of two quaternions.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">b</span>
+            <span class="types"><a class="type" href="../classes/Quat.html#">Quat</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Quat:inverse"></a>
+    <strong>Quat:inverse ()</strong>
+    </dt>
+    <dd>
+    Returns the inverse of the quaternion.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Quat.html#">Quat</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Quat:is_normalized"></a>
+    <strong>Quat:is_normalized ()</strong>
+    </dt>
+    <dd>
+    Returns whether the quaternion is normalized or not.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Quat:length"></a>
+    <strong>Quat:length ()</strong>
+    </dt>
+    <dd>
+    Returns the length of the quaternion.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Quat:length_squared"></a>
+    <strong>Quat:length_squared ()</strong>
+    </dt>
+    <dd>
+    Returns the length of the quaternion, squared.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Quat:normalized"></a>
+    <strong>Quat:normalized ()</strong>
+    </dt>
+    <dd>
+    Returns a copy of the quaternion, normalized to unit length.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Quat.html#">Quat</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Quat:slerp"></a>
+    <strong>Quat:slerp (to, weight)</strong>
+    </dt>
+    <dd>
+    Returns the result of the spherical linear interpolation between this quaternion and <code>to</code> by amount <code>weight</code>.
+ Note: Both quaternions must be normalized.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">to</span>
+            <span class="types"><a class="type" href="../classes/Quat.html#">Quat</a></span>
+
+
+
+        </li>
+        <li><span class="parameter">weight</span>
+            <span class="types"><span class="type">number</span></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Quat.html#">Quat</a></span>
+
+
+
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Quat.html#Quat:slerpni">slerpni</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Quat:slerpni"></a>
+    <strong>Quat:slerpni (to, weight)</strong>
+    </dt>
+    <dd>
+    Returns the result of the spherical linear interpolation between this quaternion and <code>to</code> by amount <code>weight</code>, but without checking if the rotation path is not bigger than 90 degrees. 
+ Note: Both quaternions must be normalized.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">to</span>
+            <span class="types"><a class="type" href="../classes/Quat.html#">Quat</a></span>
+
+
+
+        </li>
+        <li><span class="parameter">weight</span>
+            <span class="types"><span class="type">number</span></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Quat.html#">Quat</a></span>
+
+
+
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Quat.html#Quat:slerp">slerp</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Quat:unpack"></a>
+    <strong>Quat:unpack ()</strong>
+    </dt>
+    <dd>
+    Returns all elements.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+           <span class="types"><span class="type">number</span></span>
+        X</li>
+        <li>
+           <span class="types"><span class="type">number</span></span>
+        Y</li>
+        <li>
+           <span class="types"><span class="type">number</span></span>
+        Z</li>
+        <li>
+           <span class="types"><span class="type">number</span></span>
+        W</li>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Quat:xform"></a>
+    <strong>Quat:xform (v)</strong>
+    </dt>
+    <dd>
+    Returns a vector transformed (multiplied) by this quaternion.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">v</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Metamethods"></a>Metamethods </h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Quat:__add"></a>
+    <strong>Quat:__add (a, b)</strong>
+    </dt>
+    <dd>
+    Addition operation
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+            <span class="types"><a class="type" href="../classes/Quat.html#">Quat</a></span>
+
+
+
+        </li>
+        <li><span class="parameter">b</span>
+            <span class="types"><a class="type" href="../classes/Quat.html#">Quat</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Quat.html#">Quat</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Quat:__concat"></a>
+    <strong>Quat:__concat (a, b)</strong>
+    </dt>
+    <dd>
+    Concatenates values.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+          First value, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+        <li><span class="parameter">b</span>
+          First value, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Quat:__div"></a>
+    <strong>Quat:__div (a, s)</strong>
+    </dt>
+    <dd>
+    Division operation
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+            <span class="types"><a class="type" href="../classes/Quat.html#">Quat</a></span>
+
+
+
+        </li>
+        <li><span class="parameter">s</span>
+            <span class="types"><span class="type">number</span></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Quat.html#">Quat</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Quat:__eq"></a>
+    <strong>Quat:__eq (a, b)</strong>
+    </dt>
+    <dd>
+    Equality operation
+ If either <code>a</code> or <code>b</code> are not of type <a href="../classes/Quat.html#">Quat</a>, always return <code>false</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+            <span class="types"><a class="type" href="../classes/Quat.html#">Quat</a></span>
+
+
+
+        </li>
+        <li><span class="parameter">b</span>
+            <span class="types"><a class="type" href="../classes/Quat.html#">Quat</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Quat:__mul"></a>
+    <strong>Quat:__mul (a, b)</strong>
+    </dt>
+    <dd>
+    Multiplication operation
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+            <span class="types"><a class="type" href="../classes/Quat.html#">Quat</a></span>
+
+
+
+        </li>
+        <li><span class="parameter">b</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a> or <span class="type">number</span></span>
+          If a Vector3 is passed, calls <a href="../classes/Quat.html#Quat:xform">xform</a>.
+  Otherwise, returns a Quat with each component multiplied by <code>b</code>.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Quat.html#">Quat</a> or <a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Quat:__new"></a>
+    <strong>Quat:__new (...)</strong>
+    </dt>
+    <dd>
+
+<p>Quat constructor, called by the idiom <code>Quat(...)</code>. </p>
+
+<ul>
+    <li><code>Quat()</code>: <a href="../classes/Quat.html#Quat.IDENTITY">IDENTITY</a> quaternion (<code>Quat() == Quat(0, 0, 0, 1)</code>)</li>
+    <li><code>Quat(number x[, number y = 0[, number z = 0[, number w = 1]]])</code>: set XYZW</li>
+    <li><code>Quat(Basis basis)</code>: construct from basis</li>
+    <li><code>Quat(Vector3 euler)</code>: rotation specified by Euler angles (in the YXZ convention: when decomposing, first Z, then X, and Y last)</li>
+    <li><code>Quat(Vector3 axis, number angle)</code>: rotates around the given axis by the specified angle. The axis must be a normalized vector.</li>
+    <li><code>Quat(Quat other)</code>: copy values from <code>other</code></li>
+</ul>
+
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Quat.html#">Quat</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Quat:__sub"></a>
+    <strong>Quat:__sub (a, b)</strong>
+    </dt>
+    <dd>
+    Subtraction operation
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+            <span class="types"><a class="type" href="../classes/Quat.html#">Quat</a></span>
+
+
+
+        </li>
+        <li><span class="parameter">b</span>
+            <span class="types"><a class="type" href="../classes/Quat.html#">Quat</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Quat.html#">Quat</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Quat:__tostring"></a>
+    <strong>Quat:__tostring ()</strong>
+    </dt>
+    <dd>
+    Returns a Lua string representation of this quaternion.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Quat:__unm"></a>
+    <strong>Quat:__unm ()</strong>
+    </dt>
+    <dd>
+    Unary minus operation
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Quat.html#">Quat</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Constants"></a>Constants </h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Quat.IDENTITY"></a>
+    <strong>Quat.IDENTITY</strong>
+    </dt>
+    <dd>
+    The identity quaternion, representing no rotation.
+ Equivalent to an identity <a href="../classes/Basis.html#">Basis</a> matrix. If a vector is transformed by an identity quaternion, it will not change.
+
+
+    <ul>
+        <li><span class="parameter">IDENTITY</span>
+          Quat(0, 0, 0, 1)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2021-09-07 13:06:11 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

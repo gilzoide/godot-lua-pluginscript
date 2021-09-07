@@ -1,0 +1,3625 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Godot Lua PluginScript</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Methods">Methods</a></li>
+<li><a href="#Static_Functions">Static Functions </a></li>
+<li><a href="#Metamethods">Metamethods </a></li>
+<li><a href="#Methods_compatible_with_Lua_s_string_library">Methods compatible with Lua's string library </a></li>
+</ul>
+
+
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><a href="../classes/AABB.html">AABB</a></li>
+  <li><a href="../classes/Array.html">Array</a></li>
+  <li><a href="../classes/Basis.html">Basis</a></li>
+  <li><a href="../classes/Color.html">Color</a></li>
+  <li><a href="../classes/Dictionary.html">Dictionary</a></li>
+  <li><a href="../classes/NodePath.html">NodePath</a></li>
+  <li><a href="../classes/Object.html">Object</a></li>
+  <li><a href="../classes/Plane.html">Plane</a></li>
+  <li><a href="../classes/PoolByteArray.html">PoolByteArray</a></li>
+  <li><a href="../classes/PoolColorArray.html">PoolColorArray</a></li>
+  <li><a href="../classes/PoolIntArray.html">PoolIntArray</a></li>
+  <li><a href="../classes/PoolRealArray.html">PoolRealArray</a></li>
+  <li><a href="../classes/PoolStringArray.html">PoolStringArray</a></li>
+  <li><a href="../classes/PoolVector2Array.html">PoolVector2Array</a></li>
+  <li><a href="../classes/PoolVector3Array.html">PoolVector3Array</a></li>
+  <li><a href="../classes/Quat.html">Quat</a></li>
+  <li><a href="../classes/RID.html">RID</a></li>
+  <li><a href="../classes/Rect2.html">Rect2</a></li>
+  <li><strong>String</strong></li>
+  <li><a href="../classes/StringName.html">StringName</a></li>
+  <li><a href="../classes/Transform.html">Transform</a></li>
+  <li><a href="../classes/Transform2D.html">Transform2D</a></li>
+  <li><a href="../classes/Variant.html">Variant</a></li>
+  <li><a href="../classes/Vector2.html">Vector2</a></li>
+  <li><a href="../classes/Vector3.html">Vector3</a></li>
+</ul>
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/Enumerations.html">Enumerations</a></li>
+  <li><a href="../modules/GD.html">GD</a></li>
+  <li><a href="../modules/Globals.html">Globals</a></li>
+  <li><a href="../modules/OOP.html">OOP</a></li>
+  <li><a href="../modules/math_extras.html">math_extras</a></li>
+  <li><a href="../modules/package_extras.html">package_extras</a></li>
+  <li><a href="../modules/string_extras.html">string_extras</a></li>
+</ul>
+<h2>Scripts</h2>
+<ul class="nowrap">
+  <li><a href="../scripts/lps_coroutine.lua.html">lps_coroutine.lua</a></li>
+</ul>
+<h2>Topics</h2>
+<ul class="">
+  <li><a href="../topics/README.md.html">README</a></li>
+</ul>
+<h2>Examples</h2>
+<ul class="nowrap">
+  <li><a href="../examples/lua_repl.lua.html">lua_repl.lua</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Class <code>String</code></h1>
+<p>String metatype, wrapper for <code>godot_string</code>.</p>
+<p> Construct using the idiom <code>String(...)</code>, which calls <a href="../classes/String.html#String:__new">__new</a>.
+ It is compatible with <a href="#Methods_compatible_with_Lua_s_string_library">Lua's string library API</a>.</p>
+
+
+<h2><a href="#Methods">Methods</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#String:begins_with">String:begins_with (s)</a></td>
+	<td class="summary">Returns <code>true</code> if the String begins with the given string.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:bigrams">String:bigrams ()</a></td>
+	<td class="summary">Returns the bigrams (pairs of consecutive letters) of this string.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:c_escape">String:c_escape ()</a></td>
+	<td class="summary">Returns a copy of the string with special characters escaped using the C language standard.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:c_escape_multiline">String:c_escape_multiline ()</a></td>
+	<td class="summary">Returns a copy of the string with the special characters <code>\</code> and <code>&quot;</code> escaped using the C language standard.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:c_unescape">String:c_unescape ()</a></td>
+	<td class="summary">Returns a copy of the string with escaped characters replaced by their meanings.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:camelcase_to_underscore">String:camelcase_to_underscore ([lowercased=true])</a></td>
+	<td class="summary">Returns a copy of String with Camel cased words separated by underscores.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:capitalize">String:capitalize ()</a></td>
+	<td class="summary">Changes the case of some letters.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:casecmp_to">String:casecmp_to (s)</a></td>
+	<td class="summary">Performs a case-sensitive comparison to another string.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:count">String:count (what[, from=0[, to=0]])</a></td>
+	<td class="summary">Returns the number of occurrences of substring <code>what</code> between <code>from</code> and <code>to</code> positions.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:countn">String:countn (what[, from=0[, to=0]])</a></td>
+	<td class="summary">Returns the number of occurrences of substring <code>what</code> (ignoring case) between <code>from</code> and <code>to</code> positions.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:dedent">String:dedent ()</a></td>
+	<td class="summary">Returns a copy of the string with indentation (leading tabs and spaces) removed.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:empty">String:empty ()</a></td>
+	<td class="summary">Returns <code>true</code> if the length of the string equals 0.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:ends_with">String:ends_with (s)</a></td>
+	<td class="summary">Returns <code>true</code> if the String ends with the given string.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:erase">String:erase (position, chars)</a></td>
+	<td class="summary">Erases <code>chars</code> characters from the String starting from <code>position</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:find_last">String:find_last (what)</a></td>
+	<td class="summary">Finds the last occurrence of a substring.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:findmk">String:findmk (keys[, from=0])</a></td>
+	<td class="summary">Finds the first occurrence of one of the substrings provided in <code>keys</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:findn">String:findn (what[, from=0])</a></td>
+	<td class="summary">Finds the first occurrence of a substring, ignoring case.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:format">String:format (values[, placeholder="{_}"])</a></td>
+	<td class="summary">Formats the string by replacing all occurrences of <code>placeholder</code> with <code>values</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:get_base_dir">String:get_base_dir ()</a></td>
+	<td class="summary">If the String is a valid file path, returns the base directory name.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:get_basename">String:get_basename ()</a></td>
+	<td class="summary">If the string is a valid file path, returns the full file path without the extension.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:get_extension">String:get_extension ()</a></td>
+	<td class="summary">If the string is a valid file path, returns the extension.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:get_file">String:get_file ()</a></td>
+	<td class="summary">If the String is a valid file path, returns the filename.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:get_slice">String:get_slice (splitter, n)</a></td>
+	<td class="summary">Returns the Nth slice when splitting String with <code>splitter</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:get_slice_count">String:get_slice_count (splitter)</a></td>
+	<td class="summary">Returns the number of slices when splitting String with <code>splitter</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:hash">String:hash ()</a></td>
+	<td class="summary">Hashes the String and returns a 32-bit integer.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:hash64">String:hash64 ()</a></td>
+	<td class="summary">Hashes the String and returns a 64-bit integer.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:http_escape">String:http_escape ()</a></td>
+	<td class="summary">Escapes (encodes) a String to URL friendly format.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:http_unescape">String:http_unescape ()</a></td>
+	<td class="summary">Unescapes (decodes) a String in URL encoded format.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:insert">String:insert (position, what)</a></td>
+	<td class="summary">Returns a copy of the String with the substring <code>what</code> inserted at the given position.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:is_abs_path">String:is_abs_path ()</a></td>
+	<td class="summary">If the String is a path to a file or directory, returns <code>true</code> if the path is absolute.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:is_numeric">String:is_numeric ()</a></td>
+	<td class="summary">Returns whether String contents is a number</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:is_rel_path">String:is_rel_path ()</a></td>
+	<td class="summary">If the string is a path to a file or directory, returns <code>true</code> if the path is relative.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:is_resource_file">String:is_resource_file ()</a></td>
+	<td class="summary">If the string is a path to a file or directory, returns <code>true</code> if the path refers to the Resources folder.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:is_subsequence_of">String:is_subsequence_of (s)</a></td>
+	<td class="summary">Returns <code>true</code> if this String is a subsequence of the given string.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:is_subsequence_ofi">String:is_subsequence_ofi (s)</a></td>
+	<td class="summary">Returns <code>true</code> if this String is a subsequence of the given string, without considering case.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:is_valid_float">String:is_valid_float ()</a></td>
+	<td class="summary">Returns <code>true</code> if this String contains a valid float.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:is_valid_hex_number">String:is_valid_hex_number ([with_prefix=false])</a></td>
+	<td class="summary">Returns <code>true</code> if this String contains a valid hexadecimal number.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:is_valid_html_color">String:is_valid_html_color ()</a></td>
+	<td class="summary">Returns <code>true</code> if this String contains a valid color in hexadecimal HTML notation.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:is_valid_identifier">String:is_valid_identifier ()</a></td>
+	<td class="summary">Returns <code>true</code> if this string is a valid identifier.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:is_valid_integer">String:is_valid_integer ()</a></td>
+	<td class="summary">Returns <code>true</code> if this String contains a valid integer.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:is_valid_ip_address">String:is_valid_ip_address ()</a></td>
+	<td class="summary">Returns <code>true</code> if this String contains only a well-formatted IPv4 or IPv6 address.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:json_escape">String:json_escape ()</a></td>
+	<td class="summary">Returns a copy of the String with special characters escaped using the JSON standard.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:left">String:left ([position=0])</a></td>
+	<td class="summary">Returns a number of characters from the left of the String.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:length">String:length ()</a></td>
+	<td class="summary">Returns the String's amount of characters</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:lpad">String:lpad (min_length[, character=" "])</a></td>
+	<td class="summary">Left-pad String with the given character.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:md5_buffer">String:md5_buffer ()</a></td>
+	<td class="summary">Returns the MD5 hash of the String as an array of bytes.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:md5_text">String:md5_text ()</a></td>
+	<td class="summary">Returns the MD5 hash of the String as a String.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:naturalnocasecmp_to">String:naturalnocasecmp_to (s)</a></td>
+	<td class="summary">Performs a case-insensitive natural order comparison to another string</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:nocasecmp_to">String:nocasecmp_to (s)</a></td>
+	<td class="summary">Performs a case-insensitive comparison to another string.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:ord_at">String:ord_at ()</a></td>
+	<td class="summary">Returns the character code at position <code>at</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:path_to">String:path_to (path)</a></td>
+	<td class="summary">Returns a String with the relative path from this String to <code>path</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:path_to_file">String:path_to_file (path)</a></td>
+	<td class="summary">Returns a String with the relative path from this String to <code>path</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:percent_decode">String:percent_decode ()</a></td>
+	<td class="summary">Decode a percent-encoded string.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:percent_encode">String:percent_encode ()</a></td>
+	<td class="summary">Percent-encodes a string.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:plus_file">String:plus_file (file)</a></td>
+	<td class="summary">If the String is a path, concatenates <code>file</code> at the end of the String as a subpath.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:replace">String:replace (what, forwhat)</a></td>
+	<td class="summary">Replaces occurrences of a case-sensitive substring with the given one inside the String.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:replace_first">String:replace_first (what, forwhat)</a></td>
+	<td class="summary">Replaces the first occurrence of a case-sensitive substring with the given one inside the String.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:replacen">String:replacen (what, forwhat)</a></td>
+	<td class="summary">Replaces occurrences of a case-insensitive substring with the given one inside the String.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:rfind">String:rfind (what[, from=-1])</a></td>
+	<td class="summary">Performs a case-sensitive search for a substring, but starts from the end of the String instead of the beginning.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:rfindn">String:rfindn (what[, from=-1])</a></td>
+	<td class="summary">Performs a case-insensitive search for a substring, but starts from the end of the String instead of the beginning.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:right">String:right ([position=0])</a></td>
+	<td class="summary">Returns the right side of the String from a given position.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:rpad">String:rpad (min_length[, character=" "])</a></td>
+	<td class="summary">Right-pad String with the given character.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:rsplit">String:rsplit (delimiter[, allow_empty=true[, maxsplit=0]])</a></td>
+	<td class="summary">Splits the String by a <code>delimiter</code> String and returns an array of the substrings, starting from right.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:rstrip">String:rstrip (chars)</a></td>
+	<td class="summary">Returns a copy of the String with characters removed from the right.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:sha256_buffer">String:sha256_buffer ()</a></td>
+	<td class="summary">Returns the SHA-256 hash of the String as an array of bytes.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:sha256_text">String:sha256_text ()</a></td>
+	<td class="summary">Returns the SHA-256 hash of the String as a String.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:similarity">String:similarity (s)</a></td>
+	<td class="summary">Returns the similarity index of the text compared to this string.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:simplify_path">String:simplify_path ()</a></td>
+	<td class="summary">Returns a simplified version of the path String.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:split">String:split (delimiter[, allow_empty=true])</a></td>
+	<td class="summary">Splits the String by a <code>delimiter</code> string and returns an array of the substrings.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:split_floats">String:split_floats (delimiter[, allow_empty=true])</a></td>
+	<td class="summary">Splits the String in numbers by using a delimiter and returns an array of reals.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:split_floats">String:split_floats (delimiter[, allow_empty=true])</a></td>
+	<td class="summary">Splits the String in integers by using a delimiter string and returns an array of integers.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:split_spaces">String:split_spaces ()</a></td>
+	<td class="summary">Splits the String by whitespace and returns an array of the substrings.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:sprintf">String:sprintf (...)</a></td>
+	<td class="summary">Formats the String by substituting placeholder character-sequences with the given values
+ (<a href="https://docs.godotengine.org/en/stable/getting_started/scripting/gdscript/gdscript_format_string.html">reference documentation</a>)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:strip_edges">String:strip_edges ([left=true[, right=true]])</a></td>
+	<td class="summary">Returns a copy of the String stripped of any non-printable character (including tabulations, spaces and line breaks) at the beginning and the end.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:strip_escapes">String:strip_escapes ()</a></td>
+	<td class="summary">Returns a copy of the String stripped of any escape character.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:substr">String:substr ([from=0[, len=-1]])</a></td>
+	<td class="summary">Returns part of the String from the position <code>from</code> with length <a href="../classes/String.html#String:len">len</a>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:to_ascii">String:to_ascii ()</a></td>
+	<td class="summary">Converts the String to a Lua string, assuming all characters are encoded in ASCII.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:to_ascii_extended">String:to_ascii_extended ()</a></td>
+	<td class="summary">Converts the String to a Lua string, assuming all characters are encoded in extended ASCII.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:to_lower">String:to_lower ()</a></td>
+	<td class="summary">Returns the string converted to lowercase.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:to_number">String:to_number ([base])</a></td>
+	<td class="summary">Return Lua's <a href="https://www.lua.org/manual/5.1/manual.html#pdf-tonumber">tonumber</a> applied to self.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:to_upper">String:to_upper ()</a></td>
+	<td class="summary">Returns the string converted to uppercase.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:to_utf8">String:to_utf8 ()</a></td>
+	<td class="summary">Converts the String to a Lua string, assuming all characters are encoded in UTF-8.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:trim_prefix">String:trim_prefix ()</a></td>
+	<td class="summary">Removes a given String from the start if it starts with it or leaves it unchanged.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:trim_suffix">String:trim_suffix ()</a></td>
+	<td class="summary">Removes a given String from the end if it ends with it or leaves it unchanged.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:wide_str">String:wide_str ()</a></td>
+	<td class="summary">Return the String as a wide char string (<code>const wchar_t *</code>).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:word_wrap">String:word_wrap (chars_per_line)</a></td>
+	<td class="summary">Returns a copy of the String with words wrapped at <code>chars_per_line</code> characters.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:xml_escape">String:xml_escape ([escape_quotes=false])</a></td>
+	<td class="summary">Returns a copy of the string with special characters escaped using the XML standard.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:xml_unescape">String:xml_unescape (self)</a></td>
+	<td class="summary">Returns a copy of the string with escaped characters replaced by their meanings according to the XML standard.</td>
+	</tr>
+</table>
+<h2><a href="#Static_Functions">Static Functions </a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#String:hex_encode_buffer">String:hex_encode_buffer (buffer[, len=#buffer])</a></td>
+	<td class="summary">Encode a sized byte buffer into a String with hexadecimal numbers.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:humanize_size">String:humanize_size ()</a></td>
+	<td class="summary">Converts <code>size</code> represented as number of bytes to human-readable format using internationalized set of data size units, namely: B, KiB, MiB, GiB, TiB, PiB, EiB.</td>
+	</tr>
+</table>
+<h2><a href="#Metamethods">Metamethods </a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#String:__concat">String:__concat (a, b)</a></td>
+	<td class="summary">Concatenates values.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:__eq">String:__eq (a, b)</a></td>
+	<td class="summary">Equality comparison (<code>a == b</code>).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:__len">String:__len ()</a></td>
+	<td class="summary">Alias for <a href="../classes/String.html#String:length">length</a></td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:__lt">String:__lt (a, b)</a></td>
+	<td class="summary">Less than comparison (<code>a &lt; b</code>).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:__mod">String:__mod ()</a></td>
+	<td class="summary">Alias for <a href="../classes/String.html#String:sprintf">sprintf</a>, allowing the idiom `String(format) % { ...</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:__new">String:__new ([text[, length]])</a></td>
+	<td class="summary">String constructor, called by the idiom <code>String(...)</code></td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:__tostring">String:__tostring ()</a></td>
+	<td class="summary">Alias for <a href="../classes/String.html#String:to_utf8">to_utf8</a></td>
+	</tr>
+</table>
+<h2><a href="#Methods_compatible_with_Lua_s_string_library">Methods compatible with Lua's string library </a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#String:byte">String:byte ([i[, j]])</a></td>
+	<td class="summary">Wrapper for <a href="https://www.lua.org/manual/5.1/manual.html#pdf-string.byte">string.byte</a></td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:find">String:find (pattern[, init[, plain]])</a></td>
+	<td class="summary">Wrapper for <a href="https://www.lua.org/manual/5.1/manual.html#pdf-string.find">string.find</a></td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:gmatch">String:gmatch (pattern)</a></td>
+	<td class="summary">Wrapper for <a href="https://www.lua.org/manual/5.1/manual.html#pdf-string.gmatch">string.gmatch</a></td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:gsub">String:gsub (pattern, replacement[, n])</a></td>
+	<td class="summary">Wrapper for <a href="https://www.lua.org/manual/5.1/manual.html#pdf-string.gsub">string.gsub</a></td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:join">String:join (...)</a></td>
+	<td class="summary">Wrapper for <code>string.join</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:len">String:len ()</a></td>
+	<td class="summary">Wrapper for <a href="https://www.lua.org/manual/5.1/manual.html#pdf-string.len">string.len</a></td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:lower">String:lower ()</a></td>
+	<td class="summary">Wrapper for <a href="https://www.lua.org/manual/5.1/manual.html#pdf-string.lower">string.lower</a></td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:match">String:match (pattern[, init])</a></td>
+	<td class="summary">Wrapper for <a href="https://www.lua.org/manual/5.1/manual.html#pdf-string.match">string.match</a></td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:rep">String:rep (n[, sep])</a></td>
+	<td class="summary">Wrapper for <a href="https://www.lua.org/manual/5.1/manual.html#pdf-string.rep">string.rep</a></td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:reverse">String:reverse ()</a></td>
+	<td class="summary">Wrapper for <a href="https://www.lua.org/manual/5.1/manual.html#pdf-string.reverse">string.reverse</a></td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:sub">String:sub ([i[, j]])</a></td>
+	<td class="summary">Wrapper for <a href="https://www.lua.org/manual/5.1/manual.html#pdf-string.sub">string.sub</a></td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#String:upper">String:upper ()</a></td>
+	<td class="summary">Wrapper for <a href="https://www.lua.org/manual/5.1/manual.html#pdf-string.upper">string.upper</a></td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Methods"></a>Methods</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "String:begins_with"></a>
+    <strong>String:begins_with (s)</strong>
+    </dt>
+    <dd>
+    Returns <code>true</code> if the String begins with the given string.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">s</span>
+          Other value, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:bigrams"></a>
+    <strong>String:bigrams ()</strong>
+    </dt>
+    <dd>
+    Returns the bigrams (pairs of consecutive letters) of this string.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/PoolStringArray.html#">PoolStringArray</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:c_escape"></a>
+    <strong>String:c_escape ()</strong>
+    </dt>
+    <dd>
+    Returns a copy of the string with special characters escaped using the C language standard.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:c_escape_multiline"></a>
+    <strong>String:c_escape_multiline ()</strong>
+    </dt>
+    <dd>
+    Returns a copy of the string with the special characters <code>\</code> and <code>&quot;</code> escaped using the C language standard.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:c_unescape"></a>
+    <strong>String:c_unescape ()</strong>
+    </dt>
+    <dd>
+    Returns a copy of the string with escaped characters replaced by their meanings.
+ Supported escape sequences are <code>\&apos;</code>, <code>\&quot;</code>, <code>\?</code>, <code>\</code>, <code>\a</code>, <code>\b</code>, <code>\f</code>, <code>\n</code>, <code>\r</code>, <code>\t</code>, <code>\v</code>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:camelcase_to_underscore"></a>
+    <strong>String:camelcase_to_underscore ([lowercased=true])</strong>
+    </dt>
+    <dd>
+    Returns a copy of String with Camel cased words separated by underscores.
+ If <code>lowercased</code> is absent or truthy, result is converted to lower case.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">lowercased</span>
+
+
+
+         (<em>default</em> true)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:capitalize"></a>
+    <strong>String:capitalize ()</strong>
+    </dt>
+    <dd>
+    Changes the case of some letters.
+ Replaces underscores with spaces, adds spaces before in-word uppercase characters, converts all letters to lowercase, then capitalizes the first letter and every letter following a space character.
+ For <code>capitalize camelCase mixed_with_underscores</code>, it will return <code>Capitalize Camel Case Mixed With Underscores</code>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:casecmp_to"></a>
+    <strong>String:casecmp_to (s)</strong>
+    </dt>
+    <dd>
+    Performs a case-sensitive comparison to another string.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">s</span>
+          Other value, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">int</span></span>
+        -1 if less than, 1 if greater than, or 0 if equal
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:count"></a>
+    <strong>String:count (what[, from=0[, to=0]])</strong>
+    </dt>
+    <dd>
+    Returns the number of occurrences of substring <code>what</code> between <code>from</code> and <code>to</code> positions.
+ If <code>from</code> and <code>to</code> equals 0 the whole string will be used. If only <code>to</code> equals 0 the remained substring will be used.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">what</span>
+          Substring, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+        <li><span class="parameter">from</span>
+
+
+
+         (<em>default</em> 0)
+        </li>
+        <li><span class="parameter">to</span>
+
+
+
+         (<em>default</em> 0)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">int</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:countn"></a>
+    <strong>String:countn (what[, from=0[, to=0]])</strong>
+    </dt>
+    <dd>
+    Returns the number of occurrences of substring <code>what</code> (ignoring case) between <code>from</code> and <code>to</code> positions.
+ If <code>from</code> and <code>to</code> equals 0 the whole string will be used. If only <code>to</code> equals 0 the remained substring will be used.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">what</span>
+          Substring, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+        <li><span class="parameter">from</span>
+
+
+
+         (<em>default</em> 0)
+        </li>
+        <li><span class="parameter">to</span>
+
+
+
+         (<em>default</em> 0)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">int</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:dedent"></a>
+    <strong>String:dedent ()</strong>
+    </dt>
+    <dd>
+    Returns a copy of the string with indentation (leading tabs and spaces) removed.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:empty"></a>
+    <strong>String:empty ()</strong>
+    </dt>
+    <dd>
+    Returns <code>true</code> if the length of the string equals 0.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:ends_with"></a>
+    <strong>String:ends_with (s)</strong>
+    </dt>
+    <dd>
+    Returns <code>true</code> if the String ends with the given string.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">s</span>
+          Other value, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:erase"></a>
+    <strong>String:erase (position, chars)</strong>
+    </dt>
+    <dd>
+    Erases <code>chars</code> characters from the String starting from <code>position</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">position</span>
+            <span class="types"><span class="type">int</span></span>
+
+
+
+        </li>
+        <li><span class="parameter">chars</span>
+            <span class="types"><span class="type">int</span></span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:find_last"></a>
+    <strong>String:find_last (what)</strong>
+    </dt>
+    <dd>
+    Finds the last occurrence of a substring.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">what</span>
+          Substring, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">int</span></span>
+        Starting position of the substring or -1 if not found
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:findmk"></a>
+    <strong>String:findmk (keys[, from=0])</strong>
+    </dt>
+    <dd>
+    Finds the first occurrence of one of the substrings provided in <code>keys</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">keys</span>
+            <span class="types"><a class="type" href="../classes/Array.html#">Array</a></span>
+          Array of substrings
+        </li>
+        <li><span class="parameter">from</span>
+
+
+
+         (<em>default</em> 0)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+           <span class="types"><span class="type">int</span></span>
+        Starting position of the found substring</li>
+        <li>
+           <span class="types"><span class="type">int</span></span>
+        Index of the key found</li>
+    </ol>
+     <h3>Or</h3>
+    <ol>
+
+           <span class="types"><span class="type">int</span></span>
+        -1 if not found
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:findn"></a>
+    <strong>String:findn (what[, from=0])</strong>
+    </dt>
+    <dd>
+    Finds the first occurrence of a substring, ignoring case.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">what</span>
+          Substring, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+        <li><span class="parameter">from</span>
+
+
+
+         (<em>default</em> 0)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">int</span></span>
+        Starting position of the substring or -1 if not found
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:format"></a>
+    <strong>String:format (values[, placeholder="{_}"])</strong>
+    </dt>
+    <dd>
+    Formats the string by replacing all occurrences of <code>placeholder</code> with <code>values</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">values</span>
+
+
+
+        </li>
+        <li><span class="parameter">placeholder</span>
+
+
+
+         (<em>default</em> "{_}")
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:get_base_dir"></a>
+    <strong>String:get_base_dir ()</strong>
+    </dt>
+    <dd>
+    If the String is a valid file path, returns the base directory name.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:get_basename"></a>
+    <strong>String:get_basename ()</strong>
+    </dt>
+    <dd>
+    If the string is a valid file path, returns the full file path without the extension.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:get_extension"></a>
+    <strong>String:get_extension ()</strong>
+    </dt>
+    <dd>
+    If the string is a valid file path, returns the extension.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:get_file"></a>
+    <strong>String:get_file ()</strong>
+    </dt>
+    <dd>
+    If the String is a valid file path, returns the filename.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:get_slice"></a>
+    <strong>String:get_slice (splitter, n)</strong>
+    </dt>
+    <dd>
+    Returns the Nth slice when splitting String with <code>splitter</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">splitter</span>
+          Splitter substring, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+        <li><span class="parameter">n</span>
+            <span class="types"><span class="type">int</span></span>
+          Slice index
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+     <h3>Or</h3>
+    <ol>
+
+        Empty string, if there is no Nth slice
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:get_slice_count"></a>
+    <strong>String:get_slice_count (splitter)</strong>
+    </dt>
+    <dd>
+    Returns the number of slices when splitting String with <code>splitter</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">splitter</span>
+          Splitter substring, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">int</span></span>
+        Number of slices
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:hash"></a>
+    <strong>String:hash ()</strong>
+    </dt>
+    <dd>
+    Hashes the String and returns a 32-bit integer.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">int</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:hash64"></a>
+    <strong>String:hash64 ()</strong>
+    </dt>
+    <dd>
+    Hashes the String and returns a 64-bit integer.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">int</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:http_escape"></a>
+    <strong>String:http_escape ()</strong>
+    </dt>
+    <dd>
+    Escapes (encodes) a String to URL friendly format.
+ Also referred to as 'URL encode'.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:http_unescape"></a>
+    <strong>String:http_unescape ()</strong>
+    </dt>
+    <dd>
+    Unescapes (decodes) a String in URL encoded format.
+ Also referred to as 'URL decode'.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:insert"></a>
+    <strong>String:insert (position, what)</strong>
+    </dt>
+    <dd>
+    Returns a copy of the String with the substring <code>what</code> inserted at the given position.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">position</span>
+            <span class="types"><span class="type">int</span></span>
+
+
+
+        </li>
+        <li><span class="parameter">what</span>
+          Value to be inserted, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:is_abs_path"></a>
+    <strong>String:is_abs_path ()</strong>
+    </dt>
+    <dd>
+    If the String is a path to a file or directory, returns <code>true</code> if the path is absolute.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:is_numeric"></a>
+    <strong>String:is_numeric ()</strong>
+    </dt>
+    <dd>
+    Returns whether String contents is a number
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:is_rel_path"></a>
+    <strong>String:is_rel_path ()</strong>
+    </dt>
+    <dd>
+    If the string is a path to a file or directory, returns <code>true</code> if the path is relative.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:is_resource_file"></a>
+    <strong>String:is_resource_file ()</strong>
+    </dt>
+    <dd>
+    If the string is a path to a file or directory, returns <code>true</code> if the path refers to the Resources folder.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:is_subsequence_of"></a>
+    <strong>String:is_subsequence_of (s)</strong>
+    </dt>
+    <dd>
+    Returns <code>true</code> if this String is a subsequence of the given string.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">s</span>
+          Other value, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:is_subsequence_ofi"></a>
+    <strong>String:is_subsequence_ofi (s)</strong>
+    </dt>
+    <dd>
+    Returns <code>true</code> if this String is a subsequence of the given string, without considering case.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">s</span>
+          Other value, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:is_valid_float"></a>
+    <strong>String:is_valid_float ()</strong>
+    </dt>
+    <dd>
+    Returns <code>true</code> if this String contains a valid float.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:is_valid_hex_number"></a>
+    <strong>String:is_valid_hex_number ([with_prefix=false])</strong>
+    </dt>
+    <dd>
+    Returns <code>true</code> if this String contains a valid hexadecimal number.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">with_prefix</span>
+          If truthy, only matches if the prefix <code>0x</code> is present
+         (<em>default</em> false)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:is_valid_html_color"></a>
+    <strong>String:is_valid_html_color ()</strong>
+    </dt>
+    <dd>
+    Returns <code>true</code> if this String contains a valid color in hexadecimal HTML notation.
+ Other HTML notations such as named colors or <code>hsl()</code> colors aren't considered valid by this method and will return <code>false</code>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:is_valid_identifier"></a>
+    <strong>String:is_valid_identifier ()</strong>
+    </dt>
+    <dd>
+    Returns <code>true</code> if this string is a valid identifier.
+ A valid identifier may contain only letters, digits and underscores (<code>_</code>) and the first character may not be a digit.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:is_valid_integer"></a>
+    <strong>String:is_valid_integer ()</strong>
+    </dt>
+    <dd>
+    Returns <code>true</code> if this String contains a valid integer.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:is_valid_ip_address"></a>
+    <strong>String:is_valid_ip_address ()</strong>
+    </dt>
+    <dd>
+    Returns <code>true</code> if this String contains only a well-formatted IPv4 or IPv6 address.
+ This method considers reserved IP addresses such as <code>0.0.0.0</code> as valid.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:json_escape"></a>
+    <strong>String:json_escape ()</strong>
+    </dt>
+    <dd>
+    Returns a copy of the String with special characters escaped using the JSON standard.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:left"></a>
+    <strong>String:left ([position=0])</strong>
+    </dt>
+    <dd>
+    Returns a number of characters from the left of the String.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">position</span>
+            <span class="types"><span class="type">int</span></span>
+
+
+
+         (<em>default</em> 0)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:length"></a>
+    <strong>String:length ()</strong>
+    </dt>
+    <dd>
+    Returns the String's amount of characters
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">int</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:lpad"></a>
+    <strong>String:lpad (min_length[, character=" "])</strong>
+    </dt>
+    <dd>
+    Left-pad String with the given character.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">min_length</span>
+            <span class="types"><span class="type">int</span></span>
+          Desired minimum length
+        </li>
+        <li><span class="parameter">character</span>
+          Pad character, stringified with <a href="../modules/GD.html#str">GD.str</a>
+         (<em>default</em> " ")
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:md5_buffer"></a>
+    <strong>String:md5_buffer ()</strong>
+    </dt>
+    <dd>
+    Returns the MD5 hash of the String as an array of bytes.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/PoolByteArray.html#">PoolByteArray</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:md5_text"></a>
+    <strong>String:md5_text ()</strong>
+    </dt>
+    <dd>
+    Returns the MD5 hash of the String as a String.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:naturalnocasecmp_to"></a>
+    <strong>String:naturalnocasecmp_to (s)</strong>
+    </dt>
+    <dd>
+    Performs a case-insensitive natural order comparison to another string
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">s</span>
+          Other value, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">int</span></span>
+        -1 if less than, 1 if greater than, or 0 if equal
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:nocasecmp_to"></a>
+    <strong>String:nocasecmp_to (s)</strong>
+    </dt>
+    <dd>
+    Performs a case-insensitive comparison to another string.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">s</span>
+          Other value, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">int</span></span>
+        -1 if less than, 1 if greater than, or 0 if equal
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:ord_at"></a>
+    <strong>String:ord_at ()</strong>
+    </dt>
+    <dd>
+    Returns the character code at position <code>at</code>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:path_to"></a>
+    <strong>String:path_to (path)</strong>
+    </dt>
+    <dd>
+    Returns a String with the relative path from this String to <code>path</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">path</span>
+          Destiny directory path, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:path_to_file"></a>
+    <strong>String:path_to_file (path)</strong>
+    </dt>
+    <dd>
+    Returns a String with the relative path from this String to <code>path</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">path</span>
+          Destiny file path, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:percent_decode"></a>
+    <strong>String:percent_decode ()</strong>
+    </dt>
+    <dd>
+    Decode a percent-encoded string.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/String.html#String:percent_encode">percent_encode</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "String:percent_encode"></a>
+    <strong>String:percent_encode ()</strong>
+    </dt>
+    <dd>
+    Percent-encodes a string.
+ Encodes parameters in a URL when sending a HTTP GET request (and bodies of form-urlencoded POST requests).
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:plus_file"></a>
+    <strong>String:plus_file (file)</strong>
+    </dt>
+    <dd>
+    If the String is a path, concatenates <code>file</code> at the end of the String as a subpath.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">file</span>
+          File path to be concatenated, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:replace"></a>
+    <strong>String:replace (what, forwhat)</strong>
+    </dt>
+    <dd>
+    Replaces occurrences of a case-sensitive substring with the given one inside the String.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">what</span>
+          Substring to be replaced, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+        <li><span class="parameter">forwhat</span>
+          Replacement, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:replace_first"></a>
+    <strong>String:replace_first (what, forwhat)</strong>
+    </dt>
+    <dd>
+    Replaces the first occurrence of a case-sensitive substring with the given one inside the String.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">what</span>
+          Substring to be replaced, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+        <li><span class="parameter">forwhat</span>
+          Replacement, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:replacen"></a>
+    <strong>String:replacen (what, forwhat)</strong>
+    </dt>
+    <dd>
+    Replaces occurrences of a case-insensitive substring with the given one inside the String.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">what</span>
+          Substring to be replaced, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+        <li><span class="parameter">forwhat</span>
+          Replacement, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:rfind"></a>
+    <strong>String:rfind (what[, from=-1])</strong>
+    </dt>
+    <dd>
+    Performs a case-sensitive search for a substring, but starts from the end of the String instead of the beginning.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">what</span>
+          Substring to be searched, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+        <li><span class="parameter">from</span>
+            <span class="types"><span class="type">int</span></span>
+          Search start position
+         (<em>default</em> -1)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">int</span></span>
+        Position of substring, if it was found
+    </ol>
+     <h3>Or</h3>
+    <ol>
+
+           <span class="types"><span class="type">int</span></span>
+        -1 otherwise
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:rfindn"></a>
+    <strong>String:rfindn (what[, from=-1])</strong>
+    </dt>
+    <dd>
+    Performs a case-insensitive search for a substring, but starts from the end of the String instead of the beginning.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">what</span>
+          Substring to be searched, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+        <li><span class="parameter">from</span>
+            <span class="types"><span class="type">int</span></span>
+          Search start position
+         (<em>default</em> -1)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">int</span></span>
+        Position of substring, if it was found
+    </ol>
+     <h3>Or</h3>
+    <ol>
+
+           <span class="types"><span class="type">int</span></span>
+        -1 otherwise
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:right"></a>
+    <strong>String:right ([position=0])</strong>
+    </dt>
+    <dd>
+    Returns the right side of the String from a given position.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">position</span>
+            <span class="types"><span class="type">int</span></span>
+
+
+
+         (<em>default</em> 0)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:rpad"></a>
+    <strong>String:rpad (min_length[, character=" "])</strong>
+    </dt>
+    <dd>
+    Right-pad String with the given character.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">min_length</span>
+            <span class="types"><span class="type">int</span></span>
+          Desired minimum length
+        </li>
+        <li><span class="parameter">character</span>
+          Pad character, stringified with <a href="../modules/GD.html#str">GD.str</a>
+         (<em>default</em> " ")
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:rsplit"></a>
+    <strong>String:rsplit (delimiter[, allow_empty=true[, maxsplit=0]])</strong>
+    </dt>
+    <dd>
+    Splits the String by a <code>delimiter</code> String and returns an array of the substrings, starting from right.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">delimiter</span>
+          Delimiter, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+        <li><span class="parameter">allow_empty</span>
+          If absent or truthy, inserts empty substrings in the resulting Array
+         (<em>default</em> true)
+        </li>
+        <li><span class="parameter">maxsplit</span>
+            <span class="types"><span class="type">int</span></span>
+          Maximum number of splits. The default value of 0 means that all items are split.
+         (<em>default</em> 0)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Array.html#">Array</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:rstrip"></a>
+    <strong>String:rstrip (chars)</strong>
+    </dt>
+    <dd>
+    Returns a copy of the String with characters removed from the right.
+ The <code>chars</code> argument is a String specifying the set of characters to be removed.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">chars</span>
+          Characters to be removed, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:sha256_buffer"></a>
+    <strong>String:sha256_buffer ()</strong>
+    </dt>
+    <dd>
+    Returns the SHA-256 hash of the String as an array of bytes.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/PoolByteArray.html#">PoolByteArray</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:sha256_text"></a>
+    <strong>String:sha256_text ()</strong>
+    </dt>
+    <dd>
+    Returns the SHA-256 hash of the String as a String.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:similarity"></a>
+    <strong>String:similarity (s)</strong>
+    </dt>
+    <dd>
+    Returns the similarity index of the text compared to this string.
+ 1 means totally similar and 0 means totally dissimilar.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">s</span>
+          Other value, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">float</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:simplify_path"></a>
+    <strong>String:simplify_path ()</strong>
+    </dt>
+    <dd>
+    Returns a simplified version of the path String.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:split"></a>
+    <strong>String:split (delimiter[, allow_empty=true])</strong>
+    </dt>
+    <dd>
+    Splits the String by a <code>delimiter</code> string and returns an array of the substrings.
+ The <code>delimiter</code> can be of any length.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">delimiter</span>
+          Delimiter substring, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+        <li><span class="parameter">allow_empty</span>
+          If absent or truthy, inserts empty substrings in the resulting Array
+         (<em>default</em> true)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:split_floats"></a>
+    <strong>String:split_floats (delimiter[, allow_empty=true])</strong>
+    </dt>
+    <dd>
+    Splits the String in numbers by using a delimiter and returns an array of reals.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">delimiter</span>
+          If an Array is passed, all values are used as delimiters. Otherwise, it is stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+        <li><span class="parameter">allow_empty</span>
+          If absent or truthy, inserts a number for empty substrings
+         (<em>default</em> true)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/PoolRealArray.html#">PoolRealArray</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:split_floats"></a>
+    <strong>String:split_floats (delimiter[, allow_empty=true])</strong>
+    </dt>
+    <dd>
+    Splits the String in integers by using a delimiter string and returns an array of integers.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">delimiter</span>
+          If an Array is passed, all values are used as delimiters. Otherwise, it is stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+        <li><span class="parameter">allow_empty</span>
+          If absent or truthy, inserts a number for empty substrings
+         (<em>default</em> true)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/PoolIntArray.html#">PoolIntArray</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:split_spaces"></a>
+    <strong>String:split_spaces ()</strong>
+    </dt>
+    <dd>
+    Splits the String by whitespace and returns an array of the substrings.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Array.html#">Array</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:sprintf"></a>
+    <strong>String:sprintf (...)</strong>
+    </dt>
+    <dd>
+    Formats the String by substituting placeholder character-sequences with the given values
+ (<a href="https://docs.godotengine.org/en/stable/getting_started/scripting/gdscript/gdscript_format_string.html">reference documentation</a>)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+          If only a table or Array value is passed, each value will correspond to a placeholder
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+        Formatted String
+    </ol>
+     <h3>Or</h3>
+    <ol>
+        <li>
+           <span class="types"><span class="type">nil</span></span>
+
+
+</li>
+        <li>
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+        Error message, in case format is not compatible with the given values</li>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:strip_edges"></a>
+    <strong>String:strip_edges ([left=true[, right=true]])</strong>
+    </dt>
+    <dd>
+    Returns a copy of the String stripped of any non-printable character (including tabulations, spaces and line breaks) at the beginning and the end.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">left</span>
+          Toggle strip left edge
+         (<em>default</em> true)
+        </li>
+        <li><span class="parameter">right</span>
+          Toggle strip right edge
+         (<em>default</em> true)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:strip_escapes"></a>
+    <strong>String:strip_escapes ()</strong>
+    </dt>
+    <dd>
+    Returns a copy of the String stripped of any escape character.
+ These include all non-printable control characters of the first page of the ASCII table (&lt; 32), such as tabulation (<code>\t</code>) and newline ( <code>\n</code> and <code>\r</code>) characters, but not spaces.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:substr"></a>
+    <strong>String:substr ([from=0[, len=-1]])</strong>
+    </dt>
+    <dd>
+    Returns part of the String from the position <code>from</code> with length <a href="../classes/String.html#String:len">len</a>.
+ Passing -1 to <a href="../classes/String.html#String:len">len</a> will return remaining characters from given position.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">from</span>
+            <span class="types"><span class="type">int</span></span>
+
+
+
+         (<em>default</em> 0)
+        </li>
+        <li><span class="parameter">len</span>
+            <span class="types"><span class="type">int</span></span>
+
+
+
+         (<em>default</em> -1)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:to_ascii"></a>
+    <strong>String:to_ascii ()</strong>
+    </dt>
+    <dd>
+    Converts the String to a Lua string, assuming all characters are encoded in ASCII.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:to_ascii_extended"></a>
+    <strong>String:to_ascii_extended ()</strong>
+    </dt>
+    <dd>
+    Converts the String to a Lua string, assuming all characters are encoded in extended ASCII.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:to_lower"></a>
+    <strong>String:to_lower ()</strong>
+    </dt>
+    <dd>
+    Returns the string converted to lowercase.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:to_number"></a>
+    <strong>String:to_number ([base])</strong>
+    </dt>
+    <dd>
+    Return Lua's <a href="https://www.lua.org/manual/5.1/manual.html#pdf-tonumber">tonumber</a> applied to self.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">base</span>
+          Number base
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:to_upper"></a>
+    <strong>String:to_upper ()</strong>
+    </dt>
+    <dd>
+    Returns the string converted to uppercase.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:to_utf8"></a>
+    <strong>String:to_utf8 ()</strong>
+    </dt>
+    <dd>
+    Converts the String to a Lua string, assuming all characters are encoded in UTF-8.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:trim_prefix"></a>
+    <strong>String:trim_prefix ()</strong>
+    </dt>
+    <dd>
+    Removes a given String from the start if it starts with it or leaves it unchanged.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:trim_suffix"></a>
+    <strong>String:trim_suffix ()</strong>
+    </dt>
+    <dd>
+    Removes a given String from the end if it ends with it or leaves it unchanged.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:wide_str"></a>
+    <strong>String:wide_str ()</strong>
+    </dt>
+    <dd>
+    Return the String as a wide char string (<code>const wchar_t *</code>).
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">const wchar_t *</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:word_wrap"></a>
+    <strong>String:word_wrap (chars_per_line)</strong>
+    </dt>
+    <dd>
+    Returns a copy of the String with words wrapped at <code>chars_per_line</code> characters.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">chars_per_line</span>
+            <span class="types"><span class="type">int</span></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:xml_escape"></a>
+    <strong>String:xml_escape ([escape_quotes=false])</strong>
+    </dt>
+    <dd>
+    Returns a copy of the string with special characters escaped using the XML standard.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">escape_quotes</span>
+          If truthy, also escape quote characters <code>&apos;</code> and <code>&quot;</code>
+         (<em>default</em> false)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:xml_unescape"></a>
+    <strong>String:xml_unescape (self)</strong>
+    </dt>
+    <dd>
+    Returns a copy of the string with escaped characters replaced by their meanings according to the XML standard.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header has-description"><a name="Static_Functions"></a>Static Functions </h2>
+
+          <div class="section-description">
+           These don't receive <code>self</code> and should be called directly as <code>Array.static_function(...)</code>
+          </div>
+    <dl class="function">
+    <dt>
+    <a name = "String:hex_encode_buffer"></a>
+    <strong>String:hex_encode_buffer (buffer[, len=#buffer])</strong>
+    </dt>
+    <dd>
+    Encode a sized byte buffer into a String with hexadecimal numbers.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">buffer</span>
+          Lua string or pointer convertible to <code>const uint8_t *</code>
+        </li>
+        <li><span class="parameter">len</span>
+          Buffer length
+         (<em>default</em> #buffer)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+        String with hexadecimal representation of buffer
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:humanize_size"></a>
+    <strong>String:humanize_size ()</strong>
+    </dt>
+    <dd>
+    Converts <code>size</code> represented as number of bytes to human-readable format using internationalized set of data size units, namely: B, KiB, MiB, GiB, TiB, PiB, EiB.
+ Note that the next smallest unit is picked automatically to hold at most 1024 units.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Metamethods"></a>Metamethods </h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "String:__concat"></a>
+    <strong>String:__concat (a, b)</strong>
+    </dt>
+    <dd>
+    Concatenates values.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+          First value, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+        <li><span class="parameter">b</span>
+          First value, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:__eq"></a>
+    <strong>String:__eq (a, b)</strong>
+    </dt>
+    <dd>
+    Equality comparison (<code>a == b</code>).
+ If either <code>a</code> or <code>b</code> are not <a href="../classes/String.html#">String</a> or Lua <a href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a>, always return <code>false</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+
+
+
+        </li>
+        <li><span class="parameter">b</span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:__len"></a>
+    <strong>String:__len ()</strong>
+    </dt>
+    <dd>
+    Alias for <a href="../classes/String.html#String:length">length</a>
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">int</span></span>
+
+
+
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/String.html#String:length">length</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "String:__lt"></a>
+    <strong>String:__lt (a, b)</strong>
+    </dt>
+    <dd>
+    Less than comparison (<code>a &lt; b</code>).
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+
+
+
+        </li>
+        <li><span class="parameter">b</span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+    <h3>Raises:</h3>
+    If either <code>a</code> or <code>b</code> are not <a href="../classes/String.html#">String</a> or Lua <a href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a>.
+
+
+
+</dd>
+    <dt>
+    <a name = "String:__mod"></a>
+    <strong>String:__mod ()</strong>
+    </dt>
+    <dd>
+    Alias for <a href="../classes/String.html#String:sprintf">sprintf</a>, allowing the idiom <code>String(format) % { ...  }</code> found in GDScript
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+     <h3>Or</h3>
+    <ol>
+        <li>
+           <span class="types"><span class="type">nil</span></span>
+
+
+</li>
+        <li>
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+</li>
+    </ol>
+
+    <h3>Raises:</h3>
+    If <a href="../classes/String.html#String:sprintf">sprintf</a> returns an error
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/String.html#String:sprintf">sprintf</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "String:__new"></a>
+    <strong>String:__new ([text[, length]])</strong>
+    </dt>
+    <dd>
+    String constructor, called by the idiom <code>String(...)</code>
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">text</span>
+          If absent, creates an empty String.
+  If <code>text</code> is not a <a href="../classes/String.html#">String</a>, <a href="../classes/StringName.html#">StringName</a>, Lua <a href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a>, <code>wchar_t *</code> or <code>char *</code>, 
+  constructs it based on the value returned by <code>tostring(text)</code>.
+         (<em>optional</em>)
+        </li>
+        <li><span class="parameter">length</span>
+          If present, new String will have at most <a href="../classes/String.html#String:length">length</a> characters.
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:__tostring"></a>
+    <strong>String:__tostring ()</strong>
+    </dt>
+    <dd>
+    Alias for <a href="../classes/String.html#String:to_utf8">to_utf8</a>
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+
+
+
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/String.html#String:to_utf8">to_utf8</a>
+    </ul>
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Methods_compatible_with_Lua_s_string_library"></a>Methods compatible with Lua's string library </h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "String:byte"></a>
+    <strong>String:byte ([i[, j]])</strong>
+    </dt>
+    <dd>
+    Wrapper for <a href="https://www.lua.org/manual/5.1/manual.html#pdf-string.byte">string.byte</a>
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">i</span>
+
+
+
+         (<em>optional</em>)
+        </li>
+        <li><span class="parameter">j</span>
+
+
+
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        Internal numerical codes of the characters
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:find"></a>
+    <strong>String:find (pattern[, init[, plain]])</strong>
+    </dt>
+    <dd>
+    Wrapper for <a href="https://www.lua.org/manual/5.1/manual.html#pdf-string.find">string.find</a>
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">pattern</span>
+
+
+
+        </li>
+        <li><span class="parameter">init</span>
+
+
+
+         (<em>optional</em>)
+        </li>
+        <li><span class="parameter">plain</span>
+
+
+
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+        Starting index of found pattern</li>
+        <li>
+        Ending index of found pattern</li>
+        <li>
+        Captures...</li>
+    </ol>
+     <h3>Or</h3>
+    <ol>
+
+           <span class="types"><span class="type">nil</span></span>
+        If pattern is not found
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:gmatch"></a>
+    <strong>String:gmatch (pattern)</strong>
+    </dt>
+    <dd>
+    Wrapper for <a href="https://www.lua.org/manual/5.1/manual.html#pdf-string.gmatch">string.gmatch</a>
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">pattern</span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">function</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:gsub"></a>
+    <strong>String:gsub (pattern, replacement[, n])</strong>
+    </dt>
+    <dd>
+    Wrapper for <a href="https://www.lua.org/manual/5.1/manual.html#pdf-string.gsub">string.gsub</a>
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">pattern</span>
+
+
+
+        </li>
+        <li><span class="parameter">replacement</span>
+
+
+
+        </li>
+        <li><span class="parameter">n</span>
+
+
+
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:join"></a>
+    <strong>String:join (...)</strong>
+    </dt>
+    <dd>
+    Wrapper for <code>string.join</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+
+
+
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../modules/string_extras.html#">string_extras</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "String:len"></a>
+    <strong>String:len ()</strong>
+    </dt>
+    <dd>
+    Wrapper for <a href="https://www.lua.org/manual/5.1/manual.html#pdf-string.len">string.len</a>
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">int</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:lower"></a>
+    <strong>String:lower ()</strong>
+    </dt>
+    <dd>
+    Wrapper for <a href="https://www.lua.org/manual/5.1/manual.html#pdf-string.lower">string.lower</a>
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:match"></a>
+    <strong>String:match (pattern[, init])</strong>
+    </dt>
+    <dd>
+    Wrapper for <a href="https://www.lua.org/manual/5.1/manual.html#pdf-string.match">string.match</a>
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">pattern</span>
+
+
+
+        </li>
+        <li><span class="parameter">init</span>
+
+
+
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        Captures...
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:rep"></a>
+    <strong>String:rep (n[, sep])</strong>
+    </dt>
+    <dd>
+    Wrapper for <a href="https://www.lua.org/manual/5.1/manual.html#pdf-string.rep">string.rep</a>
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">n</span>
+
+
+
+        </li>
+        <li><span class="parameter">sep</span>
+
+
+
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:reverse"></a>
+    <strong>String:reverse ()</strong>
+    </dt>
+    <dd>
+    Wrapper for <a href="https://www.lua.org/manual/5.1/manual.html#pdf-string.reverse">string.reverse</a>
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:sub"></a>
+    <strong>String:sub ([i[, j]])</strong>
+    </dt>
+    <dd>
+    Wrapper for <a href="https://www.lua.org/manual/5.1/manual.html#pdf-string.sub">string.sub</a>
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">i</span>
+
+
+
+         (<em>optional</em>)
+        </li>
+        <li><span class="parameter">j</span>
+
+
+
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "String:upper"></a>
+    <strong>String:upper ()</strong>
+    </dt>
+    <dd>
+    Wrapper for <a href="https://www.lua.org/manual/5.1/manual.html#pdf-string.upper">string.upper</a>
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2021-09-07 13:06:11 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

@@ -1,0 +1,1528 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Godot Lua PluginScript</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Methods">Methods</a></li>
+<li><a href="#Static_Functions">Static Functions </a></li>
+<li><a href="#Metamethods">Metamethods </a></li>
+</ul>
+
+
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><a href="../classes/AABB.html">AABB</a></li>
+  <li><strong>Array</strong></li>
+  <li><a href="../classes/Basis.html">Basis</a></li>
+  <li><a href="../classes/Color.html">Color</a></li>
+  <li><a href="../classes/Dictionary.html">Dictionary</a></li>
+  <li><a href="../classes/NodePath.html">NodePath</a></li>
+  <li><a href="../classes/Object.html">Object</a></li>
+  <li><a href="../classes/Plane.html">Plane</a></li>
+  <li><a href="../classes/PoolByteArray.html">PoolByteArray</a></li>
+  <li><a href="../classes/PoolColorArray.html">PoolColorArray</a></li>
+  <li><a href="../classes/PoolIntArray.html">PoolIntArray</a></li>
+  <li><a href="../classes/PoolRealArray.html">PoolRealArray</a></li>
+  <li><a href="../classes/PoolStringArray.html">PoolStringArray</a></li>
+  <li><a href="../classes/PoolVector2Array.html">PoolVector2Array</a></li>
+  <li><a href="../classes/PoolVector3Array.html">PoolVector3Array</a></li>
+  <li><a href="../classes/Quat.html">Quat</a></li>
+  <li><a href="../classes/RID.html">RID</a></li>
+  <li><a href="../classes/Rect2.html">Rect2</a></li>
+  <li><a href="../classes/String.html">String</a></li>
+  <li><a href="../classes/StringName.html">StringName</a></li>
+  <li><a href="../classes/Transform.html">Transform</a></li>
+  <li><a href="../classes/Transform2D.html">Transform2D</a></li>
+  <li><a href="../classes/Variant.html">Variant</a></li>
+  <li><a href="../classes/Vector2.html">Vector2</a></li>
+  <li><a href="../classes/Vector3.html">Vector3</a></li>
+</ul>
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/Enumerations.html">Enumerations</a></li>
+  <li><a href="../modules/GD.html">GD</a></li>
+  <li><a href="../modules/Globals.html">Globals</a></li>
+  <li><a href="../modules/OOP.html">OOP</a></li>
+  <li><a href="../modules/math_extras.html">math_extras</a></li>
+  <li><a href="../modules/package_extras.html">package_extras</a></li>
+  <li><a href="../modules/string_extras.html">string_extras</a></li>
+</ul>
+<h2>Scripts</h2>
+<ul class="nowrap">
+  <li><a href="../scripts/lps_coroutine.lua.html">lps_coroutine.lua</a></li>
+</ul>
+<h2>Topics</h2>
+<ul class="">
+  <li><a href="../topics/README.md.html">README</a></li>
+</ul>
+<h2>Examples</h2>
+<ul class="nowrap">
+  <li><a href="../examples/lua_repl.lua.html">lua_repl.lua</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Class <code>Array</code></h1>
+<p>Array metatype, wrapper for <code>godot_array</code>.</p>
+<p> Construct using the idiom <code>Array(...)</code>, which calls <a href="../classes/Array.html#Array:__new">__new</a>.</p>
+
+
+<h2><a href="#Methods">Methods</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Array:append">Array:append (...)</a></td>
+	<td class="summary">Alias of <a href="../classes/Array.html#Array:push_back">push_back</a>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Array:back">Array:back ()</a></td>
+	<td class="summary">Returns the last element of the Array.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Array:bsearch">Array:bsearch (value[, before=true])</a></td>
+	<td class="summary">Finds the index of an existing value (or the insertion index that maintains sorting order, if the value is not yet present in the Array) using binary search.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Array:bsearch_custom">Array:bsearch_custom (value, object, func[, before=true])</a></td>
+	<td class="summary">Finds the index of an existing value (or the insertion index that maintains sorting order, if the value is not yet present in the Array) using binary search and a custom comparison method declared in the <code>object</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Array:clear">Array:clear ()</a></td>
+	<td class="summary">Clears the Array.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Array:count">Array:count (value)</a></td>
+	<td class="summary">Returns the number of times an element is in the Array.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Array:duplicate">Array:duplicate ([deep=false])</a></td>
+	<td class="summary">Returns a copy of the Array.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Array:empty">Array:empty ()</a></td>
+	<td class="summary">Returns <code>true</code> if the Array is empty.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Array:erase">Array:erase (value)</a></td>
+	<td class="summary">Removes the first occurrence of a value from the array.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Array:extend">Array:extend (iterable)</a></td>
+	<td class="summary">Append all values of <code>iterable</code> at the end of Array.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Array:find">Array:find (value[, from=0])</a></td>
+	<td class="summary">Searches the Array for a <code>value</code> and returns its index or -1 if not found.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Array:find_last">Array:find_last (value)</a></td>
+	<td class="summary">Searches the Array in reverse order for a <code>value</code> and returns its index or -1 if not found.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Array:front">Array:front ()</a></td>
+	<td class="summary">Returns the first element of the Array.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Array:get">Array:get (index)</a></td>
+	<td class="summary">Returns the value at <code>index</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Array:has">Array:has (value)</a></td>
+	<td class="summary">Returns <code>true</code> if the Array contains the given value.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Array:hash">Array:hash ()</a></td>
+	<td class="summary">Returns a hashed integer value representing the Array and its contents.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Array:insert">Array:insert (self, pos, value)</a></td>
+	<td class="summary">Inserts a new element at a given position in the Array.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Array:invert">Array:invert ()</a></td>
+	<td class="summary">Reverses the order of the elements in the Array.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Array:max">Array:max ()</a></td>
+	<td class="summary">Returns the maximum value contained in the Array if all elements are of comparable types.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Array:min">Array:min ()</a></td>
+	<td class="summary">Returns the minimum value contained in the Array if all elements are of comparable types.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Array:pop_back">Array:pop_back ()</a></td>
+	<td class="summary">Removes and returns the last element of the Array, if there is any.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Array:pop_front">Array:pop_front ()</a></td>
+	<td class="summary">Removes and returns the first element of the Array, if there is any.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Array:push_back">Array:push_back (...)</a></td>
+	<td class="summary">Append elements at the end of the Array.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Array:push_front">Array:push_front (...)</a></td>
+	<td class="summary">Add elements at the beginning of the Array.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Array:remove">Array:remove (index)</a></td>
+	<td class="summary">Removes an element from the Array by <code>index</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Array:resize">Array:resize (size)</a></td>
+	<td class="summary">Resizes the Array to contain a different number of elements.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Array:rfind">Array:rfind (value[, from=-1])</a></td>
+	<td class="summary">Searches the Array in reverse order.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Array:safe_get">Array:safe_get (index)</a></td>
+	<td class="summary">Returns the value at <code>index</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Array:safe_set">Array:safe_set (index, value)</a></td>
+	<td class="summary">Set a new <code>value</code> for <code>index</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Array:set">Array:set (index, value)</a></td>
+	<td class="summary">Set a new <code>value</code> for <code>index</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Array:shuffle">Array:shuffle ()</a></td>
+	<td class="summary">Shuffles the array such that the items will have a random order.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Array:size">Array:size ()</a></td>
+	<td class="summary">Returns the number of elements in the Array.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Array:slice">Array:slice (begin, end[, step=1[, deep=false]])</a></td>
+	<td class="summary">Duplicates the subset described in the function and returns it in an Array, deeply copying the values if <code>deep</code> is <code>true</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Array:sort">Array:sort ()</a></td>
+	<td class="summary">Sorts the Array.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Array:sort_custom">Array:sort_custom (object, func)</a></td>
+	<td class="summary">Sorts the Array using a custom method.</td>
+	</tr>
+</table>
+<h2><a href="#Static_Functions">Static Functions </a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Array:from">Array:from (iterable)</a></td>
+	<td class="summary">Create a new Array with the elements from <code>iterable</code> by calling <a href="../classes/Array.html#Array:extend">extend</a>.</td>
+	</tr>
+</table>
+<h2><a href="#Metamethods">Metamethods </a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Array:__concat">Array:__concat (a, b)</a></td>
+	<td class="summary">Concatenates values.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Array:__index">Array:__index (index)</a></td>
+	<td class="summary">Returns method named <code>index</code> or the result of <a href="../classes/Array.html#Array:safe_get">safe_get</a>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Array:__ipairs">Array:__ipairs ()</a></td>
+	<td class="summary">Returns an iterator for Array's elements, called by the idiom <code>ipairs(array)</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Array:__len">Array:__len ()</a></td>
+	<td class="summary">Alias for <a href="../classes/Array.html#Array:size">size</a>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Array:__new">Array:__new (...)</a></td>
+	<td class="summary">Array constructor, called by the idiom <code>Array(...)</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Array:__newindex">Array:__newindex (index, value)</a></td>
+	<td class="summary">Alias for <a href="../classes/Array.html#Array:safe_set">safe_set</a>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Array:__pairs">Array:__pairs ()</a></td>
+	<td class="summary">Alias for <a href="../classes/Array.html#Array:__ipairs">__ipairs</a>, called by the idiom <code>pairs(array)</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Array:__tostring">Array:__tostring ()</a></td>
+	<td class="summary">Returns a Lua string representation of this Array.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Methods"></a>Methods</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Array:append"></a>
+    <strong>Array:append (...)</strong>
+    </dt>
+    <dd>
+    Alias of <a href="../classes/Array.html#Array:push_back">push_back</a>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Array.html#Array:push_back">push_back</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Array:back"></a>
+    <strong>Array:back ()</strong>
+    </dt>
+    <dd>
+    Returns the last element of the Array.
+ Prints an error and returns <code>nil</code> if the Array is empty.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        Last element
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Array:bsearch"></a>
+    <strong>Array:bsearch (value[, before=true])</strong>
+    </dt>
+    <dd>
+    Finds the index of an existing value (or the insertion index that maintains sorting order, if the value is not yet present in the Array) using binary search.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">value</span>
+
+
+
+        </li>
+        <li><span class="parameter">before</span>
+          If <code>false</code>, the returned index comes after all existing entries of the value in the Array.
+         (<em>default</em> true)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">int</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Array:bsearch_custom"></a>
+    <strong>Array:bsearch_custom (value, object, func[, before=true])</strong>
+    </dt>
+    <dd>
+    Finds the index of an existing value (or the insertion index that maintains sorting order, if the value is not yet present in the Array) using binary search and a custom comparison method declared in the <code>object</code>. 
+  The custom method receives two arguments (an element from the array and the value searched for) and must return <code>true</code> if the first argument is less than the second, and return <code>false</code> otherwise.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">value</span>
+
+
+
+        </li>
+        <li><span class="parameter">object</span>
+            <span class="types"><a class="type" href="../classes/Object.html#">Object</a></span>
+
+
+
+        </li>
+        <li><span class="parameter">func</span>
+          Method name
+        </li>
+        <li><span class="parameter">before</span>
+          If <code>false</code>, the returned index comes after all existing entries of the value in the Array.
+         (<em>default</em> true)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Array:clear"></a>
+    <strong>Array:clear ()</strong>
+    </dt>
+    <dd>
+    Clears the Array.
+ This is equivalent to using <a href="../classes/Array.html#Array:resize">resize</a> with a size of 0.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Array.html#Array:resize">resize</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Array:count"></a>
+    <strong>Array:count (value)</strong>
+    </dt>
+    <dd>
+    Returns the number of times an element is in the Array.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">value</span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">int</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Array:duplicate"></a>
+    <strong>Array:duplicate ([deep=false])</strong>
+    </dt>
+    <dd>
+    Returns a copy of the Array.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">deep</span>
+          If <code>true</code>, a deep copy is performed: all nested arrays and dictionaries are duplicated and will not be shared with the original Array.
+  If <code>false</code>, a shallow copy is made and references to the original nested arrays and dictionaries are kept, so that modifying a sub-array or dictionary in the copy will also impact those referenced in the source array.
+         (<em>default</em> false)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Array.html#">Array</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Array:empty"></a>
+    <strong>Array:empty ()</strong>
+    </dt>
+    <dd>
+    Returns <code>true</code> if the Array is empty.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Array:erase"></a>
+    <strong>Array:erase (value)</strong>
+    </dt>
+    <dd>
+    Removes the first occurrence of a value from the array.
+ To remove an element by index, use <a href="../classes/Array.html#Array:remove">remove</a> instead.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">value</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Array.html#Array:remove">remove</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Array:extend"></a>
+    <strong>Array:extend (iterable)</strong>
+    </dt>
+    <dd>
+    Append all values of <code>iterable</code> at the end of Array.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">iterable</span>
+          Any object iterable by <a href="https://www.lua.org/manual/5.1/manual.html#pdf-ipairs">ipairs</a>, including Lua tables, <a href="../classes/Array.html#">Array</a>s and <code>Pool*Array</code>s.
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Array:find"></a>
+    <strong>Array:find (value[, from=0])</strong>
+    </dt>
+    <dd>
+    Searches the Array for a <code>value</code> and returns its index or -1 if not found.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">value</span>
+
+
+
+        </li>
+        <li><span class="parameter">from</span>
+            <span class="types"><span class="type">int</span></span>
+          Index to start the search from
+         (<em>default</em> 0)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">int</span></span>
+        Index where <code>value</code> was found
+    </ol>
+     <h3>Or</h3>
+    <ol>
+
+           <span class="types"><span class="type">int</span></span>
+        -1 if <code>value</code> was not found
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Array:find_last"></a>
+    <strong>Array:find_last (value)</strong>
+    </dt>
+    <dd>
+    Searches the Array in reverse order for a <code>value</code> and returns its index or -1 if not found.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">value</span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">int</span></span>
+        Index where <code>value</code> was found
+    </ol>
+     <h3>Or</h3>
+    <ol>
+
+           <span class="types"><span class="type">int</span></span>
+        -1 if <code>value</code> was not found
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Array:front"></a>
+    <strong>Array:front ()</strong>
+    </dt>
+    <dd>
+    Returns the first element of the Array.
+ Prints an error and returns <code>nil</code> if the Array is empty.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        First element
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Array:get"></a>
+    <strong>Array:get (index)</strong>
+    </dt>
+    <dd>
+    Returns the value at <code>index</code>.
+ If <code>index</code> is invalid (<code>index &lt; 0</code> or <code>index &gt;= size()</code>), the application will crash.
+ For a safe version that returns <code>nil</code> if <code>index</code> is invalid, use <a href="../classes/Array.html#Array:safe_get">safe_get</a> or the idiom <code>array[index]</code> instead.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">index</span>
+            <span class="types"><span class="type">int</span></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        Value
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Array.html#Array:safe_get">safe_get</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Array:has"></a>
+    <strong>Array:has (value)</strong>
+    </dt>
+    <dd>
+    Returns <code>true</code> if the Array contains the given value.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">value</span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Array:hash"></a>
+    <strong>Array:hash ()</strong>
+    </dt>
+    <dd>
+    Returns a hashed integer value representing the Array and its contents.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Array:insert"></a>
+    <strong>Array:insert (self, pos, value)</strong>
+    </dt>
+    <dd>
+    Inserts a new element at a given position in the Array.
+ The position must be valid, or at the end of the Array (<code>pos == size()</code>).
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+
+
+
+        </li>
+        <li><span class="parameter">pos</span>
+
+
+
+        </li>
+        <li><span class="parameter">value</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Array:invert"></a>
+    <strong>Array:invert ()</strong>
+    </dt>
+    <dd>
+    Reverses the order of the elements in the Array.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Array:max"></a>
+    <strong>Array:max ()</strong>
+    </dt>
+    <dd>
+    Returns the maximum value contained in the Array if all elements are of comparable types.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        Maximum value
+    </ol>
+     <h3>Or</h3>
+    <ol>
+
+           <span class="types"><span class="type">nil</span></span>
+        If the elements can't be compared
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Array:min"></a>
+    <strong>Array:min ()</strong>
+    </dt>
+    <dd>
+    Returns the minimum value contained in the Array if all elements are of comparable types.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        Minimum value
+    </ol>
+     <h3>Or</h3>
+    <ol>
+
+           <span class="types"><span class="type">nil</span></span>
+        If the elements can't be compared
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Array:pop_back"></a>
+    <strong>Array:pop_back ()</strong>
+    </dt>
+    <dd>
+    Removes and returns the last element of the Array, if there is any.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        Last element
+    </ol>
+     <h3>Or</h3>
+    <ol>
+
+           <span class="types"><span class="type">nil</span></span>
+        If array is empty.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Array:pop_front"></a>
+    <strong>Array:pop_front ()</strong>
+    </dt>
+    <dd>
+    Removes and returns the first element of the Array, if there is any.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        First element
+    </ol>
+     <h3>Or</h3>
+    <ol>
+
+           <span class="types"><span class="type">nil</span></span>
+        If array is empty.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Array:push_back"></a>
+    <strong>Array:push_back (...)</strong>
+    </dt>
+    <dd>
+    Append elements at the end of the Array.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Array.html#Array:push_front">push_front</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Array:push_front"></a>
+    <strong>Array:push_front (...)</strong>
+    </dt>
+    <dd>
+    Add elements at the beginning of the Array.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Array.html#Array:push_back">push_back</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Array:remove"></a>
+    <strong>Array:remove (index)</strong>
+    </dt>
+    <dd>
+    Removes an element from the Array by <code>index</code>.
+ If the <code>index</code> does not exist in the Array, nothing happens.
+ To remove an element by searching for its value, use <a href="../classes/Array.html#Array:erase">erase</a> instead.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">index</span>
+            <span class="types"><span class="type">int</span></span>
+
+
+
+        </li>
+    </ul>
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Array.html#Array:erase">erase</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Array:resize"></a>
+    <strong>Array:resize (size)</strong>
+    </dt>
+    <dd>
+    Resizes the Array to contain a different number of elements.
+ If the Array size is smaller, elements are cleared, if bigger, new elements are <code>null</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">size</span>
+            <span class="types"><span class="type">int</span></span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Array:rfind"></a>
+    <strong>Array:rfind (value[, from=-1])</strong>
+    </dt>
+    <dd>
+    Searches the Array in reverse order.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">value</span>
+
+
+
+        </li>
+        <li><span class="parameter">from</span>
+            <span class="types"><span class="type">int</span></span>
+          Starting search index.
+  If negative, the start index is considered relative to the end of the Array.
+         (<em>default</em> -1)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">int</span></span>
+        Index where <code>value</code> was found
+    </ol>
+     <h3>Or</h3>
+    <ol>
+
+           <span class="types"><span class="type">int</span></span>
+        -1 if <code>value</code> was not found
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Array:safe_get"></a>
+    <strong>Array:safe_get (index)</strong>
+    </dt>
+    <dd>
+    Returns the value at <code>index</code>.
+ The idiom <code>array[index]</code> also calls this method.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">index</span>
+            <span class="types"><span class="type">int</span></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        Value
+    </ol>
+     <h3>Or</h3>
+    <ol>
+
+           <span class="types"><span class="type">nil</span></span>
+        If index is invalid (<code>index &lt; 0</code> or <code>index &gt;= size()</code>)
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Array.html#Array:get">get</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Array:safe_set"></a>
+    <strong>Array:safe_set (index, value)</strong>
+    </dt>
+    <dd>
+    Set a new <code>value</code> for <code>index</code>.
+ If <code>index &gt;= size()</code>, the Array is <a href="../classes/Array.html#Array:resize">resize</a>d first.
+ The idiom <code>array[index] = value</code> also calls this method.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">index</span>
+            <span class="types"><span class="type">int</span></span>
+
+
+
+        </li>
+        <li><span class="parameter">value</span>
+
+
+
+        </li>
+    </ul>
+
+
+    <h3>Raises:</h3>
+    If <code>index &lt; 0</code>
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Array.html#Array:set">set</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Array:set"></a>
+    <strong>Array:set (index, value)</strong>
+    </dt>
+    <dd>
+    Set a new <code>value</code> for <code>index</code>.
+ If <code>index</code> is invalid (<code>index &lt; 0</code> or <code>index &gt;= size()</code>), the application will crash.
+ For a safe approach that <a href="../classes/Array.html#Array:resize">resize</a>s if <code>index &gt;= size()</code>, use <a href="../classes/Array.html#Array:safe_set">safe_set</a> or the idiom <code>array[index] = value</code> instead.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">index</span>
+            <span class="types"><span class="type">int</span></span>
+
+
+
+        </li>
+        <li><span class="parameter">value</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Array.html#Array:safe_set">safe_set</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Array:shuffle"></a>
+    <strong>Array:shuffle ()</strong>
+    </dt>
+    <dd>
+    Shuffles the array such that the items will have a random order.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Array:size"></a>
+    <strong>Array:size ()</strong>
+    </dt>
+    <dd>
+    Returns the number of elements in the Array.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">int</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Array:slice"></a>
+    <strong>Array:slice (begin, end[, step=1[, deep=false]])</strong>
+    </dt>
+    <dd>
+    Duplicates the subset described in the function and returns it in an Array, deeply copying the values if <code>deep</code> is <code>true</code>.
+ Lower and upper index are inclusive, with the <code>step</code> describing the change between indices while slicing.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">begin</span>
+            <span class="types"><span class="type">int</span></span>
+          Lower index
+        </li>
+        <li><span class="parameter">end</span>
+            <span class="types"><span class="type">int</span></span>
+          Upper index
+        </li>
+        <li><span class="parameter">step</span>
+            <span class="types"><span class="type">int</span></span>
+
+
+
+         (<em>default</em> 1)
+        </li>
+        <li><span class="parameter">deep</span>
+
+
+
+         (<em>default</em> false)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Array.html#">Array</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Array:sort"></a>
+    <strong>Array:sort ()</strong>
+    </dt>
+    <dd>
+    Sorts the Array.
+ Note: Strings are sorted in alphabetical order (as opposed to natural order).
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Array:sort_custom"></a>
+    <strong>Array:sort_custom (object, func)</strong>
+    </dt>
+    <dd>
+    Sorts the Array using a custom method.
+ The arguments are an <code>object</code> that holds the method and the name of such method.
+ The custom method receives two arguments (a pair of elements from the Array) and must return either <code>true</code> or <code>false</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">object</span>
+            <span class="types"><a class="type" href="../classes/Object.html#">Object</a></span>
+
+
+
+        </li>
+        <li><span class="parameter">func</span>
+          Method name
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header has-description"><a name="Static_Functions"></a>Static Functions </h2>
+
+          <div class="section-description">
+           These don't receive <code>self</code> and should be called directly as <code>Array.static_function(...)</code>
+          </div>
+    <dl class="function">
+    <dt>
+    <a name = "Array:from"></a>
+    <strong>Array:from (iterable)</strong>
+    </dt>
+    <dd>
+    Create a new Array with the elements from <code>iterable</code> by calling <a href="../classes/Array.html#Array:extend">extend</a>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">iterable</span>
+          Any object iterable by <a href="https://www.lua.org/manual/5.1/manual.html#pdf-ipairs">ipairs</a>, including Lua tables, <a href="../classes/Array.html#">Array</a>s and <code>Pool*Array</code>s.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Array.html#">Array</a></span>
+
+
+
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Array.html#Array:extend">extend</a>
+    </ul>
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="keyword">local</span> array = Array.from(some_table_or_other_iterable)</pre>
+    </ul>
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Metamethods"></a>Metamethods </h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Array:__concat"></a>
+    <strong>Array:__concat (a, b)</strong>
+    </dt>
+    <dd>
+    Concatenates values.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+          First value, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+        <li><span class="parameter">b</span>
+          First value, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Array:__index"></a>
+    <strong>Array:__index (index)</strong>
+    </dt>
+    <dd>
+    Returns method named <code>index</code> or the result of <a href="../classes/Array.html#Array:safe_get">safe_get</a>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">index</span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        Method or element or <code>nil</code>
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Array.html#Array:safe_get">safe_get</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Array:__ipairs"></a>
+    <strong>Array:__ipairs ()</strong>
+    </dt>
+    <dd>
+    Returns an iterator for Array's elements, called by the idiom <code>ipairs(array)</code>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+           <span class="types"><span class="type">function</span></span>
+
+
+</li>
+        <li>
+           <span class="types"><a class="type" href="../classes/Array.html#">Array</a></span>
+        self</li>
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="keyword">for</span> i, v <span class="keyword">in</span> <span class="global">ipairs</span>(array) <span class="keyword">do</span>
+    <span class="comment">-- do something
+</span><span class="keyword">end</span></pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "Array:__len"></a>
+    <strong>Array:__len ()</strong>
+    </dt>
+    <dd>
+    Alias for <a href="../classes/Array.html#Array:size">size</a>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">int</span></span>
+
+
+
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Array.html#Array:size">size</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Array:__new"></a>
+    <strong>Array:__new (...)</strong>
+    </dt>
+    <dd>
+    Array constructor, called by the idiom <code>Array(...)</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+          Initial elements, added with <a href="../classes/Array.html#Array:push_back">push_back</a>
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Array:__newindex"></a>
+    <strong>Array:__newindex (index, value)</strong>
+    </dt>
+    <dd>
+    Alias for <a href="../classes/Array.html#Array:safe_set">safe_set</a>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">index</span>
+            <span class="types"><span class="type">int</span></span>
+
+
+
+        </li>
+        <li><span class="parameter">value</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Array.html#Array:safe_set">safe_set</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Array:__pairs"></a>
+    <strong>Array:__pairs ()</strong>
+    </dt>
+    <dd>
+    Alias for <a href="../classes/Array.html#Array:__ipairs">__ipairs</a>, called by the idiom <code>pairs(array)</code>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+           <span class="types"><span class="type">function</span></span>
+
+
+</li>
+        <li>
+           <span class="types"><a class="type" href="../classes/Array.html#">Array</a></span>
+        self</li>
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Array.html#Array:__ipairs">__ipairs</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Array:__tostring"></a>
+    <strong>Array:__tostring ()</strong>
+    </dt>
+    <dd>
+    Returns a Lua string representation of this Array.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2021-09-07 13:06:11 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

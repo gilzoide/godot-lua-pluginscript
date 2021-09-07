@@ -1,0 +1,756 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Godot Lua PluginScript</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Methods">Methods</a></li>
+<li><a href="#Metamethods">Metamethods </a></li>
+</ul>
+
+
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><a href="../classes/AABB.html">AABB</a></li>
+  <li><a href="../classes/Array.html">Array</a></li>
+  <li><a href="../classes/Basis.html">Basis</a></li>
+  <li><a href="../classes/Color.html">Color</a></li>
+  <li><strong>Dictionary</strong></li>
+  <li><a href="../classes/NodePath.html">NodePath</a></li>
+  <li><a href="../classes/Object.html">Object</a></li>
+  <li><a href="../classes/Plane.html">Plane</a></li>
+  <li><a href="../classes/PoolByteArray.html">PoolByteArray</a></li>
+  <li><a href="../classes/PoolColorArray.html">PoolColorArray</a></li>
+  <li><a href="../classes/PoolIntArray.html">PoolIntArray</a></li>
+  <li><a href="../classes/PoolRealArray.html">PoolRealArray</a></li>
+  <li><a href="../classes/PoolStringArray.html">PoolStringArray</a></li>
+  <li><a href="../classes/PoolVector2Array.html">PoolVector2Array</a></li>
+  <li><a href="../classes/PoolVector3Array.html">PoolVector3Array</a></li>
+  <li><a href="../classes/Quat.html">Quat</a></li>
+  <li><a href="../classes/RID.html">RID</a></li>
+  <li><a href="../classes/Rect2.html">Rect2</a></li>
+  <li><a href="../classes/String.html">String</a></li>
+  <li><a href="../classes/StringName.html">StringName</a></li>
+  <li><a href="../classes/Transform.html">Transform</a></li>
+  <li><a href="../classes/Transform2D.html">Transform2D</a></li>
+  <li><a href="../classes/Variant.html">Variant</a></li>
+  <li><a href="../classes/Vector2.html">Vector2</a></li>
+  <li><a href="../classes/Vector3.html">Vector3</a></li>
+</ul>
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/Enumerations.html">Enumerations</a></li>
+  <li><a href="../modules/GD.html">GD</a></li>
+  <li><a href="../modules/Globals.html">Globals</a></li>
+  <li><a href="../modules/OOP.html">OOP</a></li>
+  <li><a href="../modules/math_extras.html">math_extras</a></li>
+  <li><a href="../modules/package_extras.html">package_extras</a></li>
+  <li><a href="../modules/string_extras.html">string_extras</a></li>
+</ul>
+<h2>Scripts</h2>
+<ul class="nowrap">
+  <li><a href="../scripts/lps_coroutine.lua.html">lps_coroutine.lua</a></li>
+</ul>
+<h2>Topics</h2>
+<ul class="">
+  <li><a href="../topics/README.md.html">README</a></li>
+</ul>
+<h2>Examples</h2>
+<ul class="nowrap">
+  <li><a href="../examples/lua_repl.lua.html">lua_repl.lua</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Class <code>Dictionary</code></h1>
+<p>Dictionary metatype, wrapper for <code>godot_dictionary</code>.</p>
+<p> Construct using the idiom <code>Dictionary(from)</code>, which calls <a href="../classes/Dictionary.html#Dictionary:__new">__new</a>.</p>
+
+
+<h2><a href="#Methods">Methods</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Dictionary:clear">Dictionary:clear ()</a></td>
+	<td class="summary">Clear the Dictionary, removing all key/value pairs.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Dictionary:duplicate">Dictionary:duplicate ([deep=false])</a></td>
+	<td class="summary">Creates a copy of the dictionary, and returns it.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Dictionary:empty">Dictionary:empty ()</a></td>
+	<td class="summary">Returns <code>true</code> if the Dictionary is empty.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Dictionary:erase">Dictionary:erase (key)</a></td>
+	<td class="summary">Erase a dictionary key/value pair by key.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Dictionary:get">Dictionary:get (key[, default])</a></td>
+	<td class="summary">Returns the current value for the specified <code>key</code> in the Dictionary.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Dictionary:has">Dictionary:has (key)</a></td>
+	<td class="summary">Returns <code>true</code> if the Dictionary has a given key.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Dictionary:has_all">Dictionary:has_all (...)</a></td>
+	<td class="summary">Returns <code>true</code> if the dictionary has all the given keys.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Dictionary:hash">Dictionary:hash ()</a></td>
+	<td class="summary">Returns a hashed integer value representing the Dictionary contents.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Dictionary:keys">Dictionary:keys ()</a></td>
+	<td class="summary">Returns the list of keys in the Dictionary.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Dictionary:next">Dictionary:next (key)</a></td>
+	<td class="summary">Returns the next key/value pair Dictionary's, similar to Lua's <a href="https://www.lua.org/manual/5.1/manual.html#pdf-next">next</a>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Dictionary:set">Dictionary:set (key, value)</a></td>
+	<td class="summary">Set a new value for the specified <code>key</code> in the Dictionary.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Dictionary:size">Dictionary:size ()</a></td>
+	<td class="summary">Returns the number of keys in the Dictionary.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Dictionary:to_json">Dictionary:to_json ()</a></td>
+	<td class="summary">Returns a String with JSON representation of the Dictionary's contents.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Dictionary:values">Dictionary:values ()</a></td>
+	<td class="summary">Returns the list of values in the Dictionary.</td>
+	</tr>
+</table>
+<h2><a href="#Metamethods">Metamethods </a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Dictionary:__concat">Dictionary:__concat (a, b)</a></td>
+	<td class="summary">Concatenates values.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Dictionary:__len">Dictionary:__len ()</a></td>
+	<td class="summary">Alias for <a href="../classes/Dictionary.html#Dictionary:size">size</a>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Dictionary:__new">Dictionary:__new ([value])</a></td>
+	<td class="summary">Dictionary constructor, called by the idiom <code>Dictionary(value)</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Dictionary:__newindex">Dictionary:__newindex (key, value)</a></td>
+	<td class="summary">Set a value to Dictionary.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Dictionary:__pairs">Dictionary:__pairs ()</a></td>
+	<td class="summary">Returns the <a href="../classes/Dictionary.html#Dictionary:next">next</a> iterator and <code>self</code>, called by the idiom <code>pairs(dictionary)</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Dictionary:__tostring">Dictionary:__tostring ()</a></td>
+	<td class="summary">Returns a Lua string representation of this Dictionary.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Methods"></a>Methods</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Dictionary:clear"></a>
+    <strong>Dictionary:clear ()</strong>
+    </dt>
+    <dd>
+    Clear the Dictionary, removing all key/value pairs.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Dictionary:duplicate"></a>
+    <strong>Dictionary:duplicate ([deep=false])</strong>
+    </dt>
+    <dd>
+    Creates a copy of the dictionary, and returns it.
+ The <code>deep</code> parameter causes inner Dictionaries and Arrays to be copied recursively, but does not apply to Objects.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">deep</span>
+
+
+
+         (<em>default</em> false)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Dictionary.html#">Dictionary</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Dictionary:empty"></a>
+    <strong>Dictionary:empty ()</strong>
+    </dt>
+    <dd>
+    Returns <code>true</code> if the Dictionary is empty.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Dictionary:erase"></a>
+    <strong>Dictionary:erase (key)</strong>
+    </dt>
+    <dd>
+    Erase a dictionary key/value pair by key.
+ Returns <code>true</code> if the given key was present in the Dictionary, <code>false</code> otherwise.
+ Does not erase elements while iterating over the dictionary.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">key</span>
+          Key, boxed with <a href="../classes/Variant.html#Variant:__new">Variant.__new</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Dictionary:get"></a>
+    <strong>Dictionary:get (key[, default])</strong>
+    </dt>
+    <dd>
+    Returns the current value for the specified <code>key</code> in the Dictionary.
+ If the key does not exist, the method returns the value of the optional <code>default</code> argument, or <code>nil</code> if it is omitted.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">key</span>
+
+
+
+        </li>
+        <li><span class="parameter">default</span>
+          Default value to be returned if key doesn't exist in Dictionary
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        Unboxed value or <code>default</code> or nil
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Dictionary:has"></a>
+    <strong>Dictionary:has (key)</strong>
+    </dt>
+    <dd>
+    Returns <code>true</code> if the Dictionary has a given key.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">key</span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Dictionary:has_all"></a>
+    <strong>Dictionary:has_all (...)</strong>
+    </dt>
+    <dd>
+    Returns <code>true</code> if the dictionary has all the given keys.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+          If only a table or Array value is passed, its values are used as search keys.
+   Otherwise, all passed arguments will be used as search keys.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Dictionary:hash"></a>
+    <strong>Dictionary:hash ()</strong>
+    </dt>
+    <dd>
+    Returns a hashed integer value representing the Dictionary contents.
+ This can be used to compare Dictionaries by value.
+ Note: Dictionaries with the same keys/values but in a different order will have a different hash.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">int</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Dictionary:keys"></a>
+    <strong>Dictionary:keys ()</strong>
+    </dt>
+    <dd>
+    Returns the list of keys in the Dictionary.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Array.html#">Array</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Dictionary:next"></a>
+    <strong>Dictionary:next (key)</strong>
+    </dt>
+    <dd>
+    Returns the next key/value pair Dictionary's, similar to Lua's <a href="https://www.lua.org/manual/5.1/manual.html#pdf-next">next</a>.
+ This is used to iterate over Dictionaries in <a href="../classes/Dictionary.html#Dictionary:__pairs">__pairs</a>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">key</span>
+          If <code>nil</code>, returns the first key/value pair.
+   Otherwise, returns the next key/value pair.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+        Key</li>
+        <li>
+        Value</li>
+    </ol>
+     <h3>Or</h3>
+    <ol>
+
+           <span class="types"><span class="type">nil</span></span>
+        If there are no more keys
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Dictionary.html#Dictionary:__pairs">__pairs</a>
+    </ul>
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="keyword">local</span> key, value = <span class="keyword">nil</span>  <span class="comment">-- First key being <code>nil</code>, the iteration begins
+</span><span class="keyword">while</span> <span class="keyword">true</span> <span class="keyword">do</span>
+   key, value = dict:<span class="global">next</span>(key)
+   <span class="keyword">if</span> key == <span class="keyword">nil</span> <span class="keyword">then</span> <span class="keyword">break</span> <span class="keyword">end</span>
+   <span class="comment">-- do something
+</span>nd</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "Dictionary:set"></a>
+    <strong>Dictionary:set (key, value)</strong>
+    </dt>
+    <dd>
+    Set a new value for the specified <code>key</code> in the Dictionary.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">key</span>
+
+
+
+        </li>
+        <li><span class="parameter">value</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Dictionary:size"></a>
+    <strong>Dictionary:size ()</strong>
+    </dt>
+    <dd>
+    Returns the number of keys in the Dictionary.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">int</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Dictionary:to_json"></a>
+    <strong>Dictionary:to_json ()</strong>
+    </dt>
+    <dd>
+    Returns a String with JSON representation of the Dictionary's contents.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Dictionary:values"></a>
+    <strong>Dictionary:values ()</strong>
+    </dt>
+    <dd>
+    Returns the list of values in the Dictionary.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Array.html#">Array</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Metamethods"></a>Metamethods </h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Dictionary:__concat"></a>
+    <strong>Dictionary:__concat (a, b)</strong>
+    </dt>
+    <dd>
+    Concatenates values.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+          First value, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+        <li><span class="parameter">b</span>
+          First value, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Dictionary:__len"></a>
+    <strong>Dictionary:__len ()</strong>
+    </dt>
+    <dd>
+    Alias for <a href="../classes/Dictionary.html#Dictionary:size">size</a>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">int</span></span>
+
+
+
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Dictionary.html#Dictionary:size">size</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Dictionary:__new"></a>
+    <strong>Dictionary:__new ([value])</strong>
+    </dt>
+    <dd>
+    Dictionary constructor, called by the idiom <code>Dictionary(value)</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">value</span>
+          If passed, the key/value pairs will be iterated with
+  <a href="https://www.lua.org/manual/5.1/manual.html#pdf-pairs">pairs</a> and inserted into the new Dictionary using <a href="../classes/Dictionary.html#Dictionary:set">set</a>.
+  Notice that both tables and userdata/cdata with a <a href="../classes/Dictionary.html#Dictionary:__pairs">__pairs</a> metamethod
+  are valid, including another Dictionary.
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Dictionary.html#">Dictionary</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Dictionary:__newindex"></a>
+    <strong>Dictionary:__newindex (key, value)</strong>
+    </dt>
+    <dd>
+    Set a value to Dictionary.
+ If <code>value</code> is <code>nil</code>, the <code>key</code> will be <a href="../classes/Dictionary.html#Dictionary:erase">erase</a>d, similarly to Lua tables.
+ To insert a Nil Variant into Dictionary, use <a href="../classes/Dictionary.html#Dictionary:set">set</a> instead.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">key</span>
+
+
+
+        </li>
+        <li><span class="parameter">value</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Dictionary:__pairs"></a>
+    <strong>Dictionary:__pairs ()</strong>
+    </dt>
+    <dd>
+    Returns the <a href="../classes/Dictionary.html#Dictionary:next">next</a> iterator and <code>self</code>, called by the idiom <code>pairs(dictionary)</code>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+           <span class="types"><span class="type">function</span></span>
+
+
+</li>
+        <li>
+           <span class="types"><a class="type" href="../classes/Dictionary.html#">Dictionary</a></span>
+        self</li>
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="keyword">for</span> k, v <span class="keyword">in</span> <span class="global">pairs</span>(dictionary) <span class="keyword">do</span>
+    <span class="comment">-- do something
+</span><span class="keyword">end</span></pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "Dictionary:__tostring"></a>
+    <strong>Dictionary:__tostring ()</strong>
+    </dt>
+    <dd>
+    Returns a Lua string representation of this Dictionary.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2021-09-07 13:06:11 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

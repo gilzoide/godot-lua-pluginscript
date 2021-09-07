@@ -1,0 +1,521 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Godot Lua PluginScript</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Methods">Methods</a></li>
+<li><a href="#Metamethods">Metamethods </a></li>
+</ul>
+
+
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><a href="../classes/AABB.html">AABB</a></li>
+  <li><a href="../classes/Array.html">Array</a></li>
+  <li><a href="../classes/Basis.html">Basis</a></li>
+  <li><a href="../classes/Color.html">Color</a></li>
+  <li><a href="../classes/Dictionary.html">Dictionary</a></li>
+  <li><strong>NodePath</strong></li>
+  <li><a href="../classes/Object.html">Object</a></li>
+  <li><a href="../classes/Plane.html">Plane</a></li>
+  <li><a href="../classes/PoolByteArray.html">PoolByteArray</a></li>
+  <li><a href="../classes/PoolColorArray.html">PoolColorArray</a></li>
+  <li><a href="../classes/PoolIntArray.html">PoolIntArray</a></li>
+  <li><a href="../classes/PoolRealArray.html">PoolRealArray</a></li>
+  <li><a href="../classes/PoolStringArray.html">PoolStringArray</a></li>
+  <li><a href="../classes/PoolVector2Array.html">PoolVector2Array</a></li>
+  <li><a href="../classes/PoolVector3Array.html">PoolVector3Array</a></li>
+  <li><a href="../classes/Quat.html">Quat</a></li>
+  <li><a href="../classes/RID.html">RID</a></li>
+  <li><a href="../classes/Rect2.html">Rect2</a></li>
+  <li><a href="../classes/String.html">String</a></li>
+  <li><a href="../classes/StringName.html">StringName</a></li>
+  <li><a href="../classes/Transform.html">Transform</a></li>
+  <li><a href="../classes/Transform2D.html">Transform2D</a></li>
+  <li><a href="../classes/Variant.html">Variant</a></li>
+  <li><a href="../classes/Vector2.html">Vector2</a></li>
+  <li><a href="../classes/Vector3.html">Vector3</a></li>
+</ul>
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/Enumerations.html">Enumerations</a></li>
+  <li><a href="../modules/GD.html">GD</a></li>
+  <li><a href="../modules/Globals.html">Globals</a></li>
+  <li><a href="../modules/OOP.html">OOP</a></li>
+  <li><a href="../modules/math_extras.html">math_extras</a></li>
+  <li><a href="../modules/package_extras.html">package_extras</a></li>
+  <li><a href="../modules/string_extras.html">string_extras</a></li>
+</ul>
+<h2>Scripts</h2>
+<ul class="nowrap">
+  <li><a href="../scripts/lps_coroutine.lua.html">lps_coroutine.lua</a></li>
+</ul>
+<h2>Topics</h2>
+<ul class="">
+  <li><a href="../topics/README.md.html">README</a></li>
+</ul>
+<h2>Examples</h2>
+<ul class="nowrap">
+  <li><a href="../examples/lua_repl.lua.html">lua_repl.lua</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Class <code>NodePath</code></h1>
+<p>NodePath metatype, wrapper for <code>godot_node_path</code>.</p>
+<p> Construct using the idiom <code>NodePath(path)</code>, which calls <a href="../classes/NodePath.html#NodePath:__new">__new</a>.</p>
+
+
+<h2><a href="#Methods">Methods</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#NodePath:as_string">NodePath:as_string ()</a></td>
+	<td class="summary">Gets a <a href="../classes/String.html#">String</a> that represents this NodePath.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#NodePath:get_as_property_path">NodePath:get_as_property_path ()</a></td>
+	<td class="summary">Returns a node path with a colon character (<code>:</code>) prepended, transforming it to a pure property path with no node name (defaults to resolving from the current node).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#NodePath:get_concatenated_subnames">NodePath:get_concatenated_subnames ()</a></td>
+	<td class="summary">Returns all subnames concatenated with a colon character (<code>:</code>) as separator, i.e.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#NodePath:get_name">NodePath:get_name (idx)</a></td>
+	<td class="summary">Gets the node name indicated by <code>idx</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#NodePath:get_name_count">NodePath:get_name_count ()</a></td>
+	<td class="summary">Gets the number of node names which make up the path.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#NodePath:get_subname">NodePath:get_subname (idx)</a></td>
+	<td class="summary">Gets the resource or property name indicated by <code>idx</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#NodePath:get_subname_count">NodePath:get_subname_count ()</a></td>
+	<td class="summary">Gets the number of resource or property names ("subnames") in the path.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#NodePath:is_absolute">NodePath:is_absolute ()</a></td>
+	<td class="summary">Returns <code>true</code> if the node path is absolute (as opposed to relative), which means that it starts with a slash character (<code>/</code>).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#NodePath:is_empty">NodePath:is_empty ()</a></td>
+	<td class="summary">Returns <code>true</code> if the node path is empty.</td>
+	</tr>
+</table>
+<h2><a href="#Metamethods">Metamethods </a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#NodePath:__concat">NodePath:__concat (a, b)</a></td>
+	<td class="summary">Concatenates values.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#NodePath:__eq">NodePath:__eq (a, b)</a></td>
+	<td class="summary">Equality comparison (<code>a == b</code>).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#NodePath:__new">NodePath:__new (path)</a></td>
+	<td class="summary">NodePath constructor, called by the idiom <code>NodePath(path)</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#NodePath:__tostring">NodePath:__tostring ()</a></td>
+	<td class="summary">Returns a Lua string representation of this NodePath.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Methods"></a>Methods</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "NodePath:as_string"></a>
+    <strong>NodePath:as_string ()</strong>
+    </dt>
+    <dd>
+    Gets a <a href="../classes/String.html#">String</a> that represents this NodePath.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "NodePath:get_as_property_path"></a>
+    <strong>NodePath:get_as_property_path ()</strong>
+    </dt>
+    <dd>
+    Returns a node path with a colon character (<code>:</code>) prepended, transforming it to a pure property path with no node name (defaults to resolving from the current node).
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "NodePath:get_concatenated_subnames"></a>
+    <strong>NodePath:get_concatenated_subnames ()</strong>
+    </dt>
+    <dd>
+    Returns all subnames concatenated with a colon character (<code>:</code>) as separator, i.e.  the right side of the first colon in a node path.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "NodePath:get_name"></a>
+    <strong>NodePath:get_name (idx)</strong>
+    </dt>
+    <dd>
+    Gets the node name indicated by <code>idx</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">idx</span>
+            <span class="types"><span class="type">int</span></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "NodePath:get_name_count"></a>
+    <strong>NodePath:get_name_count ()</strong>
+    </dt>
+    <dd>
+    Gets the number of node names which make up the path.
+ Subnames (see <a href="../classes/NodePath.html#NodePath:get_subname_count">get_subname_count</a>) are not included.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">int</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "NodePath:get_subname"></a>
+    <strong>NodePath:get_subname (idx)</strong>
+    </dt>
+    <dd>
+    Gets the resource or property name indicated by <code>idx</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">idx</span>
+            <span class="types"><span class="type">int</span></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "NodePath:get_subname_count"></a>
+    <strong>NodePath:get_subname_count ()</strong>
+    </dt>
+    <dd>
+    Gets the number of resource or property names ("subnames") in the path.
+ Each subname is listed after a colon character (<code>:</code>) in the node path.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">int</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "NodePath:is_absolute"></a>
+    <strong>NodePath:is_absolute ()</strong>
+    </dt>
+    <dd>
+    Returns <code>true</code> if the node path is absolute (as opposed to relative), which means that it starts with a slash character (<code>/</code>).
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "NodePath:is_empty"></a>
+    <strong>NodePath:is_empty ()</strong>
+    </dt>
+    <dd>
+    Returns <code>true</code> if the node path is empty.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Metamethods"></a>Metamethods </h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "NodePath:__concat"></a>
+    <strong>NodePath:__concat (a, b)</strong>
+    </dt>
+    <dd>
+    Concatenates values.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+          First value, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+        <li><span class="parameter">b</span>
+          First value, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "NodePath:__eq"></a>
+    <strong>NodePath:__eq (a, b)</strong>
+    </dt>
+    <dd>
+    Equality comparison (<code>a == b</code>).
+ If either <code>a</code> or <code>b</code> are not of type <a href="../classes/NodePath.html#">NodePath</a>, <a href="../classes/String.html#">String</a> or Lua <a href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a>, always return <code>false</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+
+
+
+        </li>
+        <li><span class="parameter">b</span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "NodePath:__new"></a>
+    <strong>NodePath:__new (path)</strong>
+    </dt>
+    <dd>
+    NodePath constructor, called by the idiom <code>NodePath(path)</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">path</span>
+          If another <a href="../classes/NodePath.html#">NodePath</a> is passed, just return a copy of it.
+   Otherwise, NodePath is created with <code>path</code> stringified with <a href="../modules/GD.html#str">GD.str</a>.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/NodePath.html#">NodePath</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "NodePath:__tostring"></a>
+    <strong>NodePath:__tostring ()</strong>
+    </dt>
+    <dd>
+    Returns a Lua string representation of this NodePath.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+
+
+
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/NodePath.html#NodePath:as_string">as_string</a>
+    </ul>
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2021-09-07 13:06:11 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

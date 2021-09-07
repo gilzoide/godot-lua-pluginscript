@@ -1,0 +1,1164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Godot Lua PluginScript</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Methods">Methods</a></li>
+<li><a href="#Metamethods">Metamethods </a></li>
+<li><a href="#Constants">Constants </a></li>
+</ul>
+
+
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><a href="../classes/AABB.html">AABB</a></li>
+  <li><a href="../classes/Array.html">Array</a></li>
+  <li><strong>Basis</strong></li>
+  <li><a href="../classes/Color.html">Color</a></li>
+  <li><a href="../classes/Dictionary.html">Dictionary</a></li>
+  <li><a href="../classes/NodePath.html">NodePath</a></li>
+  <li><a href="../classes/Object.html">Object</a></li>
+  <li><a href="../classes/Plane.html">Plane</a></li>
+  <li><a href="../classes/PoolByteArray.html">PoolByteArray</a></li>
+  <li><a href="../classes/PoolColorArray.html">PoolColorArray</a></li>
+  <li><a href="../classes/PoolIntArray.html">PoolIntArray</a></li>
+  <li><a href="../classes/PoolRealArray.html">PoolRealArray</a></li>
+  <li><a href="../classes/PoolStringArray.html">PoolStringArray</a></li>
+  <li><a href="../classes/PoolVector2Array.html">PoolVector2Array</a></li>
+  <li><a href="../classes/PoolVector3Array.html">PoolVector3Array</a></li>
+  <li><a href="../classes/Quat.html">Quat</a></li>
+  <li><a href="../classes/RID.html">RID</a></li>
+  <li><a href="../classes/Rect2.html">Rect2</a></li>
+  <li><a href="../classes/String.html">String</a></li>
+  <li><a href="../classes/StringName.html">StringName</a></li>
+  <li><a href="../classes/Transform.html">Transform</a></li>
+  <li><a href="../classes/Transform2D.html">Transform2D</a></li>
+  <li><a href="../classes/Variant.html">Variant</a></li>
+  <li><a href="../classes/Vector2.html">Vector2</a></li>
+  <li><a href="../classes/Vector3.html">Vector3</a></li>
+</ul>
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/Enumerations.html">Enumerations</a></li>
+  <li><a href="../modules/GD.html">GD</a></li>
+  <li><a href="../modules/Globals.html">Globals</a></li>
+  <li><a href="../modules/OOP.html">OOP</a></li>
+  <li><a href="../modules/math_extras.html">math_extras</a></li>
+  <li><a href="../modules/package_extras.html">package_extras</a></li>
+  <li><a href="../modules/string_extras.html">string_extras</a></li>
+</ul>
+<h2>Scripts</h2>
+<ul class="nowrap">
+  <li><a href="../scripts/lps_coroutine.lua.html">lps_coroutine.lua</a></li>
+</ul>
+<h2>Topics</h2>
+<ul class="">
+  <li><a href="../topics/README.md.html">README</a></li>
+</ul>
+<h2>Examples</h2>
+<ul class="nowrap">
+  <li><a href="../examples/lua_repl.lua.html">lua_repl.lua</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Class <code>Basis</code></h1>
+<p>Basis metatype, wrapper for <code>godot_basis</code>.</p>
+<p>
+
+<p> Constructed using the idiom <code>Basis(...)</code>, which calls <a href="../classes/Basis.html#Basis:__new">__new</a>.</p>
+
+<p> The matrix rows may be accessed through <code>rows</code> or in bulk through <code>elements</code>:</p>
+
+<pre>
+typedef union godot_basis {
+    float elements[<span class="number">9</span>];
+    Vector3 rows[<span class="number">3</span>];
+} godot_basis;
+</pre>
+
+</p>
+
+
+<h2><a href="#Methods">Methods</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Basis:determinant">Basis:determinant ()</a></td>
+	<td class="summary">Returns the determinant of the basis matrix.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Basis:get_axis">Basis:get_axis (axis)</a></td>
+	<td class="summary">Returns the given <code>axis</code> (column).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Basis:get_euler">Basis:get_euler ()</a></td>
+	<td class="summary">Returns the basis's rotation in the form of Euler angles (in the YXZ convention: when decomposing, first Z, then X, and Y last).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Basis:get_orthogonal_index">Basis:get_orthogonal_index ()</a></td>
+	<td class="summary">This function considers a discretization of rotations into 24 points on unit sphere, lying along the vectors (x,y,z) with each component being either -1, 0, or 1, and returns the index of the point best representing the orientation of the object.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Basis:get_rotation_quat">Basis:get_rotation_quat ()</a></td>
+	<td class="summary">Returns the basis's rotation in the form of a quaternion.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Basis:get_row">Basis:get_row (row)</a></td>
+	<td class="summary">Returns the given <code>row</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Basis:get_scale">Basis:get_scale ()</a></td>
+	<td class="summary">Assuming that the matrix is the combination of a rotation and scaling, return the absolute value of scaling factors along each axis.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Basis:inverse">Basis:inverse ()</a></td>
+	<td class="summary">Returns the inverse of the matrix.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Basis:orthonormalized">Basis:orthonormalized ()</a></td>
+	<td class="summary">Returns the orthonormalized version of the matrix (useful to call from time to time to avoid rounding error for orthogonal matrices).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Basis:rotated">Basis:rotated (axis, phi)</a></td>
+	<td class="summary">Introduce an additional rotation around the given <code>axis</code> by <code>phi</code> (radians).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Basis:scaled">Basis:scaled (scale)</a></td>
+	<td class="summary">Introduce an additional scaling specified by the given 3D scaling factor.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Basis:set_axis">Basis:set_axis (axis, value)</a></td>
+	<td class="summary">Set a new value for <code>axis</code> (column).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Basis:set_row">Basis:set_row (row, value)</a></td>
+	<td class="summary">Set a new value for <code>row</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Basis:slerp">Basis:slerp (b, t)</a></td>
+	<td class="summary">Assuming that the matrix is a proper rotation matrix, slerp performs a spherical-linear interpolation with another rotation matrix.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Basis:tdotx">Basis:tdotx (with)</a></td>
+	<td class="summary">Transposed dot product with the X axis of the matrix.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Basis:tdoty">Basis:tdoty (with)</a></td>
+	<td class="summary">Transposed dot product with the Y axis of the matrix.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Basis:tdotz">Basis:tdotz (with)</a></td>
+	<td class="summary">Transposed dot product with the Z axis of the matrix.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Basis:transposed">Basis:transposed ()</a></td>
+	<td class="summary">Returns the transposed version of the matrix.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Basis:xform">Basis:xform (v)</a></td>
+	<td class="summary">Returns a vector transformed (multiplied) by the matrix.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Basis:xform_inv">Basis:xform_inv (v)</a></td>
+	<td class="summary">Returns a vector transformed (multiplied) by the transposed basis matrix.</td>
+	</tr>
+</table>
+<h2><a href="#Metamethods">Metamethods </a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Basis:__add">Basis:__add (a, b)</a></td>
+	<td class="summary">Addition operation</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Basis:__concat">Basis:__concat (a, b)</a></td>
+	<td class="summary">Concatenates values.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Basis:__eq">Basis:__eq (a, b)</a></td>
+	<td class="summary">Equality operation
+ If either <code>a</code> or <code>b</code> are not of type <a href="../classes/Basis.html#">Basis</a>, always return <code>false</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Basis:__mul">Basis:__mul (self, b)</a></td>
+	<td class="summary">Multiplication operation</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Basis:__new">Basis:__new (...)</a></td>
+	<td class="summary">Basis constructor, called by the idiom <code>Basis(...)</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Basis:__sub">Basis:__sub (a, b)</a></td>
+	<td class="summary">Subtraction operation</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Basis:__tostring">Basis:__tostring ()</a></td>
+	<td class="summary">Returns a Lua string representation of this basis.</td>
+	</tr>
+</table>
+<h2><a href="#Constants">Constants </a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Basis.FLIP_X">Basis.FLIP_X</a></td>
+	<td class="summary">The basis that will flip something along the X axis when used in a transformation.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Basis.FLIP_Y">Basis.FLIP_Y</a></td>
+	<td class="summary">The basis that will flip something along the Y axis when used in a transformation.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Basis.FLIP_Z">Basis.FLIP_Z</a></td>
+	<td class="summary">The basis that will flip something along the Z axis when used in a transformation.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Basis.IDENTITY">Basis.IDENTITY</a></td>
+	<td class="summary">The identity basis, with no rotation or scaling applied.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Methods"></a>Methods</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Basis:determinant"></a>
+    <strong>Basis:determinant ()</strong>
+    </dt>
+    <dd>
+    Returns the determinant of the basis matrix.  If the basis is uniformly scaled, its determinant is the square of the scale.
+ A negative determinant means the basis has a negative scale.
+ A zero determinant means the basis isn't invertible, and is usually considered invalid.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Basis:get_axis"></a>
+    <strong>Basis:get_axis (axis)</strong>
+    </dt>
+    <dd>
+    Returns the given <code>axis</code> (column).
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">axis</span>
+            <span class="types"><span class="type">int</span></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Basis:get_euler"></a>
+    <strong>Basis:get_euler ()</strong>
+    </dt>
+    <dd>
+    Returns the basis's rotation in the form of Euler angles (in the YXZ convention: when decomposing, first Z, then X, and Y last).
+ The returned vector contains the rotation angles in the format (X angle, Y angle, Z angle).
+ Consider using the <a href="../classes/Basis.html#Basis:get_rotation_quat">get_rotation_quat</a> method instead, which returns a quaternion instead of Euler angles.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Basis.html#Basis:get_rotation_quat">get_rotation_quat</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Basis:get_orthogonal_index"></a>
+    <strong>Basis:get_orthogonal_index ()</strong>
+    </dt>
+    <dd>
+    This function considers a discretization of rotations into 24 points on unit sphere, lying along the vectors (x,y,z) with each component being either -1, 0, or 1, and returns the index of the point best representing the orientation of the object. 
+ It is mainly used by the GridMap editor.
+ For further details, refer to the Godot source code.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">int</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Basis:get_rotation_quat"></a>
+    <strong>Basis:get_rotation_quat ()</strong>
+    </dt>
+    <dd>
+    Returns the basis's rotation in the form of a quaternion.
+ See <a href="../classes/Basis.html#Basis:get_euler">get_euler</a> if you need Euler angles, but keep in mind quaternions should generally be preferred to Euler angles.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Quat.html#">Quat</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Basis:get_row"></a>
+    <strong>Basis:get_row (row)</strong>
+    </dt>
+    <dd>
+    Returns the given <code>row</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">row</span>
+            <span class="types"><span class="type">int</span></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Basis:get_scale"></a>
+    <strong>Basis:get_scale ()</strong>
+    </dt>
+    <dd>
+    Assuming that the matrix is the combination of a rotation and scaling, return the absolute value of scaling factors along each axis.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Basis:inverse"></a>
+    <strong>Basis:inverse ()</strong>
+    </dt>
+    <dd>
+    Returns the inverse of the matrix.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Basis.html#">Basis</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Basis:orthonormalized"></a>
+    <strong>Basis:orthonormalized ()</strong>
+    </dt>
+    <dd>
+    Returns the orthonormalized version of the matrix (useful to call from time to time to avoid rounding error for orthogonal matrices).
+ This performs a Gram-Schmidt orthonormalization on the basis of the matrix.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Basis.html#">Basis</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Basis:rotated"></a>
+    <strong>Basis:rotated (axis, phi)</strong>
+    </dt>
+    <dd>
+    Introduce an additional rotation around the given <code>axis</code> by <code>phi</code> (radians).
+ The <code>axis</code> must be a normalized vector.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">axis</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+        </li>
+        <li><span class="parameter">phi</span>
+            <span class="types"><span class="type">number</span></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Basis.html#">Basis</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Basis:scaled"></a>
+    <strong>Basis:scaled (scale)</strong>
+    </dt>
+    <dd>
+    Introduce an additional scaling specified by the given 3D scaling factor.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">scale</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Basis.html#">Basis</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Basis:set_axis"></a>
+    <strong>Basis:set_axis (axis, value)</strong>
+    </dt>
+    <dd>
+    Set a new value for <code>axis</code> (column).
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">axis</span>
+            <span class="types"><span class="type">int</span></span>
+
+
+
+        </li>
+        <li><span class="parameter">value</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Basis:set_row"></a>
+    <strong>Basis:set_row (row, value)</strong>
+    </dt>
+    <dd>
+    Set a new value for <code>row</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">row</span>
+            <span class="types"><span class="type">int</span></span>
+
+
+
+        </li>
+        <li><span class="parameter">value</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Basis:slerp"></a>
+    <strong>Basis:slerp (b, t)</strong>
+    </dt>
+    <dd>
+    Assuming that the matrix is a proper rotation matrix, slerp performs a spherical-linear interpolation with another rotation matrix.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">b</span>
+            <span class="types"><a class="type" href="../classes/Basis.html#">Basis</a></span>
+
+
+
+        </li>
+        <li><span class="parameter">t</span>
+            <span class="types"><span class="type">number</span></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Basis.html#">Basis</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Basis:tdotx"></a>
+    <strong>Basis:tdotx (with)</strong>
+    </dt>
+    <dd>
+    Transposed dot product with the X axis of the matrix.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">with</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Basis:tdoty"></a>
+    <strong>Basis:tdoty (with)</strong>
+    </dt>
+    <dd>
+    Transposed dot product with the Y axis of the matrix.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">with</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Basis:tdotz"></a>
+    <strong>Basis:tdotz (with)</strong>
+    </dt>
+    <dd>
+    Transposed dot product with the Z axis of the matrix.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">with</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Basis:transposed"></a>
+    <strong>Basis:transposed ()</strong>
+    </dt>
+    <dd>
+    Returns the transposed version of the matrix.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Basis.html#">Basis</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Basis:xform"></a>
+    <strong>Basis:xform (v)</strong>
+    </dt>
+    <dd>
+    Returns a vector transformed (multiplied) by the matrix.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">v</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Basis:xform_inv"></a>
+    <strong>Basis:xform_inv (v)</strong>
+    </dt>
+    <dd>
+    Returns a vector transformed (multiplied) by the transposed basis matrix.
+ Note: This results in a multiplication by the inverse of the matrix only if it represents a rotation-reflection.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">v</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Metamethods"></a>Metamethods </h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Basis:__add"></a>
+    <strong>Basis:__add (a, b)</strong>
+    </dt>
+    <dd>
+    Addition operation
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+            <span class="types"><a class="type" href="../classes/Basis.html#">Basis</a></span>
+
+
+
+        </li>
+        <li><span class="parameter">b</span>
+            <span class="types"><a class="type" href="../classes/Basis.html#">Basis</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Basis.html#">Basis</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Basis:__concat"></a>
+    <strong>Basis:__concat (a, b)</strong>
+    </dt>
+    <dd>
+    Concatenates values.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+          First value, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+        <li><span class="parameter">b</span>
+          First value, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Basis:__eq"></a>
+    <strong>Basis:__eq (a, b)</strong>
+    </dt>
+    <dd>
+    Equality operation
+ If either <code>a</code> or <code>b</code> are not of type <a href="../classes/Basis.html#">Basis</a>, always return <code>false</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+            <span class="types"><a class="type" href="../classes/Basis.html#">Basis</a></span>
+
+
+
+        </li>
+        <li><span class="parameter">b</span>
+            <span class="types"><a class="type" href="../classes/Basis.html#">Basis</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Basis:__mul"></a>
+    <strong>Basis:__mul (self, b)</strong>
+    </dt>
+    <dd>
+    Multiplication operation
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../classes/Basis.html#">Basis</a></span>
+
+
+
+        </li>
+        <li><span class="parameter">b</span>
+            <span class="types"><a class="type" href="../classes/Basis.html#">Basis</a>, <a class="type" href="../classes/Vector3.html#">Vector3</a> or <span class="type">number</span></span>
+          If a Basis is passed, returns the multiplied matrices.
+  If a Vector3 is passed, calls <a href="../classes/Basis.html#Basis:xform">xform</a>.
+  Otherwise, returns a Basis with each component multiplied by <code>b</code>.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Basis.html#">Basis</a> or <a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Basis:__new"></a>
+    <strong>Basis:__new (...)</strong>
+    </dt>
+    <dd>
+
+<p>Basis constructor, called by the idiom <code>Basis(...)</code>. </p>
+
+<ul>
+    <li><code>Basis()</code>: <a href="../classes/Basis.html#Basis.IDENTITY">IDENTITY</a> basis matrix</li>
+    <li><code>Basis(Quat quat)</code>: pure rotation basis matrix from the given quaternion</li>
+    <li><code>Basis(Vector3 euler)</code>: pure rotation basis matrix from the given Euler angles (in the YXZ convention: when <em>composing</em>, first Y, then X, and Z last)</li>
+    <li><code>Basis(Vector3 axis, number angle)</code>: pure rotation basis matrix, rotated around the given axis by angle, in radians. The axis must be a normalized vector</li>
+    <li><code>Basis(Vector3 x, Vector3 y, Vector3 z)</code>: basis matrix from 3 row vectors</li>
+    <li><code>Basis(Basis other)</code>: copy values from <code>other</code></li>
+</ul>
+
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Basis.html#">Basis</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Basis:__sub"></a>
+    <strong>Basis:__sub (a, b)</strong>
+    </dt>
+    <dd>
+    Subtraction operation
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+            <span class="types"><a class="type" href="../classes/Basis.html#">Basis</a></span>
+
+
+
+        </li>
+        <li><span class="parameter">b</span>
+            <span class="types"><a class="type" href="../classes/Basis.html#">Basis</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Basis.html#">Basis</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Basis:__tostring"></a>
+    <strong>Basis:__tostring ()</strong>
+    </dt>
+    <dd>
+    Returns a Lua string representation of this basis.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Constants"></a>Constants </h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Basis.FLIP_X"></a>
+    <strong>Basis.FLIP_X</strong>
+    </dt>
+    <dd>
+    The basis that will flip something along the X axis when used in a transformation.
+
+
+    <ul>
+        <li><span class="parameter">FLIP_X</span>
+          Basis(-1, 0, 0, 0, 1, 0, 0, 0, 1)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Basis.FLIP_Y"></a>
+    <strong>Basis.FLIP_Y</strong>
+    </dt>
+    <dd>
+    The basis that will flip something along the Y axis when used in a transformation.
+
+
+    <ul>
+        <li><span class="parameter">FLIP_Y</span>
+          Basis(1, 0, 0, 0, -1, 0, 0, 0, 1)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Basis.FLIP_Z"></a>
+    <strong>Basis.FLIP_Z</strong>
+    </dt>
+    <dd>
+    The basis that will flip something along the Z axis when used in a transformation.
+
+
+    <ul>
+        <li><span class="parameter">FLIP_Z</span>
+          Basis(1, 0, 0, 0, 1, 0, 0, 0, -1)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Basis.IDENTITY"></a>
+    <strong>Basis.IDENTITY</strong>
+    </dt>
+    <dd>
+    The identity basis, with no rotation or scaling applied.
+
+
+    <ul>
+        <li><span class="parameter">IDENTITY</span>
+          Basis(1, 0, 0, 0, 1, 0, 0, 0, 1)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2021-09-07 13:06:11 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

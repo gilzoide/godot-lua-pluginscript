@@ -1,0 +1,704 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Godot Lua PluginScript</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Tables">Tables</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><strong>Enumerations</strong></li>
+  <li><a href="../modules/GD.html">GD</a></li>
+  <li><a href="../modules/Globals.html">Globals</a></li>
+  <li><a href="../modules/OOP.html">OOP</a></li>
+  <li><a href="../modules/math_extras.html">math_extras</a></li>
+  <li><a href="../modules/package_extras.html">package_extras</a></li>
+  <li><a href="../modules/string_extras.html">string_extras</a></li>
+</ul>
+<h2>Scripts</h2>
+<ul class="nowrap">
+  <li><a href="../scripts/lps_coroutine.lua.html">lps_coroutine.lua</a></li>
+</ul>
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><a href="../classes/AABB.html">AABB</a></li>
+  <li><a href="../classes/Array.html">Array</a></li>
+  <li><a href="../classes/Basis.html">Basis</a></li>
+  <li><a href="../classes/Color.html">Color</a></li>
+  <li><a href="../classes/Dictionary.html">Dictionary</a></li>
+  <li><a href="../classes/NodePath.html">NodePath</a></li>
+  <li><a href="../classes/Object.html">Object</a></li>
+  <li><a href="../classes/Plane.html">Plane</a></li>
+  <li><a href="../classes/PoolByteArray.html">PoolByteArray</a></li>
+  <li><a href="../classes/PoolColorArray.html">PoolColorArray</a></li>
+  <li><a href="../classes/PoolIntArray.html">PoolIntArray</a></li>
+  <li><a href="../classes/PoolRealArray.html">PoolRealArray</a></li>
+  <li><a href="../classes/PoolStringArray.html">PoolStringArray</a></li>
+  <li><a href="../classes/PoolVector2Array.html">PoolVector2Array</a></li>
+  <li><a href="../classes/PoolVector3Array.html">PoolVector3Array</a></li>
+  <li><a href="../classes/Quat.html">Quat</a></li>
+  <li><a href="../classes/Rect2.html">Rect2</a></li>
+  <li><a href="../classes/RID.html">RID</a></li>
+  <li><a href="../classes/String.html">String</a></li>
+  <li><a href="../classes/StringName.html">StringName</a></li>
+  <li><a href="../classes/Transform.html">Transform</a></li>
+  <li><a href="../classes/Transform2D.html">Transform2D</a></li>
+  <li><a href="../classes/Variant.html">Variant</a></li>
+  <li><a href="../classes/Vector2.html">Vector2</a></li>
+  <li><a href="../classes/Vector3.html">Vector3</a></li>
+</ul>
+<h2>Topics</h2>
+<ul class="">
+  <li><a href="../topics/README.md.html">README</a></li>
+</ul>
+<h2>Examples</h2>
+<ul class="nowrap">
+  <li><a href="../examples/lua_repl.lua.html">lua_repl.lua</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>Enumerations</code></h1>
+<p>GDNative enumerations, all accessible globally.</p>
+<p>
+
+</p>
+
+
+<h2><a href="#Tables">Tables</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#CallError">CallError</a></td>
+	<td class="summary">Enum <code>godot_variant_call_error</code>, mapping UPPER_CASED names to ordinal values and vice-versa.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Error">Error</a></td>
+	<td class="summary">Enum <code>godot_error</code>, mapping UPPER_CASED names to ordinal values and vice-versa.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PropertyHint">PropertyHint</a></td>
+	<td class="summary">Enum <code>godot_property_hint</code>, mapping UPPER_CASED names to ordinal values and vice-versa.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PropertyUsage">PropertyUsage</a></td>
+	<td class="summary">Enum <code>godot_property_usage_flags</code>, mapping UPPER_CASED names to ordinal values and vice-versa.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#RPCMode">RPCMode</a></td>
+	<td class="summary">Enum <code>godot_method_rpc_mode</code>, mapping UPPER_CASED names to ordinal values and vice-versa.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#VariantType">VariantType</a></td>
+	<td class="summary">Enum <code>godot_variant_type</code>, mapping PascalCased names to ordinal value and vice-versa.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Tables"></a>Tables</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "CallError"></a>
+    <strong>CallError</strong>
+    </dt>
+    <dd>
+
+<p>Enum <code>godot_variant_call_error</code>, mapping UPPER_CASED names to ordinal values and vice-versa. </p>
+<pre><code> assert(CallError.OK == GODOT_CALL_ERROR_CALL_OK and CallError[CallError.OK] == 'OK')
+ ...
+</code></pre>
+
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">OK</span>
+          Ok
+        </li>
+        <li><span class="parameter">ERROR_INVALID_METHOD</span>
+          Invalid Method
+        </li>
+        <li><span class="parameter">ERROR_INVALID_ARGUMENT</span>
+          Invalid Argument
+        </li>
+        <li><span class="parameter">ERROR_TOO_MANY_ARGUMENTS</span>
+          Too Many Arguments
+        </li>
+        <li><span class="parameter">ERROR_TOO_FEW_ARGUMENTS</span>
+          Too Few Arguments
+        </li>
+        <li><span class="parameter">ERROR_INSTANCE_IS_NULL</span>
+          Instance Is Null
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Error"></a>
+    <strong>Error</strong>
+    </dt>
+    <dd>
+
+<p>Enum <code>godot_error</code>, mapping UPPER_CASED names to ordinal values and vice-versa. </p>
+<pre><code> assert(Error.OK == GODOT_OK and Error[Error.OK] == 'OK')
+ ...
+</code></pre>
+
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">OK</span>
+          Ok
+        </li>
+        <li><span class="parameter">FAILED</span>
+          Failed
+        </li>
+        <li><span class="parameter">UNAVAILABLE</span>
+          Unavailable
+        </li>
+        <li><span class="parameter">UNCONFIGURED</span>
+          Unconfigured
+        </li>
+        <li><span class="parameter">UNAUTHORIZED</span>
+          Unauthorized
+        </li>
+        <li><span class="parameter">PARAMETER_RANGE_ERROR</span>
+          Parameter Range Error
+        </li>
+        <li><span class="parameter">OUT_OF_MEMORY</span>
+          Out Of Memory
+        </li>
+        <li><span class="parameter">FILE_NOT_FOUND</span>
+          File Not Found
+        </li>
+        <li><span class="parameter">FILE_BAD_DRIVE</span>
+          File Bad Drive
+        </li>
+        <li><span class="parameter">FILE_BAD_PATH</span>
+          File Bad Path
+        </li>
+        <li><span class="parameter">FILE_NO_PERMISSION</span>
+          File No Permission
+        </li>
+        <li><span class="parameter">FILE_ALREADY_IN_USE</span>
+          File Already In Use
+        </li>
+        <li><span class="parameter">FILE_CANT_OPEN</span>
+          File Can't Open
+        </li>
+        <li><span class="parameter">FILE_CANT_WRITE</span>
+          File Can't Write
+        </li>
+        <li><span class="parameter">FILE_CANT_READ</span>
+          File Can't Read
+        </li>
+        <li><span class="parameter">FILE_UNRECOGNIZED</span>
+          File Unrecognized
+        </li>
+        <li><span class="parameter">FILE_CORRUPT</span>
+          File Corrupt
+        </li>
+        <li><span class="parameter">FILE_MISSING_DEPENDENCIES</span>
+          File Missing Dependencies
+        </li>
+        <li><span class="parameter">FILE_EOF</span>
+          File EOF
+        </li>
+        <li><span class="parameter">CANT_OPEN</span>
+          Can't Open
+        </li>
+        <li><span class="parameter">CANT_CREATE</span>
+          Can't Create
+        </li>
+        <li><span class="parameter">QUERY_FAILED</span>
+          Query Failed
+        </li>
+        <li><span class="parameter">ALREADY_IN_USE</span>
+          Already In Use
+        </li>
+        <li><span class="parameter">LOCKED</span>
+          Locked
+        </li>
+        <li><span class="parameter">TIMEOUT</span>
+          Timeout
+        </li>
+        <li><span class="parameter">CANT_CONNECT</span>
+          Can't Connect
+        </li>
+        <li><span class="parameter">CANT_RESOLVE</span>
+          Can't Resolve
+        </li>
+        <li><span class="parameter">CONNECTION_ERROR</span>
+          Connection Error
+        </li>
+        <li><span class="parameter">CANT_ACQUIRE_RESOURCE</span>
+          Can't Acquire Resource
+        </li>
+        <li><span class="parameter">CANT_FORK</span>
+          Can't Fork
+        </li>
+        <li><span class="parameter">INVALID_DATA</span>
+          Invalid Data
+        </li>
+        <li><span class="parameter">INVALID_PARAMETER</span>
+          Invalid Parameter
+        </li>
+        <li><span class="parameter">ALREADY_EXISTS</span>
+          Already Exists
+        </li>
+        <li><span class="parameter">DOES_NOT_EXIST</span>
+          Does Not Exist
+        </li>
+        <li><span class="parameter">DATABASE_CANT_READ</span>
+          Database Cant Read
+        </li>
+        <li><span class="parameter">DATABASE_CANT_WRITE</span>
+          Database Cant Write
+        </li>
+        <li><span class="parameter">COMPILATION_FAILED</span>
+          Compilation Failed
+        </li>
+        <li><span class="parameter">METHOD_NOT_FOUND</span>
+          Method Not Found
+        </li>
+        <li><span class="parameter">LINK_FAILED</span>
+          Link Failed
+        </li>
+        <li><span class="parameter">SCRIPT_FAILED</span>
+          Script Failed
+        </li>
+        <li><span class="parameter">CYCLIC_LINK</span>
+          Cyclic Link
+        </li>
+        <li><span class="parameter">INVALID_DECLARATION</span>
+          Invalid Declaration
+        </li>
+        <li><span class="parameter">DUPLICATE_SYMBOL</span>
+          Duplicate Symbol
+        </li>
+        <li><span class="parameter">PARSE_ERROR</span>
+          Parse Error
+        </li>
+        <li><span class="parameter">BUSY</span>
+          Busy
+        </li>
+        <li><span class="parameter">SKIP</span>
+          Skip
+        </li>
+        <li><span class="parameter">HELP</span>
+          Help
+        </li>
+        <li><span class="parameter">BUG</span>
+          Bug
+        </li>
+        <li><span class="parameter">PRINTER_ON_FIRE</span>
+          Printer On Fire
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "PropertyHint"></a>
+    <strong>PropertyHint</strong>
+    </dt>
+    <dd>
+    Enum <code>godot_property_hint</code>, mapping UPPER_CASED names to ordinal values and vice-versa.
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">NONE</span>
+          None
+        </li>
+        <li><span class="parameter">RANGE</span>
+          Range
+        </li>
+        <li><span class="parameter">EXP_RANGE</span>
+          Exp Range
+        </li>
+        <li><span class="parameter">ENUM</span>
+          Enum
+        </li>
+        <li><span class="parameter">EXP_EASING</span>
+          Exp Easing
+        </li>
+        <li><span class="parameter">LENGTH</span>
+          Length
+        </li>
+        <li><span class="parameter">SPRITE_FRAME</span>
+          Sprite Frame
+        </li>
+        <li><span class="parameter">KEY_ACCEL</span>
+          Key Accel
+        </li>
+        <li><span class="parameter">FLAGS</span>
+          Flags
+        </li>
+        <li><span class="parameter">LAYERS_2D_RENDER</span>
+          Layers 2D Render
+        </li>
+        <li><span class="parameter">LAYERS_2D_PHYSICS</span>
+          Layers 2D Physics
+        </li>
+        <li><span class="parameter">LAYERS_3D_RENDER</span>
+          Layers 3D Render
+        </li>
+        <li><span class="parameter">LAYERS_3D_PHYSICS</span>
+          Layers 3D Physics
+        </li>
+        <li><span class="parameter">FILE</span>
+          File
+        </li>
+        <li><span class="parameter">DIR</span>
+          Dir
+        </li>
+        <li><span class="parameter">GLOBAL_FILE</span>
+          Global File
+        </li>
+        <li><span class="parameter">GLOBAL_DIR</span>
+          Global Dir
+        </li>
+        <li><span class="parameter">RESOURCE_TYPE</span>
+          Resource Type
+        </li>
+        <li><span class="parameter">MULTILINE_TEXT</span>
+          Multiline Text
+        </li>
+        <li><span class="parameter">PLACEHOLDER_TEXT</span>
+          Placeholder Text
+        </li>
+        <li><span class="parameter">COLOR_NO_ALPHA</span>
+          Color No Alpha
+        </li>
+        <li><span class="parameter">IMAGE_COMPRESS_LOSSY</span>
+          Image Compress Lossy
+        </li>
+        <li><span class="parameter">IMAGE_COMPRESS_LOSSLESS</span>
+          Image Compress Lossless
+        </li>
+        <li><span class="parameter">OBJECT_ID</span>
+          Object Id
+        </li>
+        <li><span class="parameter">TYPE_STRING</span>
+          Type String
+        </li>
+        <li><span class="parameter">NODE_PATH_TO_EDITED_NODE</span>
+          Node Path To Edited Node
+        </li>
+        <li><span class="parameter">METHOD_OF_VARIANT_TYPE</span>
+          Method Of Variant Type
+        </li>
+        <li><span class="parameter">METHOD_OF_BASE_TYPE</span>
+          Method Of Base Type
+        </li>
+        <li><span class="parameter">METHOD_OF_INSTANCE</span>
+          Method Of Instance
+        </li>
+        <li><span class="parameter">METHOD_OF_SCRIPT</span>
+          Method Of Script
+        </li>
+        <li><span class="parameter">PROPERTY_OF_VARIANT_TYPE</span>
+          Property Of Variant Type
+        </li>
+        <li><span class="parameter">PROPERTY_OF_BASE_TYPE</span>
+          Property Of Base Type
+        </li>
+        <li><span class="parameter">PROPERTY_OF_INSTANCE</span>
+          Property Of Instance
+        </li>
+        <li><span class="parameter">PROPERTY_OF_SCRIPT</span>
+          Property Of Script
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "PropertyUsage"></a>
+    <strong>PropertyUsage</strong>
+    </dt>
+    <dd>
+    Enum <code>godot_property_usage_flags</code>, mapping UPPER_CASED names to ordinal values and vice-versa.
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">STORAGE</span>
+          Storage
+        </li>
+        <li><span class="parameter">EDITOR</span>
+          Editor
+        </li>
+        <li><span class="parameter">NETWORK</span>
+          Network
+        </li>
+        <li><span class="parameter">EDITOR_HELPER</span>
+          Editor Helper
+        </li>
+        <li><span class="parameter">CHECKABLE</span>
+          Checkable
+        </li>
+        <li><span class="parameter">CHECKED</span>
+          Checked
+        </li>
+        <li><span class="parameter">INTERNATIONALIZED</span>
+          Internationalized
+        </li>
+        <li><span class="parameter">GROUP</span>
+          Group
+        </li>
+        <li><span class="parameter">CATEGORY</span>
+          Category
+        </li>
+        <li><span class="parameter">STORE_IF_NONZERO</span>
+          Store If Nonzero
+        </li>
+        <li><span class="parameter">STORE_IF_NONONE</span>
+          Store If Nonone
+        </li>
+        <li><span class="parameter">NO_INSTANCE_STATE</span>
+          No Instance State
+        </li>
+        <li><span class="parameter">RESTART_IF_CHANGED</span>
+          Restart If Changed
+        </li>
+        <li><span class="parameter">SCRIPT_VARIABLE</span>
+          Script Variable
+        </li>
+        <li><span class="parameter">STORE_IF_NULL</span>
+          Store If Null
+        </li>
+        <li><span class="parameter">ANIMATE_AS_TRIGGER</span>
+          Animate As Trigger
+        </li>
+        <li><span class="parameter">UPDATE_ALL_IF_MODIFIED</span>
+          Update All If Modified
+        </li>
+        <li><span class="parameter">DEFAULT</span>
+          Default
+        </li>
+        <li><span class="parameter">DEFAULT_INTL</span>
+          Default Internationalized
+        </li>
+        <li><span class="parameter">NOEDITOR</span>
+          No Editor
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "RPCMode"></a>
+    <strong>RPCMode</strong>
+    </dt>
+    <dd>
+
+<p>Enum <code>godot_method_rpc_mode</code>, mapping UPPER_CASED names to ordinal values and vice-versa. </p>
+<pre><code> assert(RPCMode.Disabled == GODOT_METHOD_RPC_MODE_DISABLED and RPCMode[RPCMode.DISABLED] == 'DISABLED')
+ ...
+</code></pre>
+
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">DISABLED</span>
+          RPC Disabled
+        </li>
+        <li><span class="parameter">REMOTE</span>
+          RPC Remote
+        </li>
+        <li><span class="parameter">MASTER</span>
+          RPC Master
+        </li>
+        <li><span class="parameter">PUPPET</span>
+          RPC Puppet
+        </li>
+        <li><span class="parameter">SLAVE</span>
+          RPC Slave
+        </li>
+        <li><span class="parameter">REMOTESYNC</span>
+          RPC Remotesync
+        </li>
+        <li><span class="parameter">SYNC</span>
+          RPC Sync
+        </li>
+        <li><span class="parameter">MASTERSYNC</span>
+          RPC Mastersync
+        </li>
+        <li><span class="parameter">PUPPETSYNC</span>
+          RPC Puppetsync
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "VariantType"></a>
+    <strong>VariantType</strong>
+    </dt>
+    <dd>
+
+<p>Enum <code>godot_variant_type</code>, mapping PascalCased names to ordinal value and vice-versa. </p>
+<pre><code> assert(VariantType.Nil == GODOT_VARIANT_TYPE_NIL and VariantType[VariantType.Nil] == 'Nil')
+ ...
+</code></pre>
+
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">Nil</span>
+          Nil
+        </li>
+        <li><span class="parameter">Bool</span>
+          Bool
+        </li>
+        <li><span class="parameter">Int</span>
+          Int
+        </li>
+        <li><span class="parameter">Real</span>
+          Real
+        </li>
+        <li><span class="parameter">String</span>
+          String
+        </li>
+        <li><span class="parameter">Vector2</span>
+          Vector2
+        </li>
+        <li><span class="parameter">Rect2</span>
+          Rect2
+        </li>
+        <li><span class="parameter">Vector3</span>
+          Vector3
+        </li>
+        <li><span class="parameter">Transform2D</span>
+          Transform2D
+        </li>
+        <li><span class="parameter">Plane</span>
+          Plane
+        </li>
+        <li><span class="parameter">Quat</span>
+          Quat
+        </li>
+        <li><span class="parameter">AABB</span>
+          AABB
+        </li>
+        <li><span class="parameter">Basis</span>
+          Basis
+        </li>
+        <li><span class="parameter">Transform</span>
+          Transform
+        </li>
+        <li><span class="parameter">Color</span>
+          Color
+        </li>
+        <li><span class="parameter">NodePath</span>
+          NodePath
+        </li>
+        <li><span class="parameter">RID</span>
+          RID
+        </li>
+        <li><span class="parameter">Object</span>
+          Object
+        </li>
+        <li><span class="parameter">Dictionary</span>
+          Dictionary
+        </li>
+        <li><span class="parameter">Array</span>
+          Array
+        </li>
+        <li><span class="parameter">PoolByteArray</span>
+          PoolByteArray
+        </li>
+        <li><span class="parameter">PoolIntArray</span>
+          PoolIntArray
+        </li>
+        <li><span class="parameter">PoolRealArray</span>
+          PoolRealArray
+        </li>
+        <li><span class="parameter">PoolStringArray</span>
+          PoolStringArray
+        </li>
+        <li><span class="parameter">PoolVector2Array</span>
+          PoolVector2Array
+        </li>
+        <li><span class="parameter">PoolVector3Array</span>
+          PoolVector3Array
+        </li>
+        <li><span class="parameter">PoolColorArray</span>
+          PoolColorArray
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2021-09-07 13:06:11 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

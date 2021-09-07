@@ -1,0 +1,963 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Godot Lua PluginScript</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Methods">Methods</a></li>
+<li><a href="#Metamethods">Metamethods </a></li>
+<li><a href="#Constants">Constants </a></li>
+</ul>
+
+
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><a href="../classes/AABB.html">AABB</a></li>
+  <li><a href="../classes/Array.html">Array</a></li>
+  <li><a href="../classes/Basis.html">Basis</a></li>
+  <li><a href="../classes/Color.html">Color</a></li>
+  <li><a href="../classes/Dictionary.html">Dictionary</a></li>
+  <li><a href="../classes/NodePath.html">NodePath</a></li>
+  <li><a href="../classes/Object.html">Object</a></li>
+  <li><a href="../classes/Plane.html">Plane</a></li>
+  <li><a href="../classes/PoolByteArray.html">PoolByteArray</a></li>
+  <li><a href="../classes/PoolColorArray.html">PoolColorArray</a></li>
+  <li><a href="../classes/PoolIntArray.html">PoolIntArray</a></li>
+  <li><a href="../classes/PoolRealArray.html">PoolRealArray</a></li>
+  <li><a href="../classes/PoolStringArray.html">PoolStringArray</a></li>
+  <li><a href="../classes/PoolVector2Array.html">PoolVector2Array</a></li>
+  <li><a href="../classes/PoolVector3Array.html">PoolVector3Array</a></li>
+  <li><a href="../classes/Quat.html">Quat</a></li>
+  <li><a href="../classes/RID.html">RID</a></li>
+  <li><a href="../classes/Rect2.html">Rect2</a></li>
+  <li><a href="../classes/String.html">String</a></li>
+  <li><a href="../classes/StringName.html">StringName</a></li>
+  <li><strong>Transform</strong></li>
+  <li><a href="../classes/Transform2D.html">Transform2D</a></li>
+  <li><a href="../classes/Variant.html">Variant</a></li>
+  <li><a href="../classes/Vector2.html">Vector2</a></li>
+  <li><a href="../classes/Vector3.html">Vector3</a></li>
+</ul>
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/Enumerations.html">Enumerations</a></li>
+  <li><a href="../modules/GD.html">GD</a></li>
+  <li><a href="../modules/Globals.html">Globals</a></li>
+  <li><a href="../modules/OOP.html">OOP</a></li>
+  <li><a href="../modules/math_extras.html">math_extras</a></li>
+  <li><a href="../modules/package_extras.html">package_extras</a></li>
+  <li><a href="../modules/string_extras.html">string_extras</a></li>
+</ul>
+<h2>Scripts</h2>
+<ul class="nowrap">
+  <li><a href="../scripts/lps_coroutine.lua.html">lps_coroutine.lua</a></li>
+</ul>
+<h2>Topics</h2>
+<ul class="">
+  <li><a href="../topics/README.md.html">README</a></li>
+</ul>
+<h2>Examples</h2>
+<ul class="nowrap">
+  <li><a href="../examples/lua_repl.lua.html">lua_repl.lua</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Class <code>Transform</code></h1>
+<p>Transform metatype, wrapper for <code>godot_transform</code>.</p>
+<p>
+
+<p> Constructed using the idiom <code>Transform(...)</code>, which calls <a href="../classes/Transform.html#Transform:__new">__new</a>.</p>
+
+<pre>
+typedef union godot_transform {
+    float elements[<span class="number">12</span>];
+    struct { Basis basis; Vector3 origin; };
+} godot_transform;
+</pre>
+
+</p>
+
+
+<h2><a href="#Methods">Methods</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Transform:affine_inverse">Transform:affine_inverse ()</a></td>
+	<td class="summary">Returns the inverse of the transform, under the assumption that the transformation is composed of rotation, scaling and translation.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Transform:inverse">Transform:inverse ()</a></td>
+	<td class="summary">Returns the inverse of the transform, under the assumption that the transformation is composed of rotation and translation (no scaling, use <a href="../classes/Transform.html#Transform:affine_inverse">affine_inverse</a> for transforms with scaling).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Transform:looking_at">Transform:looking_at (target, up)</a></td>
+	<td class="summary">Returns a copy of the transform rotated such that its -Z axis points towards the <code>target</code> position.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Transform:orthonormalized">Transform:orthonormalized ()</a></td>
+	<td class="summary">Returns the transform with the basis orthogonal (90 degrees), and normalized axis vectors.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Transform:rotated">Transform:rotated (axis, angle)</a></td>
+	<td class="summary">Rotates the transform around the given <code>axis</code> by the given <code>angle</code> (in radians), using matrix multiplication.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Transform:scaled">Transform:scaled (scale)</a></td>
+	<td class="summary">Scales basis and origin of the transform by the given <code>scale</code> factor, using matrix multiplication.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Transform:treturn">Transform:treturn (offset)</a></td>
+	<td class="summary">Translates the transform by the given <code>offset</code>, relative to the transform's basis vectors.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Transform:xform">Transform:xform (value)</a></td>
+	<td class="summary">Transforms the given <a href="../classes/Vector3.html#">Vector3</a>, <a href="../classes/Plane.html#">Plane</a>, <a href="../classes/AABB.html#">AABB</a>, or <a href="../classes/PoolVector3Array.html#">PoolVector3Array</a> by this transform.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Transform:xform_aabb">Transform:xform_aabb (aabb)</a></td>
+	<td class="summary">Transforms the given AABB</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Transform:xform_inv">Transform:xform_inv (value)</a></td>
+	<td class="summary">Inverse-transforms the given <a href="../classes/Vector3.html#">Vector3</a>, <a href="../classes/Plane.html#">Plane</a>, <a href="../classes/AABB.html#">AABB</a>, or <a href="../classes/PoolVector3Array.html#">PoolVector3Array</a> by this transform.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Transform:xform_inv_aabb">Transform:xform_inv_aabb (aabb)</a></td>
+	<td class="summary">Inverse-transforms the given AABB</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Transform:xform_inv_plane">Transform:xform_inv_plane (plane)</a></td>
+	<td class="summary">Inverse-transforms the given Plane</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Transform:xform_inv_vector3">Transform:xform_inv_vector3 (vector)</a></td>
+	<td class="summary">Inverse-transforms the given Vector3</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Transform:xform_plane">Transform:xform_plane (plane)</a></td>
+	<td class="summary">Transforms the given Plane</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Transform:xform_vector3">Transform:xform_vector3 (vector)</a></td>
+	<td class="summary">Transforms the given Vector3</td>
+	</tr>
+</table>
+<h2><a href="#Metamethods">Metamethods </a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Transform:__concat">Transform:__concat (a, b)</a></td>
+	<td class="summary">Concatenates values.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Transform:__eq">Transform:__eq (a, b)</a></td>
+	<td class="summary">Equality operation
+ If either <code>a</code> or <code>b</code> are not of type <a href="../classes/Transform.html#">Transform</a>, always return <code>false</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Transform:__mul">Transform:__mul (self, b)</a></td>
+	<td class="summary">Multiplication operation.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Transform:__new">Transform:__new (...)</a></td>
+	<td class="summary">Transform constructor, called by the idiom <code>Transform(...)</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Transform:__tostring">Transform:__tostring ()</a></td>
+	<td class="summary">Returns a Lua string representation of this transform.</td>
+	</tr>
+</table>
+<h2><a href="#Constants">Constants </a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Transform.FLIP_X">Transform.FLIP_X</a></td>
+	<td class="summary">Transform with mirroring applied perpendicular to the YZ plane.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Transform.FLIP_Y">Transform.FLIP_Y</a></td>
+	<td class="summary">Transform with mirroring applied perpendicular to the XZ plane.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Transform.FLIP_Z">Transform.FLIP_Z</a></td>
+	<td class="summary">Transform with mirroring applied perpendicular to the XY plane.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Transform.IDENTITY">Transform.IDENTITY</a></td>
+	<td class="summary">Transform with no translation, rotation or scaling applied.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Methods"></a>Methods</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Transform:affine_inverse"></a>
+    <strong>Transform:affine_inverse ()</strong>
+    </dt>
+    <dd>
+    Returns the inverse of the transform, under the assumption that the transformation is composed of rotation, scaling and translation.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Transform.html#">Transform</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Transform:inverse"></a>
+    <strong>Transform:inverse ()</strong>
+    </dt>
+    <dd>
+    Returns the inverse of the transform, under the assumption that the transformation is composed of rotation and translation (no scaling, use <a href="../classes/Transform.html#Transform:affine_inverse">affine_inverse</a> for transforms with scaling).
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Transform.html#">Transform</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Transform:looking_at"></a>
+    <strong>Transform:looking_at (target, up)</strong>
+    </dt>
+    <dd>
+    Returns a copy of the transform rotated such that its -Z axis points towards the <code>target</code> position.
+ The transform will first be rotated around the given up vector, and then fully aligned to the <code>target</code> by a further rotation around an axis perpendicular to both the <code>target</code> and <code>up</code> vectors.
+ Operations take place in global space.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">target</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+        </li>
+        <li><span class="parameter">up</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Transform.html#">Transform</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Transform:orthonormalized"></a>
+    <strong>Transform:orthonormalized ()</strong>
+    </dt>
+    <dd>
+    Returns the transform with the basis orthogonal (90 degrees), and normalized axis vectors.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Transform.html#">Transform</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Transform:rotated"></a>
+    <strong>Transform:rotated (axis, angle)</strong>
+    </dt>
+    <dd>
+    Rotates the transform around the given <code>axis</code> by the given <code>angle</code> (in radians), using matrix multiplication.
+ The axis must be a normalized vector.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">axis</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+        </li>
+        <li><span class="parameter">angle</span>
+            <span class="types"><span class="type">number</span></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Transform.html#">Transform</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Transform:scaled"></a>
+    <strong>Transform:scaled (scale)</strong>
+    </dt>
+    <dd>
+    Scales basis and origin of the transform by the given <code>scale</code> factor, using matrix multiplication.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">scale</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Transform.html#">Transform</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Transform:treturn"></a>
+    <strong>Transform:treturn (offset)</strong>
+    </dt>
+    <dd>
+    Translates the transform by the given <code>offset</code>, relative to the transform's basis vectors.
+ Unlike rotated and scaled, this does not use matrix multiplication.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">offset</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Transform.html#">Transform</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Transform:xform"></a>
+    <strong>Transform:xform (value)</strong>
+    </dt>
+    <dd>
+    Transforms the given <a href="../classes/Vector3.html#">Vector3</a>, <a href="../classes/Plane.html#">Plane</a>, <a href="../classes/AABB.html#">AABB</a>, or <a href="../classes/PoolVector3Array.html#">PoolVector3Array</a> by this transform.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">value</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Plane.html#">Plane</a>, <a class="type" href="../classes/AABB.html#">AABB</a> or <a class="type" href="../classes/PoolVector3Array.html#">PoolVector3Array</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Plane.html#">Plane</a>, <a class="type" href="../classes/AABB.html#">AABB</a> or <a class="type" href="../classes/PoolVector3Array.html#">PoolVector3Array</a></span>
+        Transformed value
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Transform:xform_aabb"></a>
+    <strong>Transform:xform_aabb (aabb)</strong>
+    </dt>
+    <dd>
+    Transforms the given AABB
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">aabb</span>
+            <span class="types"><a class="type" href="../classes/AABB.html#">AABB</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/AABB.html#">AABB</a></span>
+
+
+
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Transform.html#Transform:xform">xform</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Transform:xform_inv"></a>
+    <strong>Transform:xform_inv (value)</strong>
+    </dt>
+    <dd>
+    Inverse-transforms the given <a href="../classes/Vector3.html#">Vector3</a>, <a href="../classes/Plane.html#">Plane</a>, <a href="../classes/AABB.html#">AABB</a>, or <a href="../classes/PoolVector3Array.html#">PoolVector3Array</a> by this transform.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">value</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Plane.html#">Plane</a>, <a class="type" href="../classes/AABB.html#">AABB</a> or <a class="type" href="../classes/PoolVector3Array.html#">PoolVector3Array</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Plane.html#">Plane</a>, <a class="type" href="../classes/AABB.html#">AABB</a> or <a class="type" href="../classes/PoolVector3Array.html#">PoolVector3Array</a></span>
+        Transformed value
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Transform:xform_inv_aabb"></a>
+    <strong>Transform:xform_inv_aabb (aabb)</strong>
+    </dt>
+    <dd>
+    Inverse-transforms the given AABB
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">aabb</span>
+            <span class="types"><a class="type" href="../classes/AABB.html#">AABB</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/AABB.html#">AABB</a></span>
+
+
+
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Transform.html#Transform:xform">xform</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Transform:xform_inv_plane"></a>
+    <strong>Transform:xform_inv_plane (plane)</strong>
+    </dt>
+    <dd>
+    Inverse-transforms the given Plane
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">plane</span>
+            <span class="types"><a class="type" href="../classes/Plane.html#">Plane</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Plane.html#">Plane</a></span>
+
+
+
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Transform.html#Transform:xform">xform</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Transform:xform_inv_vector3"></a>
+    <strong>Transform:xform_inv_vector3 (vector)</strong>
+    </dt>
+    <dd>
+    Inverse-transforms the given Vector3
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">vector</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Transform.html#Transform:xform">xform</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Transform:xform_plane"></a>
+    <strong>Transform:xform_plane (plane)</strong>
+    </dt>
+    <dd>
+    Transforms the given Plane
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">plane</span>
+            <span class="types"><a class="type" href="../classes/Plane.html#">Plane</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Plane.html#">Plane</a></span>
+
+
+
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Transform.html#Transform:xform">xform</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Transform:xform_vector3"></a>
+    <strong>Transform:xform_vector3 (vector)</strong>
+    </dt>
+    <dd>
+    Transforms the given Vector3
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">vector</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Transform.html#Transform:xform">xform</a>
+    </ul>
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Metamethods"></a>Metamethods </h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Transform:__concat"></a>
+    <strong>Transform:__concat (a, b)</strong>
+    </dt>
+    <dd>
+    Concatenates values.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+          First value, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+        <li><span class="parameter">b</span>
+          First value, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Transform:__eq"></a>
+    <strong>Transform:__eq (a, b)</strong>
+    </dt>
+    <dd>
+    Equality operation
+ If either <code>a</code> or <code>b</code> are not of type <a href="../classes/Transform.html#">Transform</a>, always return <code>false</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+            <span class="types"><a class="type" href="../classes/Transform.html#">Transform</a></span>
+
+
+
+        </li>
+        <li><span class="parameter">b</span>
+            <span class="types"><a class="type" href="../classes/Transform.html#">Transform</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Transform:__mul"></a>
+    <strong>Transform:__mul (self, b)</strong>
+    </dt>
+    <dd>
+    Multiplication operation.
+ Either multiply another Transform or <a href="../classes/Transform.html#Transform:xform">xform</a> value.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../classes/Transform.html#">Transform</a></span>
+
+
+
+        </li>
+        <li><span class="parameter">b</span>
+            <span class="types"><a class="type" href="../classes/Transform.html#">Transform</a>, <a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Plane.html#">Plane</a>, <a class="type" href="../classes/AABB.html#">AABB</a> or <a class="type" href="../classes/PoolVector3Array.html#">PoolVector3Array</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Transform.html#">Transform</a>, <a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Plane.html#">Plane</a>, <a class="type" href="../classes/AABB.html#">AABB</a> or <a class="type" href="../classes/PoolVector3Array.html#">PoolVector3Array</a></span>
+        Transformed value
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Transform:__new"></a>
+    <strong>Transform:__new (...)</strong>
+    </dt>
+    <dd>
+
+<p>Transform constructor, called by the idiom <code>Transform(...)</code>. </p>
+
+<ul>
+    <li><code>Transform()</code>: <a href="../classes/Transform.html#Transform.IDENTITY">IDENTITY</a> transform</li>
+    <li><code>Transform(Basis basis[, Vector3 origin = Vector3.ZERO])</code>: set <code>basis</code> and <code>origin</code></li>
+    <li><code>Transform(Quat quat[, Vector3 origin = Vector3.ZERO])</code>: set <code>basis</code> from quaternion and <code>origin</code></li>
+    <li><code>Transform(Vector3 euler[, Vector3 origin = Vector3.ZERO])</code>: set <code>basis</code> from Euler angles and <code>origin</code></li>
+    <li><code>Transform(Vector3 x, Vector3 y, Vector3 z, Vector3 origin)</code>: constructs the transform from the four column vectors.</li>
+    <li><code>Transform(Transform other)</code>: returns a copy of <code>other</code></li>
+</ul>
+
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Transform.html#">Transform</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Transform:__tostring"></a>
+    <strong>Transform:__tostring ()</strong>
+    </dt>
+    <dd>
+    Returns a Lua string representation of this transform.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Constants"></a>Constants </h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Transform.FLIP_X"></a>
+    <strong>Transform.FLIP_X</strong>
+    </dt>
+    <dd>
+    Transform with mirroring applied perpendicular to the YZ plane.
+
+
+    <ul>
+        <li><span class="parameter">FLIP_X</span>
+          Transform(-1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Transform.FLIP_Y"></a>
+    <strong>Transform.FLIP_Y</strong>
+    </dt>
+    <dd>
+    Transform with mirroring applied perpendicular to the XZ plane.
+
+
+    <ul>
+        <li><span class="parameter">FLIP_Y</span>
+          Transform(1, 0, 0, 0, -1, 0, 0, 0, 1, 0, 0, 0)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Transform.FLIP_Z"></a>
+    <strong>Transform.FLIP_Z</strong>
+    </dt>
+    <dd>
+    Transform with mirroring applied perpendicular to the XY plane.
+
+
+    <ul>
+        <li><span class="parameter">FLIP_Z</span>
+          Transform(1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Transform.IDENTITY"></a>
+    <strong>Transform.IDENTITY</strong>
+    </dt>
+    <dd>
+    Transform with no translation, rotation or scaling applied.
+
+
+    <ul>
+        <li><span class="parameter">IDENTITY</span>
+          Transform(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2021-09-07 13:06:11 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

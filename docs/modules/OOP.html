@@ -1,0 +1,661 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Godot Lua PluginScript</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Class_ClassWrapper">Class ClassWrapper </a></li>
+<li><a href="#Class_MethodBind">Class MethodBind </a></li>
+<li><a href="#Class_MethodBindByName">Class MethodBindByName </a></li>
+<li><a href="#Class_ScriptInstance">Class ScriptInstance </a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/Enumerations.html">Enumerations</a></li>
+  <li><a href="../modules/GD.html">GD</a></li>
+  <li><a href="../modules/Globals.html">Globals</a></li>
+  <li><strong>OOP</strong></li>
+  <li><a href="../modules/math_extras.html">math_extras</a></li>
+  <li><a href="../modules/package_extras.html">package_extras</a></li>
+  <li><a href="../modules/string_extras.html">string_extras</a></li>
+</ul>
+<h2>Scripts</h2>
+<ul class="nowrap">
+  <li><a href="../scripts/lps_coroutine.lua.html">lps_coroutine.lua</a></li>
+</ul>
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><a href="../classes/AABB.html">AABB</a></li>
+  <li><a href="../classes/Array.html">Array</a></li>
+  <li><a href="../classes/Basis.html">Basis</a></li>
+  <li><a href="../classes/Color.html">Color</a></li>
+  <li><a href="../classes/Dictionary.html">Dictionary</a></li>
+  <li><a href="../classes/NodePath.html">NodePath</a></li>
+  <li><a href="../classes/Object.html">Object</a></li>
+  <li><a href="../classes/Plane.html">Plane</a></li>
+  <li><a href="../classes/PoolByteArray.html">PoolByteArray</a></li>
+  <li><a href="../classes/PoolColorArray.html">PoolColorArray</a></li>
+  <li><a href="../classes/PoolIntArray.html">PoolIntArray</a></li>
+  <li><a href="../classes/PoolRealArray.html">PoolRealArray</a></li>
+  <li><a href="../classes/PoolStringArray.html">PoolStringArray</a></li>
+  <li><a href="../classes/PoolVector2Array.html">PoolVector2Array</a></li>
+  <li><a href="../classes/PoolVector3Array.html">PoolVector3Array</a></li>
+  <li><a href="../classes/Quat.html">Quat</a></li>
+  <li><a href="../classes/Rect2.html">Rect2</a></li>
+  <li><a href="../classes/RID.html">RID</a></li>
+  <li><a href="../classes/String.html">String</a></li>
+  <li><a href="../classes/StringName.html">StringName</a></li>
+  <li><a href="../classes/Transform.html">Transform</a></li>
+  <li><a href="../classes/Transform2D.html">Transform2D</a></li>
+  <li><a href="../classes/Variant.html">Variant</a></li>
+  <li><a href="../classes/Vector2.html">Vector2</a></li>
+  <li><a href="../classes/Vector3.html">Vector3</a></li>
+</ul>
+<h2>Topics</h2>
+<ul class="">
+  <li><a href="../topics/README.md.html">README</a></li>
+</ul>
+<h2>Examples</h2>
+<ul class="nowrap">
+  <li><a href="../examples/lua_repl.lua.html">lua_repl.lua</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>OOP</code></h1>
+<p>Helper metatables for interfacing with Godot's OOP.</p>
+<p> None of them are available directly for creation, but are rather returned by
+ the API.</p>
+
+
+<h2><a href="#Class_ClassWrapper">Class ClassWrapper </a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#ClassWrapper.class_name">ClassWrapper.class_name</a></td>
+	<td class="summary">(<a href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a>) Class name</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#ClassWrapper.constructor">ClassWrapper.constructor</a></td>
+	<td class="summary">(<code>Object (*)()</code>) Raw constructor function as returned by GDNative's <code>godot_get_class_constructor</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#ClassWrapper:__index">ClassWrapper:__index (key)</a></td>
+	<td class="summary">Returns a <a href="../modules/OOP.html#MethodBind">MethodBind</a> if class has a method with that name, or an integer
+ constant if there is any.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#ClassWrapper:new">ClassWrapper:new (...)</a></td>
+	<td class="summary">Creates a new instance of a Class, initializing with the given values.</td>
+	</tr>
+</table>
+<h2><a href="#Class_MethodBind">Class MethodBind </a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#MethodBind:__call">MethodBind:__call (object, ...)</a></td>
+	<td class="summary">Calls the method in <code>object</code>.</td>
+	</tr>
+</table>
+<h2><a href="#Class_MethodBindByName">Class MethodBindByName </a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#MethodBindByName.method_name">MethodBindByName.method_name</a></td>
+	<td class="summary">(<a href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a>) Method name.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#MethodBindByName:__call">MethodBindByName:__call (object, ...)</a></td>
+	<td class="summary">Returns the result of <code>object:call(self.method_name, ...)</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#MethodBindByName:new">MethodBindByName:new (method_name)</a></td>
+	<td class="summary">Create a new method binding by name.</td>
+	</tr>
+</table>
+<h2><a href="#Class_ScriptInstance">Class ScriptInstance </a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#ScriptInstance.__owner">ScriptInstance.__owner</a></td>
+	<td class="summary"><a href="../classes/Object.html#">Object</a> that this script instance is attached to.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#ScriptInstance.__script">ScriptInstance.__script</a></td>
+	<td class="summary">Lua script table, the one returned by the Lua script when loading it as a PluginScript.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#ScriptInstance:__concat">ScriptInstance:__concat (a, b)</a></td>
+	<td class="summary">Concatenates values.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#ScriptInstance:__index">ScriptInstance:__index (key)</a></td>
+	<td class="summary">Try indexing <a href="../modules/OOP.html#ScriptInstance.__script">__script</a>, then <a href="../modules/OOP.html#ScriptInstance.__owner">__owner</a>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#ScriptInstance:__tostring">ScriptInstance:__tostring ()</a></td>
+	<td class="summary">Returns a Lua string representation of <a href="../modules/OOP.html#ScriptInstance.__owner">__owner</a>, as per <a href="../classes/Object.html#Object:to_string">Object:to_string</a>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#ScriptInstance:call">ScriptInstance:call (method, ...)</a></td>
+	<td class="summary">Forwards a call to <a href="../modules/OOP.html#ScriptInstance.__owner">__owner</a> using <a href="../classes/Object.html#Object:call">Object:call</a>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#ScriptInstance:pcall">ScriptInstance:pcall (method, ...)</a></td>
+	<td class="summary">Forwards a call to <a href="../modules/OOP.html#ScriptInstance.__owner">__owner</a> using <a href="../classes/Object.html#Object:pcall">Object:pcall</a>.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header has-description"><a name="Class_ClassWrapper"></a>Class ClassWrapper </h2>
+
+          <div class="section-description">
+          Wrapper for Godot Classes, used to create instances or index constants.
+ These are constructed by <code>_G:__index</code> when indexing a known class name, e.g.: <code>KinematicBody</code>.
+          </div>
+    <dl class="function">
+    <dt>
+    <a name = "ClassWrapper.class_name"></a>
+    <strong>ClassWrapper.class_name</strong>
+    </dt>
+    <dd>
+    (<a href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a>) Class name
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "ClassWrapper.constructor"></a>
+    <strong>ClassWrapper.constructor</strong>
+    </dt>
+    <dd>
+    (<code>Object (*)()</code>) Raw constructor function as returned by GDNative's <code>godot_get_class_constructor</code>.
+ This is used by <a href="../modules/OOP.html#MethodBindByName:new">new</a> and should probably not be used directly.
+
+
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../modules/OOP.html#MethodBindByName:new">new</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "ClassWrapper:__index"></a>
+    <strong>ClassWrapper:__index (key)</strong>
+    </dt>
+    <dd>
+    Returns a <a href="../modules/OOP.html#MethodBind">MethodBind</a> if class has a method with that name, or an integer
+ constant if there is any.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">key</span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../modules/OOP.html#MethodBind">MethodBind</a></span>
+        If <code>ClassDB:class_has_method(self.class_name, key)</code>
+    </ol>
+     <h3>Or</h3>
+    <ol>
+
+           <span class="types"><span class="type">int</span></span>
+        If <code>ClassDB:class_has_integer_constant(self.class_name, key)</code>
+    </ol>
+     <h3>Or</h3>
+    <ol>
+
+           <span class="types"><span class="type">nil</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "ClassWrapper:new"></a>
+    <strong>ClassWrapper:new (...)</strong>
+    </dt>
+    <dd>
+    Creates a new instance of a Class, initializing with the given values.
+ If Class inherits from Reference, the reference is initialized with
+ <code>init_ref</code> and object is marked for <code>unreference</code>ing at garbage-collection.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+          Parameters forwarded to a call to <code>_init</code>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Object.html#">Object</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header has-description"><a name="Class_MethodBind"></a>Class MethodBind </h2>
+
+          <div class="section-description">
+          MethodBind metatype, wrapper for <code>godot_method_bind</code>.
+ These are returned by <a href="../modules/OOP.html#ClassWrapper:__index">ClassWrapper:__index</a> and GDNative's <code>godot_method_bind_get_method</code>.
+          </div>
+    <dl class="function">
+    <dt>
+    <a name = "MethodBind:__call"></a>
+    <strong>MethodBind:__call (object, ...)</strong>
+    </dt>
+    <dd>
+    Calls the method in <code>object</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">object</span>
+            <span class="types"><a class="type" href="../classes/Object.html#">Object</a></span>
+
+
+
+        </li>
+        <li><span class="parameter">...</span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        Method return value
+    </ol>
+     <h3>Or</h3>
+    <ol>
+
+           <span class="types"><span class="type">nil</span></span>
+        If call errored
+    </ol>
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header has-description"><a name="Class_MethodBindByName"></a>Class MethodBindByName </h2>
+
+          <div class="section-description">
+          A method binding object that calls a method by name, as <code>object:call(method_name, ...)</code>.
+ These are returned by <a href="../classes/Object.html#Object:__index">Object.__index</a> if <code>object:has_method(method_name)</code> is true.
+          </div>
+    <dl class="function">
+    <dt>
+    <a name = "MethodBindByName.method_name"></a>
+    <strong>MethodBindByName.method_name</strong>
+    </dt>
+    <dd>
+    (<a href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a>) Method name.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "MethodBindByName:__call"></a>
+    <strong>MethodBindByName:__call (object, ...)</strong>
+    </dt>
+    <dd>
+    Returns the result of <code>object:call(self.method_name, ...)</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">object</span>
+            <span class="types"><a class="type" href="../classes/Object.html#">Object</a>, <a class="type" href="../modules/OOP.html#ScriptInstance">ScriptInstance</a> or <a class="type" href="../classes/Variant.html#">Variant</a></span>
+
+
+
+        </li>
+        <li><span class="parameter">...</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "MethodBindByName:new"></a>
+    <strong>MethodBindByName:new (method_name)</strong>
+    </dt>
+    <dd>
+    Create a new method binding by name.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">method_name</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../modules/OOP.html#MethodBindByName">MethodBindByName</a></span>
+
+
+
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="keyword">local</span> method_bind = MethodBindByName:new(method_name)
+method_bind(object, ...)</pre>
+    </ul>
+
+</dd>
+</dl>
+    <h2 class="section-header has-description"><a name="Class_ScriptInstance"></a>Class ScriptInstance </h2>
+
+          <div class="section-description">
+          Script instance metatable, the Lua side of a Lua script instance.
+ These are created when a PluginScript is instanced and are only directly
+ accessible in the script's functions as the <code>self</code> parameter.
+          </div>
+    <dl class="function">
+    <dt>
+    <a name = "ScriptInstance.__owner"></a>
+    <strong>ScriptInstance.__owner</strong>
+    </dt>
+    <dd>
+    <a href="../classes/Object.html#">Object</a> that this script instance is attached to.
+ This is the Godot side of the instance.
+
+
+    <ul>
+        <li><span class="parameter">__owner</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "ScriptInstance.__script"></a>
+    <strong>ScriptInstance.__script</strong>
+    </dt>
+    <dd>
+    Lua script table, the one returned by the Lua script when loading it as a PluginScript.
+ Note that calling <a href="../classes/Object.html#Object:get_script">Object:get_script</a> will return an <a href="../classes/Object.html#">Object</a> rather
+ than this table.
+
+
+    <ul>
+        <li><span class="parameter">__script</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "ScriptInstance:__concat"></a>
+    <strong>ScriptInstance:__concat (a, b)</strong>
+    </dt>
+    <dd>
+    Concatenates values.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+          First value, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+        <li><span class="parameter">b</span>
+          First value, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "ScriptInstance:__index"></a>
+    <strong>ScriptInstance:__index (key)</strong>
+    </dt>
+    <dd>
+    Try indexing <a href="../modules/OOP.html#ScriptInstance.__script">__script</a>, then <a href="../modules/OOP.html#ScriptInstance.__owner">__owner</a>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">key</span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+
+
+
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Object.html#Object:__index">Object.__index</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "ScriptInstance:__tostring"></a>
+    <strong>ScriptInstance:__tostring ()</strong>
+    </dt>
+    <dd>
+    Returns a Lua string representation of <a href="../modules/OOP.html#ScriptInstance.__owner">__owner</a>, as per <a href="../classes/Object.html#Object:to_string">Object:to_string</a>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "ScriptInstance:call"></a>
+    <strong>ScriptInstance:call (method, ...)</strong>
+    </dt>
+    <dd>
+    Forwards a call to <a href="../modules/OOP.html#ScriptInstance.__owner">__owner</a> using <a href="../classes/Object.html#Object:call">Object:call</a>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">method</span>
+          Method name
+        </li>
+        <li><span class="parameter">...</span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        Method result
+    </ol>
+     <h3>Or</h3>
+    <ol>
+
+           <span class="types"><span class="type">nil</span></span>
+        If method does not exist or errors
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Object.html#Object:call">Object.call</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "ScriptInstance:pcall"></a>
+    <strong>ScriptInstance:pcall (method, ...)</strong>
+    </dt>
+    <dd>
+    Forwards a call to <a href="../modules/OOP.html#ScriptInstance.__owner">__owner</a> using <a href="../classes/Object.html#Object:pcall">Object:pcall</a>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">method</span>
+          Method name
+        </li>
+        <li><span class="parameter">...</span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+           <span class="types"><span class="type">bool</span></span>
+        <code>true</code> if method exists</li>
+        <li>
+        Method result</li>
+    </ol>
+     <h3>Or</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        <code>false</code> if method does not exist
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Object.html#Object:pcall">Object.pcall</a>
+    </ul>
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2021-09-07 13:06:11 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

@@ -1,0 +1,998 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Godot Lua PluginScript</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Methods">Methods</a></li>
+<li><a href="#Metamethods">Metamethods </a></li>
+<li><a href="#Constants">Constants </a></li>
+</ul>
+
+
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><a href="../classes/AABB.html">AABB</a></li>
+  <li><a href="../classes/Array.html">Array</a></li>
+  <li><a href="../classes/Basis.html">Basis</a></li>
+  <li><a href="../classes/Color.html">Color</a></li>
+  <li><a href="../classes/Dictionary.html">Dictionary</a></li>
+  <li><a href="../classes/NodePath.html">NodePath</a></li>
+  <li><a href="../classes/Object.html">Object</a></li>
+  <li><a href="../classes/Plane.html">Plane</a></li>
+  <li><a href="../classes/PoolByteArray.html">PoolByteArray</a></li>
+  <li><a href="../classes/PoolColorArray.html">PoolColorArray</a></li>
+  <li><a href="../classes/PoolIntArray.html">PoolIntArray</a></li>
+  <li><a href="../classes/PoolRealArray.html">PoolRealArray</a></li>
+  <li><a href="../classes/PoolStringArray.html">PoolStringArray</a></li>
+  <li><a href="../classes/PoolVector2Array.html">PoolVector2Array</a></li>
+  <li><a href="../classes/PoolVector3Array.html">PoolVector3Array</a></li>
+  <li><a href="../classes/Quat.html">Quat</a></li>
+  <li><a href="../classes/RID.html">RID</a></li>
+  <li><a href="../classes/Rect2.html">Rect2</a></li>
+  <li><a href="../classes/String.html">String</a></li>
+  <li><a href="../classes/StringName.html">StringName</a></li>
+  <li><a href="../classes/Transform.html">Transform</a></li>
+  <li><strong>Transform2D</strong></li>
+  <li><a href="../classes/Variant.html">Variant</a></li>
+  <li><a href="../classes/Vector2.html">Vector2</a></li>
+  <li><a href="../classes/Vector3.html">Vector3</a></li>
+</ul>
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/Enumerations.html">Enumerations</a></li>
+  <li><a href="../modules/GD.html">GD</a></li>
+  <li><a href="../modules/Globals.html">Globals</a></li>
+  <li><a href="../modules/OOP.html">OOP</a></li>
+  <li><a href="../modules/math_extras.html">math_extras</a></li>
+  <li><a href="../modules/package_extras.html">package_extras</a></li>
+  <li><a href="../modules/string_extras.html">string_extras</a></li>
+</ul>
+<h2>Scripts</h2>
+<ul class="nowrap">
+  <li><a href="../scripts/lps_coroutine.lua.html">lps_coroutine.lua</a></li>
+</ul>
+<h2>Topics</h2>
+<ul class="">
+  <li><a href="../topics/README.md.html">README</a></li>
+</ul>
+<h2>Examples</h2>
+<ul class="nowrap">
+  <li><a href="../examples/lua_repl.lua.html">lua_repl.lua</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Class <code>Transform2D</code></h1>
+<p>Transform2D metatype, wrapper for <code>godot_transform2d</code>.</p>
+<p>
+
+<p> Constructed using the idiom <code>Transform2D(...)</code>, which calls <a href="../classes/Transform2D.html#Transform2D:__new">__new</a>.</p>
+
+<pre>
+typedef union godot_transform2d {
+    float elements[<span class="number">6</span>];
+    Vector2 columns[<span class="number">3</span>];
+    struct { Vector2 x, y, origin; };
+} godot_transform2d;
+</pre>
+
+</p>
+
+
+<h2><a href="#Methods">Methods</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Transform2D:affine_inverse">Transform2D:affine_inverse ()</a></td>
+	<td class="summary">Returns the inverse of the transform, under the assumption that the transformation is composed of rotation, scaling and translation.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Transform2D:basis_xform_inv">Transform2D:basis_xform_inv (vector)</a></td>
+	<td class="summary">Returns a vector transformed (multiplied) by the inverse basis matrix.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Transform2D:basis_xform_vector2">Transform2D:basis_xform_vector2 (vector)</a></td>
+	<td class="summary">Returns a vector transformed (multiplied) by the basis matrix.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Transform2D:get_origin">Transform2D:get_origin ()</a></td>
+	<td class="summary">Returns the transform's origin (translation).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Transform2D:get_rotation">Transform2D:get_rotation ()</a></td>
+	<td class="summary">Returns the transform's rotation (in radians).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Transform2D:get_scale">Transform2D:get_scale ()</a></td>
+	<td class="summary">Returns the scale.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Transform2D:interpolate_with">Transform2D:interpolate_with (transform, weight)</a></td>
+	<td class="summary">Returns a transform interpolated between this transform and another by a given <code>weight</code> (on the range of 0.0 to 1.0).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Transform2D:inverse">Transform2D:inverse ()</a></td>
+	<td class="summary">Returns the inverse of the transform, under the assumption that the transformation is composed of rotation and translation (no scaling, use <a href="../classes/Transform2D.html#Transform2D:affine_inverse">affine_inverse</a> for transforms with scaling).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Transform2D:orthonormalized">Transform2D:orthonormalized ()</a></td>
+	<td class="summary">Returns the transform with the basis orthogonal (90 degrees), and normalized axis vectors (scale of 1 or -1).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Transform2D:rotated">Transform2D:rotated (angle)</a></td>
+	<td class="summary">Rotates the transform by the given <code>angle</code> (in radians), using matrix multiplication.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Transform2D:scaled">Transform2D:scaled (scale)</a></td>
+	<td class="summary">Scales the transform by the given <code>scale</code> factor, using matrix multiplication.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Transform2D:translated">Transform2D:translated (offset)</a></td>
+	<td class="summary">Translates the transform by the given <code>offset</code>, relative to the transform's basis vectors.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Transform2D:xform">Transform2D:xform (value)</a></td>
+	<td class="summary">Transforms the given <a href="../classes/Vector2.html#">Vector2</a>, <a href="../classes/Rect2.html#">Rect2</a>, or <a href="../classes/PoolVector2Array.html#">PoolVector2Array</a> by this transform.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Transform2D:xform_inv">Transform2D:xform_inv (value)</a></td>
+	<td class="summary">Inverse-transforms the given <a href="../classes/Vector2.html#">Vector2</a>, <a href="../classes/Rect2.html#">Rect2</a>, or <a href="../classes/PoolVector2Array.html#">PoolVector2Array</a> by this transform.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Transform2D:xform_inv_rect2">Transform2D:xform_inv_rect2 (vector)</a></td>
+	<td class="summary">Inverse-transforms the given Rect2.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Transform2D:xform_inv_vector2">Transform2D:xform_inv_vector2 (vector)</a></td>
+	<td class="summary">Inverse-transforms the given Vector2.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Transform2D:xform_rect2">Transform2D:xform_rect2 (vector)</a></td>
+	<td class="summary">Transforms the given Rect2.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Transform2D:xform_vector2">Transform2D:xform_vector2 (vector)</a></td>
+	<td class="summary">Transforms the given Vector2.</td>
+	</tr>
+</table>
+<h2><a href="#Metamethods">Metamethods </a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Transform2D:__concat">Transform2D:__concat (a, b)</a></td>
+	<td class="summary">Concatenates values.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Transform2D:__eq">Transform2D:__eq (a, b)</a></td>
+	<td class="summary">Equality operation
+ If either <code>a</code> or <code>b</code> are not of type <a href="../classes/Transform2D.html#">Transform2D</a>, always return <code>false</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Transform2D:__mul">Transform2D:__mul (self, b)</a></td>
+	<td class="summary">Multiplication operation.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Transform2D:__new">Transform2D:__new (...)</a></td>
+	<td class="summary">Transform2D constructor, called by the idiom <code>Transform2D(...)</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Transform2D:__tostring">Transform2D:__tostring ()</a></td>
+	<td class="summary">Returns a Lua string representation of this transform.</td>
+	</tr>
+</table>
+<h2><a href="#Constants">Constants </a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Transform2D.FLIP_X">Transform2D.FLIP_X</a></td>
+	<td class="summary">The Transform2D that will flip something along the X axis.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Transform2D.FLIP_Y">Transform2D.FLIP_Y</a></td>
+	<td class="summary">The Transform2D that will flip something along the Y axis.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Transform2D.IDENTITY">Transform2D.IDENTITY</a></td>
+	<td class="summary">The identity Transform2D with no translation, rotation or scaling applied.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Methods"></a>Methods</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Transform2D:affine_inverse"></a>
+    <strong>Transform2D:affine_inverse ()</strong>
+    </dt>
+    <dd>
+    Returns the inverse of the transform, under the assumption that the transformation is composed of rotation, scaling and translation.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Transform2D.html#">Transform2D</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Transform2D:basis_xform_inv"></a>
+    <strong>Transform2D:basis_xform_inv (vector)</strong>
+    </dt>
+    <dd>
+    Returns a vector transformed (multiplied) by the inverse basis matrix.
+ This method does not account for translation (the origin vector).
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">vector</span>
+            <span class="types"><a class="type" href="../classes/Vector2.html#">Vector2</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector2.html#">Vector2</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Transform2D:basis_xform_vector2"></a>
+    <strong>Transform2D:basis_xform_vector2 (vector)</strong>
+    </dt>
+    <dd>
+    Returns a vector transformed (multiplied) by the basis matrix.
+ This method does not account for translation (the origin vector).
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">vector</span>
+            <span class="types"><a class="type" href="../classes/Vector2.html#">Vector2</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector2.html#">Vector2</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Transform2D:get_origin"></a>
+    <strong>Transform2D:get_origin ()</strong>
+    </dt>
+    <dd>
+    Returns the transform's origin (translation).
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector2.html#">Vector2</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Transform2D:get_rotation"></a>
+    <strong>Transform2D:get_rotation ()</strong>
+    </dt>
+    <dd>
+    Returns the transform's rotation (in radians).
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Transform2D:get_scale"></a>
+    <strong>Transform2D:get_scale ()</strong>
+    </dt>
+    <dd>
+    Returns the scale.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector2.html#">Vector2</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Transform2D:interpolate_with"></a>
+    <strong>Transform2D:interpolate_with (transform, weight)</strong>
+    </dt>
+    <dd>
+    Returns a transform interpolated between this transform and another by a given <code>weight</code> (on the range of 0.0 to 1.0).
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">transform</span>
+            <span class="types"><a class="type" href="../classes/Transform2D.html#">Transform2D</a></span>
+
+
+
+        </li>
+        <li><span class="parameter">weight</span>
+            <span class="types"><span class="type">number</span></span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Transform2D:inverse"></a>
+    <strong>Transform2D:inverse ()</strong>
+    </dt>
+    <dd>
+    Returns the inverse of the transform, under the assumption that the transformation is composed of rotation and translation (no scaling, use <a href="../classes/Transform2D.html#Transform2D:affine_inverse">affine_inverse</a> for transforms with scaling).
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Transform2D.html#">Transform2D</a></span>
+
+
+
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Transform2D.html#Transform2D:affine_inverse">affine_inverse</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Transform2D:orthonormalized"></a>
+    <strong>Transform2D:orthonormalized ()</strong>
+    </dt>
+    <dd>
+    Returns the transform with the basis orthogonal (90 degrees), and normalized axis vectors (scale of 1 or -1).
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Transform2D.html#">Transform2D</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Transform2D:rotated"></a>
+    <strong>Transform2D:rotated (angle)</strong>
+    </dt>
+    <dd>
+    Rotates the transform by the given <code>angle</code> (in radians), using matrix multiplication.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">angle</span>
+            <span class="types"><span class="type">number</span></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Transform2D.html#">Transform2D</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Transform2D:scaled"></a>
+    <strong>Transform2D:scaled (scale)</strong>
+    </dt>
+    <dd>
+    Scales the transform by the given <code>scale</code> factor, using matrix multiplication.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">scale</span>
+            <span class="types"><a class="type" href="../classes/Vector2.html#">Vector2</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Transform2D.html#">Transform2D</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Transform2D:translated"></a>
+    <strong>Transform2D:translated (offset)</strong>
+    </dt>
+    <dd>
+    Translates the transform by the given <code>offset</code>, relative to the transform's basis vectors.
+ Unlike rotated and scaled, this does not use matrix multiplication.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">offset</span>
+            <span class="types"><a class="type" href="../classes/Vector2.html#">Vector2</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Transform2D.html#">Transform2D</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Transform2D:xform"></a>
+    <strong>Transform2D:xform (value)</strong>
+    </dt>
+    <dd>
+    Transforms the given <a href="../classes/Vector2.html#">Vector2</a>, <a href="../classes/Rect2.html#">Rect2</a>, or <a href="../classes/PoolVector2Array.html#">PoolVector2Array</a> by this transform.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">value</span>
+            <span class="types"><a class="type" href="../classes/Vector2.html#">Vector2</a>, <a class="type" href="../classes/Rect2.html#">Rect2</a> or <a class="type" href="../classes/PoolVector2Array.html#">PoolVector2Array</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector2.html#">Vector2</a>, <a class="type" href="../classes/Rect2.html#">Rect2</a> or <a class="type" href="../classes/PoolVector2Array.html#">PoolVector2Array</a></span>
+        Transformed value
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Transform2D:xform_inv"></a>
+    <strong>Transform2D:xform_inv (value)</strong>
+    </dt>
+    <dd>
+    Inverse-transforms the given <a href="../classes/Vector2.html#">Vector2</a>, <a href="../classes/Rect2.html#">Rect2</a>, or <a href="../classes/PoolVector2Array.html#">PoolVector2Array</a> by this transform.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">value</span>
+            <span class="types"><a class="type" href="../classes/Vector2.html#">Vector2</a>, <a class="type" href="../classes/Rect2.html#">Rect2</a> or <a class="type" href="../classes/PoolVector2Array.html#">PoolVector2Array</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector2.html#">Vector2</a>, <a class="type" href="../classes/Rect2.html#">Rect2</a> or <a class="type" href="../classes/PoolVector2Array.html#">PoolVector2Array</a></span>
+        Transformed value
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Transform2D:xform_inv_rect2"></a>
+    <strong>Transform2D:xform_inv_rect2 (vector)</strong>
+    </dt>
+    <dd>
+    Inverse-transforms the given Rect2.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">vector</span>
+            <span class="types"><a class="type" href="../classes/Rect2.html#">Rect2</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Rect2.html#">Rect2</a></span>
+
+
+
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Transform2D.html#Transform2D:xform_inv">xform_inv</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Transform2D:xform_inv_vector2"></a>
+    <strong>Transform2D:xform_inv_vector2 (vector)</strong>
+    </dt>
+    <dd>
+    Inverse-transforms the given Vector2.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">vector</span>
+            <span class="types"><a class="type" href="../classes/Vector2.html#">Vector2</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector2.html#">Vector2</a></span>
+
+
+
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Transform2D.html#Transform2D:xform_inv">xform_inv</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Transform2D:xform_rect2"></a>
+    <strong>Transform2D:xform_rect2 (vector)</strong>
+    </dt>
+    <dd>
+    Transforms the given Rect2.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">vector</span>
+            <span class="types"><a class="type" href="../classes/Rect2.html#">Rect2</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Rect2.html#">Rect2</a></span>
+
+
+
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Transform2D.html#Transform2D:xform">xform</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Transform2D:xform_vector2"></a>
+    <strong>Transform2D:xform_vector2 (vector)</strong>
+    </dt>
+    <dd>
+    Transforms the given Vector2.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">vector</span>
+            <span class="types"><a class="type" href="../classes/Vector2.html#">Vector2</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector2.html#">Vector2</a></span>
+
+
+
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Transform2D.html#Transform2D:xform">xform</a>
+    </ul>
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Metamethods"></a>Metamethods </h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Transform2D:__concat"></a>
+    <strong>Transform2D:__concat (a, b)</strong>
+    </dt>
+    <dd>
+    Concatenates values.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+          First value, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+        <li><span class="parameter">b</span>
+          First value, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Transform2D:__eq"></a>
+    <strong>Transform2D:__eq (a, b)</strong>
+    </dt>
+    <dd>
+    Equality operation
+ If either <code>a</code> or <code>b</code> are not of type <a href="../classes/Transform2D.html#">Transform2D</a>, always return <code>false</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+            <span class="types"><a class="type" href="../classes/Transform2D.html#">Transform2D</a></span>
+
+
+
+        </li>
+        <li><span class="parameter">b</span>
+            <span class="types"><a class="type" href="../classes/Transform2D.html#">Transform2D</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Transform2D:__mul"></a>
+    <strong>Transform2D:__mul (self, b)</strong>
+    </dt>
+    <dd>
+    Multiplication operation.
+ Either multiply another Transform2D or <a href="../classes/Transform2D.html#Transform2D:xform">xform</a> value.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../classes/Transform2D.html#">Transform2D</a></span>
+
+
+
+        </li>
+        <li><span class="parameter">b</span>
+            <span class="types"><a class="type" href="../classes/Transform2D.html#">Transform2D</a>, <a class="type" href="../classes/Vector2.html#">Vector2</a>, <a class="type" href="../classes/Rect2.html#">Rect2</a> or <a class="type" href="../classes/PoolVector2Array.html#">PoolVector2Array</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Transform2D.html#">Transform2D</a>, <a class="type" href="../classes/Vector2.html#">Vector2</a>, <a class="type" href="../classes/Rect2.html#">Rect2</a> or <a class="type" href="../classes/PoolVector2Array.html#">PoolVector2Array</a></span>
+        Transformed value
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Transform2D:__new"></a>
+    <strong>Transform2D:__new (...)</strong>
+    </dt>
+    <dd>
+
+<p>Transform2D constructor, called by the idiom <code>Transform2D(...)</code>. </p>
+
+<ul>
+    <li><code>Transform2D()</code>: creates an <a href="../classes/Transform2D.html#Transform2D.IDENTITY">IDENTITY</a> transform.</li>
+    <li><code>Transform2D(number angle, Vector2 position)</code>: constructs the transform from a given angle (in radians) and position.</li>
+    <li><code>Transform2D(Vector2 x, Vector2 y, Vector2 origin)</code>: constructs the transform from the three column vectors.</li>
+    <li><code>Transform2D(Transform2D other)</code>: returns a copy of <code>other</code></li>
+</ul>
+
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Transform2D.html#">Transform2D</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Transform2D:__tostring"></a>
+    <strong>Transform2D:__tostring ()</strong>
+    </dt>
+    <dd>
+    Returns a Lua string representation of this transform.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Constants"></a>Constants </h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Transform2D.FLIP_X"></a>
+    <strong>Transform2D.FLIP_X</strong>
+    </dt>
+    <dd>
+    The Transform2D that will flip something along the X axis.
+
+
+    <ul>
+        <li><span class="parameter">FLIP_X</span>
+          Transform2D(-1, 0, 0, 1, 0, 0)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Transform2D.FLIP_Y"></a>
+    <strong>Transform2D.FLIP_Y</strong>
+    </dt>
+    <dd>
+    The Transform2D that will flip something along the Y axis.
+
+
+    <ul>
+        <li><span class="parameter">FLIP_Y</span>
+          Transform2D(1, 0, 0, -1, 0, 0)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Transform2D.IDENTITY"></a>
+    <strong>Transform2D.IDENTITY</strong>
+    </dt>
+    <dd>
+    The identity Transform2D with no translation, rotation or scaling applied.
+
+
+    <ul>
+        <li><span class="parameter">IDENTITY</span>
+          Transform2D(1, 0, 0, 1, 0, 0)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2021-09-07 13:06:11 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

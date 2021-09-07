@@ -1,0 +1,1055 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Godot Lua PluginScript</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Methods">Methods</a></li>
+<li><a href="#Static_Functions">Static Functions </a></li>
+<li><a href="#Metamethods">Metamethods </a></li>
+</ul>
+
+
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><a href="../classes/AABB.html">AABB</a></li>
+  <li><a href="../classes/Array.html">Array</a></li>
+  <li><a href="../classes/Basis.html">Basis</a></li>
+  <li><strong>Color</strong></li>
+  <li><a href="../classes/Dictionary.html">Dictionary</a></li>
+  <li><a href="../classes/NodePath.html">NodePath</a></li>
+  <li><a href="../classes/Object.html">Object</a></li>
+  <li><a href="../classes/Plane.html">Plane</a></li>
+  <li><a href="../classes/PoolByteArray.html">PoolByteArray</a></li>
+  <li><a href="../classes/PoolColorArray.html">PoolColorArray</a></li>
+  <li><a href="../classes/PoolIntArray.html">PoolIntArray</a></li>
+  <li><a href="../classes/PoolRealArray.html">PoolRealArray</a></li>
+  <li><a href="../classes/PoolStringArray.html">PoolStringArray</a></li>
+  <li><a href="../classes/PoolVector2Array.html">PoolVector2Array</a></li>
+  <li><a href="../classes/PoolVector3Array.html">PoolVector3Array</a></li>
+  <li><a href="../classes/Quat.html">Quat</a></li>
+  <li><a href="../classes/RID.html">RID</a></li>
+  <li><a href="../classes/Rect2.html">Rect2</a></li>
+  <li><a href="../classes/String.html">String</a></li>
+  <li><a href="../classes/StringName.html">StringName</a></li>
+  <li><a href="../classes/Transform.html">Transform</a></li>
+  <li><a href="../classes/Transform2D.html">Transform2D</a></li>
+  <li><a href="../classes/Variant.html">Variant</a></li>
+  <li><a href="../classes/Vector2.html">Vector2</a></li>
+  <li><a href="../classes/Vector3.html">Vector3</a></li>
+</ul>
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/Enumerations.html">Enumerations</a></li>
+  <li><a href="../modules/GD.html">GD</a></li>
+  <li><a href="../modules/Globals.html">Globals</a></li>
+  <li><a href="../modules/OOP.html">OOP</a></li>
+  <li><a href="../modules/math_extras.html">math_extras</a></li>
+  <li><a href="../modules/package_extras.html">package_extras</a></li>
+  <li><a href="../modules/string_extras.html">string_extras</a></li>
+</ul>
+<h2>Scripts</h2>
+<ul class="nowrap">
+  <li><a href="../scripts/lps_coroutine.lua.html">lps_coroutine.lua</a></li>
+</ul>
+<h2>Topics</h2>
+<ul class="">
+  <li><a href="../topics/README.md.html">README</a></li>
+</ul>
+<h2>Examples</h2>
+<ul class="nowrap">
+  <li><a href="../examples/lua_repl.lua.html">lua_repl.lua</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Class <code>Color</code></h1>
+<p>Color metatype, wrapper for <code>godot_color</code>.</p>
+<p>
+
+<p> Construct using the idiom <code>Color(...)</code>, which calls <a href="../classes/Color.html#Color:__new">__new</a>.</p>
+
+<p> The R, G, B and A components may be accessed through <code>elements</code> or individually
+ with <code>r/g/b/a</code>. <a href="../classes/Vector2.html#">Vector2</a> with two adjacent components may be get/set with the
+ pairs <code>rg/gb/ba</code>. <a href="../classes/Vector3.html#">Vector3</a> with three adjacent components may be get/set with
+ the triplets <code>rgb/gba</code>:</p>
+
+<pre>
+typedef union godot_color {
+    float elements[<span class="number">4</span>];
+    struct { float r, g, b, a; };
+    struct { Vector2 rg; Vector2 ba; };
+    struct { float _; Vector2 gb; float _; };
+    struct { Vector3 rgb; float _; };
+    struct { float _; Vector3 gba; };
+} godot_color;
+</pre>
+
+</p>
+
+
+<h2><a href="#Methods">Methods</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Color:blend">Color:blend (over)</a></td>
+	<td class="summary">Returns a new color resulting from blending this color over another.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Color:contrasted">Color:contrasted ()</a></td>
+	<td class="summary">Returns the most contrasting color.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Color:darkened">Color:darkened (amount)</a></td>
+	<td class="summary">Returns a new color resulting from making this color darker by the specified percentage (ratio from 0 to 1).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Color:get_h">Color:get_h ()</a></td>
+	<td class="summary">Returns the HSV hue of this color, on the range 0 to 1.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Color:get_s">Color:get_s ()</a></td>
+	<td class="summary">Returns the HSV saturation of this color, on the range 0 to 1.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Color:get_v">Color:get_v ()</a></td>
+	<td class="summary">Returns the HSV value (brightness) of this color, on the range 0 to 1.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Color:gray">Color:gray ()</a></td>
+	<td class="summary">Returns the color's grayscale representation.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Color:inverted">Color:inverted ()</a></td>
+	<td class="summary">Returns the inverted color <code>(1 - r, 1 - g, 1 - b, a)</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Color:lightened">Color:lightened (amount)</a></td>
+	<td class="summary">Returns a new color resulting from making this color lighter by the specified percentage (ratio from 0 to 1).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Color:linear_interpolate">Color:linear_interpolate (b, t)</a></td>
+	<td class="summary">Returns the linear interpolation with another color.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Color:to_html">Color:to_html ([with_alpha=true])</a></td>
+	<td class="summary">Returns the color's HTML hexadecimal color string in ARGB format (ex: ff34f822).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Color:unpack">Color:unpack ()</a></td>
+	<td class="summary">Returns all elements.</td>
+	</tr>
+</table>
+<h2><a href="#Static_Functions">Static Functions </a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Color:from_hsv">Color:from_hsv (h, s, v[, a=1.0])</a></td>
+	<td class="summary">Constructs a color from an HSV profile.</td>
+	</tr>
+</table>
+<h2><a href="#Metamethods">Metamethods </a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Color:__add">Color:__add (a, b)</a></td>
+	<td class="summary">Addition operation</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Color:__concat">Color:__concat (a, b)</a></td>
+	<td class="summary">Concatenates values.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Color:__div">Color:__div (a, b)</a></td>
+	<td class="summary">Division operation</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Color:__eq">Color:__eq (a, b)</a></td>
+	<td class="summary">Equality operation
+ If either <code>a</code> or <code>b</code> are not of type <a href="../classes/Color.html#">Color</a>, always return <code>false</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Color:__lt">Color:__lt (a, b)</a></td>
+	<td class="summary">Less than operation</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Color:__mod">Color:__mod (a, b)</a></td>
+	<td class="summary">Module operation</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Color:__mul">Color:__mul (a, b)</a></td>
+	<td class="summary">Multiplication operation</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Color:__new">Color:__new (...)</a></td>
+	<td class="summary">Color constructor, called by the idiom <code>Color(...)</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Color:__pow">Color:__pow (a, b)</a></td>
+	<td class="summary">Power operation</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Color:__sub">Color:__sub (a, b)</a></td>
+	<td class="summary">Subtraction operation</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Color:__tostring">Color:__tostring ()</a></td>
+	<td class="summary">Returns a Lua string representation of this color.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Color:__unm">Color:__unm ()</a></td>
+	<td class="summary">Unary minus operation</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Methods"></a>Methods</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Color:blend"></a>
+    <strong>Color:blend (over)</strong>
+    </dt>
+    <dd>
+    Returns a new color resulting from blending this color over another.
+ If the color is opaque, the result is also opaque.
+ The second color may have a range of alpha values.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">over</span>
+            <span class="types"><a class="type" href="../classes/Color.html#">Color</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Color.html#">Color</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Color:contrasted"></a>
+    <strong>Color:contrasted ()</strong>
+    </dt>
+    <dd>
+    Returns the most contrasting color.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Color.html#">Color</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Color:darkened"></a>
+    <strong>Color:darkened (amount)</strong>
+    </dt>
+    <dd>
+    Returns a new color resulting from making this color darker by the specified percentage (ratio from 0 to 1).
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">amount</span>
+            <span class="types"><span class="type">number</span></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Color.html#">Color</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Color:get_h"></a>
+    <strong>Color:get_h ()</strong>
+    </dt>
+    <dd>
+    Returns the HSV hue of this color, on the range 0 to 1.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Color:get_s"></a>
+    <strong>Color:get_s ()</strong>
+    </dt>
+    <dd>
+    Returns the HSV saturation of this color, on the range 0 to 1.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Color:get_v"></a>
+    <strong>Color:get_v ()</strong>
+    </dt>
+    <dd>
+    Returns the HSV value (brightness) of this color, on the range 0 to 1.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Color:gray"></a>
+    <strong>Color:gray ()</strong>
+    </dt>
+    <dd>
+    Returns the color's grayscale representation.
+ The gray value is calculated as <code>(r + g + b) / 3</code>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Color:inverted"></a>
+    <strong>Color:inverted ()</strong>
+    </dt>
+    <dd>
+    Returns the inverted color <code>(1 - r, 1 - g, 1 - b, a)</code>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Color.html#">Color</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Color:lightened"></a>
+    <strong>Color:lightened (amount)</strong>
+    </dt>
+    <dd>
+    Returns a new color resulting from making this color lighter by the specified percentage (ratio from 0 to 1).
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">amount</span>
+            <span class="types"><span class="type">number</span></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Color.html#">Color</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Color:linear_interpolate"></a>
+    <strong>Color:linear_interpolate (b, t)</strong>
+    </dt>
+    <dd>
+    Returns the linear interpolation with another color.
+ The interpolation factor <code>t</code> is between 0 and 1.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">b</span>
+            <span class="types"><a class="type" href="../classes/Color.html#">Color</a></span>
+
+
+
+        </li>
+        <li><span class="parameter">t</span>
+            <span class="types"><span class="type">number</span></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Color.html#">Color</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Color:to_html"></a>
+    <strong>Color:to_html ([with_alpha=true])</strong>
+    </dt>
+    <dd>
+    Returns the color's HTML hexadecimal color string in ARGB format (ex: ff34f822).
+ Setting <code>with_alpha</code> to <code>false</code> excludes alpha from the hexadecimal string.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">with_alpha</span>
+
+
+
+         (<em>default</em> true)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Color:unpack"></a>
+    <strong>Color:unpack ()</strong>
+    </dt>
+    <dd>
+    Returns all elements.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+           <span class="types"><span class="type">number</span></span>
+        R</li>
+        <li>
+           <span class="types"><span class="type">number</span></span>
+        G</li>
+        <li>
+           <span class="types"><span class="type">number</span></span>
+        B</li>
+        <li>
+           <span class="types"><span class="type">number</span></span>
+        A</li>
+    </ol>
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header has-description"><a name="Static_Functions"></a>Static Functions </h2>
+
+          <div class="section-description">
+           These don't receive <code>self</code> and should be called directly as <code>Array.static_function(...)</code>
+          </div>
+    <dl class="function">
+    <dt>
+    <a name = "Color:from_hsv"></a>
+    <strong>Color:from_hsv (h, s, v[, a=1.0])</strong>
+    </dt>
+    <dd>
+    Constructs a color from an HSV profile.  h, s, and v are values between 0 and 1.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">h</span>
+            <span class="types"><span class="type">number</span></span>
+
+
+
+        </li>
+        <li><span class="parameter">s</span>
+            <span class="types"><span class="type">number</span></span>
+
+
+
+        </li>
+        <li><span class="parameter">v</span>
+            <span class="types"><span class="type">number</span></span>
+
+
+
+        </li>
+        <li><span class="parameter">a</span>
+            <span class="types"><span class="type">number</span></span>
+
+
+
+         (<em>default</em> 1.0)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Color.html#">Color</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Metamethods"></a>Metamethods </h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Color:__add"></a>
+    <strong>Color:__add (a, b)</strong>
+    </dt>
+    <dd>
+    Addition operation
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+            <span class="types"><a class="type" href="../classes/Color.html#">Color</a>, <a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Vector2.html#">Vector2</a> or <span class="type">number</span></span>
+
+
+
+        </li>
+        <li><span class="parameter">b</span>
+            <span class="types"><a class="type" href="../classes/Color.html#">Color</a>, <a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Vector2.html#">Vector2</a> or <span class="type">number</span></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Color.html#">Color</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Color:__concat"></a>
+    <strong>Color:__concat (a, b)</strong>
+    </dt>
+    <dd>
+    Concatenates values.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+          First value, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+        <li><span class="parameter">b</span>
+          First value, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Color:__div"></a>
+    <strong>Color:__div (a, b)</strong>
+    </dt>
+    <dd>
+    Division operation
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+            <span class="types"><a class="type" href="../classes/Color.html#">Color</a>, <a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Vector2.html#">Vector2</a> or <span class="type">number</span></span>
+
+
+
+        </li>
+        <li><span class="parameter">b</span>
+            <span class="types"><a class="type" href="../classes/Color.html#">Color</a>, <a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Vector2.html#">Vector2</a> or <span class="type">number</span></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Color.html#">Color</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Color:__eq"></a>
+    <strong>Color:__eq (a, b)</strong>
+    </dt>
+    <dd>
+    Equality operation
+ If either <code>a</code> or <code>b</code> are not of type <a href="../classes/Color.html#">Color</a>, always return <code>false</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+            <span class="types"><a class="type" href="../classes/Color.html#">Color</a></span>
+
+
+
+        </li>
+        <li><span class="parameter">b</span>
+            <span class="types"><a class="type" href="../classes/Color.html#">Color</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Color:__lt"></a>
+    <strong>Color:__lt (a, b)</strong>
+    </dt>
+    <dd>
+    Less than operation
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+            <span class="types"><a class="type" href="../classes/Color.html#">Color</a></span>
+
+
+
+        </li>
+        <li><span class="parameter">b</span>
+            <span class="types"><a class="type" href="../classes/Color.html#">Color</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Color:__mod"></a>
+    <strong>Color:__mod (a, b)</strong>
+    </dt>
+    <dd>
+    Module operation
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+            <span class="types"><a class="type" href="../classes/Color.html#">Color</a>, <a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Vector2.html#">Vector2</a> or <span class="type">number</span></span>
+
+
+
+        </li>
+        <li><span class="parameter">b</span>
+            <span class="types"><a class="type" href="../classes/Color.html#">Color</a>, <a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Vector2.html#">Vector2</a> or <span class="type">number</span></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Color.html#">Color</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Color:__mul"></a>
+    <strong>Color:__mul (a, b)</strong>
+    </dt>
+    <dd>
+    Multiplication operation
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+            <span class="types"><a class="type" href="../classes/Color.html#">Color</a>, <a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Vector2.html#">Vector2</a> or <span class="type">number</span></span>
+
+
+
+        </li>
+        <li><span class="parameter">b</span>
+            <span class="types"><a class="type" href="../classes/Color.html#">Color</a>, <a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Vector2.html#">Vector2</a> or <span class="type">number</span></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Color.html#">Color</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Color:__new"></a>
+    <strong>Color:__new (...)</strong>
+    </dt>
+    <dd>
+
+<p>Color constructor, called by the idiom <code>Color(...)</code>. </p>
+
+<ul>
+    <li><code>Color()</code>: RGB are set to 0, A is set to 1 (<code>Color() == Color(0, 0, 0, 1)</code>)</li>
+    <li><code>Color(number r)</code>: RGB are set to <code>r</code>, A is set to 1 (<code>Color(0.5) == Color(0.5, 0.5, 0.5, 1)</code>)</li>
+    <li><code>Color(number r, number g[, number b = 0[, number a = 1]])</code>: set RGBA</li>
+    <li><code>Color(number r, number g, Vector2 ba)</code>: set RGBA</li>
+    <li><code>Color(number r, Vector2 gb[, number a = 1])</code>: set RGBA</li>
+    <li><code>Color(number r, Vector3 gba)</code>: set RGBA</li>
+    <li><code>Color(Vector2 rg[, number b = 0[, number a = 1]])</code>: set RGBA</li>
+    <li><code>Color(Vector2 rg, Vector2 ba)</code>: set RGBA</li>
+    <li><code>Color(Vector3 rgb[, number a = 1])</code>: set RGBA</li>
+    <li><code>Color(Color other)</code>: copy values from <code>other</code></li>
+</ul>
+
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Color.html#">Color</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Color:__pow"></a>
+    <strong>Color:__pow (a, b)</strong>
+    </dt>
+    <dd>
+    Power operation
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+            <span class="types"><a class="type" href="../classes/Color.html#">Color</a>, <a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Vector2.html#">Vector2</a> or <span class="type">number</span></span>
+
+
+
+        </li>
+        <li><span class="parameter">b</span>
+            <span class="types"><a class="type" href="../classes/Color.html#">Color</a>, <a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Vector2.html#">Vector2</a> or <span class="type">number</span></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Color.html#">Color</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Color:__sub"></a>
+    <strong>Color:__sub (a, b)</strong>
+    </dt>
+    <dd>
+    Subtraction operation
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+            <span class="types"><a class="type" href="../classes/Color.html#">Color</a>, <a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Vector2.html#">Vector2</a> or <span class="type">number</span></span>
+
+
+
+        </li>
+        <li><span class="parameter">b</span>
+            <span class="types"><a class="type" href="../classes/Color.html#">Color</a>, <a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Vector2.html#">Vector2</a> or <span class="type">number</span></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Color.html#">Color</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Color:__tostring"></a>
+    <strong>Color:__tostring ()</strong>
+    </dt>
+    <dd>
+    Returns a Lua string representation of this color.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Color:__unm"></a>
+    <strong>Color:__unm ()</strong>
+    </dt>
+    <dd>
+    Unary minus operation
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Color.html#">Color</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2021-09-07 13:06:11 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

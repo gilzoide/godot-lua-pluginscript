@@ -1,0 +1,251 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Godot Lua PluginScript</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+<li><a href="#Fields">Fields</a></li>
+</ul>
+
+
+<h2>Scripts</h2>
+<ul class="nowrap">
+  <li><strong>lps_coroutine.lua</strong></li>
+</ul>
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/Enumerations.html">Enumerations</a></li>
+  <li><a href="../modules/GD.html">GD</a></li>
+  <li><a href="../modules/Globals.html">Globals</a></li>
+  <li><a href="../modules/OOP.html">OOP</a></li>
+  <li><a href="../modules/math_extras.html">math_extras</a></li>
+  <li><a href="../modules/package_extras.html">package_extras</a></li>
+  <li><a href="../modules/string_extras.html">string_extras</a></li>
+</ul>
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><a href="../classes/AABB.html">AABB</a></li>
+  <li><a href="../classes/Array.html">Array</a></li>
+  <li><a href="../classes/Basis.html">Basis</a></li>
+  <li><a href="../classes/Color.html">Color</a></li>
+  <li><a href="../classes/Dictionary.html">Dictionary</a></li>
+  <li><a href="../classes/NodePath.html">NodePath</a></li>
+  <li><a href="../classes/Object.html">Object</a></li>
+  <li><a href="../classes/Plane.html">Plane</a></li>
+  <li><a href="../classes/PoolByteArray.html">PoolByteArray</a></li>
+  <li><a href="../classes/PoolColorArray.html">PoolColorArray</a></li>
+  <li><a href="../classes/PoolIntArray.html">PoolIntArray</a></li>
+  <li><a href="../classes/PoolRealArray.html">PoolRealArray</a></li>
+  <li><a href="../classes/PoolStringArray.html">PoolStringArray</a></li>
+  <li><a href="../classes/PoolVector2Array.html">PoolVector2Array</a></li>
+  <li><a href="../classes/PoolVector3Array.html">PoolVector3Array</a></li>
+  <li><a href="../classes/Quat.html">Quat</a></li>
+  <li><a href="../classes/Rect2.html">Rect2</a></li>
+  <li><a href="../classes/RID.html">RID</a></li>
+  <li><a href="../classes/String.html">String</a></li>
+  <li><a href="../classes/StringName.html">StringName</a></li>
+  <li><a href="../classes/Transform.html">Transform</a></li>
+  <li><a href="../classes/Transform2D.html">Transform2D</a></li>
+  <li><a href="../classes/Variant.html">Variant</a></li>
+  <li><a href="../classes/Vector2.html">Vector2</a></li>
+  <li><a href="../classes/Vector3.html">Vector3</a></li>
+</ul>
+<h2>Topics</h2>
+<ul class="">
+  <li><a href="../topics/README.md.html">README</a></li>
+</ul>
+<h2>Examples</h2>
+<ul class="nowrap">
+  <li><a href="../examples/lua_repl.lua.html">lua_repl.lua</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Script <code>lps_coroutine.lua</code></h1>
+<p>Godot Reference script that wraps a Lua coroutine with an API similar to <code>GDScriptFunctionState</code>.</p>
+<p> These are created by <a href="../modules/GD.html#yield">GD.yield</a> and won't work if created manually.</p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#get_status">get_status ()</a></td>
+	<td class="summary">Returns the <a href="https://www.lua.org/manual/5.1/manual.html#pdf-coroutine.status">coroutine.status</a>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#is_valid">is_valid ()</a></td>
+	<td class="summary">Returns whether coroutine is valid (<code>coroutine.status(self.coroutine) ~= &apos;dead&apos;</code>).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#resume">resume (...)</a></td>
+	<td class="summary">Resume a coroutine, similar to <a href="https://www.lua.org/manual/5.1/manual.html#pdf-coroutine.resume">coroutine.resume</a>.</td>
+	</tr>
+</table>
+<h2><a href="#Fields">Fields</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#completed">completed</a></td>
+	<td class="summary"><code>signal completed(result)</code>: signal emitted by <a href="../scripts/lps_coroutine.lua.html#resume">resume</a> when the coroutine body is completed.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "get_status"></a>
+    <strong>get_status ()</strong>
+    </dt>
+    <dd>
+    Returns the <a href="https://www.lua.org/manual/5.1/manual.html#pdf-coroutine.status">coroutine.status</a>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+
+
+
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="https://www.lua.org/manual/5.1/manual.html#pdf-coroutine.status">coroutine.status</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "is_valid"></a>
+    <strong>is_valid ()</strong>
+    </dt>
+    <dd>
+    Returns whether coroutine is valid (<code>coroutine.status(self.coroutine) ~= &apos;dead&apos;</code>).
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "resume"></a>
+    <strong>resume (...)</strong>
+    </dt>
+    <dd>
+    Resume a coroutine, similar to <a href="https://www.lua.org/manual/5.1/manual.html#pdf-coroutine.resume">coroutine.resume</a>.
+ Emits the <a href="../scripts/lps_coroutine.lua.html#completed">completed</a> signal if the coroutine body is completed.
+ Differently than <code>GDScriptFunctionState.resume</code>, this method accepts
+ multiple arguments.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+
+
+
+    </ol>
+
+    <h3>Raises:</h3>
+    If <a href="https://www.lua.org/manual/5.1/manual.html#pdf-coroutine.resume">coroutine.resume</a> returns <code>false</code>
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="keyword">local</span> coro = some_object:method_that_yields()
+<span class="keyword">local</span> first_value = coro:resume()
+<span class="keyword">local</span> second_value = coro:resume()
+<span class="keyword">while</span> coro:is_valid() <span class="keyword">do</span>
+    <span class="keyword">local</span> next_value = coro:resume()
+    <span class="comment">-- do something
+</span><span class="keyword">end</span></pre>
+    </ul>
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Fields"></a>Fields</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "completed"></a>
+    <strong>completed</strong>
+    </dt>
+    <dd>
+    <code>signal completed(result)</code>: signal emitted by <a href="../scripts/lps_coroutine.lua.html#resume">resume</a> when the coroutine body is completed.
+
+
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2021-09-07 13:06:11 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

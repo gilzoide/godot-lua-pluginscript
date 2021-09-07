@@ -1,0 +1,1762 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Godot Lua PluginScript</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Methods">Methods</a></li>
+<li><a href="#Metamethods">Metamethods </a></li>
+<li><a href="#Constants">Constants </a></li>
+</ul>
+
+
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><a href="../classes/AABB.html">AABB</a></li>
+  <li><a href="../classes/Array.html">Array</a></li>
+  <li><a href="../classes/Basis.html">Basis</a></li>
+  <li><a href="../classes/Color.html">Color</a></li>
+  <li><a href="../classes/Dictionary.html">Dictionary</a></li>
+  <li><a href="../classes/NodePath.html">NodePath</a></li>
+  <li><a href="../classes/Object.html">Object</a></li>
+  <li><a href="../classes/Plane.html">Plane</a></li>
+  <li><a href="../classes/PoolByteArray.html">PoolByteArray</a></li>
+  <li><a href="../classes/PoolColorArray.html">PoolColorArray</a></li>
+  <li><a href="../classes/PoolIntArray.html">PoolIntArray</a></li>
+  <li><a href="../classes/PoolRealArray.html">PoolRealArray</a></li>
+  <li><a href="../classes/PoolStringArray.html">PoolStringArray</a></li>
+  <li><a href="../classes/PoolVector2Array.html">PoolVector2Array</a></li>
+  <li><a href="../classes/PoolVector3Array.html">PoolVector3Array</a></li>
+  <li><a href="../classes/Quat.html">Quat</a></li>
+  <li><a href="../classes/RID.html">RID</a></li>
+  <li><a href="../classes/Rect2.html">Rect2</a></li>
+  <li><a href="../classes/String.html">String</a></li>
+  <li><a href="../classes/StringName.html">StringName</a></li>
+  <li><a href="../classes/Transform.html">Transform</a></li>
+  <li><a href="../classes/Transform2D.html">Transform2D</a></li>
+  <li><a href="../classes/Variant.html">Variant</a></li>
+  <li><a href="../classes/Vector2.html">Vector2</a></li>
+  <li><strong>Vector3</strong></li>
+</ul>
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/Enumerations.html">Enumerations</a></li>
+  <li><a href="../modules/GD.html">GD</a></li>
+  <li><a href="../modules/Globals.html">Globals</a></li>
+  <li><a href="../modules/OOP.html">OOP</a></li>
+  <li><a href="../modules/math_extras.html">math_extras</a></li>
+  <li><a href="../modules/package_extras.html">package_extras</a></li>
+  <li><a href="../modules/string_extras.html">string_extras</a></li>
+</ul>
+<h2>Scripts</h2>
+<ul class="nowrap">
+  <li><a href="../scripts/lps_coroutine.lua.html">lps_coroutine.lua</a></li>
+</ul>
+<h2>Topics</h2>
+<ul class="">
+  <li><a href="../topics/README.md.html">README</a></li>
+</ul>
+<h2>Examples</h2>
+<ul class="nowrap">
+  <li><a href="../examples/lua_repl.lua.html">lua_repl.lua</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Class <code>Vector3</code></h1>
+<p>Vector3 metatype, wrapper for <code>godot_vector3</code>.</p>
+<p>
+
+<p> Construct using the idiom <code>Vector3(...)</code>, which calls <a href="../classes/Vector3.html#Vector3:__new">__new</a>.</p>
+
+<p> The X, Y and Z components may be accessed through <code>elements</code> or the triplets
+ <code>x/y/z</code>, <code>r/g/b</code>, <code>s/t/p</code>, <code>width/height/depth</code>, the pair <code>u/v</code>. <a href="../classes/Vector2.html#">Vector2</a> with
+ two adjacent components may be get/set with pairs like <code>xy</code> or <code>yz</code>:</p>
+
+<pre>
+typedef union godot_vector3 {
+    float elements[<span class="number">3</span>];
+    // xyz
+    struct { float x, y, z; };
+    struct { Vector2 xy; float _; };
+    struct { float _; Vector2 yz; };
+    // rgb
+    struct { float r, g, b; };
+    struct { Vector2 rg; float _; };
+    struct { float _; Vector2 gb; };
+    // stp
+    struct { float s, t, p; };
+    struct { Vector2 st; float _; };
+    struct { float _; Vector2 tp; };
+    // uv
+    struct { float u, v, _; };
+    struct { Vector2 uv; float _; };
+    // <span class="number">3</span>D Size: width/height/depth
+    struct { float width, height, depth; };
+} godot_vector3;
+</pre>
+
+</p>
+
+
+<h2><a href="#Methods">Methods</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Vector3:abs">Vector3:abs ()</a></td>
+	<td class="summary">Returns a new vector with all components in absolute values (i.e.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector3:angle_to">Vector3:angle_to (b)</a></td>
+	<td class="summary">Returns the minimum angle to the given vector, in radians.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector3:bounce">Vector3:bounce (normal)</a></td>
+	<td class="summary">Returns the vector "bounced off" from a plane defined by the given <code>normal</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector3:ceil">Vector3:ceil ()</a></td>
+	<td class="summary">Returns a new vector with all components rounded up (towards positive infinity).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector3:cross">Vector3:cross (b)</a></td>
+	<td class="summary">Returns the cross product of this vector and <code>b</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector3:cubic_interpolate">Vector3:cubic_interpolate ()</a></td>
+	<td class="summary">Performs a cubic interpolation between vectors <code>pre_a</code>, <code>a</code>, <code>b</code>, <code>post_b</code> (<code>a</code> is current), by the given amount <code>t</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector3:direction_to">Vector3:direction_to (to)</a></td>
+	<td class="summary">Returns the normalized vector pointing from this vector to <code>b</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector3:distance_squared_to">Vector3:distance_squared_to (b)</a></td>
+	<td class="summary">Returns the squared distance between this vector and <code>b</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector3:distance_to">Vector3:distance_to (b)</a></td>
+	<td class="summary">Returns the distance between this vector and <code>b</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector3:dot">Vector3:dot (b)</a></td>
+	<td class="summary">Returns the dot product of this vector and <code>b</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector3:floor">Vector3:floor ()</a></td>
+	<td class="summary">Returns a new vector with all components rounded down (towards negative infinity).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector3:inverse">Vector3:inverse ()</a></td>
+	<td class="summary">Returns the inverse of the vector.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector3:is_normalized">Vector3:is_normalized ()</a></td>
+	<td class="summary">Returns <code>true</code> if the vector is normalized.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector3:length">Vector3:length ()</a></td>
+	<td class="summary">Returns the length (magnitude) of this vector.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector3:length_squared">Vector3:length_squared ()</a></td>
+	<td class="summary">Returns the squared length (squared magnitude) of this vector.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector3:linear_interpolate">Vector3:linear_interpolate (b, t)</a></td>
+	<td class="summary">Returns the result of the linear interpolation between this vector and <code>b</code> by amount <code>t</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector3:max_axis">Vector3:max_axis ()</a></td>
+	<td class="summary">Returns the axis of the vector's largest value.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector3:min_axis">Vector3:min_axis ()</a></td>
+	<td class="summary">Returns the axis of the vector's smallest value.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector3:move_toward">Vector3:move_toward (to, delta)</a></td>
+	<td class="summary">Moves this vector toward <code>to</code> by the fixed <code>delta</code> amount.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector3:normalized">Vector3:normalized ()</a></td>
+	<td class="summary">Returns the vector scaled to unit length.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector3:outer">Vector3:outer (b)</a></td>
+	<td class="summary">Returns the outer product with <code>b</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector3:reflect">Vector3:reflect (normal)</a></td>
+	<td class="summary">Returns this vector reflected from a plane defined by the given <code>normal</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector3:rotated">Vector3:rotated (axis, phi)</a></td>
+	<td class="summary">Rotates this vector around a given <code>axis</code> by <code>phi</code> radians.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector3:slide">Vector3:slide (normal)</a></td>
+	<td class="summary">Returns this vector slid along a plane defined by the given <code>normal</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector3:snapped">Vector3:snapped (step)</a></td>
+	<td class="summary">Returns this vector with each component snapped to the nearest multiple of <code>step</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector3:to_diagonal_matrix">Vector3:to_diagonal_matrix ()</a></td>
+	<td class="summary">Returns a diagonal matrix with the vector as main diagonal.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector3:unpack">Vector3:unpack ()</a></td>
+	<td class="summary">Returns all elements.</td>
+	</tr>
+</table>
+<h2><a href="#Metamethods">Metamethods </a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Vector3:__add">Vector3:__add (a, b)</a></td>
+	<td class="summary">Addition operation</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector3:__concat">Vector3:__concat (a, b)</a></td>
+	<td class="summary">Concatenates values.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector3:__div">Vector3:__div (a, b)</a></td>
+	<td class="summary">Division operation</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector3:__eq">Vector3:__eq (a, b)</a></td>
+	<td class="summary">Equality operation</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector3:__lt">Vector3:__lt (a, b)</a></td>
+	<td class="summary">Less than operation</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector3:__mod">Vector3:__mod (a, b)</a></td>
+	<td class="summary">Module operation</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector3:__mul">Vector3:__mul (a, b)</a></td>
+	<td class="summary">Multiplication operation</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector3:__new">Vector3:__new (...)</a></td>
+	<td class="summary">Vector3 constructor, called by the idiom <code>Vector3(...)</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector3:__pow">Vector3:__pow (a, b)</a></td>
+	<td class="summary">Power operation</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector3:__sub">Vector3:__sub (a, b)</a></td>
+	<td class="summary">Subtraction operation</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector3:__tostring">Vector3:__tostring ()</a></td>
+	<td class="summary">Returns a Lua string representation of this vector.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector3:__unm">Vector3:__unm ()</a></td>
+	<td class="summary">Unary minus operation</td>
+	</tr>
+</table>
+<h2><a href="#Constants">Constants </a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Vector3.AXIS_X">Vector3.AXIS_X</a></td>
+	<td class="summary">Enumerated value for the X axis.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector3.AXIS_Y">Vector3.AXIS_Y</a></td>
+	<td class="summary">Enumerated value for the Y axis.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector3.AXIS_Z">Vector3.AXIS_Z</a></td>
+	<td class="summary">Enumerated value for the Z axis.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector3.BACK">Vector3.BACK</a></td>
+	<td class="summary">Back unit vector.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector3.DOWN">Vector3.DOWN</a></td>
+	<td class="summary">Down unit vector.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector3.FORWARD">Vector3.FORWARD</a></td>
+	<td class="summary">Forward unit vector.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector3.INF">Vector3.INF</a></td>
+	<td class="summary">Infinity vector, a vector with all components set to <code>inf</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector3.LEFT">Vector3.LEFT</a></td>
+	<td class="summary">Left unit vector.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector3.ONE">Vector3.ONE</a></td>
+	<td class="summary">One vector, a vector with all components set to 1.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector3.RIGHT">Vector3.RIGHT</a></td>
+	<td class="summary">Right unit vector.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector3.UP">Vector3.UP</a></td>
+	<td class="summary">Up unit vector.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector3.ZERO">Vector3.ZERO</a></td>
+	<td class="summary">Zero vector, a vector with all components set to 0.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Methods"></a>Methods</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Vector3:abs"></a>
+    <strong>Vector3:abs ()</strong>
+    </dt>
+    <dd>
+    Returns a new vector with all components in absolute values (i.e.  positive).
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector3:angle_to"></a>
+    <strong>Vector3:angle_to (b)</strong>
+    </dt>
+    <dd>
+    Returns the minimum angle to the given vector, in radians.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">b</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector3:bounce"></a>
+    <strong>Vector3:bounce (normal)</strong>
+    </dt>
+    <dd>
+    Returns the vector "bounced off" from a plane defined by the given <code>normal</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">normal</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector3:ceil"></a>
+    <strong>Vector3:ceil ()</strong>
+    </dt>
+    <dd>
+    Returns a new vector with all components rounded up (towards positive infinity).
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector3:cross"></a>
+    <strong>Vector3:cross (b)</strong>
+    </dt>
+    <dd>
+    Returns the cross product of this vector and <code>b</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">b</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector3:cubic_interpolate"></a>
+    <strong>Vector3:cubic_interpolate ()</strong>
+    </dt>
+    <dd>
+    Performs a cubic interpolation between vectors <code>pre_a</code>, <code>a</code>, <code>b</code>, <code>post_b</code> (<code>a</code> is current), by the given amount <code>t</code>.
+ <code>t</code> is on the range of 0.0 to 1.0, representing the amount of interpolation.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector3:direction_to"></a>
+    <strong>Vector3:direction_to (to)</strong>
+    </dt>
+    <dd>
+    Returns the normalized vector pointing from this vector to <code>b</code>.
+ Equivalent to <code>(b - a).normalized()</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">to</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector3:distance_squared_to"></a>
+    <strong>Vector3:distance_squared_to (b)</strong>
+    </dt>
+    <dd>
+    Returns the squared distance between this vector and <code>b</code>.
+ This method runs faster than <a href="../classes/Vector3.html#Vector3:distance_to">distance_to</a>, so prefer it if you need to compare vectors or need the squared distance for some formula.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">b</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector3:distance_to"></a>
+    <strong>Vector3:distance_to (b)</strong>
+    </dt>
+    <dd>
+    Returns the distance between this vector and <code>b</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">b</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector3:dot"></a>
+    <strong>Vector3:dot (b)</strong>
+    </dt>
+    <dd>
+    Returns the dot product of this vector and <code>b</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">b</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector3:floor"></a>
+    <strong>Vector3:floor ()</strong>
+    </dt>
+    <dd>
+    Returns a new vector with all components rounded down (towards negative infinity).
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector3:inverse"></a>
+    <strong>Vector3:inverse ()</strong>
+    </dt>
+    <dd>
+    Returns the inverse of the vector.
+ Equivalent to <code>1.0 / v</code>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector3:is_normalized"></a>
+    <strong>Vector3:is_normalized ()</strong>
+    </dt>
+    <dd>
+    Returns <code>true</code> if the vector is normalized.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector3:length"></a>
+    <strong>Vector3:length ()</strong>
+    </dt>
+    <dd>
+    Returns the length (magnitude) of this vector.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector3:length_squared"></a>
+    <strong>Vector3:length_squared ()</strong>
+    </dt>
+    <dd>
+    Returns the squared length (squared magnitude) of this vector.
+ This method runs faster than <a href="../classes/Vector3.html#Vector3:length">length</a>, so prefer it if you need to compare vectors or need the squared distance for some formula.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector3:linear_interpolate"></a>
+    <strong>Vector3:linear_interpolate (b, t)</strong>
+    </dt>
+    <dd>
+    Returns the result of the linear interpolation between this vector and <code>b</code> by amount <code>t</code>.
+ <code>t</code> is on the range of 0.0 to 1.0, representing the amount of interpolation.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">b</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+        </li>
+        <li><span class="parameter">t</span>
+            <span class="types"><span class="type">number</span></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector3:max_axis"></a>
+    <strong>Vector3:max_axis ()</strong>
+    </dt>
+    <dd>
+    Returns the axis of the vector's largest value.
+ If all components are equal, this method returns <a href="../classes/Vector3.html#Vector3.AXIS_Z">AXIS_Z</a>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">int</span></span>
+        <a href="../classes/Vector3.html#Vector3.AXIS_X">AXIS_X</a>, <a href="../classes/Vector3.html#Vector3.AXIS_Y">AXIS_Y</a> or <a href="../classes/Vector3.html#Vector3.AXIS_Z">AXIS_Z</a>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector3:min_axis"></a>
+    <strong>Vector3:min_axis ()</strong>
+    </dt>
+    <dd>
+    Returns the axis of the vector's smallest value.
+ If all components are equal, this method returns <a href="../classes/Vector3.html#Vector3.AXIS_Z">AXIS_Z</a>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">int</span></span>
+        <a href="../classes/Vector3.html#Vector3.AXIS_X">AXIS_X</a>, <a href="../classes/Vector3.html#Vector3.AXIS_Y">AXIS_Y</a> or <a href="../classes/Vector3.html#Vector3.AXIS_Z">AXIS_Z</a>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector3:move_toward"></a>
+    <strong>Vector3:move_toward (to, delta)</strong>
+    </dt>
+    <dd>
+    Moves this vector toward <code>to</code> by the fixed <code>delta</code> amount.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">to</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+        </li>
+        <li><span class="parameter">delta</span>
+            <span class="types"><span class="type">number</span></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector3:normalized"></a>
+    <strong>Vector3:normalized ()</strong>
+    </dt>
+    <dd>
+    Returns the vector scaled to unit length.
+ Equivalent to <code>v / v.length()</code>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector3:outer"></a>
+    <strong>Vector3:outer (b)</strong>
+    </dt>
+    <dd>
+    Returns the outer product with <code>b</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">b</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Basis.html#">Basis</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector3:reflect"></a>
+    <strong>Vector3:reflect (normal)</strong>
+    </dt>
+    <dd>
+    Returns this vector reflected from a plane defined by the given <code>normal</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">normal</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector3:rotated"></a>
+    <strong>Vector3:rotated (axis, phi)</strong>
+    </dt>
+    <dd>
+    Rotates this vector around a given <code>axis</code> by <code>phi</code> radians.
+ The <code>axis</code> must be a normalized vector.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">axis</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+        </li>
+        <li><span class="parameter">phi</span>
+            <span class="types"><span class="type">number</span></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector3:slide"></a>
+    <strong>Vector3:slide (normal)</strong>
+    </dt>
+    <dd>
+    Returns this vector slid along a plane defined by the given <code>normal</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">normal</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector3:snapped"></a>
+    <strong>Vector3:snapped (step)</strong>
+    </dt>
+    <dd>
+    Returns this vector with each component snapped to the nearest multiple of <code>step</code>.
+ This can also be used to round to an arbitrary number of decimals.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">step</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector3:to_diagonal_matrix"></a>
+    <strong>Vector3:to_diagonal_matrix ()</strong>
+    </dt>
+    <dd>
+    Returns a diagonal matrix with the vector as main diagonal.
+ This is equivalent to a Basis with no rotation or shearing and this vector's components set as the scale.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Basis.html#">Basis</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector3:unpack"></a>
+    <strong>Vector3:unpack ()</strong>
+    </dt>
+    <dd>
+    Returns all elements.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+           <span class="types"><span class="type">number</span></span>
+        X</li>
+        <li>
+           <span class="types"><span class="type">number</span></span>
+        Y</li>
+        <li>
+           <span class="types"><span class="type">number</span></span>
+        Z</li>
+    </ol>
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Metamethods"></a>Metamethods </h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Vector3:__add"></a>
+    <strong>Vector3:__add (a, b)</strong>
+    </dt>
+    <dd>
+    Addition operation
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Vector2.html#">Vector2</a> or <span class="type">number</span></span>
+
+
+
+        </li>
+        <li><span class="parameter">b</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Vector2.html#">Vector2</a> or <span class="type">number</span></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector3:__concat"></a>
+    <strong>Vector3:__concat (a, b)</strong>
+    </dt>
+    <dd>
+    Concatenates values.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+          First value, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+        <li><span class="parameter">b</span>
+          First value, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector3:__div"></a>
+    <strong>Vector3:__div (a, b)</strong>
+    </dt>
+    <dd>
+    Division operation
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Vector2.html#">Vector2</a> or <span class="type">number</span></span>
+
+
+
+        </li>
+        <li><span class="parameter">b</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Vector2.html#">Vector2</a> or <span class="type">number</span></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector3:__eq"></a>
+    <strong>Vector3:__eq (a, b)</strong>
+    </dt>
+    <dd>
+    Equality operation
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Vector2.html#">Vector2</a> or <span class="type">number</span></span>
+
+
+
+        </li>
+        <li><span class="parameter">b</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Vector2.html#">Vector2</a> or <span class="type">number</span></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector3:__lt"></a>
+    <strong>Vector3:__lt (a, b)</strong>
+    </dt>
+    <dd>
+    Less than operation
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Vector2.html#">Vector2</a> or <span class="type">number</span></span>
+
+
+
+        </li>
+        <li><span class="parameter">b</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Vector2.html#">Vector2</a> or <span class="type">number</span></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector3:__mod"></a>
+    <strong>Vector3:__mod (a, b)</strong>
+    </dt>
+    <dd>
+    Module operation
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Vector2.html#">Vector2</a> or <span class="type">number</span></span>
+
+
+
+        </li>
+        <li><span class="parameter">b</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Vector2.html#">Vector2</a> or <span class="type">number</span></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector3:__mul"></a>
+    <strong>Vector3:__mul (a, b)</strong>
+    </dt>
+    <dd>
+    Multiplication operation
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Vector2.html#">Vector2</a> or <span class="type">number</span></span>
+
+
+
+        </li>
+        <li><span class="parameter">b</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Vector2.html#">Vector2</a> or <span class="type">number</span></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector3:__new"></a>
+    <strong>Vector3:__new (...)</strong>
+    </dt>
+    <dd>
+
+<p>Vector3 constructor, called by the idiom <code>Vector3(...)</code>. </p>
+
+<ul>
+    <li><code>Vector3()</code>: all zeros (<code>Vector3() == Vector3(0, 0, 0)</code>)</li>
+    <li><code>Vector3(number x)</code>: all components are set to <code>x</code> (<code>Vector3(1) == Vector3(1, 1, 1)</code>)</li>
+    <li><code>Vector3(number x, number y[, number z = 0])</code>: set XYZ</li>
+    <li><code>Vector3(Vector2 xy[, number z = 0])</code>: set XYZ</li>
+    <li><code>Vector3(number x, Vector2 yz)</code>: set XYZ</li>
+    <li><code>Vector3(Vector3 other)</code>: copy values from <code>other</code></li>
+</ul>
+
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector3:__pow"></a>
+    <strong>Vector3:__pow (a, b)</strong>
+    </dt>
+    <dd>
+    Power operation
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Vector2.html#">Vector2</a> or <span class="type">number</span></span>
+
+
+
+        </li>
+        <li><span class="parameter">b</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Vector2.html#">Vector2</a> or <span class="type">number</span></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector3:__sub"></a>
+    <strong>Vector3:__sub (a, b)</strong>
+    </dt>
+    <dd>
+    Subtraction operation
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Vector2.html#">Vector2</a> or <span class="type">number</span></span>
+
+
+
+        </li>
+        <li><span class="parameter">b</span>
+            <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Vector2.html#">Vector2</a> or <span class="type">number</span></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector3:__tostring"></a>
+    <strong>Vector3:__tostring ()</strong>
+    </dt>
+    <dd>
+    Returns a Lua string representation of this vector.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector3:__unm"></a>
+    <strong>Vector3:__unm ()</strong>
+    </dt>
+    <dd>
+    Unary minus operation
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Constants"></a>Constants </h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Vector3.AXIS_X"></a>
+    <strong>Vector3.AXIS_X</strong>
+    </dt>
+    <dd>
+    Enumerated value for the X axis.
+
+
+    <ul>
+        <li><span class="parameter">AXIS_X</span>
+          0
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector3.AXIS_Y"></a>
+    <strong>Vector3.AXIS_Y</strong>
+    </dt>
+    <dd>
+    Enumerated value for the Y axis.
+
+
+    <ul>
+        <li><span class="parameter">AXIS_Y</span>
+          1
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector3.AXIS_Z"></a>
+    <strong>Vector3.AXIS_Z</strong>
+    </dt>
+    <dd>
+    Enumerated value for the Z axis.
+
+
+    <ul>
+        <li><span class="parameter">AXIS_Z</span>
+          2
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector3.BACK"></a>
+    <strong>Vector3.BACK</strong>
+    </dt>
+    <dd>
+    Back unit vector.  Represents the local direction of back, and the global direction of south.
+
+
+    <ul>
+        <li><span class="parameter">BACK</span>
+          Vector3(0, 0, 1)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector3.DOWN"></a>
+    <strong>Vector3.DOWN</strong>
+    </dt>
+    <dd>
+    Down unit vector.
+
+
+    <ul>
+        <li><span class="parameter">DOWN</span>
+          Vector3(0, -1, 0)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector3.FORWARD"></a>
+    <strong>Vector3.FORWARD</strong>
+    </dt>
+    <dd>
+    Forward unit vector.  Represents the local direction of forward, and the global direction of north.
+
+
+    <ul>
+        <li><span class="parameter">FORWARD</span>
+          Vector3(0, 0, -1)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector3.INF"></a>
+    <strong>Vector3.INF</strong>
+    </dt>
+    <dd>
+    Infinity vector, a vector with all components set to <code>inf</code>.
+
+
+    <ul>
+        <li><span class="parameter">INF</span>
+          Vector3(1 / 0)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector3.LEFT"></a>
+    <strong>Vector3.LEFT</strong>
+    </dt>
+    <dd>
+    Left unit vector.  Represents the local direction of left, and the global direction of west.
+
+
+    <ul>
+        <li><span class="parameter">LEFT</span>
+          Vector3(-1, 0, 0)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector3.ONE"></a>
+    <strong>Vector3.ONE</strong>
+    </dt>
+    <dd>
+    One vector, a vector with all components set to 1.
+
+
+    <ul>
+        <li><span class="parameter">ONE</span>
+          Vector3(1)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector3.RIGHT"></a>
+    <strong>Vector3.RIGHT</strong>
+    </dt>
+    <dd>
+    Right unit vector.  Right unit vector. Represents the local direction of right, and the global direction of east.
+
+
+    <ul>
+        <li><span class="parameter">RIGHT</span>
+          Vector3(1, 0, 0)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector3.UP"></a>
+    <strong>Vector3.UP</strong>
+    </dt>
+    <dd>
+    Up unit vector.
+
+
+    <ul>
+        <li><span class="parameter">UP</span>
+          Vector3(0, 1, 0)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector3.ZERO"></a>
+    <strong>Vector3.ZERO</strong>
+    </dt>
+    <dd>
+    Zero vector, a vector with all components set to 0.
+
+
+    <ul>
+        <li><span class="parameter">ZERO</span>
+          Vector3(0)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2021-09-07 13:06:11 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

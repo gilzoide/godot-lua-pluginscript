@@ -1,0 +1,349 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Godot Lua PluginScript</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Documentation">Documentation </a></li>
+<li><a href="#Installing">Installing </a></li>
+<li><a href="#Articles">Articles </a></li>
+<li><a href="#Goals">Goals </a></li>
+<li><a href="#Non_goals">Non-goals </a></li>
+<li><a href="#Script_example">Script example </a></li>
+<li><a href="#Status">Status </a></li>
+<li><a href="#Building">Building </a></li>
+<li><a href="#Third_party_software">Third-party software </a></li>
+<li><a href="#Other_projects_for_using_Lua_in_Godot">Other projects for using Lua in Godot </a></li>
+</ul>
+
+
+<h2>Topics</h2>
+<ul class="">
+  <li><strong>README</strong></li>
+</ul>
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/Enumerations.html">Enumerations</a></li>
+  <li><a href="../modules/GD.html">GD</a></li>
+  <li><a href="../modules/Globals.html">Globals</a></li>
+  <li><a href="../modules/OOP.html">OOP</a></li>
+  <li><a href="../modules/math_extras.html">math_extras</a></li>
+  <li><a href="../modules/package_extras.html">package_extras</a></li>
+  <li><a href="../modules/string_extras.html">string_extras</a></li>
+</ul>
+<h2>Scripts</h2>
+<ul class="nowrap">
+  <li><a href="../scripts/lps_coroutine.lua.html">lps_coroutine.lua</a></li>
+</ul>
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><a href="../classes/AABB.html">AABB</a></li>
+  <li><a href="../classes/Array.html">Array</a></li>
+  <li><a href="../classes/Basis.html">Basis</a></li>
+  <li><a href="../classes/Color.html">Color</a></li>
+  <li><a href="../classes/Dictionary.html">Dictionary</a></li>
+  <li><a href="../classes/NodePath.html">NodePath</a></li>
+  <li><a href="../classes/Object.html">Object</a></li>
+  <li><a href="../classes/Plane.html">Plane</a></li>
+  <li><a href="../classes/PoolByteArray.html">PoolByteArray</a></li>
+  <li><a href="../classes/PoolColorArray.html">PoolColorArray</a></li>
+  <li><a href="../classes/PoolIntArray.html">PoolIntArray</a></li>
+  <li><a href="../classes/PoolRealArray.html">PoolRealArray</a></li>
+  <li><a href="../classes/PoolStringArray.html">PoolStringArray</a></li>
+  <li><a href="../classes/PoolVector2Array.html">PoolVector2Array</a></li>
+  <li><a href="../classes/PoolVector3Array.html">PoolVector3Array</a></li>
+  <li><a href="../classes/Quat.html">Quat</a></li>
+  <li><a href="../classes/RID.html">RID</a></li>
+  <li><a href="../classes/Rect2.html">Rect2</a></li>
+  <li><a href="../classes/String.html">String</a></li>
+  <li><a href="../classes/StringName.html">StringName</a></li>
+  <li><a href="../classes/Transform.html">Transform</a></li>
+  <li><a href="../classes/Transform2D.html">Transform2D</a></li>
+  <li><a href="../classes/Variant.html">Variant</a></li>
+  <li><a href="../classes/Vector2.html">Vector2</a></li>
+  <li><a href="../classes/Vector3.html">Vector3</a></li>
+</ul>
+<h2>Examples</h2>
+<ul class="nowrap">
+  <li><a href="../examples/lua_repl.lua.html">lua_repl.lua</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+
+<h1>Godot Lua PluginScript</h1>
+
+<p>GDNative + PluginScript library that adds support for <a href="https://www.lua.org/">Lua</a>
+as a scripting language in <a href="https://godotengine.org/">Godot</a>.</p>
+
+<p>Being a GDNative library, recompiling the engine is not required, so anyone
+with a built release copied to their project can use it.
+Being a PluginScript language, Lua can seamlessly communicate with scripts
+written in GDScript/C#/Visual Script and vice-versa.</p>
+
+
+<p><a name="Documentation"></a></p>
+<h2>Documentation</h2>
+<p>The API is documented using <a href="https://stevedonovan.github.io/ldoc/manual/doc.md.html">LDoc</a>
+and is available online at <a href="https://gilzoide.github.io/godot-lua-pluginscript/topics/README.md.html">github pages</a>.</p>
+
+<p>Generate the documentation with the following command:</p>
+
+
+<pre>
+# make docs
+</pre>
+
+<p><a name="Installing"></a></p>
+<h2>Installing</h2>
+
+<p>Put a built release of the library into the project folder and restart Godot.
+Make sure the <code>lua_pluginscript.gdnlib</code> file is located at the
+<code>res://addons/godot-lua-pluginscript</code> folder.</p>
+
+
+<p><a name="Articles"></a></p>
+<h2>Articles</h2>
+
+<ol>
+    <li><a href="blog/1-design-en.md">Designing Godot Lua PluginScript</a></li>
+    <li><a href="blog/2-infrastructure-en.md">Implementing the library's skeleton</a></li>
+    <li><a href="blog/3-luajit-callbacks-en.md">Integrating LuaJIT and FFI</a></li>
+    <li>Initializing and finalizing scripts (TODO)</li>
+</ol>
+
+
+<p><a name="Goals"></a></p>
+<h2>Goals</h2>
+
+<ul>
+    <li>Provide support for Lua as a scripting language in Godot in a way that does
+    not require compiling the engine from scratch</li>
+    <li>Be able to seamlessly communicate with any other language supported by Godot,
+    like GDScript, Visual Script and C#, in an idiomatic way</li>
+    <li>Simple script description interface that doesn't need <a href="https://www.lua.org/manual/5.1/manual.html#pdf-require">require</a>ing anything</li>
+    <li>Support for LuaJIT and Lua 5.2+</li>
+    <li>Support paths relative to <code>res://*</code> and exported game executable path for
+    <a href="https://www.lua.org/manual/5.1/manual.html#pdf-require">require</a>ing Lua modules</li>
+    <li>Have a simple build process, where anyone with the cloned source code and
+    installed build system + toolchain can build the project in a single step</li>
+</ul>
+
+
+<p><a name="Non_goals"></a></p>
+<h2>Non-goals</h2>
+
+<ul>
+    <li>Provide calls to all core Godot classes' methods via native method bindings</li>
+    <li>Support multithreading on the Lua side</li>
+</ul>
+
+
+<p><a name="Script_example"></a></p>
+<h2>Script example</h2>
+
+<p>This is an example of how a Lua script looks like. There are comments regarding
+some design decisions, which may change during development.</p>
+
+
+<pre>
+<span class="comment">-- Class definitions are regular Lua tables, to be returned from the script
+</span><span class="keyword">local</span> MyClass = {}
+
+<span class="comment">-- Optional: set class as tool, defaults to false
+</span>MyClass.is_tool = <span class="keyword">true</span>
+
+<span class="comment">-- Optional: set base class by name, defaults to 'Reference'
+</span>MyClass.extends = <span class="string">'Node'</span>
+
+<span class="comment">-- Optional: give your class a name
+</span>MyClass.class_name = <span class="string">'MyClass'</span>
+
+<span class="comment">-- Declare signals
+</span>MyClass.something_happened = signal()
+MyClass.something_happened_with_args = signal(<span class="string">"arg1"</span>, <span class="string">"arg2"</span>)
+
+<span class="comment">-- Values defined in table are registered as properties of the class
+</span>MyClass.some_prop = <span class="number">42</span>
+
+<span class="comment">-- The <code>property</code> function adds metadata to defined properties,
+</span><span class="comment">-- like setter and getter functions
+</span>MyClass.some_prop_with_details = property {
+  <span class="comment">-- [1] or ["default"] or ["default_value"] = property default value
+</span>  <span class="number">5</span>,
+  <span class="comment">-- [2] or ["type"] = variant type, optional, inferred from default value
+</span>  <span class="comment">-- All Godot variant type names are defined globally as written in
+</span>  <span class="comment">-- GDScript, like bool, int, float, String, Array, Vector2, etc...
+</span>  <span class="comment">-- Notice that Lua &lt;= 5.2 does not differentiate integers from float
+</span>  <span class="comment">-- numbers, so we should always specify <code>int</code> where appropriate
+</span>  <span class="comment">-- or use <code>int(5)</code> in the default value instead
+</span>  <span class="global">type</span> = int,
+  <span class="comment">-- ["set"] or ["setter"] = setter function, optional
+</span>  set = <span class="keyword">function</span>(self, value)
+    self.some_prop_with_details = value
+    <span class="comment">-- Indexing <code>self</code> with keys undefined in script will search base
+</span>    <span class="comment">-- class for methods and properties
+</span>    self:emit_signal(<span class="string">"something_happened_with_args"</span>, <span class="string">"some_prop_with_details"</span>, value)
+  <span class="keyword">end</span>,
+  <span class="comment">-- ["get"] or ["getter"] = getter function, optional
+</span>  get = <span class="keyword">function</span>(self)
+    <span class="keyword">return</span> self.some_prop_with_details
+  <span class="keyword">end</span>,
+  <span class="comment">-- ["usage"] = property usage, from enum godot_property_usage_flags
+</span>  <span class="comment">-- optional, default to GD.PROPERTY_USAGE_DEFAULT
+</span>  usage = GD.PROPERTY_USAGE_DEFAULT,
+  <span class="comment">-- ["hint"] = property hint, from enum godot_property_hint
+</span>  <span class="comment">-- optional, default to GD.PROPERTY_HINT_NONE
+</span>  hint = GD.PROPERTY_HINT_RANGE,
+  <span class="comment">-- ["hint_string"] = property hint text, only required for some hints
+</span>  hint_string = <span class="string">'1,10'</span>,
+  <span class="comment">-- ["rset_mode"] = property remote set mode, from enum godot_method_rpc_mode
+</span>  <span class="comment">-- optional, default to GD.RPC_MODE_DISABLED
+</span>  rset_mode = GD.RPC_MODE_MASTER,
+}
+
+<span class="comment">-- Functions defined in table are public methods
+</span><span class="keyword">function</span> MyClass:_ready()  <span class="comment">-- <code>function t:f(...)</code> is an alias for <code>function t.f(self, ...)</code>
+</span>  <span class="comment">-- Singletons are available globally
+</span>  <span class="keyword">local</span> os_name = OS:get_name()
+  <span class="global">print</span>(<span class="string">"MyClass instance is ready! Running on a "</span> .. os_name .. <span class="string">" system"</span>)
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> MyClass:some_prop_doubled()
+  <span class="keyword">return</span> self.some_prop * <span class="number">2</span>
+<span class="keyword">end</span>
+
+<span class="comment">-- In the end, table with class declaration must be returned from script
+</span><span class="keyword">return</span> MyClass
+</pre>
+
+
+
+<p><a name="Status"></a></p>
+<h2>Status</h2>
+
+<ul>
+    <li>[X] LuaJIT support</li>
+    <li>[ ] Lua 5.2+ support</li>
+    <li>[X] Useful definitions for all GDNative objects, with methods and metamethods</li>
+    <li>[X] A <code>yield</code> function similar to GDScript's, to resume after a signal is
+    emitted (<a href="../modules/GD.html#yield">GD.yield</a>)</li>
+    <li>[X] Working PluginScript language definition</li>
+    <li>[X] PluginScript script validation and template source code</li>
+    <li>[ ] PluginScript code editor callbacks</li>
+    <li>[ ] PluginScript debug callbacks</li>
+    <li>[ ] PluginScript profiling callbacks</li>
+    <li>[X] Package searcher for Lua and C modules that work with paths relative to
+    the <code>res://</code> folder and/or exported games' executable path</li>
+    <li>[X] Lua REPL</li>
+    <li>[X] API documentation</li>
+    <li>[ ] Example projects</li>
+    <li>[ ] Export plugin to minify Lua scripts</li>
+    <li>[ ] Drop-in binary release in GitHub</li>
+    <li>[ ] Submit to Asset Library</li>
+</ul>
+
+
+<p><a name="Building"></a></p>
+<h2>Building</h2>
+
+<p>This project uses git submodules for its dependencies, so be sure to activate
+submodules before building.</p>
+
+
+<pre>
+# clone this repository <span class="keyword">and</span> activate submodules <span class="keyword">in</span> a single command
+git clone <span class="comment">--recurse-submodules https://github.com/gilzoide/godot-lua-pluginscript.git
+</span>
+# <span class="keyword">or</span> clone it normally <span class="keyword">and</span> <span class="keyword">then</span> activate submodules
+git clone https://github.com/gilzoide/godot-lua-pluginscript.git
+cd godot-lua-pluginscript
+git submodule init
+git submodule update
+</pre>
+
+
+<p>Build using <a href="https://www.gnu.org/software/make/">make</a> from project root,
+specifying the system as target:</p>
+
+
+<pre>
+# Choose one of the supported platforms, based on your operating system
+make windows64  # x86_64
+make windows32  # x86
+make linux64    # x86_64
+make linux32    # x86
+make osx64      # <span class="string">"universal"</span> multiarch x86_64 + amd64 dylib
+</pre>
+
+
+<p>The GDNativeLibrary file <code>lua_pluginscript.gdnlib</code> is already configured to use
+the built files stored in the <code>build</code> folder, so that one can use this
+repository directly inside a Godot project under the folder
+<code>addons/godot-lua-pluginscript</code>.</p>
+
+
+<p><a name="Third_party_software"></a></p>
+<h2>Third-party software</h2>
+
+<p>This project uses the following software:</p>
+
+<ul>
+    <li><a href="https://github.com/godotengine/godot-headers">godot-headers</a>: headers for
+    GDNative, released under the MIT license</li>
+    <li><a href="https://luajit.org/luajit.html">LuaJIT</a>: Just-In-Time Compiler (JIT) for the
+    Lua programming language, released under the MIT license</li>
+    <li><a href="https://github.com/gilzoide/high-level-gdnative">High Level GDNative (HGDN)</a>:
+    higher level GDNative API header, released to the Public Domain</li>
+</ul>
+
+
+<p><a name="Other_projects_for_using_Lua_in_Godot"></a></p>
+<h2>Other projects for using Lua in Godot</h2>
+
+<ul>
+    <li>https://github.com/perbone/luascript</li>
+    <li>https://github.com/Trey2k/lua</li>
+    <li>https://github.com/zozer/godot-lua-module</li>
+</ul>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2021-09-07 13:06:11 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

@@ -1,0 +1,325 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Godot Lua PluginScript</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+<li><a href="#Scalar_types">Scalar types </a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/Enumerations.html">Enumerations</a></li>
+  <li><a href="../modules/GD.html">GD</a></li>
+  <li><strong>Globals</strong></li>
+  <li><a href="../modules/OOP.html">OOP</a></li>
+  <li><a href="../modules/math_extras.html">math_extras</a></li>
+  <li><a href="../modules/package_extras.html">package_extras</a></li>
+  <li><a href="../modules/string_extras.html">string_extras</a></li>
+</ul>
+<h2>Scripts</h2>
+<ul class="nowrap">
+  <li><a href="../scripts/lps_coroutine.lua.html">lps_coroutine.lua</a></li>
+</ul>
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><a href="../classes/AABB.html">AABB</a></li>
+  <li><a href="../classes/Array.html">Array</a></li>
+  <li><a href="../classes/Basis.html">Basis</a></li>
+  <li><a href="../classes/Color.html">Color</a></li>
+  <li><a href="../classes/Dictionary.html">Dictionary</a></li>
+  <li><a href="../classes/NodePath.html">NodePath</a></li>
+  <li><a href="../classes/Object.html">Object</a></li>
+  <li><a href="../classes/Plane.html">Plane</a></li>
+  <li><a href="../classes/PoolByteArray.html">PoolByteArray</a></li>
+  <li><a href="../classes/PoolColorArray.html">PoolColorArray</a></li>
+  <li><a href="../classes/PoolIntArray.html">PoolIntArray</a></li>
+  <li><a href="../classes/PoolRealArray.html">PoolRealArray</a></li>
+  <li><a href="../classes/PoolStringArray.html">PoolStringArray</a></li>
+  <li><a href="../classes/PoolVector2Array.html">PoolVector2Array</a></li>
+  <li><a href="../classes/PoolVector3Array.html">PoolVector3Array</a></li>
+  <li><a href="../classes/Quat.html">Quat</a></li>
+  <li><a href="../classes/Rect2.html">Rect2</a></li>
+  <li><a href="../classes/RID.html">RID</a></li>
+  <li><a href="../classes/String.html">String</a></li>
+  <li><a href="../classes/StringName.html">StringName</a></li>
+  <li><a href="../classes/Transform.html">Transform</a></li>
+  <li><a href="../classes/Transform2D.html">Transform2D</a></li>
+  <li><a href="../classes/Variant.html">Variant</a></li>
+  <li><a href="../classes/Vector2.html">Vector2</a></li>
+  <li><a href="../classes/Vector3.html">Vector3</a></li>
+</ul>
+<h2>Topics</h2>
+<ul class="">
+  <li><a href="../topics/README.md.html">README</a></li>
+</ul>
+<h2>Examples</h2>
+<ul class="nowrap">
+  <li><a href="../examples/lua_repl.lua.html">lua_repl.lua</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>Globals</code></h1>
+<p>Extra global Lua functions and basic types</p>
+<p>
+
+</p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#_G:__index">_G:__index (key)</a></td>
+	<td class="summary">Search for singleton objects with <code>Engine:has_singleton(key)</code> and classes with
+ <code>ClassDB:class_exists(key)</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#print">print (...)</a></td>
+	<td class="summary">Alias for <a href="../modules/GD.html#print">GD.print</a></td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#setthreadfunc">setthreadfunc (thread, f)</a></td>
+	<td class="summary">Create or reuse a Lua thread (coroutine) with the given function/callable object</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#touserdata">touserdata (value)</a></td>
+	<td class="summary">Return <code>value</code> converted to light userdata with the return of <code>lua_topointer</code></td>
+	</tr>
+</table>
+<h2><a href="#Scalar_types">Scalar types </a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#bool">bool</a></td>
+	<td class="summary">Boolean type <code>godot_bool</code></td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#float">float</a></td>
+	<td class="summary">Float type <code>godot_real</code></td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#int">int</a></td>
+	<td class="summary">Integer type <code>godot_int</code></td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "_G:__index"></a>
+    <strong>_G:__index (key)</strong>
+    </dt>
+    <dd>
+    Search for singleton objects with <code>Engine:has_singleton(key)</code> and classes with
+ <code>ClassDB:class_exists(key)</code>.
+ Cache any values found, to avoid future calls.
+ Called when indexing the global table <code>_G</code> with a currently unknown key.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">key</span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Object.html#">Object</a></span>
+        Singleton object, if <code>Engine:has_singleton(key)</code>
+    </ol>
+     <h3>Or</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../modules/OOP.html#ClassWrapper">OOP.ClassWrapper</a></span>
+        Class wrapper, if <code>ClassDB:class_exists(key)</code>
+    </ol>
+     <h3>Or</h3>
+    <ol>
+
+           <span class="types"><span class="type">nil</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "print"></a>
+    <strong>print (...)</strong>
+    </dt>
+    <dd>
+    Alias for <a href="../modules/GD.html#print">GD.print</a>
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "setthreadfunc"></a>
+    <strong>setthreadfunc (thread, f)</strong>
+    </dt>
+    <dd>
+    Create or reuse a Lua thread (coroutine) with the given function/callable object
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">thread</span>
+            <span class="types"><span class="type">thread</span> or <span class="type">nil</span></span>
+          Thread to be reused. Pass <code>nil</code> to create a new one
+        </li>
+        <li><span class="parameter">f</span>
+            <span class="types"><span class="type">function</span>, <a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a> or <span class="type">userdata</span></span>
+          Function or other callable
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">thread</span></span>
+        Reused or created thread
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "touserdata"></a>
+    <strong>touserdata (value)</strong>
+    </dt>
+    <dd>
+    Return <code>value</code> converted to light userdata with the return of <code>lua_topointer</code>
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">value</span>
+          Value to be converted
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        Light userdata
+    </ol>
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Scalar_types"></a>Scalar types </h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "bool"></a>
+    <strong>bool</strong>
+    </dt>
+    <dd>
+    Boolean type <code>godot_bool</code>
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "float"></a>
+    <strong>float</strong>
+    </dt>
+    <dd>
+    Float type <code>godot_real</code>
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "int"></a>
+    <strong>int</strong>
+    </dt>
+    <dd>
+    Integer type <code>godot_int</code>
+
+
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2021-09-07 13:06:11 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

@@ -1,0 +1,1570 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Godot Lua PluginScript</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Methods">Methods</a></li>
+<li><a href="#Metamethods">Metamethods </a></li>
+</ul>
+
+
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><a href="../classes/AABB.html">AABB</a></li>
+  <li><a href="../classes/Array.html">Array</a></li>
+  <li><a href="../classes/Basis.html">Basis</a></li>
+  <li><a href="../classes/Color.html">Color</a></li>
+  <li><a href="../classes/Dictionary.html">Dictionary</a></li>
+  <li><a href="../classes/NodePath.html">NodePath</a></li>
+  <li><strong>Object</strong></li>
+  <li><a href="../classes/Plane.html">Plane</a></li>
+  <li><a href="../classes/PoolByteArray.html">PoolByteArray</a></li>
+  <li><a href="../classes/PoolColorArray.html">PoolColorArray</a></li>
+  <li><a href="../classes/PoolIntArray.html">PoolIntArray</a></li>
+  <li><a href="../classes/PoolRealArray.html">PoolRealArray</a></li>
+  <li><a href="../classes/PoolStringArray.html">PoolStringArray</a></li>
+  <li><a href="../classes/PoolVector2Array.html">PoolVector2Array</a></li>
+  <li><a href="../classes/PoolVector3Array.html">PoolVector3Array</a></li>
+  <li><a href="../classes/Quat.html">Quat</a></li>
+  <li><a href="../classes/RID.html">RID</a></li>
+  <li><a href="../classes/Rect2.html">Rect2</a></li>
+  <li><a href="../classes/String.html">String</a></li>
+  <li><a href="../classes/StringName.html">StringName</a></li>
+  <li><a href="../classes/Transform.html">Transform</a></li>
+  <li><a href="../classes/Transform2D.html">Transform2D</a></li>
+  <li><a href="../classes/Variant.html">Variant</a></li>
+  <li><a href="../classes/Vector2.html">Vector2</a></li>
+  <li><a href="../classes/Vector3.html">Vector3</a></li>
+</ul>
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/Enumerations.html">Enumerations</a></li>
+  <li><a href="../modules/GD.html">GD</a></li>
+  <li><a href="../modules/Globals.html">Globals</a></li>
+  <li><a href="../modules/OOP.html">OOP</a></li>
+  <li><a href="../modules/math_extras.html">math_extras</a></li>
+  <li><a href="../modules/package_extras.html">package_extras</a></li>
+  <li><a href="../modules/string_extras.html">string_extras</a></li>
+</ul>
+<h2>Scripts</h2>
+<ul class="nowrap">
+  <li><a href="../scripts/lps_coroutine.lua.html">lps_coroutine.lua</a></li>
+</ul>
+<h2>Topics</h2>
+<ul class="">
+  <li><a href="../topics/README.md.html">README</a></li>
+</ul>
+<h2>Examples</h2>
+<ul class="nowrap">
+  <li><a href="../examples/lua_repl.lua.html">lua_repl.lua</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Class <code>Object</code></h1>
+<p>Object metatype, wrapper for <code>godot_object</code>.</p>
+<p>
+
+</p>
+
+
+<h2><a href="#Methods">Methods</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Object:add_user_signal">Object:add_user_signal (signal[, arguments])</a></td>
+	<td class="summary">Adds a user-defined signal.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Object:call">Object:call (method, ...)</a></td>
+	<td class="summary">Calls the <code>method</code> on the Object and returns the result.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Object:call_deferred">Object:call_deferred (method, ...)</a></td>
+	<td class="summary">Calls the <code>method</code> on the Object during idle time.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Object:can_translate_messages">Object:can_translate_messages ()</a></td>
+	<td class="summary">Returns <code>true</code> if the Object can translate strings.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Object:connect">Object:connect (signal, target, method[, binds[, flags]])</a></td>
+	<td class="summary">Connects a <code>signal</code> to a <code>method</code> on a <code>target</code> Object.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Object:disconnect">Object:disconnect (signal, target, method)</a></td>
+	<td class="summary">Disconnects a <code>signal</code> from a <code>method</code> on the given <code>target</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Object:emit_signal">Object:emit_signal (signal, ...)</a></td>
+	<td class="summary">Emits the given signal.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Object:free">Object:free ()</a></td>
+	<td class="summary">Deletes the object from memory immediately.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Object:get">Object:get (property)</a></td>
+	<td class="summary">Returns the value of the given property.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Object:get_class">Object:get_class ()</a></td>
+	<td class="summary">Returns the Object's class name.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Object:get_incoming_connections">Object:get_incoming_connections ()</a></td>
+	<td class="summary">Returns an Array of Dictionaries with information about signals that are connected to the Object.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Object:get_indexed">Object:get_indexed (property)</a></td>
+	<td class="summary">Gets the Object's property indexed by the given NodePath.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Object:get_instance_id">Object:get_instance_id ()</a></td>
+	<td class="summary">Returns the Object's unique instance ID.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Object:get_meta_list">Object:get_meta_list ()</a></td>
+	<td class="summary">Returns the Object's metadata as a <a href="../classes/PoolStringArray.html#">PoolStringArray</a>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Object:get_method_list">Object:get_method_list ()</a></td>
+	<td class="summary">Returns the object's methods and their signatures as an <a href="../classes/Array.html#">Array</a>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Object:get_property_list">Object:get_property_list ()</a></td>
+	<td class="summary">Returns the Object's property list as an Array of Dictionaries.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Object:get_script">Object:get_script ()</a></td>
+	<td class="summary">Returns the object's Script instance, or <code>nil</code> if none is assigned.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Object:get_signal_connection_list">Object:get_signal_connection_list (signal)</a></td>
+	<td class="summary">Returns an <a href="../classes/Array.html#">Array</a> of connections for the given signal.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Object:get_signal_list">Object:get_signal_list ()</a></td>
+	<td class="summary">Returns the list of signals as an <a href="../classes/Array.html#">Array</a> of dictionaries.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Object:has_meta">Object:has_meta (name)</a></td>
+	<td class="summary">Returns <code>true</code> if a metadata entry is found with the given <code>name</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Object:has_method">Object:has_method (name)</a></td>
+	<td class="summary">Returns <code>true</code> if the Object contains a method with the given <code>name</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Object:has_signal">Object:has_signal (signal)</a></td>
+	<td class="summary">Returns <code>true</code> if the given <code>signal</code> exists.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Object:has_user_signal">Object:has_user_signal (signal)</a></td>
+	<td class="summary">Returns <code>true</code> if the given user-defined <code>signal</code> exists.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Object:is_blocking_signals">Object:is_blocking_signals ()</a></td>
+	<td class="summary">Returns <code>true</code> if signal emission blocking is enabled.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Object:is_class">Object:is_class (class)</a></td>
+	<td class="summary">Returns <code>true</code> if the Object inherits from the given <code>class</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Object:is_connected">Object:is_connected (signal, target, method)</a></td>
+	<td class="summary">Returns <code>true</code> if a connection exists for a given <code>signal</code>, <code>target</code>, and <code>method</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Object:is_instance_valid">Object:is_instance_valid ()</a></td>
+	<td class="summary">Check if an Object is a valid instance.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Object:is_queued_for_deletion">Object:is_queued_for_deletion ()</a></td>
+	<td class="summary">Returns <code>true</code> if the <code>Node.queue_free</code> method was called for the Object.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Object:notification">Object:notification (what[, reversed=false])</a></td>
+	<td class="summary">Send a given notification to the object, which will also trigger a call to the <code>_notification</code> method of all classes that the Object inherits from.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Object:pcall">Object:pcall (method, ...)</a></td>
+	<td class="summary">Calls the <code>method</code> on the Object and returns the result.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Object:property_list_changed_notify">Object:property_list_changed_notify ()</a></td>
+	<td class="summary">Notify the editor that the property list has changed, so that editor plugins can take the new values into account.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Object:remove_meta">Object:remove_meta (name)</a></td>
+	<td class="summary">Removes a given entry from the object's metadata.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Object:set">Object:set (property, value)</a></td>
+	<td class="summary">Assigns a new value to the given property.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Object:set_block_signals">Object:set_block_signals (enable)</a></td>
+	<td class="summary">If set to <code>true</code>, signal emission is blocked.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Object:set_deferred">Object:set_deferred (property, value)</a></td>
+	<td class="summary">Assigns a new value to the given property, after the current frame's physics step.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Object:set_indexed">Object:set_indexed (property, value)</a></td>
+	<td class="summary">Assigns a new value to the property identified by the NodePath.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Object:set_message_translation">Object:set_message_translation (enable)</a></td>
+	<td class="summary">Defines whether the Object can translate strings (with calls to <a href="../classes/Object.html#Object:tr">tr</a>).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Object:set_meta">Object:set_meta (name, value)</a></td>
+	<td class="summary">Adds, changes or removes a given entry in the Object's metadata.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Object:set_script">Object:set_script (script)</a></td>
+	<td class="summary">Assigns a script to the Object.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Object:to_string">Object:to_string ()</a></td>
+	<td class="summary">Returns a String representing the Object.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Object:tr">Object:tr (message)</a></td>
+	<td class="summary">Translates a message using translation catalogs configured in the Project Settings.</td>
+	</tr>
+</table>
+<h2><a href="#Metamethods">Metamethods </a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Object:__concat">Object:__concat (a, b)</a></td>
+	<td class="summary">Concatenates values.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Object:__index">Object:__index (key)</a></td>
+	<td class="summary">Returns a method binding if <code>key</code> is a method name, otherwise returns
+ <code>self:get(key)</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Object:__newindex">Object:__newindex (property, value)</a></td>
+	<td class="summary">Alias for <a href="../classes/Object.html#Object:set">set</a>, so that the idiom <code>object.property = value</code> sets a property.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Object:__tostring">Object:__tostring ()</a></td>
+	<td class="summary">Returns a Lua string representation of this Object, as per <a href="../classes/Object.html#Object:to_string">to_string</a>.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Methods"></a>Methods</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Object:add_user_signal"></a>
+    <strong>Object:add_user_signal (signal[, arguments])</strong>
+    </dt>
+    <dd>
+    Adds a user-defined signal.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">signal</span>
+          Signal name
+        </li>
+        <li><span class="parameter">arguments</span>
+          Array of Dictionaries, each containing name: String and type: int (see <a href="../classes/Variant.html#Variant.Type">Variant.Type</a>) entries.
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Object:call"></a>
+    <strong>Object:call (method, ...)</strong>
+    </dt>
+    <dd>
+    Calls the <code>method</code> on the Object and returns the result.
+ Fails silently if Object doesn't have a method named <code>method</code>.
+ Use <a href="../classes/Object.html#Object:pcall">pcall</a> instead if you want to know if <code>method</code> exists.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">method</span>
+          Method name
+        </li>
+        <li><span class="parameter">...</span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        Method result
+    </ol>
+     <h3>Or</h3>
+    <ol>
+
+           <span class="types"><span class="type">nil</span></span>
+        If method does not exist or errors
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Object.html#Object:pcall">pcall</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Object:call_deferred"></a>
+    <strong>Object:call_deferred (method, ...)</strong>
+    </dt>
+    <dd>
+    Calls the <code>method</code> on the Object during idle time.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">method</span>
+          Method name
+        </li>
+        <li><span class="parameter">...</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Object:can_translate_messages"></a>
+    <strong>Object:can_translate_messages ()</strong>
+    </dt>
+    <dd>
+    Returns <code>true</code> if the Object can translate strings.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <li><a href="../classes/Object.html#Object:set_message_translation">set_message_translation</a></li>
+         <li><a href="../classes/Object.html#Object:tr">tr</a></li>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Object:connect"></a>
+    <strong>Object:connect (signal, target, method[, binds[, flags]])</strong>
+    </dt>
+    <dd>
+    Connects a <code>signal</code> to a <code>method</code> on a <code>target</code> Object.
+ Parameters passed in <code>binds</code> will be passed to the method after any parameter used in the call to <a href="../classes/Object.html#Object:emit_signal">emit_signal</a>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">signal</span>
+          Signal name
+        </li>
+        <li><span class="parameter">target</span>
+          Target Object
+        </li>
+        <li><span class="parameter">method</span>
+          Method name
+        </li>
+        <li><span class="parameter">binds</span>
+            <span class="types"><a class="type" href="../classes/Array.html#">Array</a></span>
+
+
+
+         (<em>optional</em>)
+        </li>
+        <li><span class="parameter">flags</span>
+
+
+
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Error</span></span>
+
+
+
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <li><a href="../classes/Object.html#Object:disconnect">disconnect</a></li>
+         <li><a href="../classes/Object.html#Object:is_connected">is_connected</a></li>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Object:disconnect"></a>
+    <strong>Object:disconnect (signal, target, method)</strong>
+    </dt>
+    <dd>
+    Disconnects a <code>signal</code> from a <code>method</code> on the given <code>target</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">signal</span>
+          Signal name
+        </li>
+        <li><span class="parameter">target</span>
+          Target Object
+        </li>
+        <li><span class="parameter">method</span>
+          Method name
+        </li>
+    </ul>
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <li><a href="../classes/Object.html#Object:connect">connect</a></li>
+         <li><a href="../classes/Object.html#Object:is_connected">is_connected</a></li>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Object:emit_signal"></a>
+    <strong>Object:emit_signal (signal, ...)</strong>
+    </dt>
+    <dd>
+    Emits the given signal.
+ The signal must exist.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">signal</span>
+          Signal name
+        </li>
+        <li><span class="parameter">...</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Object:free"></a>
+    <strong>Object:free ()</strong>
+    </dt>
+    <dd>
+    Deletes the object from memory immediately.
+ For Nodes, you may want to use <code>Node.queue_free</code> to queue the node for safe deletion at the end of the current frame.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Object:get"></a>
+    <strong>Object:get (property)</strong>
+    </dt>
+    <dd>
+    Returns the value of the given property.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">property</span>
+          Property name
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        Property value, if it exists
+    </ol>
+     <h3>Or</h3>
+    <ol>
+
+           <span class="types"><span class="type">nil</span></span>
+        If property does not exist
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Object:get_class"></a>
+    <strong>Object:get_class ()</strong>
+    </dt>
+    <dd>
+    Returns the Object's class name.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Object:get_incoming_connections"></a>
+    <strong>Object:get_incoming_connections ()</strong>
+    </dt>
+    <dd>
+
+<p>Returns an Array of Dictionaries with information about signals that are connected to the Object.
+ Each Dictionary contains three String entries:</p>
+
+<ul>
+    <li><code>source</code> is a reference to the signal emitter.</li>
+    <li><code>signal_name</code> is the name of the connected signal.</li>
+    <li><code>method_name</code> is the name of the method to which the signal is connected.</li>
+</ul>
+
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Array.html#">Array</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Object:get_indexed"></a>
+    <strong>Object:get_indexed (property)</strong>
+    </dt>
+    <dd>
+    Gets the Object's property indexed by the given NodePath.
+ The node path should be relative to the current object and can use the colon character (<code>:</code>) to access nested properties.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">property</span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        Property value
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Object:get_instance_id"></a>
+    <strong>Object:get_instance_id ()</strong>
+    </dt>
+    <dd>
+    Returns the Object's unique instance ID.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">int</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Object:get_meta_list"></a>
+    <strong>Object:get_meta_list ()</strong>
+    </dt>
+    <dd>
+    Returns the Object's metadata as a <a href="../classes/PoolStringArray.html#">PoolStringArray</a>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/PoolStringArray.html#">PoolStringArray</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Object:get_method_list"></a>
+    <strong>Object:get_method_list ()</strong>
+    </dt>
+    <dd>
+    Returns the object's methods and their signatures as an <a href="../classes/Array.html#">Array</a>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Array.html#">Array</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Object:get_property_list"></a>
+    <strong>Object:get_property_list ()</strong>
+    </dt>
+    <dd>
+    Returns the Object's property list as an Array of Dictionaries.
+ Each property's Dictionary contain at least <code>name: String</code> and <code>type: int</code> (see <a href="../classes/Variant.html#Variant.Type">Variant.Type</a>) entries.
+ Optionally, it can also include <code>hint: int</code> (see PropertyHint), <code>hint_string: String</code>, and <code>usage: int</code> (see PropertyUsageFlags).
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Array.html#">Array</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Object:get_script"></a>
+    <strong>Object:get_script ()</strong>
+    </dt>
+    <dd>
+    Returns the object's Script instance, or <code>nil</code> if none is assigned.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Object.html#">Object</a> or <span class="type">nil</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Object:get_signal_connection_list"></a>
+    <strong>Object:get_signal_connection_list (signal)</strong>
+    </dt>
+    <dd>
+    Returns an <a href="../classes/Array.html#">Array</a> of connections for the given signal.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">signal</span>
+          Signal name
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Array.html#">Array</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Object:get_signal_list"></a>
+    <strong>Object:get_signal_list ()</strong>
+    </dt>
+    <dd>
+    Returns the list of signals as an <a href="../classes/Array.html#">Array</a> of dictionaries.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Array.html#">Array</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Object:has_meta"></a>
+    <strong>Object:has_meta (name)</strong>
+    </dt>
+    <dd>
+    Returns <code>true</code> if a metadata entry is found with the given <code>name</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">name</span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Object:has_method"></a>
+    <strong>Object:has_method (name)</strong>
+    </dt>
+    <dd>
+    Returns <code>true</code> if the Object contains a method with the given <code>name</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">name</span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Object:has_signal"></a>
+    <strong>Object:has_signal (signal)</strong>
+    </dt>
+    <dd>
+    Returns <code>true</code> if the given <code>signal</code> exists.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">signal</span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Object:has_user_signal"></a>
+    <strong>Object:has_user_signal (signal)</strong>
+    </dt>
+    <dd>
+    Returns <code>true</code> if the given user-defined <code>signal</code> exists.
+ Only signals added using <a href="../classes/Object.html#Object:add_user_signal">add_user_signal</a> are taken into account.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">signal</span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Object:is_blocking_signals"></a>
+    <strong>Object:is_blocking_signals ()</strong>
+    </dt>
+    <dd>
+    Returns <code>true</code> if signal emission blocking is enabled.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Object.html#Object:set_block_signals">set_block_signals</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Object:is_class"></a>
+    <strong>Object:is_class (class)</strong>
+    </dt>
+    <dd>
+    Returns <code>true</code> if the Object inherits from the given <code>class</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">class</span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Object:is_connected"></a>
+    <strong>Object:is_connected (signal, target, method)</strong>
+    </dt>
+    <dd>
+    Returns <code>true</code> if a connection exists for a given <code>signal</code>, <code>target</code>, and <code>method</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">signal</span>
+          Signal name
+        </li>
+        <li><span class="parameter">target</span>
+          Target Object
+        </li>
+        <li><span class="parameter">method</span>
+          Method name
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <li><a href="../classes/Object.html#Object:connect">connect</a></li>
+         <li><a href="../classes/Object.html#Object:disconnect">disconnect</a></li>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Object:is_instance_valid"></a>
+    <strong>Object:is_instance_valid ()</strong>
+    </dt>
+    <dd>
+    Check if an Object is a valid instance.
+ Can also be called as <code>Object.is_instance_valid(some_object_or_nil)</code>
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Object:is_queued_for_deletion"></a>
+    <strong>Object:is_queued_for_deletion ()</strong>
+    </dt>
+    <dd>
+    Returns <code>true</code> if the <code>Node.queue_free</code> method was called for the Object.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Object:notification"></a>
+    <strong>Object:notification (what[, reversed=false])</strong>
+    </dt>
+    <dd>
+    Send a given notification to the object, which will also trigger a call to the <code>_notification</code> method of all classes that the Object inherits from.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">what</span>
+
+
+
+        </li>
+        <li><span class="parameter">reversed</span>
+
+
+
+         (<em>default</em> false)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Object:pcall"></a>
+    <strong>Object:pcall (method, ...)</strong>
+    </dt>
+    <dd>
+    Calls the <code>method</code> on the Object and returns the result.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">method</span>
+          Method name
+        </li>
+        <li><span class="parameter">...</span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+           <span class="types"><span class="type">bool</span></span>
+        <code>true</code> if method exists</li>
+        <li>
+        Method result</li>
+    </ol>
+     <h3>Or</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        <code>false</code> if method does not exist
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Object.html#Object:call">call</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Object:property_list_changed_notify"></a>
+    <strong>Object:property_list_changed_notify ()</strong>
+    </dt>
+    <dd>
+    Notify the editor that the property list has changed, so that editor plugins can take the new values into account.
+ Does nothing on export builds.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Object:remove_meta"></a>
+    <strong>Object:remove_meta (name)</strong>
+    </dt>
+    <dd>
+    Removes a given entry from the object's metadata.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">name</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Object.html#Object:set_meta">set_meta</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Object:set"></a>
+    <strong>Object:set (property, value)</strong>
+    </dt>
+    <dd>
+    Assigns a new value to the given property.
+ If the <code>property</code> does not exist, nothing will happen.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">property</span>
+
+
+
+        </li>
+        <li><span class="parameter">value</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Object:set_block_signals"></a>
+    <strong>Object:set_block_signals (enable)</strong>
+    </dt>
+    <dd>
+    If set to <code>true</code>, signal emission is blocked.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">enable</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Object:set_deferred"></a>
+    <strong>Object:set_deferred (property, value)</strong>
+    </dt>
+    <dd>
+    Assigns a new value to the given property, after the current frame's physics step.
+ This is equivalent to calling set via <a href="../classes/Object.html#Object:call_deferred">call_deferred</a>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">property</span>
+
+
+
+        </li>
+        <li><span class="parameter">value</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Object:set_indexed"></a>
+    <strong>Object:set_indexed (property, value)</strong>
+    </dt>
+    <dd>
+    Assigns a new value to the property identified by the NodePath.
+ The node path should be relative to the current object and can use the colon character (<code>:</code>) to access nested properties.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">property</span>
+
+
+
+        </li>
+        <li><span class="parameter">value</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Object:set_message_translation"></a>
+    <strong>Object:set_message_translation (enable)</strong>
+    </dt>
+    <dd>
+    Defines whether the Object can translate strings (with calls to <a href="../classes/Object.html#Object:tr">tr</a>).
+ Enabled by default.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">enable</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Object.html#Object:tr">tr</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Object:set_meta"></a>
+    <strong>Object:set_meta (name, value)</strong>
+    </dt>
+    <dd>
+    Adds, changes or removes a given entry in the Object's metadata.
+ If <code>value</code> is set to <code>nil</code>, metadata for <code>name</code> is removed.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">name</span>
+
+
+
+        </li>
+        <li><span class="parameter">value</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Object:set_script"></a>
+    <strong>Object:set_script (script)</strong>
+    </dt>
+    <dd>
+    Assigns a script to the Object.
+ If the Object already had a script, the previous script instance will be freed and its variables and state will be lost.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">script</span>
+            <span class="types"><a class="type" href="../classes/Object.html#">Object</a> or <span class="type">nil</span></span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Object:to_string"></a>
+    <strong>Object:to_string ()</strong>
+    </dt>
+    <dd>
+    Returns a String representing the Object.
+ Override the method <code>_to_string</code> to customize the <a href="../classes/String.html#">String</a> representation.
+ If not overridden, defaults to <code>&quot;[ClassName:RID]&quot;</code>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Object:tr"></a>
+    <strong>Object:tr (message)</strong>
+    </dt>
+    <dd>
+    Translates a message using translation catalogs configured in the Project Settings.
+ Only works if message translation is enabled (which it is by default), otherwise it returns the <code>message</code> unchanged.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">message</span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Object.html#Object:set_message_translation">set_message_translation</a>
+    </ul>
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Metamethods"></a>Metamethods </h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Object:__concat"></a>
+    <strong>Object:__concat (a, b)</strong>
+    </dt>
+    <dd>
+    Concatenates values.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+          First value, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+        <li><span class="parameter">b</span>
+          First value, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Object:__index"></a>
+    <strong>Object:__index (key)</strong>
+    </dt>
+    <dd>
+    Returns a method binding if <code>key</code> is a method name, otherwise returns
+ <code>self:get(key)</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">key</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../modules/OOP.html#MethodBindByName">OOP.MethodBindByName</a></span>
+        If <code>self:has_method(key)</code>
+    </ol>
+     <h3>Or</h3>
+    <ol>
+
+        Result from <code>self:get(key)</code>
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <li><a href="../classes/Object.html#Object:get">get</a></li>
+         <li><a href="../classes/Object.html#Object:has_method">has_method</a></li>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Object:__newindex"></a>
+    <strong>Object:__newindex (property, value)</strong>
+    </dt>
+    <dd>
+    Alias for <a href="../classes/Object.html#Object:set">set</a>, so that the idiom <code>object.property = value</code> sets a property.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">property</span>
+
+
+
+        </li>
+        <li><span class="parameter">value</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Object.html#Object:set">set</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Object:__tostring"></a>
+    <strong>Object:__tostring ()</strong>
+    </dt>
+    <dd>
+    Returns a Lua string representation of this Object, as per <a href="../classes/Object.html#Object:to_string">to_string</a>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2021-09-07 13:06:11 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

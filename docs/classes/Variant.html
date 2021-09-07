@@ -1,0 +1,1257 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Godot Lua PluginScript</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Tables">Tables</a></li>
+<li><a href="#Methods">Methods</a></li>
+<li><a href="#Metamethods">Metamethods </a></li>
+</ul>
+
+
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><a href="../classes/AABB.html">AABB</a></li>
+  <li><a href="../classes/Array.html">Array</a></li>
+  <li><a href="../classes/Basis.html">Basis</a></li>
+  <li><a href="../classes/Color.html">Color</a></li>
+  <li><a href="../classes/Dictionary.html">Dictionary</a></li>
+  <li><a href="../classes/NodePath.html">NodePath</a></li>
+  <li><a href="../classes/Object.html">Object</a></li>
+  <li><a href="../classes/Plane.html">Plane</a></li>
+  <li><a href="../classes/PoolByteArray.html">PoolByteArray</a></li>
+  <li><a href="../classes/PoolColorArray.html">PoolColorArray</a></li>
+  <li><a href="../classes/PoolIntArray.html">PoolIntArray</a></li>
+  <li><a href="../classes/PoolRealArray.html">PoolRealArray</a></li>
+  <li><a href="../classes/PoolStringArray.html">PoolStringArray</a></li>
+  <li><a href="../classes/PoolVector2Array.html">PoolVector2Array</a></li>
+  <li><a href="../classes/PoolVector3Array.html">PoolVector3Array</a></li>
+  <li><a href="../classes/Quat.html">Quat</a></li>
+  <li><a href="../classes/RID.html">RID</a></li>
+  <li><a href="../classes/Rect2.html">Rect2</a></li>
+  <li><a href="../classes/String.html">String</a></li>
+  <li><a href="../classes/StringName.html">StringName</a></li>
+  <li><a href="../classes/Transform.html">Transform</a></li>
+  <li><a href="../classes/Transform2D.html">Transform2D</a></li>
+  <li><strong>Variant</strong></li>
+  <li><a href="../classes/Vector2.html">Vector2</a></li>
+  <li><a href="../classes/Vector3.html">Vector3</a></li>
+</ul>
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/Enumerations.html">Enumerations</a></li>
+  <li><a href="../modules/GD.html">GD</a></li>
+  <li><a href="../modules/Globals.html">Globals</a></li>
+  <li><a href="../modules/OOP.html">OOP</a></li>
+  <li><a href="../modules/math_extras.html">math_extras</a></li>
+  <li><a href="../modules/package_extras.html">package_extras</a></li>
+  <li><a href="../modules/string_extras.html">string_extras</a></li>
+</ul>
+<h2>Scripts</h2>
+<ul class="nowrap">
+  <li><a href="../scripts/lps_coroutine.lua.html">lps_coroutine.lua</a></li>
+</ul>
+<h2>Topics</h2>
+<ul class="">
+  <li><a href="../topics/README.md.html">README</a></li>
+</ul>
+<h2>Examples</h2>
+<ul class="nowrap">
+  <li><a href="../examples/lua_repl.lua.html">lua_repl.lua</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Class <code>Variant</code></h1>
+<p>Variant metatype, wrapper for <code>godot_variant</code>.</p>
+<p> Useful for interfacing directly with the GDNative API.
+ Construct using the idiom <code>Variant(value)</code>, which calls <a href="../classes/Variant.html#Variant:__new">__new</a>.</p>
+
+
+<h2><a href="#Tables">Tables</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Variant.Type">Variant.Type</a></td>
+	<td class="summary">Alias for <a href="../modules/GD.html#VariantType">GD.VariantType</a></td>
+	</tr>
+</table>
+<h2><a href="#Methods">Methods</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Variant:as_aabb">Variant:as_aabb ()</a></td>
+	<td class="summary">Return the Variant as an <a href="../classes/AABB.html#">AABB</a>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Variant:as_array">Variant:as_array ()</a></td>
+	<td class="summary">Return the Variant as a <a href="../classes/Array.html#">Array</a>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Variant:as_basis">Variant:as_basis ()</a></td>
+	<td class="summary">Return the Variant as a <a href="../classes/Basis.html#">Basis</a>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Variant:as_bool">Variant:as_bool ()</a></td>
+	<td class="summary">Return the Variant as a boolean.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Variant:as_color">Variant:as_color ()</a></td>
+	<td class="summary">Return the Variant as a <a href="../classes/Color.html#">Color</a>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Variant:as_dictionary">Variant:as_dictionary ()</a></td>
+	<td class="summary">Return the Variant as a <a href="../classes/Dictionary.html#">Dictionary</a>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Variant:as_int">Variant:as_int ()</a></td>
+	<td class="summary">Return the Variant as an integer.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Variant:as_node_path">Variant:as_node_path ()</a></td>
+	<td class="summary">Return the Variant as a <a href="../classes/NodePath.html#">NodePath</a>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Variant:as_object">Variant:as_object ()</a></td>
+	<td class="summary">Return the Variant as an <a href="../classes/Object.html#">Object</a>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Variant:as_plane">Variant:as_plane ()</a></td>
+	<td class="summary">Return the Variant as a <a href="../classes/Plane.html#">Plane</a>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Variant:as_pool_byte_array">Variant:as_pool_byte_array ()</a></td>
+	<td class="summary">Return the Variant as a <a href="../classes/PoolByteArray.html#">PoolByteArray</a>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Variant:as_pool_color_array">Variant:as_pool_color_array ()</a></td>
+	<td class="summary">Return the Variant as a <a href="../classes/PoolColorArray.html#">PoolColorArray</a>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Variant:as_pool_int_array">Variant:as_pool_int_array ()</a></td>
+	<td class="summary">Return the Variant as a <a href="../classes/PoolIntArray.html#">PoolIntArray</a>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Variant:as_pool_real_array">Variant:as_pool_real_array ()</a></td>
+	<td class="summary">Return the Variant as a <a href="../classes/PoolRealArray.html#">PoolRealArray</a>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Variant:as_pool_string_array">Variant:as_pool_string_array ()</a></td>
+	<td class="summary">Return the Variant as a <a href="../classes/PoolStringArray.html#">PoolStringArray</a>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Variant:as_pool_vector2_array">Variant:as_pool_vector2_array ()</a></td>
+	<td class="summary">Return the Variant as a <a href="../classes/PoolVector2Array.html#">PoolVector2Array</a>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Variant:as_pool_vector3_array">Variant:as_pool_vector3_array ()</a></td>
+	<td class="summary">Return the Variant as a <a href="../classes/PoolVector3Array.html#">PoolVector3Array</a>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Variant:as_quat">Variant:as_quat ()</a></td>
+	<td class="summary">Return the Variant as a <a href="../classes/Quat.html#">Quat</a>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Variant:as_real">Variant:as_real ()</a></td>
+	<td class="summary">Return the Variant as an number.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Variant:as_rect2">Variant:as_rect2 ()</a></td>
+	<td class="summary">Return the Variant as a <a href="../classes/Rect2.html#">Rect2</a>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Variant:as_rid">Variant:as_rid ()</a></td>
+	<td class="summary">Return the Variant as a <a href="../classes/RID.html#">RID</a>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Variant:as_string">Variant:as_string ()</a></td>
+	<td class="summary">Return the Variant as a <a href="../classes/String.html#">String</a>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Variant:as_transform">Variant:as_transform ()</a></td>
+	<td class="summary">Return the Variant as a <a href="../classes/Transform.html#">Transform</a>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Variant:as_transform2d">Variant:as_transform2d ()</a></td>
+	<td class="summary">Return the Variant as a <a href="../classes/Transform2D.html#">Transform2D</a>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Variant:as_uint">Variant:as_uint ()</a></td>
+	<td class="summary">Return the Variant as an unsigned integer.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Variant:as_vector2">Variant:as_vector2 ()</a></td>
+	<td class="summary">Return the Variant as a <a href="../classes/Vector2.html#">Vector2</a>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Variant:as_vector3">Variant:as_vector3 ()</a></td>
+	<td class="summary">Return the Variant as a <a href="../classes/Vector3.html#">Vector3</a>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Variant:call">Variant:call (method, ...)</a></td>
+	<td class="summary">Try calling method with the passed name and arguments.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Variant:get_type">Variant:get_type ()</a></td>
+	<td class="summary">Returns the Variant type enum value (<code>enum godot_variant_type</code>).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Variant:get_type_name">Variant:get_type_name ()</a></td>
+	<td class="summary">Returns the Variant type name.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Variant:has_method">Variant:has_method (method)</a></td>
+	<td class="summary">Returns <code>true</code> if Variant has method <code>method</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Variant:hash_compare">Variant:hash_compare (other)</a></td>
+	<td class="summary">Returns <code>true</code> if Variant's hash is equal to <code>other</code>'s.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Variant:pcall">Variant:pcall (method, ...)</a></td>
+	<td class="summary">Try calling method with the passed name and arguments.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Variant:unbox">Variant:unbox ()</a></td>
+	<td class="summary">Unbox a Variant, returning the corresponding Lua object.</td>
+	</tr>
+</table>
+<h2><a href="#Metamethods">Metamethods </a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Variant:__concat">Variant:__concat (a, b)</a></td>
+	<td class="summary">Concatenates values.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Variant:__eq">Variant:__eq (a, b)</a></td>
+	<td class="summary">Equality comparison (<code>a == b</code>).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Variant:__eq">Variant:__eq (a, b)</a></td>
+	<td class="summary">Less than comparison (<code>a &lt; b</code>).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Variant:__new">Variant:__new (value)</a></td>
+	<td class="summary">Variant constructor, called by the idiom <code>Variant(value)</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Variant:__tostring">Variant:__tostring ()</a></td>
+	<td class="summary">Returns a Lua <a href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> from the result of <a href="../classes/Variant.html#Variant:as_string">as_string</a>.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Tables"></a>Tables</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Variant.Type"></a>
+    <strong>Variant.Type</strong>
+    </dt>
+    <dd>
+    Alias for <a href="../modules/GD.html#VariantType">GD.VariantType</a>
+
+
+
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Methods"></a>Methods</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Variant:as_aabb"></a>
+    <strong>Variant:as_aabb ()</strong>
+    </dt>
+    <dd>
+    Return the Variant as an <a href="../classes/AABB.html#">AABB</a>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/AABB.html#">AABB</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Variant:as_array"></a>
+    <strong>Variant:as_array ()</strong>
+    </dt>
+    <dd>
+    Return the Variant as a <a href="../classes/Array.html#">Array</a>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Array.html#">Array</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Variant:as_basis"></a>
+    <strong>Variant:as_basis ()</strong>
+    </dt>
+    <dd>
+    Return the Variant as a <a href="../classes/Basis.html#">Basis</a>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Basis.html#">Basis</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Variant:as_bool"></a>
+    <strong>Variant:as_bool ()</strong>
+    </dt>
+    <dd>
+    Return the Variant as a boolean.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Variant:as_color"></a>
+    <strong>Variant:as_color ()</strong>
+    </dt>
+    <dd>
+    Return the Variant as a <a href="../classes/Color.html#">Color</a>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Color.html#">Color</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Variant:as_dictionary"></a>
+    <strong>Variant:as_dictionary ()</strong>
+    </dt>
+    <dd>
+    Return the Variant as a <a href="../classes/Dictionary.html#">Dictionary</a>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Dictionary.html#">Dictionary</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Variant:as_int"></a>
+    <strong>Variant:as_int ()</strong>
+    </dt>
+    <dd>
+    Return the Variant as an integer.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">int64_t</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Variant:as_node_path"></a>
+    <strong>Variant:as_node_path ()</strong>
+    </dt>
+    <dd>
+    Return the Variant as a <a href="../classes/NodePath.html#">NodePath</a>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/NodePath.html#">NodePath</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Variant:as_object"></a>
+    <strong>Variant:as_object ()</strong>
+    </dt>
+    <dd>
+    Return the Variant as an <a href="../classes/Object.html#">Object</a>.
+ If object is a Reference, it is automatically referenced and marked for unreferencing upon garbage-collection.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Object.html#">Object</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Variant:as_plane"></a>
+    <strong>Variant:as_plane ()</strong>
+    </dt>
+    <dd>
+    Return the Variant as a <a href="../classes/Plane.html#">Plane</a>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Plane.html#">Plane</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Variant:as_pool_byte_array"></a>
+    <strong>Variant:as_pool_byte_array ()</strong>
+    </dt>
+    <dd>
+    Return the Variant as a <a href="../classes/PoolByteArray.html#">PoolByteArray</a>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/PoolByteArray.html#">PoolByteArray</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Variant:as_pool_color_array"></a>
+    <strong>Variant:as_pool_color_array ()</strong>
+    </dt>
+    <dd>
+    Return the Variant as a <a href="../classes/PoolColorArray.html#">PoolColorArray</a>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/PoolColorArray.html#">PoolColorArray</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Variant:as_pool_int_array"></a>
+    <strong>Variant:as_pool_int_array ()</strong>
+    </dt>
+    <dd>
+    Return the Variant as a <a href="../classes/PoolIntArray.html#">PoolIntArray</a>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/PoolIntArray.html#">PoolIntArray</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Variant:as_pool_real_array"></a>
+    <strong>Variant:as_pool_real_array ()</strong>
+    </dt>
+    <dd>
+    Return the Variant as a <a href="../classes/PoolRealArray.html#">PoolRealArray</a>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/PoolRealArray.html#">PoolRealArray</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Variant:as_pool_string_array"></a>
+    <strong>Variant:as_pool_string_array ()</strong>
+    </dt>
+    <dd>
+    Return the Variant as a <a href="../classes/PoolStringArray.html#">PoolStringArray</a>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/PoolStringArray.html#">PoolStringArray</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Variant:as_pool_vector2_array"></a>
+    <strong>Variant:as_pool_vector2_array ()</strong>
+    </dt>
+    <dd>
+    Return the Variant as a <a href="../classes/PoolVector2Array.html#">PoolVector2Array</a>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/PoolVector2Array.html#">PoolVector2Array</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Variant:as_pool_vector3_array"></a>
+    <strong>Variant:as_pool_vector3_array ()</strong>
+    </dt>
+    <dd>
+    Return the Variant as a <a href="../classes/PoolVector3Array.html#">PoolVector3Array</a>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/PoolVector3Array.html#">PoolVector3Array</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Variant:as_quat"></a>
+    <strong>Variant:as_quat ()</strong>
+    </dt>
+    <dd>
+    Return the Variant as a <a href="../classes/Quat.html#">Quat</a>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Quat.html#">Quat</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Variant:as_real"></a>
+    <strong>Variant:as_real ()</strong>
+    </dt>
+    <dd>
+    Return the Variant as an number.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Variant:as_rect2"></a>
+    <strong>Variant:as_rect2 ()</strong>
+    </dt>
+    <dd>
+    Return the Variant as a <a href="../classes/Rect2.html#">Rect2</a>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Rect2.html#">Rect2</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Variant:as_rid"></a>
+    <strong>Variant:as_rid ()</strong>
+    </dt>
+    <dd>
+    Return the Variant as a <a href="../classes/RID.html#">RID</a>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/RID.html#">RID</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Variant:as_string"></a>
+    <strong>Variant:as_string ()</strong>
+    </dt>
+    <dd>
+    Return the Variant as a <a href="../classes/String.html#">String</a>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Variant:as_transform"></a>
+    <strong>Variant:as_transform ()</strong>
+    </dt>
+    <dd>
+    Return the Variant as a <a href="../classes/Transform.html#">Transform</a>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Transform.html#">Transform</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Variant:as_transform2d"></a>
+    <strong>Variant:as_transform2d ()</strong>
+    </dt>
+    <dd>
+    Return the Variant as a <a href="../classes/Transform2D.html#">Transform2D</a>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Transform2D.html#">Transform2D</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Variant:as_uint"></a>
+    <strong>Variant:as_uint ()</strong>
+    </dt>
+    <dd>
+    Return the Variant as an unsigned integer.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">uint64_t</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Variant:as_vector2"></a>
+    <strong>Variant:as_vector2 ()</strong>
+    </dt>
+    <dd>
+    Return the Variant as a <a href="../classes/Vector2.html#">Vector2</a>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector2.html#">Vector2</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Variant:as_vector3"></a>
+    <strong>Variant:as_vector3 ()</strong>
+    </dt>
+    <dd>
+    Return the Variant as a <a href="../classes/Vector3.html#">Vector3</a>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Vector3.html#">Vector3</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Variant:call"></a>
+    <strong>Variant:call (method, ...)</strong>
+    </dt>
+    <dd>
+    Try calling method with the passed name and arguments.
+ Fails silently if call errors.
+ Use <a href="../classes/Variant.html#Variant:pcall">pcall</a> instead if you need to know if the call succeeded.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">method</span>
+          Method name, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+        <li><span class="parameter">...</span>
+          Arguments passed to method
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        Method call result
+    </ol>
+     <h3>Or</h3>
+    <ol>
+
+           <span class="types"><span class="type">nil</span></span>
+        If call failed
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Variant.html#Variant:pcall">pcall</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Variant:get_type"></a>
+    <strong>Variant:get_type ()</strong>
+    </dt>
+    <dd>
+    Returns the Variant type enum value (<code>enum godot_variant_type</code>).
+ Use <a href="../classes/Variant.html#Variant:get_type_name">get_type_name</a> or <a href="../classes/Variant.html#Variant.Type">Variant.Type</a> to get the type name.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">int</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Variant:get_type_name"></a>
+    <strong>Variant:get_type_name ()</strong>
+    </dt>
+    <dd>
+    Returns the Variant type name.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Variant:has_method"></a>
+    <strong>Variant:has_method (method)</strong>
+    </dt>
+    <dd>
+    Returns <code>true</code> if Variant has method <code>method</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">method</span>
+          Method name, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Variant:hash_compare"></a>
+    <strong>Variant:hash_compare (other)</strong>
+    </dt>
+    <dd>
+    Returns <code>true</code> if Variant's hash is equal to <code>other</code>'s.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">other</span>
+          Other value, boxed by <a href="../classes/Variant.html#Variant:__new">__new</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Variant:pcall"></a>
+    <strong>Variant:pcall (method, ...)</strong>
+    </dt>
+    <dd>
+    Try calling method with the passed name and arguments.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">method</span>
+          Method name, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+        <li><span class="parameter">...</span>
+          Arguments passed to method
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+           <span class="types"><span class="type">bool</span></span>
+        <code>true</code> if method was called successfully</li>
+        <li>
+        Method call result</li>
+    </ol>
+     <h3>Or</h3>
+    <ol>
+        <li>
+           <span class="types"><span class="type">bool</span></span>
+        <code>false</code> on errors</li>
+        <li>
+           <span class="types"><span class="type">godot_variant_call_error</span></span>
+        Error struct</li>
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Variant.html#Variant:call">call</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Variant:unbox"></a>
+    <strong>Variant:unbox ()</strong>
+    </dt>
+    <dd>
+    Unbox a Variant, returning the corresponding Lua object.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">nil</span>, <span class="type">bool</span>, <span class="type">number</span>, <a class="type" href="../classes/String.html#">String</a>, <a class="type" href="../classes/Vector2.html#">Vector2</a>, <a class="type" href="../classes/Rect2.html#">Rect2</a>, <a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Transform2D.html#">Transform2D</a>, <a class="type" href="../classes/Plane.html#">Plane</a>, <a class="type" href="../classes/Quat.html#">Quat</a>, <a class="type" href="../classes/AABB.html#">AABB</a>, <a class="type" href="../classes/Basis.html#">Basis</a>, <a class="type" href="../classes/Transform.html#">Transform</a>, <a class="type" href="../classes/Color.html#">Color</a>, <a class="type" href="../classes/NodePath.html#">NodePath</a>, <a class="type" href="../classes/RID.html#">RID</a>, <a class="type" href="../classes/Object.html#">Object</a>, <a class="type" href="../classes/Dictionary.html#">Dictionary</a>, <a class="type" href="../classes/Array.html#">Array</a>, <a class="type" href="../classes/PoolByteArray.html#">PoolByteArray</a>, <a class="type" href="../classes/PoolIntArray.html#">PoolIntArray</a>, <a class="type" href="../classes/PoolRealArray.html#">PoolRealArray</a>, <a class="type" href="../classes/PoolStringArray.html#">PoolStringArray</a>, <a class="type" href="../classes/PoolVector2Array.html#">PoolVector2Array</a>, <a class="type" href="../classes/PoolVector3Array.html#">PoolVector3Array</a> or <a class="type" href="../classes/PoolColorArray.html#">PoolColorArray</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Metamethods"></a>Metamethods </h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Variant:__concat"></a>
+    <strong>Variant:__concat (a, b)</strong>
+    </dt>
+    <dd>
+    Concatenates values.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+          First value, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+        <li><span class="parameter">b</span>
+          First value, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Variant:__eq"></a>
+    <strong>Variant:__eq (a, b)</strong>
+    </dt>
+    <dd>
+    Equality comparison (<code>a == b</code>).
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+          First value, boxed with <a href="../classes/Variant.html#Variant:__new">__new</a>
+        </li>
+        <li><span class="parameter">b</span>
+          Second value, boxed with <a href="../classes/Variant.html#Variant:__new">__new</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Variant:__eq"></a>
+    <strong>Variant:__eq (a, b)</strong>
+    </dt>
+    <dd>
+    Less than comparison (<code>a &lt; b</code>).
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+          First value, boxed with <a href="../classes/Variant.html#Variant:__new">__new</a>
+        </li>
+        <li><span class="parameter">b</span>
+          Second value, boxed with <a href="../classes/Variant.html#Variant:__new">__new</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Variant:__new"></a>
+    <strong>Variant:__new (value)</strong>
+    </dt>
+    <dd>
+    Variant constructor, called by the idiom <code>Variant(value)</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">value</span>
+          Value to be boxed
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/Variant.html#">Variant</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Variant:__tostring"></a>
+    <strong>Variant:__tostring ()</strong>
+    </dt>
+    <dd>
+    Returns a Lua <a href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> from the result of <a href="../classes/Variant.html#Variant:as_string">as_string</a>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2021-09-07 13:06:11 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>
