@@ -10,6 +10,9 @@ written in GDScript / C# / Visual Script and vice-versa.
 This way, one can use the language that best suits the implementation for each
 script and all of them can understand each other.
 
+For some usage examples, check out [lps_coroutine.lua](lps_coroutine.lua)
+and [plugin/lua_repl.lua](plugin/lua_repl.lua).
+
 Currently, only LuaJIT is supported, since the implementation is based on its
 [FFI](https://luajit.org/ext_ffi.html) library.
 
@@ -19,6 +22,14 @@ Currently, only LuaJIT is supported, since the implementation is based on its
 Put a built release of the library into the project folder and restart Godot.
 Make sure the `lua_pluginscript.gdnlib` file is located at the
 `res://addons/godot-lua-pluginscript` folder.
+
+
+## Plugin
+
+An editor plugin is included, currently with a barebones REPL for Lua
+expressions, located in the bottom panel of the editor.
+Enable the `Lua PluginScript` plugin in `Project -> Project Settings...` menu,
+in the `Plugins` tab.
 
 
 ## Goals
