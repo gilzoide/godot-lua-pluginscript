@@ -317,7 +317,9 @@ _Object = ffi_metatype('godot_object', {
 	-- @param property
 	-- @param value
 	-- @see set
-	__newindex = methods.set,
+	__newindex = function(self, property, value)
+		methods.set(self, property, value)
+	end,
 	--- Concatenates values.
 	-- @function __concat
 	-- @param a  First value, stringified with `GD.str`
