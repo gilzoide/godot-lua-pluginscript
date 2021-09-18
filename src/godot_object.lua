@@ -298,7 +298,7 @@ _Object = ffi_metatype('godot_object', {
 	-- @function __tostring
 	-- @treturn string
 	__tostring = function(self)
-		return tostring(methods.to_string(self))
+		return self == nil and 'Null' or tostring(methods.to_string(self))
 	end,
 	--- Returns a method binding if `key` is a method name, otherwise returns
 	-- `self:get(key)`.
@@ -330,3 +330,5 @@ _Object = ffi_metatype('godot_object', {
 
 Object = ClassWrapper:new 'Object'
 Object.is_instance_valid = methods.is_instance_valid
+--- (`(godot_object *) NULL`): The `null` Object, useful as default values of properties.
+Object.null = ffi_new('godot_object *', nil)
