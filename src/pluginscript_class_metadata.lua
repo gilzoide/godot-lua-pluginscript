@@ -162,7 +162,7 @@ function property(metadata)
 		end
 		prop.setter = setter
 	end
-	assert(default_value ~= nil or property_type ~= VariantType.Nil or getter == nil, "Expected either default value, type or getter")
+	assert(default_value ~= nil or property_type ~= VariantType.Nil or getter ~= nil, "Expected either default value, type or getter for property")
 	prop.default_value = default_value
 	prop.type = property_type
 	prop.getter = getter
