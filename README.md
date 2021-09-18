@@ -10,8 +10,8 @@ written in GDScript / C# / Visual Script and vice-versa.
 This way, one can use the language that best suits the implementation for each
 script and all of them can understand each other.
 
-For some usage examples, check out [lps_coroutine.lua](lps_coroutine.lua)
-and [plugin/lua_repl.lua](plugin/lua_repl.lua).
+For some usage examples, check out [lps\_coroutine.lua](lps_coroutine.lua)
+and [plugin/lua\_repl.lua](plugin/lua_repl.lua).
 
 Currently, only LuaJIT is supported, since the implementation is based on its
 [FFI](https://luajit.org/ext_ffi.html) library.
