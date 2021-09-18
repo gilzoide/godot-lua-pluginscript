@@ -84,35 +84,16 @@ local function is_property(value)
 end
 
 local function property_to_dictionary(prop)
-	local dict, default_value, get, set = Dictionary(), nil, nil, nil
-	if not is_property(prop) then
-		default_value = prop
-		dict.type = get_property_type(prop)
-	else
-		default_value = prop.default_value or prop.default or prop[1]
-		local explicit_type = prop.type or prop[2]
-		if is_class_wrapper(explicit_type) and explicit_type:inherits('Resource') then
-			dict.type = VariantType.Object
-			dict.hint = PropertyHint.RESOURCE_TYPE
-			dict.hint_string = explicit_type.class_name
-		else
-			dict.type = property_types[explicit_type] or explicit_type or get_property_type(default_value)
-			dict.hint = prop.hint
-			dict.hint_string = prop.hint_string
-		end
-		dict.usage = prop.usage
-		dict.rset_mode = prop.rset_mode
-		get = prop.get or prop.getter
-		if is_a_string(get) then
-			get = MethodBindByName:new(get)
-		end
-		set = prop.set or prop.setter
-		if is_a_string(set) then
-			set = MethodBindByName:new(set)
-		end
-	end
-	dict.default_value = default_value
-	return dict, default_value, get, set
+	local default_value = prop.default_value
+	local dict = Dictionary {
+		default_value = default_value,
+		type = prop.type,
+		usage = prop.usage,
+		rset_mode = prop.rset_mode,
+		hint = prop.hint,
+		hint_string = prop.hint_string,
+	}
+	return dict, default_value
 end
 
 --- Adds `metadata` to a property.
@@ -148,12 +129,44 @@ end
 --         hint_text = '1,100',
 --     }
 -- @treturn table
+-- @raise If neither default value, type or getter is passed.
 -- @see lps_coroutine.lua
 function property(metadata)
+	local prop = setmetatable({}, Property)
+	local default_value, property_type, getter
 	if type(metadata) ~= 'table' then
-		metadata = { default_value = metadata }
+		default_value = metadata
+		property_type = get_property_type(metadata)
+	else
+		default_value = metadata.default_value or metadata.default or metadata[1]
+		local explicit_type = metadata.type or metadata[2]
+		if is_class_wrapper(explicit_type) then
+			assert(explicit_type:inherits('Resource'), string_format("Only classes based on Resource are supported as property types, found %q", explicit_type.class_name))
+			property_type = VariantType.Object
+			prop.hint = PropertyHint.RESOURCE_TYPE
+			prop.hint_string = explicit_type.class_name
+		else
+			property_type = property_types[explicit_type] or explicit_type or get_property_type(default_value)
+			prop.hint = metadata.hint
+			prop.hint_string = metadata.hint_string
+		end
+		prop.usage = metadata.usage
+		prop.rset_mode = metadata.rset_mode
+		getter = metadata.get or metadata.getter
+		if is_a_string(getter) then
+			getter = MethodBindByName:new(getter)
+		end
+		local setter = metadata.set or metadata.setter
+		if is_a_string(setter) then
+			setter = MethodBindByName:new(setter)
+		end
+		prop.setter = setter
 	end
-	return setmetatable(metadata, Property)
+	assert(default_value ~= nil or property_type ~= VariantType.Nil or getter == nil, "Expected either default value, type or getter")
+	prop.default_value = default_value
+	prop.type = property_type
+	prop.getter = getter
+	return prop
 end
 
 

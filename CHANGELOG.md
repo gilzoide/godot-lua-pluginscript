@@ -1,5 +1,7 @@
 # Changelog
 ## [Unreleased]
+### Fixed
+- Properties with `nil` as default value not accesible from Lua
 
 ## [r1]
 ### Added

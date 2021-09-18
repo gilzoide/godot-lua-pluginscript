@@ -107,7 +107,7 @@ clib.lps_script_init_cb = wrap_callback(function(manifest, path, source, err)
 		api.godot_print_error('Script must return a table', path, path, -1)
 		return
 	end
-	local getter, setter = {}, {}
+	local known_properties = {}
 	for k, v in pairs(metadata) do
 		if k == 'class_name' then
 			manifest.name = ffi_gc(StringName(v), nil)
@@ -124,22 +124,17 @@ clib.lps_script_init_cb = wrap_callback(function(manifest, path, source, err)
 			sig.name = String(k)
 			manifest.signals:append(sig)
 		else
-			local prop, default_value, get, set = property_to_dictionary(v)
-			prop.name = String(k)
+			local prop = is_property(v) and v or property(v)
+			known_properties[k] = prop
+			local prop_dict, default_value = property_to_dictionary(prop)
+			prop_dict.name = String(k)
 			-- Maintain default value directly for __indexing
 			metadata[k] = default_value
-			if get then
-				getter[k] = get
-			end
-			if set then
-				setter[k] = set
-			end
-			manifest.properties:append(prop)
+			manifest.properties:append(prop_dict)
 		end
 	end
 	metadata.__path = path
-	metadata.__getter = getter
-	metadata.__setter = setter
+	metadata.__properties = known_properties
 
 	local metadata_index = pointer_to_index(touserdata(metadata))
 	lps_scripts[metadata_index] = metadata
@@ -181,12 +176,14 @@ clib.lps_instance_set_prop_cb = wrap_callback(function(data, name, value)
 	local self = get_lua_instance(data)
 	local script = self.__script
 	lps_callstack:push('set', string_quote(name), '@', string_quote(script.__path))
-	local setter = script.__setter[name]
-	if setter then
-		setter(self, name, value:unbox())
-		return true
-	elseif script[name] ~= nil then
-		self[name] = value:unbox()
+	local prop = script.__properties[name]
+	if prop then
+		local setter = prop.setter
+		if setter then
+			setter(self, name, value:unbox())
+		else
+			self[name] = value:unbox()
+		end
 		return true
 	else
 		local _set = script._set
@@ -203,12 +200,19 @@ clib.lps_instance_get_prop_cb = wrap_callback(function(data, name, ret)
 	local self = get_lua_instance(data)
 	local script = self.__script
 	lps_callstack:push('get', string_quote(name), '@', string_quote(script.__path))
-	local getter = script.__getter[name]
-	if getter then
-		ret[0] = ffi_gc(Variant(getter(self)), nil)
-		return true
-	elseif script[name] ~= nil then
-		ret[0] = ffi_gc(Variant(self[name]), nil)
+	local prop = script.__properties[name]
+	if prop then
+		local getter, value = prop.getter, nil
+		if getter then
+			value = getter(self)
+		else
+			-- Avoid infinite recursion from `self[name]`, since `__index` may call `Object:get`
+			value = rawget(self, name)
+			if value == nil then
+				value = prop.default_value
+			end
+		end
+		ret[0] = ffi_gc(Variant(value), nil)
 		return true
 	else
 		local _get = script._get
