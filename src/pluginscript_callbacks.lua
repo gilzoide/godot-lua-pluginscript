@@ -45,12 +45,15 @@ local lps_callstack = {
 	pop = table_remove,
 }
 
-local function print_coroutine_error(co, err)
-	local filename, line, msg = string_match(err, ERROR_PATH_LINE_MESSAGE_PATT)
-	msg = debug_traceback(co, msg, 1)
+local function print_coroutine_error(co, err, msg_prefix)
+	local filename, line, err_msg = string_match(err, ERROR_PATH_LINE_MESSAGE_PATT)
+	local msg_lines = {
+		(msg_prefix or '') .. debug_traceback(co, err_msg, 1),
+	}
 	for i = #lps_callstack, 1, -1 do
-		msg = msg .. '\n\tin ' .. table_concat(lps_callstack[i], ' ')
+		table_insert(msg_lines, table_concat(lps_callstack[i], ' '))
 	end
+	local msg = table_concat(msg_lines, '\n\tin ')
 	api.godot_print_error(msg, debug_getinfo(co, 0, 'n').name, filename, tonumber(line))
 end
 
@@ -60,13 +63,12 @@ local function wrap_callback(f, error_return)
 		local success, result = coroutine_resume(co, ...)
 		if success then
 			lps_coroutine_pool:release(co)
-			lps_callstack:pop()
-			return result
 		else
 			print_coroutine_error(co, result)
-			lps_callstack:pop()
-			return error_return
+			result = error_return
 		end
+		lps_callstack:pop()
+		return result
 	end
 end
 
@@ -89,7 +91,7 @@ end)
 clib.lps_script_init_cb = wrap_callback(function(manifest, path, source, err)
 	path = tostring(path)
 	source = tostring(source)
-	lps_callstack:push(string_quote(path))
+	lps_callstack:push('script_load', '@', string_quote(path))
 	local script, err_message = loadstring(source, path)
 	if not script then
 		local line, msg = string_match(err_message, ERROR_LINE_MESSAGE_PATT)
@@ -97,12 +99,13 @@ clib.lps_script_init_cb = wrap_callback(function(manifest, path, source, err)
 		err[0] = Error.PARSE_ERROR
 		return
 	end
-	local success, metadata = pcall(script)
+	local co = lps_coroutine_pool:acquire(script)
+	local success, metadata = coroutine_resume(co)
 	if not success then
-		local line, msg = string_match(metadata, ERROR_LINE_MESSAGE_PATT)
-		api.godot_print_error('Error loading script metadata: ' .. msg, path, path, tonumber(line))
+		print_coroutine_error(co, metadata, 'Error loading script metadata: ')
 		return
 	end
+	lps_coroutine_pool:release(co)
 	if type(metadata) ~= 'table' then
 		api.godot_print_error('Script must return a table', path, path, -1)
 		return

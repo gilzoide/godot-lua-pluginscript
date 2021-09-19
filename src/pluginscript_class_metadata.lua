@@ -102,7 +102,8 @@ end
 --
 -- * `default_value` or `default` or `1`: default property value, returned when
 --   Object has no other value set for it.
--- * (*optional*) `type` or `2`: property type. If absent, it is inferred from `default_value`.
+--   If absent, `type` must be given and a default value for the type will be used instead.
+-- * `type` or `2`: property type. If absent, it is inferred from `default_value`.
 --   May be a `Enumerations.VariantType` (`VariantType.Vector2`), the type directly (`Vector2`),
 --   or a Resource class (`AudioStream`)
 -- * (*optional*) `get` or `getter`: getter function. May be a string with the method name
