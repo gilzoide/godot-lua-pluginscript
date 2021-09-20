@@ -2,6 +2,7 @@
 ## [Unreleased]
 ### Added
 - `Object.null`
+- REPL history, with up/down keys choosing previous/next line
 
 ### Fixed
 - Properties with `nil` as default value not accesible from Lua
