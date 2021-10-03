@@ -59,6 +59,90 @@ local property_types = {
 	PoolColorArray = VariantType.PoolColorArray, [PoolColorArray] = VariantType.PoolColorArray,
 }
 
+local property_initializer_for_type = {
+	[VariantType.Bool] = function(default_value)
+		return default_value or false
+	end,
+	[VariantType.Int] = function(default_value)
+		return default_value or 0
+	end,
+	[VariantType.Real] = function(default_value)
+		return default_value or 0
+	end,
+	[VariantType.String] = function(default_value)
+		return default_value and String(default_value) or String()
+	end,
+
+	[VariantType.Vector2] = function(default_value)
+		return Vector2(default_value)
+	end,
+	[VariantType.Rect2] = function(default_value)
+		return Rect2(default_value)
+	end,
+	[VariantType.Vector3] = function(default_value)
+		return Vector3(default_value)
+	end,
+	[VariantType.Transform2D] = function(default_value)
+		return Transform2D(default_value)
+	end,
+	[VariantType.Plane] = function(default_value)
+		return Plane(default_value)
+	end,
+	[VariantType.Quat] = function(default_value)
+		return Quat(default_value)
+	end,
+	[VariantType.AABB] = function(default_value)
+		return AABB(default_value)
+	end,
+	[VariantType.Basis] = function(default_value)
+		return Basis(default_value)
+	end,
+	[VariantType.Transform] = function(default_value)
+		return Transform(default_value)
+	end,
+
+	[VariantType.Color] = function(default_value)
+		return Color(default_value)
+	end,
+	[VariantType.NodePath] = function(default_value)
+		return NodePath(default_value)
+	end,
+	[VariantType.RID] = function(default_value)
+		return RID(default_value)
+	end,
+	[VariantType.Object] = function(default_value)
+		return default_value or Object.null
+	end,
+	[VariantType.Dictionary] = function(default_value)
+		return Dictionary(default_value)
+	end,
+	[VariantType.Array] = function(default_value)
+		return default_value and Array.from(default_value) or Array()
+	end,
+
+	[VariantType.PoolByteArray] = function(default_value)
+		return default_value and PoolByteArray.from(default_value) or PoolByteArray()
+	end,
+	[VariantType.PoolIntArray] = function(default_value)
+		return default_value and PoolIntArray.from(default_value) or PoolIntArray()
+	end,
+	[VariantType.PoolRealArray] = function(default_value)
+		return default_value and PoolRealArray.from(default_value) or PoolRealArray()
+	end,
+	[VariantType.PoolStringArray] = function(default_value)
+		return default_value and PoolStringArray.from(default_value) or PoolStringArray()
+	end,
+	[VariantType.PoolVector2Array] = function(default_value)
+		return default_value and PoolVector2Array.from(default_value) or PoolVector2Array()
+	end,
+	[VariantType.PoolVector3Array] = function(default_value)
+		return default_value and PoolVector3Array.from(default_value) or PoolVector3Array()
+	end,
+	[VariantType.PoolColorArray] = function(default_value)
+		return default_value and PoolColorArray.from(default_value) or PoolColorArray()
+	end,
+}
+
 local function get_property_type(value)
 	local t = type(value)
 	if t == 'boolean' then
@@ -178,11 +262,12 @@ local function is_signal(value)
 end
 
 local function signal_to_dictionary(sig)
-	local dict = Dictionary()
-	dict.args = Array()
+	local args = Array()
 	for i = 1, #sig do
-		dict.args:append(Dictionary{ name = String(sig[i]) })
+		args:append(Dictionary{ name = String(sig[i]) })
 	end
+	local dict = Dictionary()
+	dict.args = args
 	return dict
 end
 

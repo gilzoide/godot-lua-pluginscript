@@ -110,6 +110,7 @@ clib.lps_script_init_cb = wrap_callback(function(manifest, path, source, err)
 		api.godot_print_error('Script must return a table', path, path, -1)
 		return
 	end
+
 	local known_properties = {}
 	for k, v in pairs(metadata) do
 		if k == 'class_name' then
@@ -159,6 +160,14 @@ clib.lps_instance_init_cb = wrap_callback(function(script_data, owner)
 		__owner = owner,
 		__script = script,
 	}, ScriptInstance)
+	for name, prop in pairs(script.__properties) do
+		if not prop.getter then
+			local property_initializer = property_initializer_for_type[prop.type]
+			if property_initializer then
+				rawset(instance, name, property_initializer(prop.default_value))
+			end
+		end
+	end
 	local _init = script._init
 	if _init then
 		_init(instance)
