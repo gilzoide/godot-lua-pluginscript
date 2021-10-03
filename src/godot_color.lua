@@ -239,7 +239,7 @@ Color = ffi_metatype('godot_color', {
 		a, b = Color(a), Color(b)
 		return Color(a.r ^ b.r, a.g ^ b.g, a.b ^ b.b, a.a ^ b.a)
 	end,
-	--- Unary minus operation
+	--- Unary minus operation: `1 - self`
 	-- @function __unm
 	-- @treturn Color
 	__unm = function(self)

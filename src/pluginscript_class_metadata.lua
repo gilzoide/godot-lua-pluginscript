@@ -29,7 +29,7 @@
 local property_types = {
 	bool = VariantType.Bool, [bool] = VariantType.Bool,
 	int = VariantType.Int, [int] = VariantType.Int,
-	float = VariantType.Float, [float] = VariantType.Float,
+	float = VariantType.Real, [float] = VariantType.Real,
 	String = VariantType.String, [String] = VariantType.String,
 	string = VariantType.String, [string] = VariantType.String,
 

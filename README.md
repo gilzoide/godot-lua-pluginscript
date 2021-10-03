@@ -166,7 +166,7 @@ return MyClass
 - [X] API documentation
 - [ ] Example projects
 - [ ] Export plugin to minify Lua scripts
-- [ ] Drop-in binary release in GitHub
+- [X] Drop-in binary release in GitHub
 - [ ] Submit to Asset Library
 
 
