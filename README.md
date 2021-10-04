@@ -164,6 +164,7 @@ return MyClass
   the `res://` folder and/or exported games' executable path
 - [X] Lua REPL
 - [X] API documentation
+- [ ] Unit tests
 - [ ] Example projects
 - [ ] Export plugin to minify Lua scripts
 - [X] Drop-in binary release in GitHub
