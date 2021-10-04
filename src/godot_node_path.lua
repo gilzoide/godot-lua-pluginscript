@@ -86,16 +86,19 @@ local methods = {
 }
 NodePath = ffi_metatype('godot_node_path', {
 	--- NodePath constructor, called by the idiom `NodePath(path)`.
+	--
+	-- * `NodePath()`: empty NodePath
+	-- * `NodePath(any path)`: created with `path` stringified with `GD.str`
+	-- * `NodePath(NodePath other)`: copy from `other`
 	-- @function __new
-	-- @param path  If another `NodePath` is passed, just return a copy of it.
-	--   Otherwise, NodePath is created with `path` stringified with `GD.str`.
+	-- @param[opt] path
 	-- @treturn NodePath
 	__new = function(mt, path)
 		local self = ffi_new(mt)
 		if ffi_istype(mt, path) then
 			api.godot_node_path_new_copy(self, path)
 		else
-			api.godot_node_path_new(self, str(path))
+			api.godot_node_path_new(self, str(path or ''))
 		end
 		return self
 	end,
