@@ -64,6 +64,14 @@ api.godot_dictionary_destroy(global_constants)
 -- @treturn String
 GD.str = str
 
+--- Returns the Lua table associated with an `Object`, if it has a Lua
+-- Script attached.
+-- @function GD.get_lua_instance
+-- @tparam Object  object
+-- @treturn[1] table
+-- @treturn[2] nil  If Object has no Lua Script attached
+GD.get_lua_instance = get_lua_instance
+
 --- Print a message to Godot's Output panel, with values separated by tabs
 function GD.print(...)
 	local message = String(string_join('\t', ...))

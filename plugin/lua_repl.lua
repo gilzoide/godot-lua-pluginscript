@@ -33,31 +33,58 @@ local function get_error(text)
 	return 'Error: ' .. (text:match(":%d+:%s*(.+)") or text)
 end
 
-function LuaREPL:_init()
-	-- Local environment, to avoid messing up _G
-	self.env = setmetatable({
-		print = function(...)
-			return self:print(...)
-		end,
-	}, index_G)
-end
-
--- Cache nodes
+-- Cache and setup nodes
 function LuaREPL:_ready()
 	self.output = self:get_node("Output")
 	self.line_edit = self:get_node("Footer/LineEdit")
+	self.history_button_popup = self:get_node("Header/HistoryButton"):get_popup()
+	self.history_button_popup:connect("about_to_show", self, "_on_HistoryButton_popup_about_to_show")
+	self.history_button_popup:connect("id_pressed", self, "_on_HistoryButton_popup_id_pressed")
+	
+	self:reset()
 end
 
--- Prints a line to output
-function LuaREPL:print(...)
-	self.output:add_text(string.join('\t', ...))
-	self.output:add_text('\n')
+-- Resets the Lua environment and REPL history
+function LuaREPL:reset()
+	-- Local environment, to avoid messing up _G
+	self.env = setmetatable({
+		print = function(...)
+			return self:printf('%s\n', string.join('\t', ...))
+		end,
+	}, index_G)
+	self.history = PoolStringArray()
+	self.current_history = 0
+	
+	self:clear()
+end
+
+-- Print content to output
+function LuaREPL:print(msg)
+	self.output:add_text(msg)
+end
+
+function LuaREPL:printn(msg)
+	self:print(msg)
+	self:print('\n')
+end
+
+function LuaREPL:printf(...)
+	self:print(string.format(...))
 end
 
 -- Runs a line, printing the results/error
 function LuaREPL:dostring(text)
-	self:print('> ' .. text)
-	text = tostring(text):gsub('^%s*%=', '', 1)
+	text = text:strip_edges()
+	if text:empty() then
+		return
+	end
+	
+	self.history:append(text)
+	self.current_history = #self.history
+	self.line_edit:clear()
+	self:printn(text)
+	
+	text = text:gsub('^=', '', 1)  -- support for "= value" idiom from Lua 5.1 REPL
 	local f, err_msg = load('return ' .. text, nil, nil, self.env)
 	if not f then
 		f, err_msg = load(text, nil, nil, self.env)
@@ -65,19 +92,43 @@ function LuaREPL:dostring(text)
 	if f then
 		local result = table.pack(pcall(f))
 		if not result[1] then
-			self:print(get_error(result[2]))
+			self:printn(get_error(result[2]))
 		elseif result.n > 1 then
-			self:print(table.unpack(result, 2, result.n))
+			local joined_results = string.join('\t', table.unpack(result, 2, result.n))
+			self:printf('Out[%d]: %s\n', #self.history, joined_results)
 		end
 	else
-		self:print(get_error(err_msg))
+		self:printn(get_error(err_msg))
 	end
-	self.line_edit:clear()
+	self:prompt()
+end
+
+function LuaREPL:prompt()
+	self:printf('\nIn [%d]: ', #self.history + 1)
 end
 
 -- Clear output text
 function LuaREPL:clear()
 	self.output:clear()
+	self:prompt()
+end
+
+-- History handlers
+function LuaREPL:set_history(index)
+	if index >= 0 and index < #self.history then
+		self.current_history = index
+		local text = self.history[self.current_history]
+		self.line_edit.text = text
+		self.line_edit.caret_position = #text
+	end
+end
+
+function LuaREPL:history_up()
+	self:set_history(self.current_history - 1)
+end
+
+function LuaREPL:history_down()
+	self:set_history(self.current_history + 1)
 end
 
 -- Signal handlers
@@ -91,6 +142,31 @@ end
 
 function LuaREPL:_on_ClearButton_pressed()
 	self:clear()
+end
+
+function LuaREPL:_on_ResetButton_pressed()
+	self:reset()
+end
+
+function LuaREPL:_on_LineEdit_gui_input(event)
+	if event:is_class("InputEventKey") and event:is_pressed() then
+		if event.scancode == GD.KEY_UP then
+			self:history_up()
+		elseif event.scancode == GD.KEY_DOWN then
+			self:history_down()
+		end
+	end
+end
+
+function LuaREPL:_on_HistoryButton_popup_about_to_show()
+	self.history_button_popup:clear()
+	for i, s in ipairs(self.history) do
+		self.history_button_popup:add_item(s)
+	end
+end
+
+function LuaREPL:_on_HistoryButton_popup_id_pressed(i)
+	self:set_history(i)
 end
 
 return LuaREPL

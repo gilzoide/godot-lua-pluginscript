@@ -29,7 +29,7 @@
 local property_types = {
 	bool = VariantType.Bool, [bool] = VariantType.Bool,
 	int = VariantType.Int, [int] = VariantType.Int,
-	float = VariantType.Float, [float] = VariantType.Float,
+	float = VariantType.Real, [float] = VariantType.Real,
 	String = VariantType.String, [String] = VariantType.String,
 	string = VariantType.String, [string] = VariantType.String,
 
@@ -59,6 +59,90 @@ local property_types = {
 	PoolColorArray = VariantType.PoolColorArray, [PoolColorArray] = VariantType.PoolColorArray,
 }
 
+local property_initializer_for_type = {
+	[VariantType.Bool] = function(default_value)
+		return default_value or false
+	end,
+	[VariantType.Int] = function(default_value)
+		return default_value or 0
+	end,
+	[VariantType.Real] = function(default_value)
+		return default_value or 0
+	end,
+	[VariantType.String] = function(default_value)
+		return default_value and String(default_value) or String()
+	end,
+
+	[VariantType.Vector2] = function(default_value)
+		return Vector2(default_value)
+	end,
+	[VariantType.Rect2] = function(default_value)
+		return Rect2(default_value)
+	end,
+	[VariantType.Vector3] = function(default_value)
+		return Vector3(default_value)
+	end,
+	[VariantType.Transform2D] = function(default_value)
+		return Transform2D(default_value)
+	end,
+	[VariantType.Plane] = function(default_value)
+		return Plane(default_value)
+	end,
+	[VariantType.Quat] = function(default_value)
+		return Quat(default_value)
+	end,
+	[VariantType.AABB] = function(default_value)
+		return AABB(default_value)
+	end,
+	[VariantType.Basis] = function(default_value)
+		return Basis(default_value)
+	end,
+	[VariantType.Transform] = function(default_value)
+		return Transform(default_value)
+	end,
+
+	[VariantType.Color] = function(default_value)
+		return Color(default_value)
+	end,
+	[VariantType.NodePath] = function(default_value)
+		return NodePath(default_value)
+	end,
+	[VariantType.RID] = function(default_value)
+		return RID(default_value)
+	end,
+	[VariantType.Object] = function(default_value)
+		return default_value or Object.null
+	end,
+	[VariantType.Dictionary] = function(default_value)
+		return Dictionary(default_value)
+	end,
+	[VariantType.Array] = function(default_value)
+		return default_value and Array.from(default_value) or Array()
+	end,
+
+	[VariantType.PoolByteArray] = function(default_value)
+		return default_value and PoolByteArray.from(default_value) or PoolByteArray()
+	end,
+	[VariantType.PoolIntArray] = function(default_value)
+		return default_value and PoolIntArray.from(default_value) or PoolIntArray()
+	end,
+	[VariantType.PoolRealArray] = function(default_value)
+		return default_value and PoolRealArray.from(default_value) or PoolRealArray()
+	end,
+	[VariantType.PoolStringArray] = function(default_value)
+		return default_value and PoolStringArray.from(default_value) or PoolStringArray()
+	end,
+	[VariantType.PoolVector2Array] = function(default_value)
+		return default_value and PoolVector2Array.from(default_value) or PoolVector2Array()
+	end,
+	[VariantType.PoolVector3Array] = function(default_value)
+		return default_value and PoolVector3Array.from(default_value) or PoolVector3Array()
+	end,
+	[VariantType.PoolColorArray] = function(default_value)
+		return default_value and PoolColorArray.from(default_value) or PoolColorArray()
+	end,
+}
+
 local function get_property_type(value)
 	local t = type(value)
 	if t == 'boolean' then
@@ -84,35 +168,16 @@ local function is_property(value)
 end
 
 local function property_to_dictionary(prop)
-	local dict, default_value, get, set = Dictionary(), nil, nil, nil
-	if not is_property(prop) then
-		default_value = prop
-		dict.type = get_property_type(prop)
-	else
-		default_value = prop.default_value or prop.default or prop[1]
-		local explicit_type = prop.type or prop[2]
-		if is_class_wrapper(explicit_type) and explicit_type:inherits('Resource') then
-			dict.type = VariantType.Object
-			dict.hint = PropertyHint.RESOURCE_TYPE
-			dict.hint_string = explicit_type.class_name
-		else
-			dict.type = property_types[explicit_type] or explicit_type or get_property_type(default_value)
-			dict.hint = prop.hint
-			dict.hint_string = prop.hint_string
-		end
-		dict.usage = prop.usage
-		dict.rset_mode = prop.rset_mode
-		get = prop.get or prop.getter
-		if is_a_string(get) then
-			get = MethodBindByName:new(get)
-		end
-		set = prop.set or prop.setter
-		if is_a_string(set) then
-			set = MethodBindByName:new(set)
-		end
-	end
-	dict.default_value = default_value
-	return dict, default_value, get, set
+	local default_value = prop.default_value
+	local dict = Dictionary {
+		default_value = default_value,
+		type = prop.type,
+		usage = prop.usage,
+		rset_mode = prop.rset_mode,
+		hint = prop.hint,
+		hint_string = prop.hint_string,
+	}
+	return dict, default_value
 end
 
 --- Adds `metadata` to a property.
@@ -121,7 +186,8 @@ end
 --
 -- * `default_value` or `default` or `1`: default property value, returned when
 --   Object has no other value set for it.
--- * (*optional*) `type` or `2`: property type. If absent, it is inferred from `default_value`.
+--   If absent, `type` must be given and a default value for the type will be used instead.
+-- * `type` or `2`: property type. If absent, it is inferred from `default_value`.
 --   May be a `Enumerations.VariantType` (`VariantType.Vector2`), the type directly (`Vector2`),
 --   or a Resource class (`AudioStream`)
 -- * (*optional*) `get` or `getter`: getter function. May be a string with the method name
@@ -148,12 +214,44 @@ end
 --         hint_text = '1,100',
 --     }
 -- @treturn table
+-- @raise If neither default value, type or getter is passed.
 -- @see lps_coroutine.lua
 function property(metadata)
+	local prop = setmetatable({}, Property)
+	local default_value, property_type, getter
 	if type(metadata) ~= 'table' then
-		metadata = { default_value = metadata }
+		default_value = metadata
+		property_type = get_property_type(metadata)
+	else
+		default_value = metadata.default_value or metadata.default or metadata[1]
+		local explicit_type = metadata.type or metadata[2]
+		if is_class_wrapper(explicit_type) then
+			assert(explicit_type:inherits('Resource'), string_format("Only classes based on Resource are supported as property types, found %q", explicit_type.class_name))
+			property_type = VariantType.Object
+			prop.hint = PropertyHint.RESOURCE_TYPE
+			prop.hint_string = explicit_type.class_name
+		else
+			property_type = property_types[explicit_type] or explicit_type or get_property_type(default_value)
+			prop.hint = metadata.hint
+			prop.hint_string = metadata.hint_string
+		end
+		prop.usage = metadata.usage
+		prop.rset_mode = metadata.rset_mode
+		getter = metadata.get or metadata.getter
+		if is_a_string(getter) then
+			getter = MethodBindByName:new(getter)
+		end
+		local setter = metadata.set or metadata.setter
+		if is_a_string(setter) then
+			setter = MethodBindByName:new(setter)
+		end
+		prop.setter = setter
 	end
-	return setmetatable(metadata, Property)
+	assert(default_value ~= nil or property_type ~= VariantType.Nil or getter ~= nil, "Expected either default value, type or getter for property")
+	prop.default_value = default_value
+	prop.type = property_type
+	prop.getter = getter
+	return prop
 end
 
 
@@ -164,11 +262,12 @@ local function is_signal(value)
 end
 
 local function signal_to_dictionary(sig)
-	local dict = Dictionary()
-	dict.args = Array()
+	local args = Array()
 	for i = 1, #sig do
-		dict.args:append(Dictionary{ name = String(sig[i]) })
+		args:append(Dictionary{ name = String(sig[i]) })
 	end
+	local dict = Dictionary()
+	dict.args = args
 	return dict
 end
 

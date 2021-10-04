@@ -31,14 +31,6 @@ local methods = {
 	fillvariant = api.godot_variant_new_dictionary,
 	varianttype = VariantType.Dictionary,
 
-	--- Creates a copy of the dictionary, and returns it.
-	-- The `deep` parameter causes inner Dictionaries and Arrays to be copied recursively, but does not apply to Objects.
-	-- @function duplicate
-	-- @param[opt=false] deep
-	-- @treturn Dictionary
-	duplicate = function(self, deep)
-		return ffi_gc(api.godot_dictionary_duplicate(self, deep or false), api.godot_dictionary_destroy)
-	end,
 	--- Returns the number of keys in the Dictionary.
 	-- @function size
 	-- @treturn int
@@ -131,7 +123,7 @@ local methods = {
 	-- @return[1] Value
 	-- @treturn[2] nil  If there are no more keys
 	-- @see __pairs
-	next = function(self, key)  -- behave like `next(table [, index])` for __pairs
+	next = function(self, key)
 		if key ~= nil then
 			key = Variant(key)
 		end
@@ -149,6 +141,17 @@ local methods = {
 		return ffi_gc(api.godot_dictionary_to_json(self), api.godot_string_destroy)
 	end,
 }
+
+if api_1_2 ~= nil then
+	--- Creates a copy of the dictionary, and returns it.
+	-- The `deep` parameter causes inner Dictionaries and Arrays to be copied recursively, but does not apply to Objects.
+	-- @function duplicate
+	-- @param[opt=false] deep
+	-- @treturn Dictionary
+	methods.duplicate = function(self, deep)
+		return ffi_gc(api_1_2.godot_dictionary_duplicate(self, deep or false), api.godot_dictionary_destroy)
+	end
+end
 
 Dictionary = ffi_metatype('godot_dictionary', {
 	--- Dictionary constructor, called by the idiom `Dictionary(value)`.

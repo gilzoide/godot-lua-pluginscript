@@ -16,15 +16,30 @@ margin_bottom = 20.0
 
 [node name="Title" type="Label" parent="Header"]
 margin_top = 3.0
-margin_right = 976.0
+margin_right = 862.0
 margin_bottom = 17.0
 size_flags_horizontal = 3
 text = "Lua PluginScript REPL:"
+
+[node name="HistoryButton" type="MenuButton" parent="Header"]
+margin_left = 866.0
+margin_right = 924.0
+margin_bottom = 20.0
+text = "History"
+flat = false
+
+[node name="ResetButton" type="Button" parent="Header"]
+margin_left = 928.0
+margin_right = 976.0
+margin_bottom = 20.0
+hint_tooltip = "Reset the Lua environment and REPL history "
+text = "Reset"
 
 [node name="ClearButton" type="Button" parent="Header"]
 margin_left = 980.0
 margin_right = 1024.0
 margin_bottom = 20.0
+hint_tooltip = "Clear the output text"
 text = "Clear"
 
 [node name="Output" type="RichTextLabel" parent="."]
@@ -46,6 +61,8 @@ margin_bottom = 600.0
 [node name="LineEdit" type="LineEdit" parent="Footer"]
 margin_right = 984.0
 margin_bottom = 24.0
+focus_neighbour_top = NodePath(".")
+focus_neighbour_bottom = NodePath(".")
 size_flags_horizontal = 3
 clear_button_enabled = true
 
@@ -55,6 +72,8 @@ margin_right = 1024.0
 margin_bottom = 24.0
 text = "Run"
 
+[connection signal="pressed" from="Header/ResetButton" to="." method="_on_ResetButton_pressed"]
 [connection signal="pressed" from="Header/ClearButton" to="." method="_on_ClearButton_pressed"]
+[connection signal="gui_input" from="Footer/LineEdit" to="." method="_on_LineEdit_gui_input"]
 [connection signal="text_entered" from="Footer/LineEdit" to="." method="_on_LineEdit_text_entered"]
 [connection signal="pressed" from="Footer/RunButton" to="." method="_on_RunButton_pressed"]

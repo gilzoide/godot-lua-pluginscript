@@ -209,16 +209,9 @@ local methods = {
 	-- @tparam Object object
 	-- @param func  Method name
 	-- @param[opt=true] before  If `false`, the returned index comes after all existing entries of the value in the Array.
+	-- @treturn int
 	bsearch_custom = function(self, value, obj, func, before)
 		return api.godot_array_bsearch_custom(self, Variant(value), obj, str(func), before == nil or before)
-	end,
-	--- Returns a copy of the Array.
-	-- @function duplicate
-	-- @param[opt=false] deep  If `true`, a deep copy is performed: all nested arrays and dictionaries are duplicated and will not be shared with the original Array.
-	--  If `false`, a shallow copy is made and references to the original nested arrays and dictionaries are kept, so that modifying a sub-array or dictionary in the copy will also impact those referenced in the source array.
-	-- @treturn Array
-	duplicate = function(self, deep)
-		return api.godot_array_duplicate(self, deep or false)
 	end,
 	--- Duplicates the subset described in the function and returns it in an Array, deeply copying the values if `deep` is `true`.
 	-- Lower and upper index are inclusive, with the `step` describing the change between indices while slicing.
@@ -229,7 +222,7 @@ local methods = {
 	-- @param[opt=false] deep
 	-- @treturn Array
 	slice = function(self, begin, _end, step, deep)
-		return api.godot_array_slice(self, begin, _end, step or 1, deep or false)
+		return ffi_gc(api.godot_array_slice(self, begin, _end, step or 1, deep or false), api.godot_array_destroy)
 	end,
 }
 
@@ -278,6 +271,14 @@ methods.extend = function(self, iterable)
 end
 
 if api_1_1 ~= nil then
+	--- Returns a copy of the Array.
+	-- @function duplicate
+	-- @param[opt=false] deep  If `true`, a deep copy is performed: all nested arrays and dictionaries are duplicated and will not be shared with the original Array.
+	--  If `false`, a shallow copy is made and references to the original nested arrays and dictionaries are kept, so that modifying a sub-array or dictionary in the copy will also impact those referenced in the source array.
+	-- @treturn Array
+	methods.duplicate = function(self, deep)
+		return ffi_gc(api_1_1.godot_array_duplicate(self, deep or false), api.godot_array_destroy)
+	end
 	--- Returns the maximum value contained in the Array if all elements are of comparable types.
 	-- @function max
 	-- @return[1] Maximum value

@@ -1,5 +1,6 @@
 DEBUG ?= 0
 LUAJIT_52_COMPAT ?= 1
+GODOT_BIN = godot
 
 CFLAGS += -std=c11 "-I$(CURDIR)/lib/godot-headers" "-I$(CURDIR)/lib/high-level-gdnative" "-I$(CURDIR)/lib/luajit/src"
 ifeq ($(DEBUG), 1)
@@ -122,16 +123,18 @@ build/osx_arm64/lua_pluginscript.dylib: MAKE_LUAJIT_ARGS += TARGET_FLAGS="-arch 
 build/osx_universal64/lua_pluginscript.dylib: build/osx_x86_64/lua_pluginscript.dylib build/osx_arm64/lua_pluginscript.dylib | build/osx_universal64
 	$(_LIPO) $^ -create -output $@
 
-build/$(GDNLIB_ENTRY_PREFIX)/%:
+build/$(GDNLIB_ENTRY_PREFIX)/%: %
 	@mkdir -p $(dir $@)
-	cp $* $@
+	cp $< $@
 $(addprefix build/,$(DIST_SRC)): | build
 	cp $(notdir $@) $@
 build/lua_pluginscript.zip: $(DIST_DEST)
 	cd build && zip lua_pluginscript $(DIST_ZIP_SRC)
+build/project.godot: src/tools/project.godot | build
+	cp $< $@
 
 # Phony targets
-.PHONY: clean dist docs
+.PHONY: clean dist docs test
 clean:
 	$(RM) -r build/*/
 
@@ -139,6 +142,9 @@ dist: build/lua_pluginscript.zip
 
 docs:
 	ldoc .
+
+test: $(DIST_DEST) build/project.godot
+	$(GODOT_BIN) --path build --no-window --quit --script "$(CURDIR)/src/test/init.lua"
 
 # Targets by OS + arch
 linux32: MAKE_LUAJIT_ARGS += CC="$(CC) -m32 -fPIC"

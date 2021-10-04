@@ -1,0 +1,12 @@
+; Godot project config file for unit test runner
+
+config_version=4
+
+[application]
+
+config/name="godot-lua-pluginscript-unittest"
+
+[gdnative]
+
+singletons=[ "res://addons/godot-lua-pluginscript/lua_pluginscript.gdnlib" ]
+

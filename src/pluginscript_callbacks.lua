@@ -45,12 +45,15 @@ local lps_callstack = {
 	pop = table_remove,
 }
 
-local function print_coroutine_error(co, err)
-	local filename, line, msg = string_match(err, ERROR_PATH_LINE_MESSAGE_PATT)
-	msg = debug_traceback(co, msg, 1)
+local function print_coroutine_error(co, err, msg_prefix)
+	local filename, line, err_msg = string_match(err, ERROR_PATH_LINE_MESSAGE_PATT)
+	local msg_lines = {
+		(msg_prefix or '') .. debug_traceback(co, err_msg, 1),
+	}
 	for i = #lps_callstack, 1, -1 do
-		msg = msg .. '\n\tin ' .. table_concat(lps_callstack[i], ' ')
+		table_insert(msg_lines, table_concat(lps_callstack[i], ' '))
 	end
+	local msg = table_concat(msg_lines, '\n\tin ')
 	api.godot_print_error(msg, debug_getinfo(co, 0, 'n').name, filename, tonumber(line))
 end
 
@@ -60,13 +63,12 @@ local function wrap_callback(f, error_return)
 		local success, result = coroutine_resume(co, ...)
 		if success then
 			lps_coroutine_pool:release(co)
-			lps_callstack:pop()
-			return result
 		else
 			print_coroutine_error(co, result)
-			lps_callstack:pop()
-			return error_return
+			result = error_return
 		end
+		lps_callstack:pop()
+		return result
 	end
 end
 
@@ -89,7 +91,7 @@ end)
 clib.lps_script_init_cb = wrap_callback(function(manifest, path, source, err)
 	path = tostring(path)
 	source = tostring(source)
-	lps_callstack:push(string_quote(path))
+	lps_callstack:push('script_load', '@', string_quote(path))
 	local script, err_message = loadstring(source, path)
 	if not script then
 		local line, msg = string_match(err_message, ERROR_LINE_MESSAGE_PATT)
@@ -97,17 +99,19 @@ clib.lps_script_init_cb = wrap_callback(function(manifest, path, source, err)
 		err[0] = Error.PARSE_ERROR
 		return
 	end
-	local success, metadata = pcall(script)
+	local co = lps_coroutine_pool:acquire(script)
+	local success, metadata = coroutine_resume(co)
 	if not success then
-		local line, msg = string_match(metadata, ERROR_LINE_MESSAGE_PATT)
-		api.godot_print_error('Error loading script metadata: ' .. msg, path, path, tonumber(line))
+		print_coroutine_error(co, metadata, 'Error loading script metadata: ')
 		return
 	end
+	lps_coroutine_pool:release(co)
 	if type(metadata) ~= 'table' then
 		api.godot_print_error('Script must return a table', path, path, -1)
 		return
 	end
-	local getter, setter = {}, {}
+
+	local known_properties = {}
 	for k, v in pairs(metadata) do
 		if k == 'class_name' then
 			manifest.name = ffi_gc(StringName(v), nil)
@@ -124,22 +128,17 @@ clib.lps_script_init_cb = wrap_callback(function(manifest, path, source, err)
 			sig.name = String(k)
 			manifest.signals:append(sig)
 		else
-			local prop, default_value, get, set = property_to_dictionary(v)
-			prop.name = String(k)
+			local prop = is_property(v) and v or property(v)
+			known_properties[k] = prop
+			local prop_dict, default_value = property_to_dictionary(prop)
+			prop_dict.name = String(k)
 			-- Maintain default value directly for __indexing
 			metadata[k] = default_value
-			if get then
-				getter[k] = get
-			end
-			if set then
-				setter[k] = set
-			end
-			manifest.properties:append(prop)
+			manifest.properties:append(prop_dict)
 		end
 	end
 	metadata.__path = path
-	metadata.__getter = getter
-	metadata.__setter = setter
+	metadata.__properties = known_properties
 
 	local metadata_index = pointer_to_index(touserdata(metadata))
 	lps_scripts[metadata_index] = metadata
@@ -161,6 +160,14 @@ clib.lps_instance_init_cb = wrap_callback(function(script_data, owner)
 		__owner = owner,
 		__script = script,
 	}, ScriptInstance)
+	for name, prop in pairs(script.__properties) do
+		if not prop.getter then
+			local property_initializer = property_initializer_for_type[prop.type]
+			if property_initializer then
+				rawset(instance, name, property_initializer(prop.default_value))
+			end
+		end
+	end
 	local _init = script._init
 	if _init then
 		_init(instance)
@@ -181,12 +188,14 @@ clib.lps_instance_set_prop_cb = wrap_callback(function(data, name, value)
 	local self = get_lua_instance(data)
 	local script = self.__script
 	lps_callstack:push('set', string_quote(name), '@', string_quote(script.__path))
-	local setter = script.__setter[name]
-	if setter then
-		setter(self, name, value:unbox())
-		return true
-	elseif script[name] ~= nil then
-		self[name] = value:unbox()
+	local prop = script.__properties[name]
+	if prop then
+		local setter = prop.setter
+		if setter then
+			setter(self, name, value:unbox())
+		else
+			self[name] = value:unbox()
+		end
 		return true
 	else
 		local _set = script._set
@@ -203,12 +212,19 @@ clib.lps_instance_get_prop_cb = wrap_callback(function(data, name, ret)
 	local self = get_lua_instance(data)
 	local script = self.__script
 	lps_callstack:push('get', string_quote(name), '@', string_quote(script.__path))
-	local getter = script.__getter[name]
-	if getter then
-		ret[0] = ffi_gc(Variant(getter(self)), nil)
-		return true
-	elseif script[name] ~= nil then
-		ret[0] = ffi_gc(Variant(self[name]), nil)
+	local prop = script.__properties[name]
+	if prop then
+		local getter, value = prop.getter, nil
+		if getter then
+			value = getter(self)
+		else
+			-- Avoid infinite recursion from `self[name]`, since `__index` may call `Object:get`
+			value = rawget(self, name)
+			if value == nil then
+				value = prop.default_value
+			end
+		end
+		ret[0] = ffi_gc(Variant(value), nil)
 		return true
 	else
 		local _get = script._get
