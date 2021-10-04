@@ -126,51 +126,102 @@
 	<span class="keyword">return</span> <span class="string">'Error: '</span> .. (text:match(<span class="string">":%d+:%s*(.+)"</span>) <span class="keyword">or</span> text)
 <span class="keyword">end</span>
 
-<span class="keyword">function</span> LuaREPL:_init()
-	<span class="comment">-- Local environment, to avoid messing up _G
-</span>	self.env = <span class="global">setmetatable</span>({
-		<span class="global">print</span> = <span class="keyword">function</span>(...)
-			<span class="keyword">return</span> self:<span class="global">print</span>(...)
-		<span class="keyword">end</span>,
-	}, index_G)
-<span class="keyword">end</span>
-
-<span class="comment">-- Cache nodes
+<span class="comment">-- Cache and setup nodes
 </span><span class="keyword">function</span> LuaREPL:_ready()
 	self.output = self:get_node(<span class="string">"Output"</span>)
 	self.line_edit = self:get_node(<span class="string">"Footer/LineEdit"</span>)
+	self.history_button_popup = self:get_node(<span class="string">"Header/HistoryButton"</span>):get_popup()
+	self.history_button_popup:connect(<span class="string">"about_to_show"</span>, self, <span class="string">"_on_HistoryButton_popup_about_to_show"</span>)
+	self.history_button_popup:connect(<span class="string">"id_pressed"</span>, self, <span class="string">"_on_HistoryButton_popup_id_pressed"</span>)
+
+	self:reset()
 <span class="keyword">end</span>
 
-<span class="comment">-- Prints a line to output
-</span><span class="keyword">function</span> LuaREPL:<span class="global">print</span>(...)
-	self.output:add_text(<span class="global">string</span>.join(<span class="string">'\t'</span>, ...))
-	self.output:add_text(<span class="string">'\n'</span>)
+<span class="comment">-- Resets the Lua environment and REPL history
+</span><span class="keyword">function</span> LuaREPL:reset()
+	<span class="comment">-- Local environment, to avoid messing up _G
+</span>	self.env = <span class="global">setmetatable</span>({
+		<span class="global">print</span> = <span class="keyword">function</span>(...)
+			<span class="keyword">return</span> self:printf(<span class="string">'%s\n'</span>, <span class="global">string</span>.join(<span class="string">'\t'</span>, ...))
+		<span class="keyword">end</span>,
+	}, index_G)
+	self.history = PoolStringArray()
+	self.current_history = <span class="number">0</span>
+
+	self:clear()
+<span class="keyword">end</span>
+
+<span class="comment">-- Print content to output
+</span><span class="keyword">function</span> LuaREPL:<span class="global">print</span>(msg)
+	self.output:add_text(msg)
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> LuaREPL:printn(msg)
+	self:<span class="global">print</span>(msg)
+	self:<span class="global">print</span>(<span class="string">'\n'</span>)
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> LuaREPL:printf(...)
+	self:<span class="global">print</span>(<span class="global">string</span>.format(...))
 <span class="keyword">end</span>
 
 <span class="comment">-- Runs a line, printing the results/error
 </span><span class="keyword">function</span> LuaREPL:dostring(text)
-	self:<span class="global">print</span>(<span class="string">'&gt; '</span> .. text)
-	text = <span class="global">tostring</span>(text):gsub(<span class="string">'^%s*%='</span>, <span class="string">''</span>, <span class="number">1</span>)
-	<span class="keyword">local</span> f, err_msg = <span class="global">load</span>(<span class="string">'return '</span> .. text, <span class="keyword">nil</span>, <span class="keyword">nil</span>, self.env)
+	text = text:strip_edges()
+	<span class="keyword">if</span> text:empty() <span class="keyword">then</span>
+		<span class="keyword">return</span>
+	<span class="keyword">end</span>
+
+	self.history:append(text)
+	self.current_history = #self.history
+	self.line_edit:clear()
+	self:printn(text)
+
+	text = text:gsub(<span class="string">'^='</span>, <span class="string">''</span>, <span class="number">1</span>)  <span class="comment">-- support for "= value" idiom from Lua 5.1 REPL
+</span>	<span class="keyword">local</span> f, err_msg = <span class="global">load</span>(<span class="string">'return '</span> .. text, <span class="keyword">nil</span>, <span class="keyword">nil</span>, self.env)
 	<span class="keyword">if</span> <span class="keyword">not</span> f <span class="keyword">then</span>
 		f, err_msg = <span class="global">load</span>(text, <span class="keyword">nil</span>, <span class="keyword">nil</span>, self.env)
 	<span class="keyword">end</span>
 	<span class="keyword">if</span> f <span class="keyword">then</span>
 		<span class="keyword">local</span> result = <span class="global">table</span>.pack(<span class="global">pcall</span>(f))
 		<span class="keyword">if</span> <span class="keyword">not</span> result[<span class="number">1</span>] <span class="keyword">then</span>
-			self:<span class="global">print</span>(get_error(result[<span class="number">2</span>]))
+			self:printn(get_error(result[<span class="number">2</span>]))
 		<span class="keyword">elseif</span> result.n &gt; <span class="number">1</span> <span class="keyword">then</span>
-			self:<span class="global">print</span>(<span class="global">table</span>.<span class="global">unpack</span>(result, <span class="number">2</span>, result.n))
+			<span class="keyword">local</span> joined_results = <span class="global">string</span>.join(<span class="string">'\t'</span>, <span class="global">table</span>.<span class="global">unpack</span>(result, <span class="number">2</span>, result.n))
+			self:printf(<span class="string">'Out[%d]: %s\n'</span>, #self.history, joined_results)
 		<span class="keyword">end</span>
 	<span class="keyword">else</span>
-		self:<span class="global">print</span>(get_error(err_msg))
+		self:printn(get_error(err_msg))
 	<span class="keyword">end</span>
-	self.line_edit:clear()
+	self:prompt()
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> LuaREPL:prompt()
+	self:printf(<span class="string">'\nIn [%d]: '</span>, #self.history + <span class="number">1</span>)
 <span class="keyword">end</span>
 
 <span class="comment">-- Clear output text
 </span><span class="keyword">function</span> LuaREPL:clear()
 	self.output:clear()
+	self:prompt()
+<span class="keyword">end</span>
+
+<span class="comment">-- History handlers
+</span><span class="keyword">function</span> LuaREPL:set_history(index)
+	<span class="keyword">if</span> index &gt;= <span class="number">0</span> <span class="keyword">and</span> index &lt; #self.history <span class="keyword">then</span>
+		self.current_history = index
+		<span class="keyword">local</span> text = self.history[self.current_history]
+		self.line_edit.text = text
+		self.line_edit.caret_position = #text
+	<span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> LuaREPL:history_up()
+	self:set_history(self.current_history - <span class="number">1</span>)
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> LuaREPL:history_down()
+	self:set_history(self.current_history + <span class="number">1</span>)
 <span class="keyword">end</span>
 
 <span class="comment">-- Signal handlers
@@ -186,6 +237,31 @@
 	self:clear()
 <span class="keyword">end</span>
 
+<span class="keyword">function</span> LuaREPL:_on_ResetButton_pressed()
+	self:reset()
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> LuaREPL:_on_LineEdit_gui_input(event)
+	<span class="keyword">if</span> event:is_class(<span class="string">"InputEventKey"</span>) <span class="keyword">and</span> event:is_pressed() <span class="keyword">then</span>
+		<span class="keyword">if</span> event.scancode == GD.KEY_UP <span class="keyword">then</span>
+			self:history_up()
+		<span class="keyword">elseif</span> event.scancode == GD.KEY_DOWN <span class="keyword">then</span>
+			self:history_down()
+		<span class="keyword">end</span>
+	<span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> LuaREPL:_on_HistoryButton_popup_about_to_show()
+	self.history_button_popup:clear()
+	<span class="keyword">for</span> i, s <span class="keyword">in</span> <span class="global">ipairs</span>(self.history) <span class="keyword">do</span>
+		self.history_button_popup:add_item(s)
+	<span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> LuaREPL:_on_HistoryButton_popup_id_pressed(i)
+	self:set_history(i)
+<span class="keyword">end</span>
+
 <span class="keyword">return</span> LuaREPL</pre>
 
 
@@ -193,7 +269,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2021-09-07 20:50:30 </i>
+<i style="float:right;">Last updated 2021-10-03 22:41:31 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>
