@@ -123,9 +123,9 @@ build/osx_arm64/lua_pluginscript.dylib: MAKE_LUAJIT_ARGS += TARGET_FLAGS="-arch 
 build/osx_universal64/lua_pluginscript.dylib: build/osx_x86_64/lua_pluginscript.dylib build/osx_arm64/lua_pluginscript.dylib | build/osx_universal64
 	$(_LIPO) $^ -create -output $@
 
-build/$(GDNLIB_ENTRY_PREFIX)/%: %
+build/$(GDNLIB_ENTRY_PREFIX)/%:
 	@mkdir -p $(dir $@)
-	cp $< $@
+	cp $* $@
 $(addprefix build/,$(DIST_SRC)): | build
 	cp $(notdir $@) $@
 build/lua_pluginscript.zip: $(DIST_DEST)
