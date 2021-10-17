@@ -1,5 +1,7 @@
 # Godot Lua PluginScript
 
+<img src="blog/icon.png" alt="Lua PluginScript icon" width="128" height="128"/>
+
 GDNative + PluginScript library that adds support for [Lua](https://www.lua.org/)
 as a scripting language in [Godot](https://godotengine.org/).
 
