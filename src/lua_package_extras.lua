@@ -27,7 +27,6 @@
 -- executable folder.
 -- @module package_extras
 
-local active_library_dirsep_pos, so_ext = active_library_path:match("()[^/]+(%.%w+)$")
 local execdir_repl =
 	OS:has_feature("standalone")
 	and active_library_path:sub(1, active_library_dirsep_pos - 1)
