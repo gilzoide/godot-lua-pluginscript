@@ -1,13 +1,17 @@
 # Changelog
 ## [Unreleased]
+
+
+## [0.1.0]
 ### Added
+- `GD._VERSION`
 - `Object.null`
 - Call `Object.set` on `Object.__newindex`
-- REPL history, with up/down keys choosing previous/next line
 - Stack trace to error message when loading script fails
 - Initialize known properties when instantiating script
 - Unit test infrastructure
-
+- Android ARMv7/ARM64/x86/x86_64 builds
+- [plugin] REPL history, with up/down keys choosing previous/next line
 
 ### Fixed
 - Properties with `nil` as default value not accesible from Lua
@@ -31,5 +35,6 @@
 - API documentation
 
 
-[Unreleased]: https://github.com/gilzoide/godot-lua-pluginscript/compare/r1...HEAD
+[Unreleased]: https://github.com/gilzoide/godot-lua-pluginscript/compare/0.1.0...HEAD
+[0.1.0]: https://github.com/gilzoide/godot-lua-pluginscript/releases/tag/0.1.0
 [r1]: https://github.com/gilzoide/godot-lua-pluginscript/releases/tag/r1
