@@ -170,13 +170,13 @@ osx-x86_64: build/osx_x86_64/lua_pluginscript.dylib
 osx-arm64: build/osx_arm64/lua_pluginscript.dylib
 osx64: build/osx_universal64/lua_pluginscript.dylib
 
-android-armv7a: NDK_TARGET_ABI ?= 16
-android-armv7a: _CC = "$(NDK_TOOLCHAIN_BIN)/armv7a-linux-androideabi$(NDK_TARGET_ABI)-clang" -fPIC
+android-armv7a: NDK_TARGET_API ?= 16
+android-armv7a: _CC = "$(NDK_TOOLCHAIN_BIN)/armv7a-linux-androideabi$(NDK_TARGET_API)-clang" -fPIC
 android-armv7a: MAKE_LUAJIT_ARGS += HOST_CC="$(CC) -m32 -fPIC" CROSS="$(NDK_TOOLCHAIN_BIN)/arm-linux-androideabi-" STATIC_CC="$(_CC)" DYNAMIC_CC="$(_CC)" TARGET_LD="$(_CC)"
 android-armv7a: build/android_armv7a/liblua_pluginscript.so
 
-android-aarch64: NDK_TARGET_ABI ?= 21
-android-aarch64: _CC = "$(NDK_TOOLCHAIN_BIN)/aarch64-linux-android$(NDK_TARGET_ABI)-clang" -fPIC
+android-aarch64: NDK_TARGET_API ?= 21
+android-aarch64: _CC = "$(NDK_TOOLCHAIN_BIN)/aarch64-linux-android$(NDK_TARGET_API)-clang" -fPIC
 android-aarch64: MAKE_LUAJIT_ARGS += HOST_CC="$(CC) -fPIC" CROSS="$(NDK_TOOLCHAIN_BIN)/aarch64-linux-android-" STATIC_CC="$(_CC)" DYNAMIC_CC="$(_CC)" TARGET_LD="$(_CC)"
 android-aarch64: build/android_aarch64/liblua_pluginscript.so
 
