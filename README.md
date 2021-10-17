@@ -196,9 +196,16 @@ make windows64  # x86_64
 make windows32  # x86
 make linux64    # x86_64
 make linux32    # x86
-make osx64 MACOSX_DEPLOYMENT_TARGET=XX.YY     # "universal" multiarch x86_64 + amd64 dylib
-make android-armv7a NDK_TOOLCHAIN_BIN=/path/to/ndk/toolchains/llvm/prebuild/host_os-arch/bin    # Android ARMv7
-make android-aarch64 NDK_TOOLCHAIN_BIN=/path/to/ndk/toolchains/llvm/prebuild/host_os-arch/bin   # Android ARM64
+make osx64 \    # "universal" multiarch x86_64 + amd64 dylib
+    MACOSX_DEPLOYMENT_TARGET=XX.YY
+make android-armv7a \   # Android ARMv7
+    NDK_TOOLCHAIN_BIN=/path/to/ndk/toolchains/llvm/prebuild/host_os-arch/bin   
+make android-aarch64 \  # Android ARM64
+    NDK_TOOLCHAIN_BIN=/path/to/ndk/toolchains/llvm/prebuild/host_os-arch/bin  
+make android-x86 \      # Android x86
+    NDK_TOOLCHAIN_BIN=/path/to/ndk/toolchains/llvm/prebuild/host_os-arch/bin      
+make android-x86_64 \   # Android x86_64
+    NDK_TOOLCHAIN_BIN=/path/to/ndk/toolchains/llvm/prebuild/host_os-arch/bin   
 ```
 
 The GDNativeLibrary file `lua_pluginscript.gdnlib` is already configured to use

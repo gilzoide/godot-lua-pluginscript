@@ -24,7 +24,7 @@ BUILT_OBJS = $(addprefix build/%/,$(OBJS))
 MAKE_LUAJIT_OUTPUT = build/%/luajit/src/luajit build/%/luajit/src/lua51.dll build/%/luajit/src/libluajit.a
 
 GDNLIB_ENTRY_PREFIX = addons/godot-lua-pluginscript
-BUILD_FOLDERS = build build/windows_x86 build/windows_x86_64 build/linux_x86 build/linux_x86_64 build/osx_x86_64 build/osx_arm64 build/osx_universal64 build/android_armv7a build/android_aarch64 build/$(GDNLIB_ENTRY_PREFIX)
+BUILD_FOLDERS = build build/windows_x86 build/windows_x86_64 build/linux_x86 build/linux_x86_64 build/osx_x86_64 build/osx_arm64 build/osx_universal64 build/android_armv7a build/android_aarch64 build/android_x86 build/android_x86_64 build/$(GDNLIB_ENTRY_PREFIX)
 
 DIST_SRC = LICENSE
 DIST_ADDONS_SRC = LICENSE lps_coroutine.lua lua_pluginscript.gdnlib $(wildcard build/*/lua*.*) $(wildcard plugin/*)
@@ -179,4 +179,14 @@ android-aarch64: NDK_TARGET_API ?= 21
 android-aarch64: _CC = "$(NDK_TOOLCHAIN_BIN)/aarch64-linux-android$(NDK_TARGET_API)-clang" -fPIC
 android-aarch64: MAKE_LUAJIT_ARGS += HOST_CC="$(CC) -fPIC" CROSS="$(NDK_TOOLCHAIN_BIN)/aarch64-linux-android-" STATIC_CC="$(_CC)" DYNAMIC_CC="$(_CC)" TARGET_LD="$(_CC)"
 android-aarch64: build/android_aarch64/liblua_pluginscript.so
+
+android-x86: NDK_TARGET_API ?= 16
+android-x86: _CC = "$(NDK_TOOLCHAIN_BIN)/i686-linux-android$(NDK_TARGET_API)-clang" -fPIC
+android-x86: MAKE_LUAJIT_ARGS += HOST_CC="$(CC) -m32 -fPIC" CROSS="$(NDK_TOOLCHAIN_BIN)/i686-linux-android-" STATIC_CC="$(_CC)" DYNAMIC_CC="$(_CC)" TARGET_LD="$(_CC)"
+android-x86: build/android_x86/liblua_pluginscript.so
+
+android-x86_64: NDK_TARGET_API ?= 21
+android-x86_64: _CC = "$(NDK_TOOLCHAIN_BIN)/x86_64-linux-android$(NDK_TARGET_API)-clang" -fPIC
+android-x86_64: MAKE_LUAJIT_ARGS += HOST_CC="$(CC) -fPIC" CROSS="$(NDK_TOOLCHAIN_BIN)/x86_64-linux-android-" STATIC_CC="$(_CC)" DYNAMIC_CC="$(_CC)" TARGET_LD="$(_CC)"
+android-x86_64: build/android_x86_64/liblua_pluginscript.so
 
