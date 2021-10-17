@@ -2,7 +2,7 @@
 
 singleton=true
 load_once=true
-symbol_prefix="godot_"
+symbol_prefix="lps_"
 reloadable=false
 
 [entry]

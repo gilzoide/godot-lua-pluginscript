@@ -221,8 +221,10 @@ static godot_pluginscript_language_desc lps_language_desc = {
 	},
 };
 
+#define PREFIX_SYMBOL(s) lps_ ## s
+
 // GDNative functions
-GDN_EXPORT void godot_gdnative_init(godot_gdnative_init_options *options) {
+GDN_EXPORT void PREFIX_SYMBOL(gdnative_init)(godot_gdnative_init_options *options) {
 	hgdn_gdnative_init(options);
 
 	if (!hgdn_pluginscript_api) {
@@ -253,10 +255,10 @@ GDN_EXPORT void godot_gdnative_init(godot_gdnative_init_options *options) {
 	hgdn_pluginscript_api->godot_pluginscript_register_language(&lps_language_desc);
 }
 
-GDN_EXPORT void godot_gdnative_terminate(godot_gdnative_terminate_options *options) {
+GDN_EXPORT void PREFIX_SYMBOL(gdnative_terminate)(godot_gdnative_terminate_options *options) {
 	hgdn_string_destroy(&lps_active_library_path);
 	hgdn_gdnative_terminate(options);
 }
 
-GDN_EXPORT void godot_gdnative_singleton() {
+GDN_EXPORT void PREFIX_SYMBOL(gdnative_singleton)() {
 }
