@@ -48,6 +48,8 @@ GD = {
 	PropertyHint = PropertyHint,
 	--- `Enumerations.PropertyUsage`
 	PropertyUsage = PropertyUsage,
+	--- Project version: 0.1.0
+	_VERSION = '0.1.0',
 }
 
 local global_constants = api.godot_get_global_constants()
