@@ -12,6 +12,8 @@ written in GDScript / C# / Visual Script and vice-versa.
 This way, one can use the language that best suits the implementation for each
 script and all of them can understand each other.
 
+This plugin is available in the Asset Library as `Lua PluginScript`: https://godotengine.org/asset-library/asset/1078
+
 For some usage examples, check out [lps\_coroutine.lua](lps_coroutine.lua)
 and [plugin/lua\_repl.lua](plugin/lua_repl.lua).
 
@@ -21,9 +23,16 @@ Currently, only LuaJIT is supported, since the implementation is based on its
 
 ## Installing
 
-Put a built release of the library into the project folder and restart Godot.
-Make sure the `lua_pluginscript.gdnlib` file is located at the
-`res://addons/godot-lua-pluginscript` folder.
+Either:
+
+- In Godot Editor, open the [Asset Library tab](https://docs.godotengine.org/en/stable/tutorials/assetlib/using_assetlib.html#in-the-editor),
+  search for the [Lua PluginScript](https://godotengine.org/asset-library/asset/1078)
+  asset, download and install it.
+- Put a built release of the library into the project folder and restart Godot.
+  Make sure the `lua_pluginscript.gdnlib` file is located at the
+  `res://addons/godot-lua-pluginscript` folder.
+- Clone this repository in the project's `res://addons/godot-lua-pluginscript`
+  folder and build for the wanted platforms.
 
 
 ## Plugin
@@ -170,7 +179,7 @@ return MyClass
 - [ ] Example projects
 - [ ] Export plugin to minify Lua scripts
 - [X] Drop-in binary release in GitHub
-- [ ] Submit to Asset Library
+- [X] Submit to Asset Library
 
 
 ## Building
