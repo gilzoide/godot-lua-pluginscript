@@ -298,6 +298,23 @@ if api_1_1 ~= nil then
 	methods.shuffle = api_1_1.godot_array_shuffle
 end
 
+--- Returns a String with each element of the array joined with the given `delimiter`.
+-- @function join
+-- @param[opt=""] delimiter  
+-- @treturn String
+local function array_join(self, delimiter)
+	if #self == 0 then
+		return String()
+	end
+	local result = String(self[0])
+	delimiter = String(delimiter or "")
+	for i = 1, #self - 1 do
+		result = result .. delimiter .. self[i]
+	end
+	return result
+end
+methods.join = array_join
+
 --- Static Functions.
 -- These don't receive `self` and should be called directly as `Array.static_function(...)`
 -- @section static_funcs
