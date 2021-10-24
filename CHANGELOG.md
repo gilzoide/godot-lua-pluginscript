@@ -1,5 +1,16 @@
 # Changelog
 ## [Unreleased]
+### Added
+- `Array.join` method, similar to `PoolStringArray.join`
+
+### Fixed
+- Error handler now uses `tostring` to stringify the incoming parameter,
+  avoiding type errors. It also checks for the result of `string.match`, so it
+  does not errors if the message is not in the format expected.
+- Loading of C modules now uses absolute library paths, so that files found in
+  patterns like `res://*` are correctly loaded.
+- Always try loading active library, so that dynamic loader knows about `lua*`
+  symbols when loading C modules.
 
 
 ## [0.1.0]
