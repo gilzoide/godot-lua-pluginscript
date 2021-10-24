@@ -104,10 +104,7 @@ local methods = {
 	-- @treturn[1] String
 	-- @treturn[2] nil  If index is invalid (`index < 0` or `index >= size()`)
 	-- @see get
-	safe_get = function(self, index)
-		local value = Array.safe_get(self, index)
-		return value and ffi_gc(value, api.godot_string_destroy)
-	end,
+	safe_get = Array.safe_get,
 	--- Set a new string for `index`.
 	-- If `index` is invalid (`index < 0` or `index >= size()`), the application will crash.
 	-- For a safe approach that `resize`s if `index >= size()`, use `safe_set` or the idiom `array[index] = value` instead.
@@ -204,7 +201,7 @@ end
 -- @function join
 -- @param[opt=""] delimiter  
 -- @treturn String
-methods.join = array_join
+methods.join = Array.join
 
 --- Static Functions.
 -- These don't receive `self` and should be called directly as `PoolStringArray.static_function(...)`

@@ -302,7 +302,7 @@ end
 -- @function join
 -- @param[opt=""] delimiter  
 -- @treturn String
-local function array_join(self, delimiter)
+methods.join = function(self, delimiter)
 	if #self == 0 then
 		return String()
 	end
@@ -313,7 +313,6 @@ local function array_join(self, delimiter)
 	end
 	return result
 end
-methods.join = array_join
 
 --- Static Functions.
 -- These don't receive `self` and should be called directly as `Array.static_function(...)`
