@@ -46,6 +46,7 @@ local lps_callstack = {
 }
 
 local function print_coroutine_error(co, err, msg_prefix)
+	err = tostring(err)
 	local filename, line, err_msg = string_match(err, ERROR_PATH_LINE_MESSAGE_PATT)
 	if not filename then
 		filename, line, err_msg = '?', -1, err
