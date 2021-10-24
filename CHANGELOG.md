@@ -1,5 +1,8 @@
 # Changelog
 ## [Unreleased]
+
+
+## [0.2.0]
 ### Added
 - `Array.join` method, similar to `PoolStringArray.join`
 - Project Settings for setting up `package.path` and `package.cpath`
@@ -49,6 +52,7 @@
 - API documentation
 
 
-[Unreleased]: https://github.com/gilzoide/godot-lua-pluginscript/compare/0.1.0...HEAD
+[Unreleased]: https://github.com/gilzoide/godot-lua-pluginscript/compare/0.2.0...HEAD
+[0.2.0]: https://github.com/gilzoide/godot-lua-pluginscript/releases/tag/0.2.0
 [0.1.0]: https://github.com/gilzoide/godot-lua-pluginscript/releases/tag/0.1.0
 [r1]: https://github.com/gilzoide/godot-lua-pluginscript/releases/tag/r1
