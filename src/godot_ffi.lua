@@ -1386,7 +1386,6 @@ void (*lps_make_function_cb)(const godot_string *class_name, const godot_string 
 ]]
 
 local active_library_path = ...
-local active_library_dirsep_pos, so_ext = active_library_path:match("()[^/]+(%.%w+)$")
 local _, clib = pcall(ffi.load, active_library_path, true)
 clib = clib or ffi.C
 

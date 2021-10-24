@@ -12,7 +12,8 @@ written in GDScript / C# / Visual Script and vice-versa.
 This way, one can use the language that best suits the implementation for each
 script and all of them can understand each other.
 
-This plugin is available in the Asset Library as `Lua PluginScript`: https://godotengine.org/asset-library/asset/1078
+This plugin is available in the Asset Library as [Lua PluginScript](https://godotengine.org/asset-library/asset/1078)
+and has [online documentation](https://gilzoide.github.io/godot-lua-pluginscript/topics/README.md.html).
 
 For some usage examples, check out [lps\_coroutine.lua](lps_coroutine.lua)
 and [plugin/lua\_repl.lua](plugin/lua_repl.lua).
@@ -35,12 +36,39 @@ Either:
   folder and build for the wanted platforms.
 
 
-## Plugin
+## Project Settings + Plugin
 
-An editor plugin is included, currently with a barebones REPL for Lua
+In the `Project -> Project Settings...` window, some settings are available for
+`Lua PluginScript`:
+
+- **Lua PluginScript/Package Path/Behavior**: Whether templates will replace
+  [package.path](https://www.lua.org/manual/5.1/manual.html#pdf-package.path),
+  be appended to it, or prepended to it.
+  Default behavior: replace.
+- **Lua PluginScript/Package Path/Templates**: String array of templates to be
+  injected into `package.path`.
+  Default templates: `res://?.lua` and `res://?/init.lua`.
+- **Lua PluginScript/Package C Path/Behavior**: Whether templates will replace
+  [package.cpath](https://www.lua.org/manual/5.1/manual.html#pdf-package.cpath),
+  be appended to it, or prepended to it.
+  Default behavior: replace.
+- **Lua PluginScript/Package C Path/Templates**: String array of templates to be
+  injected into `package.cpath`.
+  Default templates: `!/?.dll` and `!/loadall.dll` on Windows, `!/?.so` and `!/loadall.so` elsewhere.
+
+Also, an editor plugin is included, currently with a barebones REPL for Lua
 expressions, located in the bottom panel of the editor.
-Enable the `Lua PluginScript` plugin in `Project -> Project Settings...` menu,
-in the `Plugins` tab.
+Enable the `Lua PluginScript` plugin in the `Plugins` tab of the Project Settings window.
+
+
+## Using LuaRocks
+
+Lua modules can be installed locally to the project using [LuaRocks](https://luarocks.org/):
+
+    $ luarocks install --lua-version 5.1 --tree localrocks <module name>
+
+Adjust the package paths using the settings described above and Lua PluginScript
+should be able to use the installed modules.
 
 
 ## Goals
@@ -61,15 +89,6 @@ in the `Plugins` tab.
 
 - Provide calls to all core Godot classes' methods via native method bindings
 - Support multithreading on the Lua side
-
-
-## Documentation
-The API is documented using [LDoc](https://stevedonovan.github.io/ldoc/manual/doc.md.html)
-and is available online at [github pages](https://gilzoide.github.io/godot-lua-pluginscript/topics/README.md.html).
-
-Documentation may be generated with the following command:
-
-    # make docs
 
 
 ## Articles
@@ -179,6 +198,13 @@ return MyClass
 - [ ] Export plugin to minify Lua scripts
 - [X] Drop-in binary release in GitHub
 - [X] Submit to Asset Library
+
+
+## Documentation
+The API is documented using [LDoc](https://stevedonovan.github.io/ldoc/manual/doc.md.html).
+Documentation may be generated with the following command:
+
+    # make docs
 
 
 ## Building
