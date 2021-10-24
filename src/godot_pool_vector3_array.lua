@@ -244,7 +244,7 @@ PoolVector3Array = ffi_metatype('godot_pool_vector3_array', {
 		methods.push_back(self, ...)
 		return self
 	end,
-	__gc = godot_pool_vector3_array_destroy,
+	__gc = api.godot_pool_vector3_array_destroy,
 	--- Returns method named `index` or the result of `safe_get`.
 	-- @function __index
 	-- @param index

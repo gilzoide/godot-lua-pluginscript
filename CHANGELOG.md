@@ -13,6 +13,7 @@
   patterns like `res://*` are correctly loaded.
 - Always try loading active library, so that dynamic loader knows about `lua*`
   symbols when loading C modules.
+- `Pool*Array`s' `__gc` metamethod
 
 
 ## [0.1.0]
