@@ -2,6 +2,23 @@
 ## [Unreleased]
 
 
+## [0.2.0]
+### Added
+- `Array.join` method, similar to `PoolStringArray.join`
+- Project Settings for setting up `package.path` and `package.cpath`
+- Bundle LuaJIT's `jit/*.lua` modules in build folder
+
+### Fixed
+- Error handler now uses `tostring` to stringify the incoming parameter,
+  avoiding type errors. It also checks for the result of `string.match`, so it
+  does not errors if the message is not in the format expected.
+- Loading of C modules now uses absolute library paths, so that files found in
+  patterns like `res://*` are correctly loaded.
+- Always try loading active library, so that dynamic loader knows about `lua*`
+  symbols when loading C modules.
+- `Pool*Array`s' `__gc` metamethod
+
+
 ## [0.1.0]
 ### Added
 - `GD._VERSION`
@@ -35,6 +52,7 @@
 - API documentation
 
 
-[Unreleased]: https://github.com/gilzoide/godot-lua-pluginscript/compare/0.1.0...HEAD
+[Unreleased]: https://github.com/gilzoide/godot-lua-pluginscript/compare/0.2.0...HEAD
+[0.2.0]: https://github.com/gilzoide/godot-lua-pluginscript/releases/tag/0.2.0
 [0.1.0]: https://github.com/gilzoide/godot-lua-pluginscript/releases/tag/0.1.0
 [r1]: https://github.com/gilzoide/godot-lua-pluginscript/releases/tag/r1

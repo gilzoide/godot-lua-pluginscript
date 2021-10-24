@@ -27,6 +27,8 @@
 -- executable folder.
 -- @module package_extras
 
+local active_library_dirsep_pos = active_library_path:match("()[^/]+%.%w+$")
+
 local execdir_repl =
 	OS:has_feature("standalone")
 	and active_library_path:sub(1, active_library_dirsep_pos - 1)
@@ -70,6 +72,7 @@ local function c_searcher(name, name_override)
 	if not filename then
 		return open_file_or_err
 	end
+	filename = tostring(open_file_or_err:get_path_absolute())
 	open_file_or_err:close()
 	local func_suffix = (name_override or name):replace('.', '_')
 	-- Split module name if a "-" is found
@@ -118,18 +121,76 @@ function package.searchpath(...)
 	end
 end
 
---- Prepend the paths `res://?.lua` and `res://?/init.lua`.
-package.path = 'res://?.lua;res://?/init.lua;' .. package.path
---- Prepend the paths `!/?.{dll,so,dylib}` and `!/loadall.{dll,so,dylib}`.
--- The shared library file extension is detected automatically.
--- @see package.soext
-package.cpath = '!/?' .. so_ext .. ';!/loadall' .. so_ext .. ';' .. package.cpath
-
---- The shared object file extension for this system, currently either `.dll`, `.so` or `.dylib`.
--- Detected automatically.
-package.soext = so_ext
-
 local searchers = package.searchers or package.loaders
 searchers[2] = lua_searcher
 searchers[3] = c_searcher
 searchers[4] = c_root_searcher
+
+local LUA_PATH_BEHAVIOR_SETTING = 'lua_pluginscript/package_path/behavior'
+local LUA_PATH_SETTING = 'lua_pluginscript/package_path/templates'
+local LUA_CPATH_BEHAVIOR_SETTING = 'lua_pluginscript/package_c_path/behavior'
+local LUA_CPATH_SETTING = 'lua_pluginscript/package_c_path/templates'
+
+local function add_project_setting(name, initial_value)
+	if not ProjectSettings:has_setting(name) then
+		ProjectSettings:set_setting(name, initial_value)
+	end
+	ProjectSettings:set_initial_value(name, initial_value)
+end
+
+local function add_project_setting_enum(name, enum_values)
+	add_project_setting(name, 0)
+	ProjectSettings:add_property_info {
+		name = name,
+		type = VariantType.Int,
+		hint = PropertyHint.ENUM,
+		hint_string = enum_values,
+	}
+end
+
+add_project_setting_enum(LUA_PATH_BEHAVIOR_SETTING, 'Replace,Append,Prepend')
+add_project_setting(LUA_PATH_SETTING, PoolStringArray('res://?.lua', 'res://?/init.lua', 'res://addons/godot-lua-pluginscript/build/?.lua'))
+add_project_setting_enum(LUA_CPATH_BEHAVIOR_SETTING, 'Replace,Append,Prepend')
+add_project_setting(LUA_CPATH_SETTING, PoolStringArray('!/?.so', '!/loadall.so'))
+add_project_setting(LUA_CPATH_SETTING .. '.Windows', PoolStringArray('!/?.dll', '!/loadall.dll'))
+
+local lua_path = ProjectSettings:get_setting(LUA_PATH_SETTING)
+local lua_cpath = ProjectSettings:get_setting(LUA_CPATH_SETTING)
+local lua_path_behaviour = ProjectSettings:get_setting(LUA_PATH_BEHAVIOR_SETTING)
+local lua_cpath_behaviour = ProjectSettings:get_setting(LUA_CPATH_BEHAVIOR_SETTING)
+
+if lua_path_behaviour == 1 then
+	lua_path:insert(0, package.path)
+elseif lua_path_behaviour == 2 then
+	lua_path:append(package.path)
+end
+
+if lua_cpath_behaviour == 1 then
+	lua_cpath:insert(0, package.cpath)
+elseif lua_cpath_behaviour == 2 then
+	lua_cpath:append(package.cpath)
+end
+
+--- When Lua PluginScript is loaded, `package.path` is either replaced,
+-- appended or prepended by the paths in `lua_pluginscript/package_path/templates` project
+-- setting.
+--
+-- The chosen behavior depends on the `lua_pluginscript/package_path/behavior`
+-- project setting.
+--
+-- Default paths are `res://?.lua`, `res://?/init.lua` and 'res://addons/godot-lua-pluginscript/build/?.lua'.
+--
+-- @see searchpath
+package.path = lua_path:join(';')
+
+--- When Lua PluginScript is loaded, `package.cpath` is either replaced,
+-- appended or prepended by the paths in `lua_pluginscript/package_c_path/templates` project
+-- setting.
+--
+-- The chosen behavior depends on the `lua_pluginscript/package_c_path/behavior`
+-- project setting.
+--
+-- Default paths are `!/?.dll` and `!/loadall.dll` on Windows, `!/?.so` and `!/loadall.so` elsewhere.
+--
+-- @see searchpath
+package.cpath = lua_cpath:join(';')

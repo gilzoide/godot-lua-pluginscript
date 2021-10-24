@@ -57,7 +57,7 @@ local weak_k = { __mode = 'k' }
 
 -- Some useful patterns
 local ERROR_LINE_MESSAGE_PATT = ':(%d+):%s*(.*)'
-local ERROR_PATH_LINE_MESSAGE_PATT = '"([^"]+)"%D*(%d*):%s*(.+)'
+local ERROR_PATH_LINE_MESSAGE_PATT = '"([^"]+)"[^:]*:(%d*):%s*(.*)'
 
 -- Some useful functions
 local function string_quote(s)

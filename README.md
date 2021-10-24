@@ -12,6 +12,9 @@ written in GDScript / C# / Visual Script and vice-versa.
 This way, one can use the language that best suits the implementation for each
 script and all of them can understand each other.
 
+This plugin is available in the Asset Library as [Lua PluginScript](https://godotengine.org/asset-library/asset/1078)
+and has [online documentation](https://gilzoide.github.io/godot-lua-pluginscript/topics/README.md.html).
+
 For some usage examples, check out [lps\_coroutine.lua](lps_coroutine.lua)
 and [plugin/lua\_repl.lua](plugin/lua_repl.lua).
 
@@ -21,17 +24,52 @@ Currently, only LuaJIT is supported, since the implementation is based on its
 
 ## Installing
 
-Put a built release of the library into the project folder and restart Godot.
-Make sure the `lua_pluginscript.gdnlib` file is located at the
-`res://addons/godot-lua-pluginscript` folder.
+Either:
+
+- In Godot Editor, open the [Asset Library tab](https://docs.godotengine.org/en/stable/tutorials/assetlib/using_assetlib.html#in-the-editor),
+  search for the [Lua PluginScript](https://godotengine.org/asset-library/asset/1078)
+  asset, download and install it.
+- Put a built release of the library into the project folder and restart Godot.
+  Make sure the `lua_pluginscript.gdnlib` file is located at the
+  `res://addons/godot-lua-pluginscript` folder.
+- Clone this repository as the project's `res://addons/godot-lua-pluginscript`
+  folder and build for the desired platforms.
 
 
-## Plugin
+## Project Settings + Plugin
 
-An editor plugin is included, currently with a barebones REPL for Lua
+In the `Project -> Project Settings...` window, some settings are available:
+
+- **Lua PluginScript/Package Path/Behavior**: Whether templates will replace
+  [package.path](https://www.lua.org/manual/5.1/manual.html#pdf-package.path),
+  be appended to it or prepended to it.
+  Default behavior: replace.
+- **Lua PluginScript/Package Path/Templates**: String array of templates to be
+  injected into `package.path`.
+  Default templates: `res://?.lua` and `res://?/init.lua`.
+- **Lua PluginScript/Package C Path/Behavior**: Whether templates will replace
+  [package.cpath](https://www.lua.org/manual/5.1/manual.html#pdf-package.cpath),
+  be appended to it or prepended to it.
+  Default behavior: replace.
+- **Lua PluginScript/Package C Path/Templates**: String array of templates to be
+  injected into `package.cpath`.
+  Default templates: `!/?.dll` and `!/loadall.dll` on Windows, `!/?.so` and `!/loadall.so` elsewhere.
+
+Also, an editor plugin is included, currently with a barebones REPL for Lua
 expressions, located in the bottom panel of the editor.
-Enable the `Lua PluginScript` plugin in `Project -> Project Settings...` menu,
-in the `Plugins` tab.
+Enable the `Lua PluginScript` plugin in the `Plugins` tab of the Project Settings window.
+
+
+## Using LuaRocks
+
+Lua modules available at [LuaRocks](https://luarocks.org/) can be installed locally to the project:
+
+```
+luarocks install --lua-version 5.1 --tree <local modules folder name> <module name>
+```
+
+Adjust the package paths using the settings described above and Lua PluginScript
+should be able to `require` the installed modules.
 
 
 ## Goals
@@ -54,15 +92,6 @@ in the `Plugins` tab.
 - Support multithreading on the Lua side
 
 
-## Documentation
-The API is documented using [LDoc](https://stevedonovan.github.io/ldoc/manual/doc.md.html)
-and is available online at [github pages](https://gilzoide.github.io/godot-lua-pluginscript/topics/README.md.html).
-
-Documentation may be generated with the following command:
-
-    # make docs
-
-
 ## Articles
 
 1. [Designing Godot Lua PluginScript](https://github.com/gilzoide/godot-lua-pluginscript/blob/main/blog/1-design-en.md)
@@ -73,8 +102,7 @@ Documentation may be generated with the following command:
 
 ## Script example
 
-This is an example of how a Lua script looks like. There are comments regarding
-some design decisions, which may change during development.
+This is an example of how a Lua script looks like.
 
 ```lua
 -- Class definitions are regular Lua tables, to be returned from the script
@@ -170,7 +198,14 @@ return MyClass
 - [ ] Example projects
 - [ ] Export plugin to minify Lua scripts
 - [X] Drop-in binary release in GitHub
-- [ ] Submit to Asset Library
+- [X] Submit to Asset Library
+
+
+## Documentation
+The API is documented using [LDoc](https://stevedonovan.github.io/ldoc/manual/doc.md.html).
+Documentation may be generated with the following command:
+
+    # make docs
 
 
 ## Building

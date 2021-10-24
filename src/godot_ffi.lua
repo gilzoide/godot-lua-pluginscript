@@ -1386,8 +1386,8 @@ void (*lps_make_function_cb)(const godot_string *class_name, const godot_string 
 ]]
 
 local active_library_path = ...
-local active_library_dirsep_pos, so_ext = active_library_path:match("()[^/]+(%.%w+)$")
-local clib = so_ext == '.dll' and ffi.load(active_library_path, true) or ffi.C
+local _, clib = pcall(ffi.load, active_library_path, true)
+clib = clib or ffi.C
 
 local api = clib.hgdn_core_api
 local api_1_1 = clib.hgdn_core_1_1_api

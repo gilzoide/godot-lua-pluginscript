@@ -78,7 +78,7 @@ local methods = {
 	end,
 	--- Returns the bigrams (pairs of consecutive letters) of this string.
 	-- @function bigrams
-	-- @treturn PoolStringArray
+	-- @treturn Array
 	bigrams = function(self)
 		return ffi_gc(api.godot_string_bigrams(self), api.godot_array_destroy)
 	end,
