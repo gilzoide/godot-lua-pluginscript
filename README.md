@@ -32,25 +32,24 @@ Either:
 - Put a built release of the library into the project folder and restart Godot.
   Make sure the `lua_pluginscript.gdnlib` file is located at the
   `res://addons/godot-lua-pluginscript` folder.
-- Clone this repository in the project's `res://addons/godot-lua-pluginscript`
-  folder and build for the wanted platforms.
+- Clone this repository as the project's `res://addons/godot-lua-pluginscript`
+  folder and build for the desired platforms.
 
 
 ## Project Settings + Plugin
 
-In the `Project -> Project Settings...` window, some settings are available for
-`Lua PluginScript`:
+In the `Project -> Project Settings...` window, some settings are available:
 
 - **Lua PluginScript/Package Path/Behavior**: Whether templates will replace
   [package.path](https://www.lua.org/manual/5.1/manual.html#pdf-package.path),
-  be appended to it, or prepended to it.
+  be appended to it or prepended to it.
   Default behavior: replace.
 - **Lua PluginScript/Package Path/Templates**: String array of templates to be
   injected into `package.path`.
   Default templates: `res://?.lua` and `res://?/init.lua`.
 - **Lua PluginScript/Package C Path/Behavior**: Whether templates will replace
   [package.cpath](https://www.lua.org/manual/5.1/manual.html#pdf-package.cpath),
-  be appended to it, or prepended to it.
+  be appended to it or prepended to it.
   Default behavior: replace.
 - **Lua PluginScript/Package C Path/Templates**: String array of templates to be
   injected into `package.cpath`.
@@ -63,12 +62,14 @@ Enable the `Lua PluginScript` plugin in the `Plugins` tab of the Project Setting
 
 ## Using LuaRocks
 
-Lua modules can be installed locally to the project using [LuaRocks](https://luarocks.org/):
+Lua modules available at [LuaRocks](https://luarocks.org/) can be installed locally to the project:
 
-    $ luarocks install --lua-version 5.1 --tree localrocks <module name>
+```
+luarocks install --lua-version 5.1 --tree <local modules folder name> <module name>
+```
 
 Adjust the package paths using the settings described above and Lua PluginScript
-should be able to use the installed modules.
+should be able to `require` the installed modules.
 
 
 ## Goals

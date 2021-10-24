@@ -2,6 +2,7 @@
 ## [Unreleased]
 ### Added
 - `Array.join` method, similar to `PoolStringArray.join`
+- Project Settings for setting up `package.path` and `package.cpath`
 
 ### Fixed
 - Error handler now uses `tostring` to stringify the incoming parameter,
