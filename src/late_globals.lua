@@ -135,12 +135,13 @@ end
 local Engine = api.godot_global_get_singleton("Engine")
 setmetatable(_G, {
 	__index = function(self, key)
-		if Engine:has_singleton(key) then
+		local gd_key = String(key)
+		if Engine:has_singleton(gd_key) then
 			local singleton = api.godot_global_get_singleton(key)
 			rawset(self, key, singleton)
 			return singleton
 		end
-		if ClassDB:class_exists(key) then
+		if ClassDB:class_exists(gd_key) then
 			local cls = ClassWrapper:new(key)
 			rawset(self, key, cls)
 			return cls

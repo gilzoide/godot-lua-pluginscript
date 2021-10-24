@@ -70,6 +70,7 @@ local function c_searcher(name, name_override)
 	if not filename then
 		return open_file_or_err
 	end
+	filename = tostring(open_file_or_err:get_path_absolute())
 	open_file_or_err:close()
 	local func_suffix = (name_override or name):replace('.', '_')
 	-- Split module name if a "-" is found
