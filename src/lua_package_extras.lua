@@ -126,10 +126,10 @@ searchers[2] = lua_searcher
 searchers[3] = c_searcher
 searchers[4] = c_root_searcher
 
-local LUA_PATH_SETTING = 'lua_pluginscript/package_path/templates'
-local LUA_CPATH_SETTING = 'lua_pluginscript/package_c_path/templates'
 local LUA_PATH_BEHAVIOR_SETTING = 'lua_pluginscript/package_path/behavior'
+local LUA_PATH_SETTING = 'lua_pluginscript/package_path/templates'
 local LUA_CPATH_BEHAVIOR_SETTING = 'lua_pluginscript/package_c_path/behavior'
+local LUA_CPATH_SETTING = 'lua_pluginscript/package_c_path/templates'
 
 local function add_project_setting(name, initial_value)
 	if not ProjectSettings:has_setting(name) then
@@ -149,7 +149,7 @@ local function add_project_setting_enum(name, enum_values)
 end
 
 add_project_setting_enum(LUA_PATH_BEHAVIOR_SETTING, 'Replace,Append,Prepend')
-add_project_setting(LUA_PATH_SETTING, PoolStringArray('res://?.lua', 'res://?/init.lua'))
+add_project_setting(LUA_PATH_SETTING, PoolStringArray('res://?.lua', 'res://?/init.lua', 'res://addons/godot-lua-pluginscript/build/?.lua'))
 add_project_setting_enum(LUA_CPATH_BEHAVIOR_SETTING, 'Replace,Append,Prepend')
 add_project_setting(LUA_CPATH_SETTING, PoolStringArray('!/?.so', '!/loadall.so'))
 add_project_setting(LUA_CPATH_SETTING .. '.Windows', PoolStringArray('!/?.dll', '!/loadall.dll'))
@@ -178,7 +178,7 @@ end
 -- The chosen behavior depends on the `lua_pluginscript/package_path/behavior`
 -- project setting.
 --
--- Default paths are `res://?.lua`, `res://?/init.lua`.
+-- Default paths are `res://?.lua`, `res://?/init.lua` and 'res://addons/godot-lua-pluginscript/build/?.lua'.
 --
 -- @see searchpath
 package.path = lua_path:join(';')

@@ -27,7 +27,7 @@ GDNLIB_ENTRY_PREFIX = addons/godot-lua-pluginscript
 BUILD_FOLDERS = build build/windows_x86 build/windows_x86_64 build/linux_x86 build/linux_x86_64 build/osx_x86_64 build/osx_arm64 build/osx_universal64 build/android_armv7a build/android_aarch64 build/android_x86 build/android_x86_64 build/$(GDNLIB_ENTRY_PREFIX)
 
 DIST_SRC = LICENSE
-DIST_ADDONS_SRC = LICENSE lps_coroutine.lua lua_pluginscript.gdnlib $(wildcard build/*/*lua*.*) $(wildcard plugin/*)
+DIST_ADDONS_SRC = LICENSE lps_coroutine.lua lua_pluginscript.gdnlib $(wildcard build/jit/*.lua) $(wildcard build/*/*lua*.*) $(wildcard plugin/*)
 DIST_ZIP_SRC = $(DIST_SRC) $(addprefix $(GDNLIB_ENTRY_PREFIX)/,$(DIST_ADDONS_SRC))
 DIST_DEST = $(addprefix build/,$(DIST_SRC)) $(addprefix build/$(GDNLIB_ENTRY_PREFIX)/,$(DIST_ADDONS_SRC))
 
@@ -90,10 +90,14 @@ build/%/language_gdnative.o: src/language_gdnative.c
 build/%/language_in_editor_callbacks.o: src/language_in_editor_callbacks.c
 	$(_CC) -o $@ $< -c $(CFLAGS)
 
+build/jit: | build
+	cp -r lib/luajit/src/jit/ $@
 build/%/luajit: | build/%
 	cp -r lib/luajit $@
-$(MAKE_LUAJIT_OUTPUT): | build/%/luajit
-	$(MAKE) -C $| $(and $(TARGET_SYS),TARGET_SYS=$(TARGET_SYS)) $(MAKE_LUAJIT_ARGS)
+$(MAKE_LUAJIT_OUTPUT): | build/%/luajit build/jit
+	$(MAKE) -C $(firstword $|) $(and $(TARGET_SYS),TARGET_SYS=$(TARGET_SYS)) $(MAKE_LUAJIT_ARGS)
+	@mkdir -p build/jit
+	cp $(firstword $|)/src/jit/vmdef.lua build/jit
 build/%/lua51.dll: build/%/luajit/src/lua51.dll
 	cp $< $@
 

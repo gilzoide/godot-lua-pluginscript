@@ -3,6 +3,7 @@
 ### Added
 - `Array.join` method, similar to `PoolStringArray.join`
 - Project Settings for setting up `package.path` and `package.cpath`
+- Bundle LuaJIT's `jit/*.lua` modules in build folder
 
 ### Fixed
 - Error handler now uses `tostring` to stringify the incoming parameter,
