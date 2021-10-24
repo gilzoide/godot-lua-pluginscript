@@ -82,8 +82,7 @@ Documentation may be generated with the following command:
 
 ## Script example
 
-This is an example of how a Lua script looks like. There are comments regarding
-some design decisions, which may change during development.
+This is an example of how a Lua script looks like.
 
 ```lua
 -- Class definitions are regular Lua tables, to be returned from the script
