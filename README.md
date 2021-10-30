@@ -261,6 +261,8 @@ This project uses the following software:
   Lua programming language, released under the MIT license
 - [High Level GDNative (HGDN)](https://github.com/gilzoide/high-level-gdnative):
   higher level GDNative API header, released to the Public Domain
+- [LuaSrcDiet](https://github.com/jirutka/luasrcdiet): compresses Lua source
+  code by removing unnecessary characters, released under the MIT license
 
 
 ## Other projects for using Lua in Godot
