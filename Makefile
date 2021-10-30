@@ -24,13 +24,14 @@ BUILT_OBJS = $(addprefix build/%/,$(OBJS))
 MAKE_LUAJIT_OUTPUT = build/%/luajit/src/luajit build/%/luajit/src/lua51.dll build/%/luajit/src/libluajit.a
 
 GDNLIB_ENTRY_PREFIX = addons/godot-lua-pluginscript
-BUILD_FOLDERS = build build/windows_x86 build/windows_x86_64 build/linux_x86 build/linux_x86_64 build/osx_x86_64 build/osx_arm64 build/osx_universal64 build/android_armv7a build/android_aarch64 build/android_x86 build/android_x86_64 build/$(GDNLIB_ENTRY_PREFIX)
+BUILD_FOLDERS = build build/windows_x86 build/windows_x86_64 build/linux_x86 build/linux_x86_64 build/osx_x86_64 build/osx_arm64 build/osx_universal64 build/android_armv7a build/android_aarch64 build/android_x86 build/android_x86_64 build/$(GDNLIB_ENTRY_PREFIX) plugin/luasrcdiet
 
 LUASRCDIET_SRC = $(wildcard lib/luasrcdiet/luasrcdiet/*.lua) lib/luasrcdiet/COPYRIGHT lib/luasrcdiet/COPYRIGHT_Lua51
+LUASRCDIET_DEST = $(addprefix plugin/luasrcdiet/,$(notdir $(LUASRCDIET_SRC)))
 LUASRCDIET_FLAGS = --maximum --quiet --noopt-binequiv
 
 DIST_SRC = LICENSE
-DIST_ADDONS_SRC = LICENSE lps_coroutine.lua lua_pluginscript.gdnlib $(wildcard build/jit/*.lua) $(wildcard build/*/*lua*.*) $(wildcard plugin/*)
+DIST_ADDONS_SRC = LICENSE lps_coroutine.lua lua_pluginscript.gdnlib $(wildcard build/jit/*.lua) $(wildcard build/*/*lua*.*) $(wildcard plugin/*.*) $(LUASRCDIET_DEST)
 DIST_ZIP_SRC = $(DIST_SRC) $(addprefix $(GDNLIB_ENTRY_PREFIX)/,$(DIST_ADDONS_SRC))
 DIST_DEST = $(addprefix build/,$(DIST_SRC)) $(addprefix build/$(GDNLIB_ENTRY_PREFIX)/,$(DIST_ADDONS_SRC))
 
@@ -136,18 +137,23 @@ build/osx_arm64/lua_pluginscript.dylib: MAKE_LUAJIT_ARGS += TARGET_FLAGS="-arch 
 build/osx_universal64/lua_pluginscript.dylib: build/osx_x86_64/lua_pluginscript.dylib build/osx_arm64/lua_pluginscript.dylib | build/osx_universal64
 	$(_LIPO) $^ -create -output $@
 
+plugin/luasrcdiet/%.lua: lib/luasrcdiet/luasrcdiet/%.lua | plugin/luasrcdiet
+	cp $< $@
+plugin/luasrcdiet/%: lib/luasrcdiet/% | plugin/luasrcdiet
+	cp $< $@
+
 build/$(GDNLIB_ENTRY_PREFIX)/%:
 	@mkdir -p $(dir $@)
 	cp $* $@
 $(addprefix build/,$(DIST_SRC)): | build
 	cp $(notdir $@) $@
-build/lua_pluginscript.zip: $(DIST_DEST)
+build/lua_pluginscript.zip: $(LUASRCDIET_DEST) $(DIST_DEST)
 	cd build && zip lua_pluginscript $(DIST_ZIP_SRC)
 build/project.godot: src/tools/project.godot | build
 	cp $< $@
 
 # Phony targets
-.PHONY: clean dist docs test
+.PHONY: clean dist docs test plugin
 clean:
 	$(RM) -r build/*/
 
@@ -158,6 +164,8 @@ docs:
 
 test: $(DIST_DEST) build/project.godot
 	$(GODOT_BIN) --path build --no-window --quit --script "$(CURDIR)/src/test/init.lua"
+
+plugin: $(LUASRCDIET_DEST)
 
 # Targets by OS + arch
 linux32: MAKE_LUAJIT_ARGS += CC="$(CC) -m32 -fPIC"

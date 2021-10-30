@@ -3,3 +3,4 @@ build/
 .xmake/
 .cache/
 docs/
+plugin/luasrcdiet
