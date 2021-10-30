@@ -26,6 +26,9 @@ MAKE_LUAJIT_OUTPUT = build/%/luajit/src/luajit build/%/luajit/src/lua51.dll buil
 GDNLIB_ENTRY_PREFIX = addons/godot-lua-pluginscript
 BUILD_FOLDERS = build build/windows_x86 build/windows_x86_64 build/linux_x86 build/linux_x86_64 build/osx_x86_64 build/osx_arm64 build/osx_universal64 build/android_armv7a build/android_aarch64 build/android_x86 build/android_x86_64 build/$(GDNLIB_ENTRY_PREFIX)
 
+LUASRCDIET_SRC = $(wildcard lib/luasrcdiet/luasrcdiet/*.lua) lib/luasrcdiet/COPYRIGHT lib/luasrcdiet/COPYRIGHT_Lua51
+LUASRCDIET_FLAGS = --maximum --quiet --noopt-binequiv
+
 DIST_SRC = LICENSE
 DIST_ADDONS_SRC = LICENSE lps_coroutine.lua lua_pluginscript.gdnlib $(wildcard build/jit/*.lua) $(wildcard build/*/*lua*.*) $(wildcard plugin/*)
 DIST_ZIP_SRC = $(DIST_SRC) $(addprefix $(GDNLIB_ENTRY_PREFIX)/,$(DIST_ADDONS_SRC))
@@ -72,7 +75,10 @@ LUA_INIT_SCRIPT_SRC = \
 	src/in_editor_callbacks.lua
 
 ifneq (1,$(DEBUG))
-	EMBED_SCRIPT_SED := src/tools/compact_lua_script.sed
+	EMBED_SCRIPT_SED := src/tools/compact_c_ffi.sed
+	LUA_INIT_SCRIPT_TO_USE = build/init_script-diet.lua
+else
+	LUA_INIT_SCRIPT_TO_USE = build/init_script.lua
 endif
 EMBED_SCRIPT_SED += src/tools/embed_to_c.sed
 INIT_SCRIPT_SED = src/tools/add_script_c_decl.sed
@@ -103,8 +109,10 @@ build/%/lua51.dll: build/%/luajit/src/lua51.dll
 
 build/init_script.lua: $(LUA_INIT_SCRIPT_SRC) | build
 	cat $^ > $@
-build/%/init_script.c: build/init_script.lua $(EMBED_SCRIPT_SED) $(INIT_SCRIPT_SED) | build/%
-	sed $(addprefix -f ,$(EMBED_SCRIPT_SED)) $< | sed -f $(INIT_SCRIPT_SED) > $@
+build/init_script-diet.lua: build/init_script.lua
+	env LUA_PATH=';;lib/luasrcdiet/?.lua;lib/luasrcdiet/?/init.lua' lua lib/luasrcdiet/bin/luasrcdiet $< -o $@ $(LUASRCDIET_FLAGS)
+build/%/init_script.c: $(LUA_INIT_SCRIPT_TO_USE) $(EMBED_SCRIPT_SED) $(INIT_SCRIPT_SED) | build/%
+	sed -E $(addprefix -f ,$(EMBED_SCRIPT_SED)) $< | sed -f $(INIT_SCRIPT_SED) > $@
 
 build/%/init_script.o: build/%/init_script.c
 	$(_CC) -o $@ $< -c $(CFLAGS)

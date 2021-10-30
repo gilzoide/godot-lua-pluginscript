@@ -4,5 +4,11 @@ s/\\/\\\\/g
 s/"/\\"/g
 # Add starting quote
 s/^/"/
-# Add ending newline and quote
-s/$/\\n"/
+# Add ending newline, except inside ffi.cdef
+/cdef\[\[/,/\]\]/ {
+	/\]\]/! b a
+}
+s/$/\\n/
+:a
+# Add ending quote
+s/$/"/
