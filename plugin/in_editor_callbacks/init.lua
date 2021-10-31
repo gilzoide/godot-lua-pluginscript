@@ -42,7 +42,7 @@ clib.lps_validate_cb = wrap_callback(function(script, line_error, col_error, tes
 	script = tostring(script)
 	local f, err = loadstring(script, tostring(path))
 	if not f then
-		local line, msg = string.match(err, ERROR_LINE_MESSAGE_PATT)
+		local line, msg = string.match(err, ':(%d+):%s*(.*)')
 		line_error[0] = tonumber(line) or -1
 		test_error[0] = ffi.gc(String(msg or err), nil)
 	end
