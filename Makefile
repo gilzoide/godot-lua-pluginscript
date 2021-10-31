@@ -81,8 +81,7 @@ ifneq (1,$(DEBUG))
 else
 	LUA_INIT_SCRIPT_TO_USE = build/init_script.lua
 endif
-EMBED_SCRIPT_SED += src/tools/embed_to_c.sed
-INIT_SCRIPT_SED = src/tools/add_script_c_decl.sed
+EMBED_SCRIPT_SED += src/tools/embed_to_c.sed src/tools/add_script_c_decl.sed
 
 # Avoid removing intermediate files created by chained implicit rules
 .PRECIOUS: build/%/luajit build/%/init_script.c $(BUILT_OBJS) build/%/lua51.dll $(MAKE_LUAJIT_OUTPUT)
@@ -112,8 +111,8 @@ build/init_script.lua: $(LUA_INIT_SCRIPT_SRC) | build
 	cat $^ > $@
 build/init_script-diet.lua: build/init_script.lua
 	env LUA_PATH=';;lib/luasrcdiet/?.lua;lib/luasrcdiet/?/init.lua' lua lib/luasrcdiet/bin/luasrcdiet $< -o $@ $(LUASRCDIET_FLAGS)
-build/%/init_script.c: $(LUA_INIT_SCRIPT_TO_USE) $(EMBED_SCRIPT_SED) $(INIT_SCRIPT_SED) | build/%
-	sed -E $(addprefix -f ,$(EMBED_SCRIPT_SED)) $< | sed -f $(INIT_SCRIPT_SED) > $@
+build/%/init_script.c: $(LUA_INIT_SCRIPT_TO_USE) $(EMBED_SCRIPT_SED) | build/%
+	sed -E $(addprefix -f ,$(EMBED_SCRIPT_SED)) $< > $@
 
 build/%/init_script.o: build/%/init_script.c
 	$(_CC) -o $@ $< -c $(CFLAGS)
