@@ -30,18 +30,23 @@ void (*lps_make_function_cb)(const godot_string *class_name, const godot_string 
 
 godot_string lps_get_template_source_code(godot_pluginscript_language_data *data, const godot_string *class_name, const godot_string *base_class_name) {
 	godot_string ret;
-	lps_get_template_source_code_cb(class_name, base_class_name, &ret);
+	hgdn_core_api->godot_string_new(&ret);
+	if (lps_get_template_source_code_cb) {
+		lps_get_template_source_code_cb(class_name, base_class_name, &ret);
+	}
 	return ret;
 }
 
 godot_bool lps_validate(godot_pluginscript_language_data *data, const godot_string *script, int *line_error, int *col_error, godot_string *test_error, const godot_string *path, godot_pool_string_array *functions) {
-	return lps_validate_cb(script, line_error, col_error, test_error, path, functions);
+	return lps_validate_cb && lps_validate_cb(script, line_error, col_error, test_error, path, functions);
 }
 
 godot_string lps_make_function(godot_pluginscript_language_data *data, const godot_string *class_name, const godot_string *name, const godot_pool_string_array *args) {
 	godot_string result;
 	hgdn_core_api->godot_string_new(&result);
-	lps_make_function_cb(class_name, name, args, &result);
+	if (lps_make_function_cb) {
+		lps_make_function_cb(class_name, name, args, &result);
+	}
 	return result;
 }
 
