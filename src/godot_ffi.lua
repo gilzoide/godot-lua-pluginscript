@@ -1379,13 +1379,9 @@ godot_bool (*lps_instance_set_prop_cb)(godot_pluginscript_instance_data *data, c
 godot_bool (*lps_instance_get_prop_cb)(godot_pluginscript_instance_data *data, const godot_string *name, godot_variant *ret);
 void (*lps_instance_call_method_cb)(godot_pluginscript_instance_data *data, const godot_string_name *method, const godot_variant **args, int argcount, godot_variant *ret, godot_variant_call_error *error);
 void (*lps_instance_notification_cb)(godot_pluginscript_instance_data *data, int notification);
-
-void (*lps_get_template_source_code_cb)(const godot_string *class_name, const godot_string *base_class_name, godot_string *ret);
-godot_bool (*lps_validate_cb)(const godot_string *script, int *line_error, int *col_error, godot_string *test_error, const godot_string *path, godot_pool_string_array *functions);
-void (*lps_make_function_cb)(const godot_string *class_name, const godot_string *name, const godot_pool_string_array *args, godot_string *ret);
 ]]
 
-local active_library_path = ...
+local active_library_path, in_editor = ...
 local _, clib = pcall(ffi.load, active_library_path, true)
 clib = clib or ffi.C
 

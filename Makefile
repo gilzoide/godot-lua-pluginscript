@@ -31,7 +31,7 @@ LUASRCDIET_DEST = $(addprefix plugin/luasrcdiet/,$(notdir $(LUASRCDIET_SRC)))
 LUASRCDIET_FLAGS = --maximum --quiet --noopt-binequiv
 
 DIST_SRC = LICENSE
-DIST_ADDONS_SRC = LICENSE lps_coroutine.lua lua_pluginscript.gdnlib $(wildcard build/jit/*.lua) $(wildcard build/*/*lua*.*) $(wildcard plugin/*.*) $(LUASRCDIET_DEST)
+DIST_ADDONS_SRC = LICENSE lps_coroutine.lua lua_pluginscript.gdnlib $(wildcard build/jit/*.lua build/*/*lua*.* plugin/*.* plugin/in_editor_callbacks/* plugin/*/.gdignore) $(LUASRCDIET_DEST)
 DIST_ZIP_SRC = $(DIST_SRC) $(addprefix $(GDNLIB_ENTRY_PREFIX)/,$(DIST_ADDONS_SRC))
 DIST_DEST = $(addprefix build/,$(DIST_SRC)) $(addprefix build/$(GDNLIB_ENTRY_PREFIX)/,$(DIST_ADDONS_SRC))
 
@@ -73,7 +73,7 @@ LUA_INIT_SCRIPT_SRC = \
 	src/late_globals.lua \
 	src/lua_package_extras.lua \
 	src/lua_math_extras.lua \
-	src/in_editor_callbacks.lua
+	src/register_in_editor_callbacks.lua
 
 ifneq (1,$(DEBUG))
 	EMBED_SCRIPT_SED := src/tools/compact_c_ffi.sed

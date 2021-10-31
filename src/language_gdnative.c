@@ -41,6 +41,7 @@ void (*lps_instance_notification_cb)(godot_pluginscript_instance_data *data, int
 
 // Active shared library path, for loading symbols in FFI
 static hgdn_string lps_active_library_path;
+static bool in_editor;
 
 // Language functions
 static void *lps_alloc(void *userdata, void *ptr, size_t osize, size_t nsize) {
@@ -108,7 +109,8 @@ static godot_pluginscript_language_data *lps_language_init() {
 		return L;
 	}
 	lua_pushlstring(L, lps_active_library_path.ptr, lps_active_library_path.length);
-	if (lua_pcall(L, 1, 0, 0) != 0) {
+	lua_pushboolean(L, in_editor);
+	if (lua_pcall(L, 2, 0, 0) != 0) {
 		const char *error_msg = lua_tostring(L, -1);
 		HGDN_PRINT_ERROR("Error running initialization script: %s", error_msg);
 	}
@@ -232,7 +234,8 @@ GDN_EXPORT void PREFIX_SYMBOL(gdnative_init)(godot_gdnative_init_options *option
 		return;
 	}
 
-	if (options->in_editor) {
+	in_editor = options->in_editor;
+	if (in_editor) {
 		lps_register_in_editor_callbacks(&lps_language_desc);
 	}
 

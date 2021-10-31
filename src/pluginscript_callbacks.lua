@@ -27,6 +27,14 @@ local function pointer_to_index(ptr)
 	return tonumber(ffi_cast('uintptr_t', ptr))
 end
 
+local function get_lua_instance(ptr)
+	return lps_instances[pointer_to_index(ptr)]
+end
+
+local function set_lua_instance(ptr, instance)
+	lps_instances[pointer_to_index(ptr)] = instance
+end
+
 local lps_coroutine_pool = {
 	acquire = function(self, f)
 		return setthreadfunc(table_remove(self), f)
@@ -75,14 +83,7 @@ local function wrap_callback(f, error_return)
 		return result
 	end
 end
-
-local function get_lua_instance(ptr)
-	return lps_instances[pointer_to_index(ptr)]
-end
-
-local function set_lua_instance(ptr, instance)
-	lps_instances[pointer_to_index(ptr)] = instance
-end
+if in_editor then debug.getregistry().lps_wrap_callback = wrap_callback end
 
 -- void (*lps_language_add_global_constant_cb)(const godot_string *name, const godot_variant *value);
 clib.lps_language_add_global_constant_cb = wrap_callback(function(name, value)
