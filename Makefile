@@ -24,7 +24,7 @@ BUILT_OBJS = $(addprefix build/%/,$(OBJS))
 MAKE_LUAJIT_OUTPUT = build/%/luajit/src/luajit build/%/luajit/src/lua51.dll build/%/luajit/src/libluajit.a
 
 GDNLIB_ENTRY_PREFIX = addons/godot-lua-pluginscript
-BUILD_FOLDERS = build build/windows_x86 build/windows_x86_64 build/linux_x86 build/linux_x86_64 build/osx_x86_64 build/osx_arm64 build/osx_universal64 build/android_armv7a build/android_aarch64 build/android_x86 build/android_x86_64 build/$(GDNLIB_ENTRY_PREFIX) plugin/luasrcdiet
+BUILD_FOLDERS = build build/windows_x86 build/windows_x86_64 build/linux_x86 build/linux_x86_64 build/osx_x86_64 build/osx_arm64 build/osx_universal64 build/android_armv7a build/android_aarch64 build/android_x86 build/android_x86_64 build/$(GDNLIB_ENTRY_PREFIX)
 
 LUASRCDIET_SRC = $(wildcard lib/luasrcdiet/luasrcdiet/*.lua) lib/luasrcdiet/COPYRIGHT lib/luasrcdiet/COPYRIGHT_Lua51
 LUASRCDIET_DEST = $(addprefix plugin/luasrcdiet/,$(notdir $(LUASRCDIET_SRC)))
@@ -154,7 +154,7 @@ build/project.godot: src/tools/project.godot | build
 # Phony targets
 .PHONY: clean dist docs test plugin
 clean:
-	$(RM) -r build/*/
+	$(RM) -r build/*/ plugin/luasrcdiet/*
 
 dist: build/lua_pluginscript.zip
 
