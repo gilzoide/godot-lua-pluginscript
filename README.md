@@ -43,17 +43,20 @@ In the `Project -> Project Settings...` window, some settings are available:
 - **Lua PluginScript/Package Path/Behavior**: Whether templates will replace
   [package.path](https://www.lua.org/manual/5.1/manual.html#pdf-package.path),
   be appended to it or prepended to it.
-  Default behavior: replace.
+  Default behavior: `replace`.
 - **Lua PluginScript/Package Path/Templates**: String array of templates to be
   injected into `package.path`.
   Default templates: `res://?.lua` and `res://?/init.lua`.
 - **Lua PluginScript/Package C Path/Behavior**: Whether templates will replace
   [package.cpath](https://www.lua.org/manual/5.1/manual.html#pdf-package.cpath),
   be appended to it or prepended to it.
-  Default behavior: replace.
+  Default behavior: `replace`.
 - **Lua PluginScript/Package C Path/Templates**: String array of templates to be
   injected into `package.cpath`.
   Default templates: `!/?.dll` and `!/loadall.dll` on Windows, `!/?.so` and `!/loadall.so` elsewhere.
+- **Lua PluginScript/Export/Minify On Release Export**: Whether Lua scritps
+  should be minified on release exports.
+  Defaults to `true`.
 
 Also, an editor plugin is included, currently with a barebones REPL for Lua
 expressions, located in the bottom panel of the editor.
@@ -196,7 +199,7 @@ return MyClass
 - [X] API documentation
 - [ ] Unit tests
 - [ ] Example projects
-- [ ] Export plugin to minify Lua scripts
+- [X] Export plugin to minify Lua scripts
 - [X] Drop-in binary release in GitHub
 - [X] Submit to Asset Library
 

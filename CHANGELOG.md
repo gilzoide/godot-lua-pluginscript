@@ -1,5 +1,10 @@
 # Changelog
 ## [Unreleased]
+### Added
+- `EditorExportPlugin` for minifying Lua scripts with `LuaSrcDiet` on
+  release exports. Minification may be turned off with the
+  `Lua PluginScript/Export/Minify On Release Export` project setting.
+
 ### Changed
 - Release builds' init Lua script are minified with `LuaSrcDiet` and libraries
   are now `strip`ed, resulting in smaller dynamic libraries
