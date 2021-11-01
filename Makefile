@@ -1,6 +1,7 @@
 DEBUG ?= 0
 GODOT_BIN ?= godot
 LIPO ?= lipo
+STRIP ?= strip
 LUAJIT_52_COMPAT ?= 1
 NDK_TOOLCHAIN_BIN ?=
 
@@ -17,6 +18,7 @@ endif
 
 _CC = $(CROSS)$(CC)
 _LIPO = $(CROSS)$(LIPO)
+_STRIP = $(CROSS)$(STRIP)
 
 SRC = language_gdnative.c language_in_editor_callbacks.c
 OBJS = $(SRC:.c=.o) init_script.o
@@ -78,8 +80,10 @@ LUA_INIT_SCRIPT_SRC = \
 ifneq (1,$(DEBUG))
 	EMBED_SCRIPT_SED := src/tools/compact_c_ffi.sed
 	LUA_INIT_SCRIPT_TO_USE = build/init_script-diet.lua
+	STRIP_CMD = $(_STRIP) $1
 else
 	LUA_INIT_SCRIPT_TO_USE = build/init_script.lua
+	STRIP_CMD =
 endif
 EMBED_SCRIPT_SED += src/tools/embed_to_c.sed src/tools/add_script_c_decl.sed
 
@@ -118,15 +122,18 @@ build/%/init_script.o: build/%/init_script.c
 build/%/liblua_pluginscript.so: TARGET_SYS = Linux
 build/%/liblua_pluginscript.so: $(BUILT_OBJS) build/%/luajit/src/libluajit.a
 	$(_CC) -o $@ $^ -shared $(CFLAGS) -lm -ldl $(LDFLAGS)
+	$(call STRIP_CMD,$@)
 
 build/%/lua_pluginscript.dll: TARGET_SYS = Windows
 build/%/lua_pluginscript.dll: EXE = .exe
 build/%/lua_pluginscript.dll: $(BUILT_OBJS) build/%/lua51.dll
 	$(_CC) -o $@ $^ -shared $(CFLAGS) $(LDFLAGS)
+	$(call STRIP_CMD,$@)
 
 build/%/lua_pluginscript.dylib: TARGET_SYS = Darwin
 build/%/lua_pluginscript.dylib: $(BUILT_OBJS) build/%/luajit/src/libluajit.a
 	$(_CC) -o $@ $^ -shared $(CFLAGS) $(LDFLAGS)
+	$(call STRIP_CMD,$@)
 build/osx_x86_64/lua_pluginscript.dylib: CFLAGS += -arch x86_64
 build/osx_x86_64/lua_pluginscript.dylib: MAKE_LUAJIT_ARGS += TARGET_FLAGS="-arch x86_64"
 build/osx_arm64/lua_pluginscript.dylib: CFLAGS += -arch arm64
@@ -189,21 +196,25 @@ osx64: build/osx_universal64/lua_pluginscript.dylib
 
 android-armv7a: NDK_TARGET_API ?= 16
 android-armv7a: _CC = "$(NDK_TOOLCHAIN_BIN)/armv7a-linux-androideabi$(NDK_TARGET_API)-clang" -fPIC
-android-armv7a: MAKE_LUAJIT_ARGS += HOST_CC="$(CC) -m32 -fPIC" CROSS="$(NDK_TOOLCHAIN_BIN)/arm-linux-androideabi-" STATIC_CC="$(_CC)" DYNAMIC_CC="$(_CC)" TARGET_LD="$(_CC)"
+android-armv7a: CROSS = "$(NDK_TOOLCHAIN_BIN)/arm-linux-androideabi-"
+android-armv7a: MAKE_LUAJIT_ARGS += HOST_CC="$(CC) -m32 -fPIC" CROSS="$(CROSS)" STATIC_CC="$(_CC)" DYNAMIC_CC="$(_CC)" TARGET_LD="$(_CC)"
 android-armv7a: build/android_armv7a/liblua_pluginscript.so
 
 android-aarch64: NDK_TARGET_API ?= 21
 android-aarch64: _CC = "$(NDK_TOOLCHAIN_BIN)/aarch64-linux-android$(NDK_TARGET_API)-clang" -fPIC
-android-aarch64: MAKE_LUAJIT_ARGS += HOST_CC="$(CC) -fPIC" CROSS="$(NDK_TOOLCHAIN_BIN)/aarch64-linux-android-" STATIC_CC="$(_CC)" DYNAMIC_CC="$(_CC)" TARGET_LD="$(_CC)"
+android-aarch64: CROSS = "$(NDK_TOOLCHAIN_BIN)/aarch64-linux-android-"
+android-aarch64: MAKE_LUAJIT_ARGS += HOST_CC="$(CC) -fPIC" CROSS="$(CROSS)" STATIC_CC="$(_CC)" DYNAMIC_CC="$(_CC)" TARGET_LD="$(_CC)"
 android-aarch64: build/android_aarch64/liblua_pluginscript.so
 
 android-x86: NDK_TARGET_API ?= 16
 android-x86: _CC = "$(NDK_TOOLCHAIN_BIN)/i686-linux-android$(NDK_TARGET_API)-clang" -fPIC
-android-x86: MAKE_LUAJIT_ARGS += HOST_CC="$(CC) -m32 -fPIC" CROSS="$(NDK_TOOLCHAIN_BIN)/i686-linux-android-" STATIC_CC="$(_CC)" DYNAMIC_CC="$(_CC)" TARGET_LD="$(_CC)"
+android-x86: CROSS = "$(NDK_TOOLCHAIN_BIN)/i686-linux-android-"
+android-x86: MAKE_LUAJIT_ARGS += HOST_CC="$(CC) -m32 -fPIC" CROSS="$(CROSS)" STATIC_CC="$(_CC)" DYNAMIC_CC="$(_CC)" TARGET_LD="$(_CC)"
 android-x86: build/android_x86/liblua_pluginscript.so
 
 android-x86_64: NDK_TARGET_API ?= 21
 android-x86_64: _CC = "$(NDK_TOOLCHAIN_BIN)/x86_64-linux-android$(NDK_TARGET_API)-clang" -fPIC
-android-x86_64: MAKE_LUAJIT_ARGS += HOST_CC="$(CC) -fPIC" CROSS="$(NDK_TOOLCHAIN_BIN)/x86_64-linux-android-" STATIC_CC="$(_CC)" DYNAMIC_CC="$(_CC)" TARGET_LD="$(_CC)"
+android-x86_64: CROSS = "$(NDK_TOOLCHAIN_BIN)/x86_64-linux-android-"
+android-x86_64: MAKE_LUAJIT_ARGS += HOST_CC="$(CC) -fPIC" CROSS="$(CROSS)" STATIC_CC="$(_CC)" DYNAMIC_CC="$(_CC)" TARGET_LD="$(_CC)"
 android-x86_64: build/android_x86_64/liblua_pluginscript.so
 
