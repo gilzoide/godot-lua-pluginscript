@@ -208,7 +208,9 @@ return MyClass
 The API is documented using [LDoc](https://stevedonovan.github.io/ldoc/manual/doc.md.html).
 Documentation may be generated with the following command:
 
-    # make docs
+```sh
+make docs
+```
 
 
 ## Building
@@ -252,8 +254,11 @@ make android-x86 \      # Android x86
     NDK_TOOLCHAIN_BIN=/path/to/ndk/toolchains/llvm/prebuild/host_os-arch/bin      
 make android-x86_64 \   # Android x86_64
     NDK_TOOLCHAIN_BIN=/path/to/ndk/toolchains/llvm/prebuild/host_os-arch/bin   
+```
 
-# If you plan in using the export plugin, this is also required
+If you plan in using the export plugin, the following is also required:
+
+```sh
 make plugin
 ```
 

@@ -3,13 +3,15 @@
 ### Added
 - `EditorExportPlugin` for minifying Lua scripts with `LuaSrcDiet` on
   release exports. Minification may be turned off with the
-  `Lua PluginScript/Export/Minify On Release Export` project setting.
+  `lua_pluginscript/export/minify_on_release_export` project setting.
 
 ### Changed
 - Release builds' init Lua script are minified with `LuaSrcDiet` and libraries
   are now `strip`ed, resulting in smaller dynamic libraries
 - HGDN functions are now compiled with static visibility and unused GDNative
   extensions are excluded, also resulting in smaller dynamic libraries
+- Makefile targets for cross-compiling for Windows were renamed from
+  `cross-windows*` to `mingw-windows*`
 
 ### Fixed
 - `PoolByteArray.extend` when called with a string argument
