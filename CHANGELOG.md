@@ -1,5 +1,10 @@
 # Changelog
 ## [Unreleased]
+### Changed
+- Release builds' init Lua script are minified with `LuaSrcDiet` and libraries
+  are now `strip`ed, resulting in smaller dynamic libraries
+- HGDN functions are now compiled with static visibility and unused GDNative
+  extensions are excluded, also resulting in smaller dynamic libraries
 
 
 ## [0.2.0]
