@@ -181,14 +181,14 @@ linux64: CFLAGS += -fPIC
 linux64: build/linux_x86_64/liblua_pluginscript.so
 
 windows32: build/windows_x86/lua_pluginscript.dll
-cross-windows32: CROSS = i686-w64-mingw32-
-cross-windows32: MAKE_LUAJIT_ARGS += HOST_CC="$(CC) -m32" CROSS="i686-w64-mingw32-" LDFLAGS=-static-libgcc
-cross-windows32: windows32
+mingw-windows32: CROSS = i686-w64-mingw32-
+mingw-windows32: MAKE_LUAJIT_ARGS += HOST_CC="$(CC) -m32" CROSS="$(CROSS)" LDFLAGS=-static-libgcc
+mingw-windows32: windows32
 
 windows64: build/windows_x86_64/lua_pluginscript.dll
-cross-windows64: CROSS = x86_64-w64-mingw32-
-cross-windows64: MAKE_LUAJIT_ARGS += HOST_CC="$(CC)" CROSS="x86_64-w64-mingw32-" LDFLAGS=-static-libgcc
-cross-windows64: windows64
+mingw-windows64: CROSS = x86_64-w64-mingw32-
+mingw-windows64: MAKE_LUAJIT_ARGS += HOST_CC="$(CC)" CROSS="$(CROSS)" LDFLAGS=-static-libgcc
+mingw-windows64: windows64
 
 osx-x86_64: build/osx_x86_64/lua_pluginscript.dylib
 osx-arm64: build/osx_arm64/lua_pluginscript.dylib

@@ -238,6 +238,12 @@ make linux64    # x86_64
 make linux32    # x86
 make osx64 \    # "universal" multiarch x86_64 + amd64 dylib
     MACOSX_DEPLOYMENT_TARGET=XX.YY
+    
+# Cross-compiling for Windows using MinGW
+make mingw-windows64  # x86_64
+make mingw-windows32  # x86
+
+# Cross-compiling for Android using NDK
 make android-armv7a \   # Android ARMv7
     NDK_TOOLCHAIN_BIN=/path/to/ndk/toolchains/llvm/prebuild/host_os-arch/bin   
 make android-aarch64 \  # Android ARM64
@@ -246,12 +252,20 @@ make android-x86 \      # Android x86
     NDK_TOOLCHAIN_BIN=/path/to/ndk/toolchains/llvm/prebuild/host_os-arch/bin      
 make android-x86_64 \   # Android x86_64
     NDK_TOOLCHAIN_BIN=/path/to/ndk/toolchains/llvm/prebuild/host_os-arch/bin   
+
+# If you plan in using the export plugin, this is also required
+make plugin
 ```
 
 The GDNativeLibrary file `lua_pluginscript.gdnlib` is already configured to use
 the built files stored in the `build` folder, so that one can use this
-repository directly inside a Godot project under the folder
-`addons/godot-lua-pluginscript`.
+repository directly inside a Godot project under the folder `addons/godot-lua-pluginscript`.
+
+After building the desired libraries, a distribution zip can be built with:
+
+```sh
+make dist
+```
 
 
 ## Third-party software
