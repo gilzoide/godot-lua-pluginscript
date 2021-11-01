@@ -1,5 +1,8 @@
 # Changelog
 ## [Unreleased]
+
+
+## [0.3.0]
 ### Added
 - `EditorExportPlugin` for minifying Lua scripts with `LuaSrcDiet` on
   release exports. Minification may be turned off with the
@@ -67,7 +70,8 @@
 - API documentation
 
 
-[Unreleased]: https://github.com/gilzoide/godot-lua-pluginscript/compare/0.2.0...HEAD
+[Unreleased]: https://github.com/gilzoide/godot-lua-pluginscript/compare/0.3.0...HEAD
+[0.3.0]: https://github.com/gilzoide/godot-lua-pluginscript/releases/tag/0.3.0
 [0.2.0]: https://github.com/gilzoide/godot-lua-pluginscript/releases/tag/0.2.0
 [0.1.0]: https://github.com/gilzoide/godot-lua-pluginscript/releases/tag/0.1.0
 [r1]: https://github.com/gilzoide/godot-lua-pluginscript/releases/tag/r1
