@@ -28,6 +28,9 @@
 
 #include "language_gdnative.h"
 
+#define HGDN_IMPLEMENTATION
+#include "hgdn.h"
+
 // Callbacks to be implemented in Lua
 void (*lps_language_add_global_constant_cb)(const godot_string *name, const godot_variant *value);
 void (*lps_script_init_cb)(godot_pluginscript_script_manifest *manifest, const godot_string *path, const godot_string *source, godot_error *error);

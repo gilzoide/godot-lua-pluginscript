@@ -18,7 +18,7 @@ endif
 _CC = $(CROSS)$(CC)
 _LIPO = $(CROSS)$(LIPO)
 
-SRC = hgdn.c language_gdnative.c language_in_editor_callbacks.c
+SRC = language_gdnative.c language_in_editor_callbacks.c
 OBJS = $(SRC:.c=.o) init_script.o
 BUILT_OBJS = $(addprefix build/%/,$(OBJS))
 MAKE_LUAJIT_OUTPUT = build/%/luajit/src/luajit build/%/luajit/src/lua51.dll build/%/luajit/src/libluajit.a
@@ -89,8 +89,6 @@ EMBED_SCRIPT_SED += src/tools/embed_to_c.sed src/tools/add_script_c_decl.sed
 $(BUILD_FOLDERS):
 	mkdir -p $@
 
-build/%/hgdn.o: src/hgdn.c
-	$(_CC) -o $@ $< -c $(CFLAGS)
 build/%/language_gdnative.o: src/language_gdnative.c
 	$(_CC) -o $@ $< -c $(CFLAGS)
 build/%/language_in_editor_callbacks.o: src/language_in_editor_callbacks.c
