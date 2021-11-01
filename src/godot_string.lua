@@ -783,6 +783,7 @@ end
 --- Converts `size` represented as number of bytes to human-readable format using internationalized set of data size units, namely: B, KiB, MiB, GiB, TiB, PiB, EiB.
 -- Note that the next smallest unit is picked automatically to hold at most 1024 units.
 -- @function humanize_size
+-- @tparam int size
 -- @treturn String
 methods.humanize_size = function(size)
 	return ffi_gc(api.godot_string_humanize_size(size), api.godot_string_destroy)

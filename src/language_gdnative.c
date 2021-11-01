@@ -81,6 +81,7 @@ static int lps_lua_setthreadfunc(lua_State *L) {
 	else {
 		co = lua_newthread(L);
 	}
+	// move callable argument to the new/reused thread
 	lua_pushvalue(L, 2);
 	lua_xmove(L, co, 1);
 	return 1;

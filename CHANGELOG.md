@@ -6,6 +6,9 @@
 - HGDN functions are now compiled with static visibility and unused GDNative
   extensions are excluded, also resulting in smaller dynamic libraries
 
+### Fixed
+- `PoolByteArray.extend` when called with a string argument
+
 
 ## [0.2.0]
 ### Added
