@@ -1,9 +1,16 @@
+# Build options
 DEBUG ?= 0
+LUAJIT_52_COMPAT ?= 1
+# OSX code signing options
+CODE_SIGN_IDENTITY ?=
+OTHER_CODE_SIGN_FLAGS ?=
+# Configurable binaries
 GODOT_BIN ?= godot
 LUA_BIN ?= lua
 LIPO ?= lipo
 STRIP ?= strip
-LUAJIT_52_COMPAT ?= 1
+CODESIGN ?= codesign
+# Configurable paths
 NDK_TOOLCHAIN_BIN ?=
 
 CFLAGS += -std=c11 "-I$(CURDIR)/lib/godot-headers" "-I$(CURDIR)/lib/high-level-gdnative" "-I$(CURDIR)/lib/luajit/src"
@@ -88,6 +95,10 @@ else
 endif
 EMBED_SCRIPT_SED += src/tools/embed_to_c.sed src/tools/add_script_c_decl.sed
 
+ifneq (,$(CODE_SIGN_IDENTITY))
+	CODESIGN_CMD = codesign -s $(CODE_SIGN_IDENTITY) $1 $(OTHER_CODE_SIGN_FLAGS)
+endif
+
 # Avoid removing intermediate files created by chained implicit rules
 .PRECIOUS: build/%/luajit build/%/init_script.c $(BUILT_OBJS) build/%/lua51.dll $(MAKE_LUAJIT_OUTPUT)
 
@@ -135,6 +146,7 @@ build/%/lua_pluginscript.dylib: TARGET_SYS = Darwin
 build/%/lua_pluginscript.dylib: $(BUILT_OBJS) build/%/luajit/src/libluajit.a
 	$(_CC) -o $@ $^ -shared $(CFLAGS) $(LDFLAGS)
 	$(call STRIP_CMD,-x $@)
+	$(call CODESIGN_CMD,$@)
 build/osx_x86_64/lua_pluginscript.dylib: MACOSX_DEPLOYMENT_TARGET ?= 10.7
 build/osx_x86_64/lua_pluginscript.dylib: CFLAGS += -arch x86_64
 build/osx_x86_64/lua_pluginscript.dylib: MAKE_LUAJIT_ARGS += TARGET_FLAGS="-arch x86_64" MACOSX_DEPLOYMENT_TARGET="$(MACOSX_DEPLOYMENT_TARGET)"

@@ -241,6 +241,10 @@ make linux32    # x86
 make osx64 \    # "universal" multiarch x86_64 + amd64 dylib
     # Optional: deployment target. If absent, uses 10.7 for x86_64 and 11.0 for arm64
     MACOSX_DEPLOYMENT_TARGET=XX.YY \
+    # Optional: code sign identity. If absent, `codesign` is not performed
+    CODE_SIGN_IDENTITY=<identity> \
+    # Optional: additional flags passed to `codesign`
+    OTHER_CODE_SIGN_FLAGS=<flags>
     
 # Cross-compiling for Windows using MinGW
 make mingw-windows64  # x86_64
