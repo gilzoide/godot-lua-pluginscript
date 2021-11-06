@@ -33,7 +33,7 @@ jobs:
       - name: Build artifact
         run: ${{ matrix.make }}
         env:
-          - LUA_BIN=build/native/luajit/src/luajit
+          LUA_BIN: build/native/luajit/src/luajit
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
