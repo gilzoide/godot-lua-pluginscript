@@ -12,6 +12,8 @@ STRIP ?= strip
 CODESIGN ?= codesign
 # Configurable paths
 NDK_TOOLCHAIN_BIN ?=
+ZIP_URL ?=
+ZIP_URL_DOWNLOAD_OUTPUT ?= /tmp/godot-lua-pluginscript-unzip-to-build.zip
 
 CFLAGS += -std=c11 "-I$(CURDIR)/lib/godot-headers" "-I$(CURDIR)/lib/high-level-gdnative" "-I$(CURDIR)/lib/luajit/src"
 ifeq ($(DEBUG), 1)
@@ -173,7 +175,7 @@ build/project.godot: src/tools/project.godot | build
 	cp $< $@
 
 # Phony targets
-.PHONY: clean dist docs test plugin
+.PHONY: clean dist docs test unzip-to-build
 clean:
 	$(RM) -r build/*/ plugin/luasrcdiet/*
 
@@ -185,6 +187,15 @@ docs:
 test: $(DIST_DEST) build/project.godot
 	$(GODOT_BIN) --path build --no-window --quit --script "$(CURDIR)/src/test/init.lua"
 
+unzip-to-build:
+ifneq (,$(filter http://% https://%,$(ZIP_URL)))
+	curl -L $(ZIP_URL) -o $(ZIP_URL_DOWNLOAD_OUTPUT)
+	cd build && unzip -u $(ZIP_URL_DOWNLOAD_OUTPUT)
+else
+	cd build && unzip -u $(ZIP_URL)
+endif
+
+# Miscelaneous targets
 plugin: $(LUASRCDIET_DEST)
 
 native-luajit: MACOSX_DEPLOYMENT_TARGET ?= 11.0
