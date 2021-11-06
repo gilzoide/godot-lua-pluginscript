@@ -1,5 +1,20 @@
 # Changelog
 ## [Unreleased]
+### Added
+- Support for `codesign`ing OSX builds
+- `LUA_BIN` option for specifying a Lua command other than `lua` when building
+- `native-luajit` make target, used by CI
+- `unzip-to-build` make target, for unzipping artifacts from CI to build folder
+
+### Fixed
+- `strip` invocation on OSX builds
+- Update build GitHub Actions workflow with newer build pipeline
+
+### Changed
+- Added `build/.gdignore` to distribution, to stop Godot from trying to import
+  `build/jit/*.lua` files
+- Added default values for `MACOSX_DEPLOYMENT_TARGET`, making it an optional
+  parameter for OSX builds
 
 
 ## [0.3.0]
