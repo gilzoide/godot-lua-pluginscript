@@ -40,8 +40,9 @@ LUASRCDIET_SRC = $(wildcard lib/luasrcdiet/luasrcdiet/*.lua) lib/luasrcdiet/COPY
 LUASRCDIET_DEST = $(addprefix plugin/luasrcdiet/,$(notdir $(LUASRCDIET_SRC)))
 LUASRCDIET_FLAGS = --maximum --quiet --noopt-binequiv
 
+DIST_BUILT_LIBS = $(filter-out build/osx_arm64/% build/osx_x86_64/%,$(wildcard build/*/*lua*.*))
 DIST_SRC = LICENSE
-DIST_ADDONS_SRC = LICENSE lps_coroutine.lua lua_pluginscript.gdnlib build/.gdignore $(wildcard build/jit/*.lua build/*/*lua*.* plugin/*.* plugin/in_editor_callbacks/* plugin/*/.gdignore) $(LUASRCDIET_DEST)
+DIST_ADDONS_SRC = LICENSE lps_coroutine.lua lua_pluginscript.gdnlib build/.gdignore $(wildcard build/jit/*.lua plugin/*.* plugin/in_editor_callbacks/* plugin/*/.gdignore) $(DIST_BUILT_LIBS) $(LUASRCDIET_DEST)
 DIST_ZIP_SRC = $(DIST_SRC) $(addprefix $(GDNLIB_ENTRY_PREFIX)/,$(DIST_ADDONS_SRC))
 DIST_DEST = $(addprefix build/,$(DIST_SRC)) $(addprefix build/$(GDNLIB_ENTRY_PREFIX)/,$(DIST_ADDONS_SRC))
 
