@@ -24,7 +24,7 @@ _STRIP = $(CROSS)$(STRIP)
 SRC = language_gdnative.c language_in_editor_callbacks.c
 OBJS = $(SRC:.c=.o) init_script.o
 BUILT_OBJS = $(addprefix build/%/,$(OBJS))
-MAKE_LUAJIT_OUTPUT = build/%/luajit/src/luajit build/%/luajit/src/lua51.dll build/%/luajit/src/libluajit.a
+MAKE_LUAJIT_OUTPUT = build/%/luajit/src/luajit.o build/%/luajit/src/lua51.dll build/%/luajit/src/libluajit.a
 
 GDNLIB_ENTRY_PREFIX = addons/godot-lua-pluginscript
 BUILD_FOLDERS = build build/native build/windows_x86 build/windows_x86_64 build/linux_x86 build/linux_x86_64 build/osx_x86_64 build/osx_arm64 build/osx_universal64 build/android_armv7a build/android_aarch64 build/android_x86 build/android_x86_64 build/$(GDNLIB_ENTRY_PREFIX)
@@ -176,7 +176,7 @@ plugin: $(LUASRCDIET_DEST)
 
 native-luajit: MACOSX_DEPLOYMENT_TARGET ?= 10.7
 native-luajit: MAKE_LUAJIT_ARGS = MACOSX_DEPLOYMENT_TARGET=$(MACOSX_DEPLOYMENT_TARGET)
-native-luajit: build/native/luajit/src/luajit
+native-luajit: build/native/luajit/src/luajit.o
 
 # Targets by OS + arch
 linux32: MAKE_LUAJIT_ARGS += CC="$(CC) -m32 -fPIC"
