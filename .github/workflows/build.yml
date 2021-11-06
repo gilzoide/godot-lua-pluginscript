@@ -16,7 +16,10 @@ jobs:
             make: make windows64 CC=gcc
             arch: x86_64
           - os: ubuntu-latest
-            make: make linux64
+            make: |
+              make osx-arm64 CC=clang SDKROOT=/Library/Developer/CommandLineTools/SDKs/MacOSX11.1.sdk
+              make osx-x86_64 CC=clang
+              make osx64
             arch: x86_64
           - os: macos-latest
             make: make osx64
