@@ -1,5 +1,8 @@
 # Changelog
 ## [Unreleased]
+
+
+## [0.3.1]
 ### Added
 - Support for `codesign`ing OSX builds directly from make invocation.
   The optional parameters are `CODE_SIGN_IDENTITY` and `OTHER_CODE_SIGN_FLAGS`.
@@ -86,7 +89,8 @@
 - API documentation
 
 
-[Unreleased]: https://github.com/gilzoide/godot-lua-pluginscript/compare/0.3.0...HEAD
+[Unreleased]: https://github.com/gilzoide/godot-lua-pluginscript/compare/0.3.1...HEAD
+[0.3.0]: https://github.com/gilzoide/godot-lua-pluginscript/releases/tag/0.3.1
 [0.3.0]: https://github.com/gilzoide/godot-lua-pluginscript/releases/tag/0.3.0
 [0.2.0]: https://github.com/gilzoide/godot-lua-pluginscript/releases/tag/0.2.0
 [0.1.0]: https://github.com/gilzoide/godot-lua-pluginscript/releases/tag/0.1.0
