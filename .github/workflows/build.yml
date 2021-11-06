@@ -22,15 +22,10 @@ jobs:
             make: make osx64
             arch: x86_64-arm64
     steps:
-      - uses: xpol/setup-lua@v0.3
-        name: Setup Lua
-        with:
-          lua-version: "5.1.5"
-      - uses: actions/checkout@v2
-        with:
-          submodules: true
+      - name: Build native LuaJIT
+        run: make native-luajit
       - name: Build artifact
-        run: ${{ matrix.make }}
+        run: ${{ matrix.make }} LUA_BIN=build/native/luajit/src/luajit
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
