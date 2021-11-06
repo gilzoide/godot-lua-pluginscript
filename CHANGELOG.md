@@ -1,7 +1,8 @@
 # Changelog
 ## [Unreleased]
 ### Added
-- Support for `codesign`ing OSX builds
+- Support for `codesign`ing OSX builds directly from make invocation.
+  The optional parameters are `CODE_SIGN_IDENTITY` and `OTHER_CODE_SIGN_FLAGS`.
 - `LUA_BIN` option for specifying a Lua command other than `lua` when building
 - `native-luajit` make target, used by CI
 - `unzip-to-build` make target, for unzipping artifacts from CI to build folder
