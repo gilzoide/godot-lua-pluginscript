@@ -239,7 +239,8 @@ make windows32  # x86
 make linux64    # x86_64
 make linux32    # x86
 make osx64 \    # "universal" multiarch x86_64 + amd64 dylib
-    MACOSX_DEPLOYMENT_TARGET=XX.YY
+    # Optional: deployment target. If absent, uses 10.7 for x86_64 and 11.0 for arm64
+    MACOSX_DEPLOYMENT_TARGET=XX.YY \
     
 # Cross-compiling for Windows using MinGW
 make mingw-windows64  # x86_64
