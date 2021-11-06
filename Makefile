@@ -174,7 +174,7 @@ test: $(DIST_DEST) build/project.godot
 
 plugin: $(LUASRCDIET_DEST)
 
-native-luajit: MACOSX_DEPLOYMENT_TARGET ?= 10.7
+native-luajit: MACOSX_DEPLOYMENT_TARGET ?= 11.0
 native-luajit: MAKE_LUAJIT_ARGS = MACOSX_DEPLOYMENT_TARGET=$(MACOSX_DEPLOYMENT_TARGET)
 native-luajit: build/native/luajit/src/luajit.o
 
