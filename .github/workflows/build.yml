@@ -19,12 +19,13 @@ jobs:
             make: make linux64
             arch: x86_64
           - os: macos-latest
-            make: |
-              make osx-arm64 MACOSX_DEPLOYMENT_TARGET=11.0 CC=clang SDKROOT=/Library/Developer/CommandLineTools/SDKs/MacOSX11.1.sdk
-              make osx-x86_64 MACOSX_DEPLOYMENT_TARGET=10.14 CC=clang
-              make osx64
+            make: make osx64
             arch: x86_64-arm64
     steps:
+      - uses: leafo/gh-actions-lua@v8.0.0
+        name: Setup Lua
+        with:
+          luaVersion: "5.1"
       - uses: actions/checkout@v2
         with:
           submodules: true
