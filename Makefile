@@ -1,7 +1,8 @@
 # Build options
 DEBUG ?= 0
 LUAJIT_52_COMPAT ?= 1
-# OSX code signing options
+IOS_VERSION_MIN ?= 8.0
+# OSX/iOS code signing options
 CODE_SIGN_IDENTITY ?=
 OTHER_CODE_SIGN_FLAGS ?=
 # Configurable binaries
@@ -10,10 +11,12 @@ LUA_BIN ?= lua
 LIPO ?= lipo
 STRIP ?= strip
 CODESIGN ?= codesign
+XCODEBUILD ?= xcodebuild
 # Configurable paths
 NDK_TOOLCHAIN_BIN ?=
 ZIP_URL ?=
 ZIP_URL_DOWNLOAD_OUTPUT ?= /tmp/godot-lua-pluginscript-unzip-to-build.zip
+
 
 CFLAGS += -std=c11 "-I$(CURDIR)/lib/godot-headers" "-I$(CURDIR)/lib/high-level-gdnative" "-I$(CURDIR)/lib/luajit/src"
 ifeq ($(DEBUG), 1)
@@ -36,7 +39,13 @@ BUILT_OBJS = $(addprefix build/%/,$(OBJS))
 MAKE_LUAJIT_OUTPUT = build/%/luajit/src/luajit.o build/%/luajit/src/lua51.dll build/%/luajit/src/libluajit.a
 
 GDNLIB_ENTRY_PREFIX = addons/godot-lua-pluginscript
-BUILD_FOLDERS = build build/native build/windows_x86 build/windows_x86_64 build/linux_x86 build/linux_x86_64 build/osx_x86_64 build/osx_arm64 build/osx_universal64 build/android_armv7a build/android_aarch64 build/android_x86 build/android_x86_64 build/$(GDNLIB_ENTRY_PREFIX)
+BUILD_FOLDERS = \
+	build build/native build/$(GDNLIB_ENTRY_PREFIX) \
+	build/windows_x86 build/windows_x86_64 \
+	build/linux_x86 build/linux_x86_64 \
+	build/osx_x86_64 build/osx_arm64 build/osx_universal64 \
+	build/ios_armv7s build/ios_arm64 build/ios_simulator_arm64 build/ios_simulator_x86_64 build/ios_simulator_arm64_x86_64 \
+	build/android_armv7a build/android_aarch64 build/android_x86 build/android_x86_64
 
 LUASRCDIET_SRC = $(wildcard lib/luasrcdiet/luasrcdiet/*.lua) lib/luasrcdiet/COPYRIGHT lib/luasrcdiet/COPYRIGHT_Lua51
 LUASRCDIET_DEST = $(addprefix plugin/luasrcdiet/,$(notdir $(LUASRCDIET_SRC)))
@@ -146,18 +155,17 @@ build/%/lua_pluginscript.dll: $(BUILT_OBJS) build/%/lua51.dll
 	$(call STRIP_CMD,$@)
 
 build/%/lua_pluginscript.dylib: TARGET_SYS = Darwin
+build/ios_%/lua_pluginscript.dylib: TARGET_SYS = iOS
 build/%/lua_pluginscript.dylib: $(BUILT_OBJS) build/%/luajit/src/libluajit.a
 	$(_CC) -o $@ $^ -shared $(CFLAGS) $(LDFLAGS)
 	$(call STRIP_CMD,-x $@)
 	$(call CODESIGN_CMD,$@)
-build/osx_x86_64/lua_pluginscript.dylib: MACOSX_DEPLOYMENT_TARGET ?= 10.7
-build/osx_x86_64/lua_pluginscript.dylib: CFLAGS += -arch x86_64
-build/osx_x86_64/lua_pluginscript.dylib: MAKE_LUAJIT_ARGS += TARGET_FLAGS="-arch x86_64" MACOSX_DEPLOYMENT_TARGET="$(MACOSX_DEPLOYMENT_TARGET)"
-build/osx_arm64/lua_pluginscript.dylib: MACOSX_DEPLOYMENT_TARGET ?= 11.0
-build/osx_arm64/lua_pluginscript.dylib: CFLAGS += -arch arm64
-build/osx_arm64/lua_pluginscript.dylib: MAKE_LUAJIT_ARGS += TARGET_FLAGS="-arch arm64" MACOSX_DEPLOYMENT_TARGET="$(MACOSX_DEPLOYMENT_TARGET)"
 build/osx_universal64/lua_pluginscript.dylib: build/osx_x86_64/lua_pluginscript.dylib build/osx_arm64/lua_pluginscript.dylib | build/osx_universal64
 	$(_LIPO) $^ -create -output $@
+build/ios_simulator_arm64_x86_64/lua_pluginscript.dylib: build/ios_simulator_arm64/lua_pluginscript.dylib build/ios_simulator_x86_64/lua_pluginscript.dylib | build/ios_simulator_arm64_x86_64
+	$(_LIPO) $^ -create -output $@
+build/ios_universal64.xcframework: build/ios_arm64/lua_pluginscript.dylib build/ios_simulator_arm64_x86_64/lua_pluginscript.dylib | build
+	$(XCODEBUILD) -create-xcframework $(addprefix -library ,$^) -output $@
 
 plugin/luasrcdiet/%.lua: lib/luasrcdiet/luasrcdiet/%.lua | plugin/luasrcdiet
 	cp $< $@
@@ -221,9 +229,42 @@ mingw-windows64: CROSS = x86_64-w64-mingw32-
 mingw-windows64: MAKE_LUAJIT_ARGS += HOST_CC="$(CC)" CROSS="$(CROSS)" LDFLAGS=-static-libgcc
 mingw-windows64: windows64
 
+osx-x86_64: MACOSX_DEPLOYMENT_TARGET ?= 10.7
+osx-x86_64: _ADD_CFLAGS = -isysroot '$(shell xcrun --sdk macosx --show-sdk-path)' -arch x86_64
+osx-x86_64: CFLAGS += $(_ADD_CFLAGS)
+osx-x86_64: MAKE_LUAJIT_ARGS += TARGET_FLAGS="$(_ADD_CFLAGS)" MACOSX_DEPLOYMENT_TARGET="$(MACOSX_DEPLOYMENT_TARGET)"
 osx-x86_64: build/osx_x86_64/lua_pluginscript.dylib
+
+osx-arm64: MACOSX_DEPLOYMENT_TARGET ?= 11.0
+osx-arm64: _ADD_CFLAGS = -isysroot '$(shell xcrun --sdk macosx --show-sdk-path)' -arch arm64
+osx-arm64: CFLAGS += $(_ADD_CFLAGS)
+osx-arm64: MAKE_LUAJIT_ARGS += TARGET_FLAGS="$(_ADD_CFLAGS)" MACOSX_DEPLOYMENT_TARGET="$(MACOSX_DEPLOYMENT_TARGET)"
 osx-arm64: build/osx_arm64/lua_pluginscript.dylib
-osx64: build/osx_universal64/lua_pluginscript.dylib
+
+osx64: osx-x86_64 osx-arm64 build/osx_universal64/lua_pluginscript.dylib
+
+# Note: newer OSX systems can't run i386 apps, so LuaJIT can't build properly with the current Makefile
+#ios-armv7s: _ADD_CFLAGS = -isysroot "$(shell xcrun --sdk iphoneos --show-sdk-path)" -arch armv7s -miphoneos-version-min=$(IOS_VERSION_MIN)
+#ios-armv7s: CFLAGS += $(_ADD_CFLAGS)
+#ios-armv7s: MAKE_LUAJIT_ARGS += TARGET_FLAGS='$(_ADD_CFLAGS)'
+#ios-armv7s: build/ios_armv7s/lua_pluginscript.dylib
+
+ios-arm64: _ADD_CFLAGS = -isysroot '$(shell xcrun --sdk iphoneos --show-sdk-path)' -arch arm64 -miphoneos-version-min=$(IOS_VERSION_MIN)
+ios-arm64: CFLAGS += $(_ADD_CFLAGS)
+ios-arm64: MAKE_LUAJIT_ARGS += TARGET_FLAGS="$(_ADD_CFLAGS)"
+ios-arm64: build/ios_arm64/lua_pluginscript.dylib
+
+ios-simulator-arm64: _ADD_CFLAGS = -isysroot '$(shell xcrun --sdk iphonesimulator --show-sdk-path)' -arch arm64 -miphonesimulator-version-min=$(IOS_VERSION_MIN)
+ios-simulator-arm64: CFLAGS += $(_ADD_CFLAGS)
+ios-simulator-arm64: MAKE_LUAJIT_ARGS += TARGET_FLAGS="$(_ADD_CFLAGS)"
+ios-simulator-arm64: build/ios_simulator_arm64/lua_pluginscript.dylib
+
+ios-simulator-x86_64: _ADD_CFLAGS = -isysroot '$(shell xcrun --sdk iphonesimulator --show-sdk-path)' -arch x86_64 -miphonesimulator-version-min=$(IOS_VERSION_MIN)
+ios-simulator-x86_64: CFLAGS += $(_ADD_CFLAGS)
+ios-simulator-x86_64: MAKE_LUAJIT_ARGS += TARGET_FLAGS="$(_ADD_CFLAGS)"
+ios-simulator-x86_64: build/ios_simulator_x86_64/lua_pluginscript.dylib
+
+ios64: ios-arm64 ios-simulator-x86_64 ios-simulator-arm64 build/ios_universal64.xcframework
 
 android-armv7a: NDK_TARGET_API ?= 16
 android-armv7a: _CC = "$(NDK_TOOLCHAIN_BIN)/armv7a-linux-androideabi$(NDK_TARGET_API)-clang" -fPIC
