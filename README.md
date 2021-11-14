@@ -259,6 +259,15 @@ make android-x86 \      # Android x86
     NDK_TOOLCHAIN_BIN=/path/to/ndk/toolchains/llvm/prebuild/host_os-arch/bin      
 make android-x86_64 \   # Android x86_64
     NDK_TOOLCHAIN_BIN=/path/to/ndk/toolchains/llvm/prebuild/host_os-arch/bin   
+
+# Cross-compiling for iOS in a OSX environment
+make ios64 \    # XCFramework with iOS arm64 and simulator arm64 + x86_64
+    # Optional: minimum iOS version to target. If absent, uses 8.0
+    IOS_VERSION_MIN=X.Y
+    # Optional: code sign identity. If absent, `codesign` is not performed
+    CODE_SIGN_IDENTITY=<identity> \
+    # Optional: additional flags passed to `codesign`
+    OTHER_CODE_SIGN_FLAGS=<flags>
 ```
 
 If you plan in using the export plugin, the following is also required:
