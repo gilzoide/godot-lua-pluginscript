@@ -108,7 +108,7 @@ endif
 EMBED_SCRIPT_SED += src/tools/embed_to_c.sed src/tools/add_script_c_decl.sed
 
 ifneq (,$(CODE_SIGN_IDENTITY))
-	CODESIGN_CMD = codesign -s $(CODE_SIGN_IDENTITY) $1 $(OTHER_CODE_SIGN_FLAGS)
+	CODESIGN_CMD = codesign -s "$(CODE_SIGN_IDENTITY)" $1 $(OTHER_CODE_SIGN_FLAGS)
 endif
 
 # Avoid removing intermediate files created by chained implicit rules
@@ -166,6 +166,7 @@ build/ios_simulator_arm64_x86_64/lua_pluginscript.dylib: build/ios_simulator_arm
 	$(_LIPO) $^ -create -output $@
 build/ios_universal64.xcframework: build/ios_arm64/lua_pluginscript.dylib build/ios_simulator_arm64_x86_64/lua_pluginscript.dylib | build
 	$(XCODEBUILD) -create-xcframework $(addprefix -library ,$^) -output $@
+	$(call CODESIGN_CMD,$@)
 
 plugin/luasrcdiet/%.lua: lib/luasrcdiet/luasrcdiet/%.lua | plugin/luasrcdiet
 	cp $< $@
