@@ -165,6 +165,7 @@ build/osx_universal64/lua_pluginscript.dylib: build/osx_x86_64/lua_pluginscript.
 build/ios_simulator_arm64_x86_64/lua_pluginscript.dylib: build/ios_simulator_arm64/lua_pluginscript.dylib build/ios_simulator_x86_64/lua_pluginscript.dylib | build/ios_simulator_arm64_x86_64
 	$(_LIPO) $^ -create -output $@
 build/ios_universal64.xcframework: build/ios_arm64/lua_pluginscript.dylib build/ios_simulator_arm64_x86_64/lua_pluginscript.dylib | build
+	$(RM) -r $@
 	$(XCODEBUILD) -create-xcframework $(addprefix -library ,$^) -output $@
 	$(call CODESIGN_CMD,$@)
 
@@ -255,17 +256,17 @@ ios-arm64: CFLAGS += $(_ADD_CFLAGS)
 ios-arm64: MAKE_LUAJIT_ARGS += TARGET_FLAGS="$(_ADD_CFLAGS)"
 ios-arm64: build/ios_arm64/lua_pluginscript.dylib
 
-ios-simulator-arm64: _ADD_CFLAGS = -isysroot '$(shell xcrun --sdk iphonesimulator --show-sdk-path)' -arch arm64 -miphonesimulator-version-min=$(IOS_VERSION_MIN)
+ios-simulator-arm64: _ADD_CFLAGS = -isysroot '$(shell xcrun --sdk iphonesimulator --show-sdk-path)' -arch arm64 -mios-simulator-version-min=$(IOS_VERSION_MIN)
 ios-simulator-arm64: CFLAGS += $(_ADD_CFLAGS)
 ios-simulator-arm64: MAKE_LUAJIT_ARGS += TARGET_FLAGS="$(_ADD_CFLAGS)"
 ios-simulator-arm64: build/ios_simulator_arm64/lua_pluginscript.dylib
 
-ios-simulator-x86_64: _ADD_CFLAGS = -isysroot '$(shell xcrun --sdk iphonesimulator --show-sdk-path)' -arch x86_64 -miphonesimulator-version-min=$(IOS_VERSION_MIN)
+ios-simulator-x86_64: _ADD_CFLAGS = -isysroot '$(shell xcrun --sdk iphonesimulator --show-sdk-path)' -arch x86_64 -mios-simulator-version-min=$(IOS_VERSION_MIN)
 ios-simulator-x86_64: CFLAGS += $(_ADD_CFLAGS)
 ios-simulator-x86_64: MAKE_LUAJIT_ARGS += TARGET_FLAGS="$(_ADD_CFLAGS)"
 ios-simulator-x86_64: build/ios_simulator_x86_64/lua_pluginscript.dylib
 
-ios64: ios-arm64 ios-simulator-x86_64 ios-simulator-arm64 build/ios_universal64.xcframework
+ios64: ios-arm64 ios-simulator-x86_64 #ios-simulator-arm64 build/ios_universal64.xcframework
 
 android-armv7a: NDK_TARGET_API ?= 16
 android-armv7a: _CC = "$(NDK_TOOLCHAIN_BIN)/armv7a-linux-androideabi$(NDK_TARGET_API)-clang" -fPIC
