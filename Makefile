@@ -266,7 +266,8 @@ ios-simulator-x86_64: CFLAGS += $(_ADD_CFLAGS)
 ios-simulator-x86_64: MAKE_LUAJIT_ARGS += TARGET_FLAGS="$(_ADD_CFLAGS)"
 ios-simulator-x86_64: build/ios_simulator_x86_64/lua_pluginscript.dylib
 
-ios64: ios-arm64 ios-simulator-x86_64 #ios-simulator-arm64 build/ios_universal64.xcframework
+ios-simulator64: ios-simulator-x86_64 ios-simulator-arm64 build/ios_simulator_arm64_x86_64/lua_pluginscript.dylib
+ios64: ios-arm64 ios-simulator64 #build/ios_universal64.xcframework
 
 android-armv7a: NDK_TARGET_API ?= 16
 android-armv7a: _CC = "$(NDK_TOOLCHAIN_BIN)/armv7a-linux-androideabi$(NDK_TARGET_API)-clang" -fPIC
