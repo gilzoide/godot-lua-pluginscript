@@ -58,7 +58,7 @@ static void *lps_alloc(void *userdata, void *ptr, size_t osize, size_t nsize) {
 }
 
 static int lps_atpanic(lua_State *L) {
-	luaL_traceback(L, L, lua_tostring(L, -1), 1);
+	luaL_traceback(L, L, lua_tostring(L, -1), 0);
 	const char *error_msg_plus_traceback = lua_tostring(L, -1);
 	HGDN_PRINT_ERROR("LUA PANIC: %s", error_msg_plus_traceback);
 	return 1;
