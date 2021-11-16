@@ -95,6 +95,13 @@ static int lps_lua_string_replace(lua_State *L) {
 	return 1;
 }
 
+#ifdef DEBUG
+static int lps_pcall_error_handler(lua_State *L) {
+	luaL_traceback(L, L, lua_tostring(L, 1), 0);
+	return 1;
+}
+#endif
+
 static godot_pluginscript_language_data *lps_language_init() {
 	lua_State *L = lua_newstate(&lps_alloc, NULL);
 	lua_atpanic(L, &lps_atpanic);
@@ -112,12 +119,22 @@ static godot_pluginscript_language_data *lps_language_init() {
 		HGDN_PRINT_ERROR("Error loading initialization script: %s", error_msg);
 		return L;
 	}
+#ifdef DEBUG
+	lua_pushcfunction(L, &lps_pcall_error_handler);
+	const int err_handler_index = lua_gettop(L);
+	lua_pushvalue(L, -2);
+#else
+	const int err_handler_index = 0;
+#endif
 	lua_pushlstring(L, lps_active_library_path.ptr, lps_active_library_path.length);
 	lua_pushboolean(L, in_editor);
-	if (lua_pcall(L, 2, 0, 0) != 0) {
+	if (lua_pcall(L, 2, 0, err_handler_index) != LUA_OK) {
 		const char *error_msg = lua_tostring(L, -1);
 		HGDN_PRINT_ERROR("Error running initialization script: %s", error_msg);
 	}
+#ifdef DEBUG
+	lua_pop(L, 2);
+#endif
 	return L;
 }
 
