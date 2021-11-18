@@ -216,7 +216,7 @@ for k, v in pairs(CallError) do CallError[v] = k end
 _G.CallError = CallError
 
 --- Enum `godot_method_rpc_mode`, mapping UPPER_CASED names to ordinal values and vice-versa.
---     assert(RPCMode.Disabled == GODOT_METHOD_RPC_MODE_DISABLED and RPCMode[RPCMode.DISABLED] == 'DISABLED')
+--     assert(RPCMode.DISABLED == GODOT_METHOD_RPC_MODE_DISABLED and RPCMode[RPCMode.DISABLED] == 'DISABLED')
 --     ...
 -- @table RPCMode
 -- @field DISABLED  RPC Disabled
@@ -243,6 +243,8 @@ for k, v in pairs(RPCMode) do RPCMode[v] = k end
 _G.RPCMode = RPCMode
 
 --- Enum `godot_property_hint`, mapping UPPER_CASED names to ordinal values and vice-versa.
+--     assert(PropertyHint.NONE == GODOT_PROPERTY_HINT_NONE and PropertyHint[PropertyHint.NONE] == 'NONE')
+--     ...
 -- @table PropertyHint
 -- @field NONE  None
 -- @field RANGE  Range (hint_string = `"min,max,step,slider"`; step and slider are optional)
@@ -318,6 +320,8 @@ for k, v in pairs(PropertyHint) do PropertyHint[v] = k end
 _G.PropertyHint = PropertyHint
 
 --- Enum `godot_property_usage_flags`, mapping UPPER_CASED names to ordinal values and vice-versa.
+--     assert(PropertyUsage.STORAGE == GODOT_PROPERTY_USAGE_STORAGE and PropertyUsage[PropertyUsage.STORAGE] == 'STORAGE')
+--     ...
 -- @table PropertyUsage
 -- @field STORAGE  Storage
 -- @field EDITOR  Editor
