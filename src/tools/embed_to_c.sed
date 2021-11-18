@@ -4,11 +4,7 @@ s/\\/\\\\/g
 s/"/\\"/g
 # Add starting quote
 s/^/"/
-# Add ending newline, except inside ffi.cdef or last script line
-/cdef\[\[/,/\]\]/ {
-	/\]\]/! b skipNewLine
-}
+# Add ending newline, except on last script line
 $! s/$/\\n/
-:skipNewLine
 # Add ending quote
 s/$/"/
