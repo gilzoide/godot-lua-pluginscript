@@ -155,17 +155,20 @@ and <a href="plugin/lua_repl.lua">plugin/lua_repl.lua</a>.</p>
     <li><strong>Lua PluginScript/Package Path/Behavior</strong>: Whether templates will replace
     <a href="https://www.lua.org/manual/5.1/manual.html#pdf-package.path">package.path</a>,
     be appended to it or prepended to it.
-    Default behavior: replace.</li>
+    Default behavior: <code>replace</code>.</li>
     <li><strong>Lua PluginScript/Package Path/Templates</strong>: String array of templates to be
     injected into <a href="https://www.lua.org/manual/5.1/manual.html#pdf-package.path">package.path</a>.
     Default templates: <code>res://?.lua</code> and <code>res://?/init.lua</code>.</li>
     <li><strong>Lua PluginScript/Package C Path/Behavior</strong>: Whether templates will replace
     <a href="https://www.lua.org/manual/5.1/manual.html#pdf-package.cpath">package.cpath</a>,
     be appended to it or prepended to it.
-    Default behavior: replace.</li>
+    Default behavior: <code>replace</code>.</li>
     <li><strong>Lua PluginScript/Package C Path/Templates</strong>: String array of templates to be
     injected into <a href="https://www.lua.org/manual/5.1/manual.html#pdf-package.cpath">package.cpath</a>.
     Default templates: <code>!/?.dll</code> and <code>!/loadall.dll</code> on Windows, <code>!/?.so</code> and <code>!/loadall.so</code> elsewhere.</li>
+    <li><strong>Lua PluginScript/Export/Minify On Release Export</strong>: Whether Lua scritps
+    should be minified on release exports.
+    Defaults to <code>true</code>.</li>
 </ul>
 
 <p>Also, an editor plugin is included, currently with a barebones REPL for Lua
@@ -324,7 +327,7 @@ MyClass.something_happened_with_args = signal(<span class="string">"arg1"</span>
     <li>[X] API documentation</li>
     <li>[ ] Unit tests</li>
     <li>[ ] Example projects</li>
-    <li>[ ] Export plugin to minify Lua scripts</li>
+    <li>[X] Export plugin to minify Lua scripts</li>
     <li>[X] Drop-in binary release in GitHub</li>
     <li>[X] Submit to Asset Library</li>
 </ul>
@@ -337,8 +340,10 @@ Documentation may be generated with the following command:</p>
 
 
 <pre>
-# make docs
+make docs
 </pre>
+
+
 
 <p><a name="Building"></a></p>
 <h2>Building</h2>
@@ -370,7 +375,18 @@ make windows32  # x86
 make linux64    # x86_64
 make linux32    # x86
 make osx64 \    # <span class="string">"universal"</span> multiarch x86_64 + amd64 dylib
-    MACOSX_DEPLOYMENT_TARGET=XX.YY
+    # Optional: deployment target. If absent, uses <span class="number">10.7</span> <span class="keyword">for</span> x86_64 <span class="keyword">and</span> <span class="number">11.0</span> <span class="keyword">for</span> arm64
+    MACOSX_DEPLOYMENT_TARGET=XX.YY \
+    # Optional: code sign identity. If absent, <span class="backtick"><code>codesign</code></span> is <span class="keyword">not</span> performed
+    CODE_SIGN_IDENTITY=&lt;identity&gt; \
+    # Optional: additional flags passed to <span class="backtick"><code>codesign</code></span>
+    OTHER_CODE_SIGN_FLAGS=&lt;flags&gt;
+
+# Cross-compiling <span class="keyword">for</span> Windows using MinGW
+make mingw-windows64  # x86_64
+make mingw-windows32  # x86
+
+# Cross-compiling <span class="keyword">for</span> Android using NDK
 make android-armv7a \   # Android ARMv7
     NDK_TOOLCHAIN_BIN=/path/to/ndk/toolchains/llvm/prebuild/host_os-arch/bin
 make android-aarch64 \  # Android ARM64
@@ -379,13 +395,37 @@ make android-x86 \      # Android x86
     NDK_TOOLCHAIN_BIN=/path/to/ndk/toolchains/llvm/prebuild/host_os-arch/bin
 make android-x86_64 \   # Android x86_64
     NDK_TOOLCHAIN_BIN=/path/to/ndk/toolchains/llvm/prebuild/host_os-arch/bin
+
+# Cross-compiling <span class="keyword">for</span> iOS <span class="keyword">in</span> a OSX environment
+make ios64 \    # XCFramework with iOS arm64 <span class="keyword">and</span> simulator arm64 + x86_64
+    # Optional: minimum iOS version to target. If absent, uses <span class="number">8.0</span>
+    IOS_VERSION_MIN=X.Y
+    # Optional: code sign identity. If absent, <span class="backtick"><code>codesign</code></span> is <span class="keyword">not</span> performed
+    CODE_SIGN_IDENTITY=&lt;identity&gt; \
+    # Optional: additional flags passed to <span class="backtick"><code>codesign</code></span>
+    OTHER_CODE_SIGN_FLAGS=&lt;flags&gt;
+</pre>
+
+
+<p>If you plan in using the export plugin, the following is also required:</p>
+
+
+<pre>
+make plugin
 </pre>
 
 
 <p>The GDNativeLibrary file <code>lua_pluginscript.gdnlib</code> is already configured to use
 the built files stored in the <code>build</code> folder, so that one can use this
-repository directly inside a Godot project under the folder
-<code>addons/godot-lua-pluginscript</code>.</p>
+repository directly inside a Godot project under the folder <code>addons/godot-lua-pluginscript</code>.</p>
+
+<p>After building the desired libraries, a distribution zip can be built with:</p>
+
+
+<pre>
+make dist
+</pre>
+
 
 
 <p><a name="Third_party_software"></a></p>
@@ -400,6 +440,8 @@ repository directly inside a Godot project under the folder
     Lua programming language, released under the MIT license</li>
     <li><a href="https://github.com/gilzoide/high-level-gdnative">High Level GDNative (HGDN)</a>:
     higher level GDNative API header, released to the Public Domain</li>
+    <li><a href="https://github.com/jirutka/luasrcdiet">LuaSrcDiet</a>: compresses Lua source
+    code by removing unnecessary characters, released under the MIT license</li>
 </ul>
 
 
@@ -417,7 +459,7 @@ repository directly inside a Godot project under the folder
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2021-10-24 18:36:55 </i>
+<i style="float:right;">Last updated 2021-11-19 09:41:10 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>
