@@ -1381,9 +1381,11 @@ void (*lps_instance_call_method_cb)(godot_pluginscript_instance_data *data, cons
 void (*lps_instance_notification_cb)(godot_pluginscript_instance_data *data, int notification);
 ]]
 
-local active_library_path, in_editor = ...
-local _, clib = pcall(ffi.load, active_library_path, true)
-clib = clib or ffi.C
+local pluginscript_callbacks, active_library_path, in_editor = ...
+local success, clib = pcall(ffi.load, active_library_path, true)
+if not success then
+	clib = ffi.C
+end
 
 local api = clib.hgdn_core_api
 local api_1_1 = clib.hgdn_core_1_1_api

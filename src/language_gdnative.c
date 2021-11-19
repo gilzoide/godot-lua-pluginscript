@@ -31,6 +31,12 @@
 #define HGDN_IMPLEMENTATION
 #include "hgdn.h"
 
+#define PLUGINSCRIPT_CALLBACKS_KEY "lps_callbacks"
+#define lps_push_callback(L, name) \
+	lua_getfield(L, LUA_REGISTRYINDEX, PLUGINSCRIPT_CALLBACKS_KEY), \
+	lua_getfield(L, -1, name), \
+	lua_remove(L, -2)
+
 // Callbacks to be implemented in Lua
 void (*lps_language_add_global_constant_cb)(const godot_string *name, const godot_variant *value);
 void (*lps_script_init_cb)(godot_pluginscript_script_manifest *manifest, const godot_string *path, const godot_string *source, godot_error *error);
@@ -45,6 +51,7 @@ void (*lps_instance_notification_cb)(godot_pluginscript_instance_data *data, int
 // Active shared library path, for loading symbols in FFI
 static hgdn_string lps_active_library_path;
 static bool in_editor;
+static lua_State *lps_L;
 
 // Language functions
 static void *lps_alloc(void *userdata, void *ptr, size_t osize, size_t nsize) {
@@ -71,9 +78,8 @@ static int lps_lua_touserdata(lua_State *L) {
 }
 
 static int lps_lua_setthreadfunc(lua_State *L) {
-	lua_State *co;
-	if (lua_isthread(L, 1)) {
-		co = lua_tothread(L, 1);
+	lua_State *co = lua_tothread(L, 1);
+	if (co) {
 		lua_settop(co, 0);
 		// return reused thread
 		lua_pushvalue(L, 1);
@@ -103,7 +109,7 @@ static int lps_pcall_error_handler(lua_State *L) {
 #endif
 
 static godot_pluginscript_language_data *lps_language_init() {
-	lua_State *L = lua_newstate(&lps_alloc, NULL);
+	lua_State *L = lps_L = lua_newstate(&lps_alloc, NULL);
 	lua_atpanic(L, &lps_atpanic);
 	luaL_openlibs(L);
 	lua_register(L, "touserdata", &lps_lua_touserdata);
@@ -126,9 +132,13 @@ static godot_pluginscript_language_data *lps_language_init() {
 #else
 	const int err_handler_index = 0;
 #endif
+	lua_createtable(L, 0, 9);
+	lua_pushvalue(L, -1);
+	lua_setfield(L, LUA_REGISTRYINDEX, PLUGINSCRIPT_CALLBACKS_KEY);
+
 	lua_pushlstring(L, lps_active_library_path.ptr, lps_active_library_path.length);
 	lua_pushboolean(L, in_editor);
-	if (lua_pcall(L, 2, 0, err_handler_index) != LUA_OK) {
+	if (lua_pcall(L, 3, 1, err_handler_index) != LUA_OK) {
 		const char *error_msg = lua_tostring(L, -1);
 		HGDN_PRINT_ERROR("Error running initialization script: %s", error_msg);
 	}
@@ -140,10 +150,14 @@ static godot_pluginscript_language_data *lps_language_init() {
 
 static void lps_language_finish(godot_pluginscript_language_data *data) {
 	lua_close((lua_State *) data);
+	lps_L = NULL;
 }
 
 static void lps_language_add_global_constant(godot_pluginscript_language_data *data, const godot_string *name, const godot_variant *value) {
-	lps_language_add_global_constant_cb(name, value);
+	lps_push_callback(lps_L, "language_add_global_constant");
+	lua_pushlightuserdata(lps_L, (void *) name);
+	lua_pushlightuserdata(lps_L, (void *) value);
+	lua_pcall(lps_L, 2, 0, 0);
 }
 
 // Script manifest
@@ -160,7 +174,12 @@ static godot_pluginscript_script_manifest lps_script_init(godot_pluginscript_lan
 	hgdn_core_api->godot_array_new(&manifest.properties);
 
 	godot_error cb_error = GODOT_ERR_SCRIPT_FAILED;
-	lps_script_init_cb(&manifest, path, source, &cb_error);
+	lps_push_callback(lps_L, "script_init");
+	lua_pushlightuserdata(lps_L, (void *) &manifest);
+	lua_pushlightuserdata(lps_L, (void *) path);
+	lua_pushlightuserdata(lps_L, (void *) source);
+	lua_pushlightuserdata(lps_L, (void *) &cb_error);
+	lua_pcall(lps_L, 4, 0, 0);
 	if (error) {
 		*error = cb_error;
 	}
@@ -169,25 +188,53 @@ static godot_pluginscript_script_manifest lps_script_init(godot_pluginscript_lan
 }
 
 static void lps_script_finish(godot_pluginscript_script_data *data) {
-	lps_script_finish_cb(data);
+	lps_push_callback(lps_L, "script_finish");
+	lua_pushlightuserdata(lps_L, (void *) data);
+	lua_pcall(lps_L, 1, 0, 0);
 }
 
 
 // Instance
 static godot_pluginscript_instance_data *lps_instance_init(godot_pluginscript_script_data *data, godot_object *owner) {
-	return lps_instance_init_cb(data, owner);
+	lps_push_callback(lps_L, "instance_init");
+	lua_pushlightuserdata(lps_L, (void *) data);
+	lua_pushlightuserdata(lps_L, (void *) owner);
+	if (lua_pcall(lps_L, 2, 0, 0) == LUA_OK) {
+		return owner;
+	}
+	return NULL;
 }
 
 static void lps_instance_finish(godot_pluginscript_instance_data *data) {
-	lps_instance_finish_cb(data);
+	lps_push_callback(lps_L, "instance_finish");
+	lua_pushlightuserdata(lps_L, (void *) data);
+	lua_pcall(lps_L, 1, 0, 0);
 }
 
 static godot_bool lps_instance_set_prop(godot_pluginscript_instance_data *data, const godot_string *name, const godot_variant *value) {
-	return lps_instance_set_prop_cb(data, name, value);
+	lps_push_callback(lps_L, "instance_set_prop");
+	lua_pushlightuserdata(lps_L, (void *) data);
+	lua_pushlightuserdata(lps_L, (void *) name);
+	lua_pushlightuserdata(lps_L, (void *) value);
+	if (lua_pcall(lps_L, 3, 1, 0) != LUA_OK) {
+		return false;
+	}
+	godot_bool ret = lua_toboolean(lps_L, -1);
+	lua_pop(lps_L, 1);
+	return ret;
 }
 
-static godot_bool lps_instance_get_prop(godot_pluginscript_instance_data *data, const godot_string *name, godot_variant *ret) {
-	return lps_instance_get_prop_cb(data, name, ret);
+static godot_bool lps_instance_get_prop(godot_pluginscript_instance_data *data, const godot_string *name, godot_variant *value_ret) {
+	lps_push_callback(lps_L, "instance_get_prop");
+	lua_pushlightuserdata(lps_L, (void *) data);
+	lua_pushlightuserdata(lps_L, (void *) name);
+	lua_pushlightuserdata(lps_L, (void *) value_ret);
+	if (lua_pcall(lps_L, 3, 1, 0) != LUA_OK) {
+		return false;
+	}
+	godot_bool ret = lua_toboolean(lps_L, -1);
+	lua_pop(lps_L, 1);
+	return ret;
 }
 
 static godot_variant lps_instance_call_method(godot_pluginscript_instance_data *data, const godot_string_name *method, const godot_variant **args, int argcount, godot_variant_call_error *error) {
@@ -195,12 +242,22 @@ static godot_variant lps_instance_call_method(godot_pluginscript_instance_data *
 	if (error) {
 		error->error = GODOT_CALL_ERROR_CALL_ERROR_INVALID_METHOD;
 	}
-	lps_instance_call_method_cb(data, method, args, argcount, &var, error);
+	lps_push_callback(lps_L, "instance_call_method");
+	lua_pushlightuserdata(lps_L, (void *) data);
+	lua_pushlightuserdata(lps_L, (void *) method);
+	lua_pushlightuserdata(lps_L, (void *) args);
+	lua_pushinteger(lps_L, argcount);
+	lua_pushlightuserdata(lps_L, (void *) &var);
+	lua_pushlightuserdata(lps_L, (void *) error);
+	lua_pcall(lps_L, 6, 0, 0);
 	return var;
 }
 
 static void lps_instance_notification(godot_pluginscript_instance_data *data, int notification) {
-	lps_instance_notification_cb(data, notification);
+	lps_push_callback(lps_L, "instance_notification");
+	lua_pushlightuserdata(lps_L, (void *) data);
+	lua_pushinteger(lps_L, notification);
+	lua_pcall(lps_L, 2, 0, 0);
 }
 
 static godot_pluginscript_language_desc lps_language_desc = {
