@@ -26,10 +26,17 @@
 #include "lualib.h"
 #include "lauxlib.h"
 
-#include "language_gdnative.h"
-
+#define HGDN_STATIC
+#define HGDN_NO_EXT_NATIVESCRIPT
+#define HGDN_NO_EXT_ANDROID
+#define HGDN_NO_EXT_ARVR
+#define HGDN_NO_EXT_VIDEOCODER
+#define HGDN_NO_EXT_NET
 #define HGDN_IMPLEMENTATION
 #include "hgdn.h"
+
+extern const char LUA_INIT_SCRIPT[];
+extern const size_t LUA_INIT_SCRIPT_SIZE;
 
 #define PLUGINSCRIPT_CALLBACKS_KEY "lps_callbacks"
 #define lps_push_callback(L, name) \
@@ -188,10 +195,10 @@ static godot_pluginscript_instance_data *lps_instance_init(godot_pluginscript_sc
 	lps_push_callback(lps_L, "instance_init");
 	lua_pushlightuserdata(lps_L, (void *) data);
 	lua_pushlightuserdata(lps_L, (void *) owner);
-	if (lua_pcall(lps_L, 2, 0, 0) == LUA_OK) {
-		return owner;
+	if (lua_pcall(lps_L, 2, 0, 0) != LUA_OK) {
+		return NULL;
 	}
-	return NULL;
+	return owner;
 }
 
 static void lps_instance_finish(godot_pluginscript_instance_data *data) {
@@ -208,9 +215,9 @@ static godot_bool lps_instance_set_prop(godot_pluginscript_instance_data *data, 
 	if (lua_pcall(lps_L, 3, 1, 0) != LUA_OK) {
 		return false;
 	}
-	godot_bool ret = lua_toboolean(lps_L, -1);
+	godot_bool have_prop = lua_toboolean(lps_L, -1);
 	lua_pop(lps_L, 1);
-	return ret;
+	return have_prop;
 }
 
 static godot_bool lps_instance_get_prop(godot_pluginscript_instance_data *data, const godot_string *name, godot_variant *value_ret) {
@@ -221,9 +228,9 @@ static godot_bool lps_instance_get_prop(godot_pluginscript_instance_data *data, 
 	if (lua_pcall(lps_L, 3, 1, 0) != LUA_OK) {
 		return false;
 	}
-	godot_bool ret = lua_toboolean(lps_L, -1);
+	godot_bool have_prop = lua_toboolean(lps_L, -1);
 	lua_pop(lps_L, 1);
-	return ret;
+	return have_prop;
 }
 
 static godot_variant lps_instance_call_method(godot_pluginscript_instance_data *data, const godot_string_name *method, const godot_variant **args, int argcount, godot_variant_call_error *error) {
@@ -249,6 +256,53 @@ static void lps_instance_notification(godot_pluginscript_instance_data *data, in
 	lua_pcall(lps_L, 2, 0, 0);
 }
 
+// In-editor callbacks
+godot_string lps_get_template_source_code(godot_pluginscript_language_data *data, const godot_string *class_name, const godot_string *base_class_name) {
+	godot_string ret;
+	hgdn_core_api->godot_string_new(&ret);
+	lps_push_callback(lps_L, "get_template_source_code");
+	lua_pushlightuserdata(lps_L, (void *) class_name);
+	lua_pushlightuserdata(lps_L, (void *) base_class_name);
+	lua_pushlightuserdata(lps_L, (void *) &ret);
+	lua_pcall(lps_L, 3, 0, 0);
+	return ret;
+}
+
+godot_bool lps_validate(godot_pluginscript_language_data *data, const godot_string *script, int *line_error, int *col_error, godot_string *test_error, const godot_string *path, godot_pool_string_array *functions) {
+	lps_push_callback(lps_L, "validate");
+	lua_pushlightuserdata(lps_L, (void *) script);
+	lua_pushlightuserdata(lps_L, (void *) line_error);
+	lua_pushlightuserdata(lps_L, (void *) col_error);
+	lua_pushlightuserdata(lps_L, (void *) test_error);
+	lua_pushlightuserdata(lps_L, (void *) path);
+	lua_pushlightuserdata(lps_L, (void *) functions);
+	if (lua_pcall(lps_L, 6, 1, 0) != LUA_OK) {
+		return false;
+	}
+	godot_bool success = lua_toboolean(lps_L, -1);
+	lua_pop(lps_L, 1);
+	return success;
+}
+
+godot_string lps_make_function(godot_pluginscript_language_data *data, const godot_string *class_name, const godot_string *name, const godot_pool_string_array *args) {
+	godot_string ret;
+	hgdn_core_api->godot_string_new(&ret);
+	lps_push_callback(lps_L, "make_function");
+	lua_pushlightuserdata(lps_L, (void *) class_name);
+	lua_pushlightuserdata(lps_L, (void *) name);
+	lua_pushlightuserdata(lps_L, (void *) args);
+	lua_pushlightuserdata(lps_L, (void *) &ret);
+	lua_pcall(lps_L, 4, 0, 0);
+	return ret;
+}
+
+void lps_register_in_editor_callbacks(godot_pluginscript_language_desc *desc) {
+	desc->get_template_source_code = &lps_get_template_source_code;
+	desc->validate = &lps_validate;
+	desc->make_function = &lps_make_function;
+}
+
+// GDNative entrypoint
 static godot_pluginscript_language_desc lps_language_desc = {
 	.name = "Lua",
 	.type = "Lua",

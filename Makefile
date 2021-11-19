@@ -33,7 +33,7 @@ _CC = $(CROSS)$(CC)
 _LIPO = $(CROSS)$(LIPO)
 _STRIP = $(CROSS)$(STRIP)
 
-SRC = language_gdnative.c language_in_editor_callbacks.c
+SRC = language_gdnative.c
 OBJS = $(SRC:.c=.o) init_script.o
 BUILT_OBJS = $(addprefix build/%/,$(OBJS))
 MAKE_LUAJIT_OUTPUT = build/%/luajit/src/luajit.o build/%/luajit/src/lua51.dll build/%/luajit/src/libluajit.a
