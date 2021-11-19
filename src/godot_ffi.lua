@@ -1370,9 +1370,11 @@ const godot_gdnative_core_1_2_api_struct *hgdn_core_1_2_api;
 godot_object *hgdn_library;
 ]]
 
-local pluginscript_callbacks, active_library_path, in_editor = ...
-local success, clib = pcall(ffi.load, active_library_path, true)
-if not success then
+local pluginscript_callbacks, in_editor, active_library_path = ...
+local clib
+if active_library_path then
+	clib = ffi.load(active_library_path, true)
+else
 	clib = ffi.C
 end
 

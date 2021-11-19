@@ -128,13 +128,14 @@ static godot_pluginscript_language_data *lps_language_init() {
 #else
 	const int err_handler_index = 0;
 #endif
-	lua_createtable(L, 0, 9);
+	// registry.lps_callbacks = {} // maintaining it on stack
+	lua_createtable(L, 0, 10);
 	lua_pushvalue(L, -1);
 	lua_setfield(L, LUA_REGISTRYINDEX, PLUGINSCRIPT_CALLBACKS_KEY);
 
-	lua_pushlstring(L, lps_active_library_path.ptr, lps_active_library_path.length);
 	lua_pushboolean(L, in_editor);
-	if (lua_pcall(L, 3, 1, err_handler_index) != LUA_OK) {
+	lua_pushlstring(L, lps_active_library_path.ptr, lps_active_library_path.length);
+	if (lua_pcall(L, 3, 0, err_handler_index) != LUA_OK) {
 		const char *error_msg = lua_tostring(L, -1);
 		HGDN_PRINT_ERROR("Error running initialization script: %s", error_msg);
 	}
