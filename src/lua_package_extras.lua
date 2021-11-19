@@ -29,6 +29,7 @@
 
 local active_library_dirsep_pos = active_library_path:match("()[^/]+%.%w+$")
 
+local ProjectSettings = ProjectSettings
 local execdir_repl =
 	OS:has_feature("standalone")
 	and active_library_path:sub(1, active_library_dirsep_pos - 1)

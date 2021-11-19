@@ -4,5 +4,7 @@ s/\\/\\\\/g
 s/"/\\"/g
 # Add starting quote
 s/^/"/
-# Add ending newline and quote
-s/$/\\n"/
+# Add ending newline, except on last script line
+$! s/$/\\n/
+# Add ending quote
+s/$/"/

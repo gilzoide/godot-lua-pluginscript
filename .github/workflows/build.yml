@@ -20,16 +20,20 @@ jobs:
             arch: x86_64
           - os: macos-latest
             make: |
-              make osx-arm64 MACOSX_DEPLOYMENT_TARGET=11.0 CC=clang SDKROOT=/Library/Developer/CommandLineTools/SDKs/MacOSX11.1.sdk
-              make osx-x86_64 MACOSX_DEPLOYMENT_TARGET=10.14 CC=clang
+              make osx-arm64 CC=clang SDKROOT=/Library/Developer/CommandLineTools/SDKs/MacOSX11.1.sdk
+              make osx-x86_64 CC=clang
               make osx64
             arch: x86_64-arm64
     steps:
       - uses: actions/checkout@v2
         with:
           submodules: true
+      - name: Build native LuaJIT
+        run: make native-luajit
       - name: Build artifact
         run: ${{ matrix.make }}
+        env:
+          LUA_BIN: build/native/luajit/src/luajit
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:

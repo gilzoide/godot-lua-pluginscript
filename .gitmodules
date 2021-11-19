@@ -7,3 +7,6 @@
 [submodule "lib/luajit"]
 	path = lib/luajit
 	url = https://github.com/LuaJIT/LuaJIT.git
+[submodule "lib/luasrcdiet"]
+	path = lib/luasrcdiet
+	url = https://github.com/jirutka/luasrcdiet.git

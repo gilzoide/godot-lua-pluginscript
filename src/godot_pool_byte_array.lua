@@ -187,9 +187,9 @@ methods.append = methods.push_back
 methods.extend = function(self, iterable)
 	if type(iterable) == 'string' then
 		local size = #self
-		self:resize(size + #v)
+		self:resize(size + #iterable)
 		local write = self:write()
-		ffi_copy(write:ptr() + size, v, #v)
+		ffi_copy(write:ptr() + size, iterable, #iterable)
 		write:destroy()
 	elseif ffi_istype(PoolByteArray, iterable) then
 		api.godot_pool_byte_array_append_array(self, iterable)

@@ -2,6 +2,43 @@
 ## [Unreleased]
 
 
+## [0.3.1]
+### Added
+- Support for `codesign`ing OSX builds directly from make invocation.
+  The optional parameters are `CODE_SIGN_IDENTITY` and `OTHER_CODE_SIGN_FLAGS`.
+- `LUA_BIN` option for specifying a Lua command other than `lua` when building
+- `native-luajit` make target, used by CI
+- `unzip-to-build` make target, for unzipping artifacts from CI to build folder
+
+### Fixed
+- `strip` invocation on OSX builds
+- Update build GitHub Actions workflow with newer build pipeline
+
+### Changed
+- Added `build/.gdignore` to distribution, to stop Godot from trying to import
+  `build/jit/*.lua` files
+- Added default values for `MACOSX_DEPLOYMENT_TARGET`, making it an optional
+  parameter for OSX builds
+
+
+## [0.3.0]
+### Added
+- `EditorExportPlugin` for minifying Lua scripts with `LuaSrcDiet` on
+  release exports. Minification may be turned off with the
+  `lua_pluginscript/export/minify_on_release_export` project setting.
+
+### Changed
+- Release builds' init Lua script are minified with `LuaSrcDiet` and libraries
+  are now `strip`ed, resulting in smaller dynamic libraries
+- HGDN functions are now compiled with static visibility and unused GDNative
+  extensions are excluded, also resulting in smaller dynamic libraries
+- Makefile targets for cross-compiling for Windows were renamed from
+  `cross-windows*` to `mingw-windows*`
+
+### Fixed
+- `PoolByteArray.extend` when called with a string argument
+
+
 ## [0.2.0]
 ### Added
 - `Array.join` method, similar to `PoolStringArray.join`
@@ -52,7 +89,9 @@
 - API documentation
 
 
-[Unreleased]: https://github.com/gilzoide/godot-lua-pluginscript/compare/0.2.0...HEAD
+[Unreleased]: https://github.com/gilzoide/godot-lua-pluginscript/compare/0.3.1...HEAD
+[0.3.1]: https://github.com/gilzoide/godot-lua-pluginscript/releases/tag/0.3.1
+[0.3.0]: https://github.com/gilzoide/godot-lua-pluginscript/releases/tag/0.3.0
 [0.2.0]: https://github.com/gilzoide/godot-lua-pluginscript/releases/tag/0.2.0
 [0.1.0]: https://github.com/gilzoide/godot-lua-pluginscript/releases/tag/0.1.0
 [r1]: https://github.com/gilzoide/godot-lua-pluginscript/releases/tag/r1

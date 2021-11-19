@@ -43,17 +43,20 @@ In the `Project -> Project Settings...` window, some settings are available:
 - **Lua PluginScript/Package Path/Behavior**: Whether templates will replace
   [package.path](https://www.lua.org/manual/5.1/manual.html#pdf-package.path),
   be appended to it or prepended to it.
-  Default behavior: replace.
+  Default behavior: `replace`.
 - **Lua PluginScript/Package Path/Templates**: String array of templates to be
   injected into `package.path`.
   Default templates: `res://?.lua` and `res://?/init.lua`.
 - **Lua PluginScript/Package C Path/Behavior**: Whether templates will replace
   [package.cpath](https://www.lua.org/manual/5.1/manual.html#pdf-package.cpath),
   be appended to it or prepended to it.
-  Default behavior: replace.
+  Default behavior: `replace`.
 - **Lua PluginScript/Package C Path/Templates**: String array of templates to be
   injected into `package.cpath`.
   Default templates: `!/?.dll` and `!/loadall.dll` on Windows, `!/?.so` and `!/loadall.so` elsewhere.
+- **Lua PluginScript/Export/Minify On Release Export**: Whether Lua scritps
+  should be minified on release exports.
+  Defaults to `true`.
 
 Also, an editor plugin is included, currently with a barebones REPL for Lua
 expressions, located in the bottom panel of the editor.
@@ -196,7 +199,7 @@ return MyClass
 - [X] API documentation
 - [ ] Unit tests
 - [ ] Example projects
-- [ ] Export plugin to minify Lua scripts
+- [X] Export plugin to minify Lua scripts
 - [X] Drop-in binary release in GitHub
 - [X] Submit to Asset Library
 
@@ -205,7 +208,9 @@ return MyClass
 The API is documented using [LDoc](https://stevedonovan.github.io/ldoc/manual/doc.md.html).
 Documentation may be generated with the following command:
 
-    # make docs
+```sh
+make docs
+```
 
 
 ## Building
@@ -234,7 +239,18 @@ make windows32  # x86
 make linux64    # x86_64
 make linux32    # x86
 make osx64 \    # "universal" multiarch x86_64 + amd64 dylib
-    MACOSX_DEPLOYMENT_TARGET=XX.YY
+    # Optional: deployment target. If absent, uses 10.7 for x86_64 and 11.0 for arm64
+    MACOSX_DEPLOYMENT_TARGET=XX.YY \
+    # Optional: code sign identity. If absent, `codesign` is not performed
+    CODE_SIGN_IDENTITY=<identity> \
+    # Optional: additional flags passed to `codesign`
+    OTHER_CODE_SIGN_FLAGS=<flags>
+    
+# Cross-compiling for Windows using MinGW
+make mingw-windows64  # x86_64
+make mingw-windows32  # x86
+
+# Cross-compiling for Android using NDK
 make android-armv7a \   # Android ARMv7
     NDK_TOOLCHAIN_BIN=/path/to/ndk/toolchains/llvm/prebuild/host_os-arch/bin   
 make android-aarch64 \  # Android ARM64
@@ -243,12 +259,32 @@ make android-x86 \      # Android x86
     NDK_TOOLCHAIN_BIN=/path/to/ndk/toolchains/llvm/prebuild/host_os-arch/bin      
 make android-x86_64 \   # Android x86_64
     NDK_TOOLCHAIN_BIN=/path/to/ndk/toolchains/llvm/prebuild/host_os-arch/bin   
+
+# Cross-compiling for iOS in a OSX environment
+make ios64 \    # XCFramework with iOS arm64 and simulator arm64 + x86_64
+    # Optional: minimum iOS version to target. If absent, uses 8.0
+    IOS_VERSION_MIN=X.Y
+    # Optional: code sign identity. If absent, `codesign` is not performed
+    CODE_SIGN_IDENTITY=<identity> \
+    # Optional: additional flags passed to `codesign`
+    OTHER_CODE_SIGN_FLAGS=<flags>
+```
+
+If you plan in using the export plugin, the following is also required:
+
+```sh
+make plugin
 ```
 
 The GDNativeLibrary file `lua_pluginscript.gdnlib` is already configured to use
 the built files stored in the `build` folder, so that one can use this
-repository directly inside a Godot project under the folder
-`addons/godot-lua-pluginscript`.
+repository directly inside a Godot project under the folder `addons/godot-lua-pluginscript`.
+
+After building the desired libraries, a distribution zip can be built with:
+
+```sh
+make dist
+```
 
 
 ## Third-party software
@@ -261,6 +297,8 @@ This project uses the following software:
   Lua programming language, released under the MIT license
 - [High Level GDNative (HGDN)](https://github.com/gilzoide/high-level-gdnative):
   higher level GDNative API header, released to the Public Domain
+- [LuaSrcDiet](https://github.com/jirutka/luasrcdiet): compresses Lua source
+  code by removing unnecessary characters, released under the MIT license
 
 
 ## Other projects for using Lua in Godot

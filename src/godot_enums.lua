@@ -77,7 +77,7 @@
 -- @field HELP  Help
 -- @field BUG  Bug
 -- @field PRINTER_ON_FIRE  Printer On Fire
-Error = {
+local Error = {
 	OK = clib.GODOT_OK, 
 	FAILED = clib.GODOT_FAILED, 
 	UNAVAILABLE = clib.GODOT_ERR_UNAVAILABLE, 
@@ -129,6 +129,7 @@ Error = {
 	PRINTER_ON_FIRE = clib.GODOT_ERR_PRINTER_ON_FIRE, 
 }
 for k, v in pairs(Error) do Error[v] = k end
+_G.Error = Error
 
 --- Enum `godot_variant_type`, mapping PascalCased names to ordinal value and vice-versa.
 --     assert(VariantType.Nil == GODOT_VARIANT_TYPE_NIL and VariantType[VariantType.Nil] == 'Nil')
@@ -161,7 +162,7 @@ for k, v in pairs(Error) do Error[v] = k end
 -- @field PoolVector2Array  PoolVector2Array
 -- @field PoolVector3Array  PoolVector3Array
 -- @field PoolColorArray  PoolColorArray
-VariantType = {
+local VariantType = {
 	Nil = clib.GODOT_VARIANT_TYPE_NIL,
 	Bool = clib.GODOT_VARIANT_TYPE_BOOL,
 	Int = clib.GODOT_VARIANT_TYPE_INT,
@@ -191,6 +192,7 @@ VariantType = {
 	PoolColorArray = clib.GODOT_VARIANT_TYPE_POOL_COLOR_ARRAY,
 }
 for k, v in pairs(VariantType) do VariantType[v] = k end
+_G.VariantType = VariantType
 
 --- Enum `godot_variant_call_error`, mapping UPPER_CASED names to ordinal values and vice-versa.
 --     assert(CallError.OK == GODOT_CALL_ERROR_CALL_OK and CallError[CallError.OK] == 'OK')
@@ -202,7 +204,7 @@ for k, v in pairs(VariantType) do VariantType[v] = k end
 -- @field ERROR_TOO_MANY_ARGUMENTS  Too Many Arguments
 -- @field ERROR_TOO_FEW_ARGUMENTS  Too Few Arguments
 -- @field ERROR_INSTANCE_IS_NULL  Instance Is Null
-CallError = {
+local CallError = {
 	OK = clib.GODOT_CALL_ERROR_CALL_OK,
 	ERROR_INVALID_METHOD = clib.GODOT_CALL_ERROR_CALL_ERROR_INVALID_METHOD,
 	ERROR_INVALID_ARGUMENT = clib.GODOT_CALL_ERROR_CALL_ERROR_INVALID_ARGUMENT,
@@ -211,9 +213,10 @@ CallError = {
 	ERROR_INSTANCE_IS_NULL = clib.GODOT_CALL_ERROR_CALL_ERROR_INSTANCE_IS_NULL,
 }
 for k, v in pairs(CallError) do CallError[v] = k end
+_G.CallError = CallError
 
 --- Enum `godot_method_rpc_mode`, mapping UPPER_CASED names to ordinal values and vice-versa.
---     assert(RPCMode.Disabled == GODOT_METHOD_RPC_MODE_DISABLED and RPCMode[RPCMode.DISABLED] == 'DISABLED')
+--     assert(RPCMode.DISABLED == GODOT_METHOD_RPC_MODE_DISABLED and RPCMode[RPCMode.DISABLED] == 'DISABLED')
 --     ...
 -- @table RPCMode
 -- @field DISABLED  RPC Disabled
@@ -225,7 +228,7 @@ for k, v in pairs(CallError) do CallError[v] = k end
 -- @field SYNC  RPC Sync
 -- @field MASTERSYNC  RPC Mastersync
 -- @field PUPPETSYNC  RPC Puppetsync
-RPCMode = {
+local RPCMode = {
 	DISABLED = clib.GODOT_METHOD_RPC_MODE_DISABLED,
 	REMOTE = clib.GODOT_METHOD_RPC_MODE_REMOTE,
 	MASTER = clib.GODOT_METHOD_RPC_MODE_MASTER,
@@ -237,8 +240,11 @@ RPCMode = {
 	PUPPETSYNC = clib.GODOT_METHOD_RPC_MODE_PUPPETSYNC,
 }
 for k, v in pairs(RPCMode) do RPCMode[v] = k end
+_G.RPCMode = RPCMode
 
 --- Enum `godot_property_hint`, mapping UPPER_CASED names to ordinal values and vice-versa.
+--     assert(PropertyHint.NONE == GODOT_PROPERTY_HINT_NONE and PropertyHint[PropertyHint.NONE] == 'NONE')
+--     ...
 -- @table PropertyHint
 -- @field NONE  None
 -- @field RANGE  Range (hint_string = `"min,max,step,slider"`; step and slider are optional)
@@ -274,7 +280,7 @@ for k, v in pairs(RPCMode) do RPCMode[v] = k end
 -- @field PROPERTY_OF_BASE_TYPE  Property Of Base Type
 -- @field PROPERTY_OF_INSTANCE  Property Of Instance
 -- @field PROPERTY_OF_SCRIPT  Property Of Script
-PropertyHint = {
+local PropertyHint = {
 	NONE = clib.GODOT_PROPERTY_HINT_NONE, 
 	RANGE = clib.GODOT_PROPERTY_HINT_RANGE, 
 	EXP_RANGE = clib.GODOT_PROPERTY_HINT_EXP_RANGE, 
@@ -311,8 +317,11 @@ PropertyHint = {
 	PROPERTY_OF_SCRIPT = clib.GODOT_PROPERTY_HINT_PROPERTY_OF_SCRIPT, 
 }
 for k, v in pairs(PropertyHint) do PropertyHint[v] = k end
+_G.PropertyHint = PropertyHint
 
 --- Enum `godot_property_usage_flags`, mapping UPPER_CASED names to ordinal values and vice-versa.
+--     assert(PropertyUsage.STORAGE == GODOT_PROPERTY_USAGE_STORAGE and PropertyUsage[PropertyUsage.STORAGE] == 'STORAGE')
+--     ...
 -- @table PropertyUsage
 -- @field STORAGE  Storage
 -- @field EDITOR  Editor
@@ -334,7 +343,7 @@ for k, v in pairs(PropertyHint) do PropertyHint[v] = k end
 -- @field DEFAULT  Default
 -- @field DEFAULT_INTL  Default Internationalized
 -- @field NOEDITOR  No Editor
-PropertyUsage = {
+local PropertyUsage = {
 	STORAGE = clib.GODOT_PROPERTY_USAGE_STORAGE,
 	EDITOR = clib.GODOT_PROPERTY_USAGE_EDITOR,
 	NETWORK = clib.GODOT_PROPERTY_USAGE_NETWORK,
@@ -357,3 +366,4 @@ PropertyUsage = {
 	NOEDITOR = clib.GODOT_PROPERTY_USAGE_NOEDITOR,
 }
 for k, v in pairs(PropertyUsage) do PropertyUsage[v] = k end
+_G.PropertyUsage = PropertyUsage

@@ -27,6 +27,14 @@ local function pointer_to_index(ptr)
 	return tonumber(ffi_cast('uintptr_t', ptr))
 end
 
+local function get_lua_instance(ptr)
+	return lps_instances[pointer_to_index(ptr)]
+end
+
+local function set_lua_instance(ptr, instance)
+	lps_instances[pointer_to_index(ptr)] = instance
+end
+
 local lps_coroutine_pool = {
 	acquire = function(self, f)
 		return setthreadfunc(table_remove(self), f)
@@ -75,26 +83,22 @@ local function wrap_callback(f, error_return)
 		return result
 	end
 end
+pluginscript_callbacks.wrap_callback = wrap_callback
 
-local function get_lua_instance(ptr)
-	return lps_instances[pointer_to_index(ptr)]
-end
-
-local function set_lua_instance(ptr, instance)
-	lps_instances[pointer_to_index(ptr)] = instance
-end
-
--- void (*lps_language_add_global_constant_cb)(const godot_string *name, const godot_variant *value);
-clib.lps_language_add_global_constant_cb = wrap_callback(function(name, value)
-	name = tostring(name)
+-- void (*)(const godot_string *name, const godot_variant *value);
+pluginscript_callbacks.language_add_global_constant = wrap_callback(function(name, value)
+	name = tostring(ffi_cast('godot_string *', name))
 	lps_callstack:push('add_global', string_quote(name))
-	_G[name] = value:unbox()
+	_G[name] = ffi_cast('godot_variant *', value):unbox()
 end)
 
--- void (*lps_script_init_cb)(godot_pluginscript_script_manifest *manifest, const godot_string *path, const godot_string *source, godot_error *error);
-clib.lps_script_init_cb = wrap_callback(function(manifest, path, source, err)
-	path = tostring(path)
-	source = tostring(source)
+-- void (*)(godot_pluginscript_script_manifest *manifest, const godot_string *path, const godot_string *source, godot_error *error);
+pluginscript_callbacks.script_init = wrap_callback(function(manifest, path, source, err)
+	manifest = ffi_cast('godot_pluginscript_script_manifest *', manifest)
+	path = tostring(ffi_cast('godot_string *', path))
+	source = tostring(ffi_cast('godot_string *', source))
+	err = ffi_cast('godot_error *', err)
+
 	lps_callstack:push('script_load', '@', string_quote(path))
 	local script, err_message = loadstring(source, path)
 	if not script then
@@ -150,15 +154,17 @@ clib.lps_script_init_cb = wrap_callback(function(manifest, path, source, err)
 	err[0] = Error.OK
 end)
 
--- void (*lps_script_finish_cb)(godot_pluginscript_script_data *data);
-clib.lps_script_finish_cb = wrap_callback(function(data)
+-- void (*)(godot_pluginscript_script_data *data);
+pluginscript_callbacks.script_finish = wrap_callback(function(data)
 	lps_callstack:push('script_finish')
 	lps_scripts[pointer_to_index(data)] = nil
 end)
 
--- godot_pluginscript_instance_data *(*lps_instance_init_cb)(godot_pluginscript_script_data *data, godot_object *owner);
-clib.lps_instance_init_cb = wrap_callback(function(script_data, owner)
+-- void (*)(godot_pluginscript_script_data *data, godot_object *owner);
+pluginscript_callbacks.instance_init = wrap_callback(function(script_data, owner)
 	local script = lps_scripts[pointer_to_index(script_data)]
+	owner = ffi_cast('godot_object *', owner)
+
 	lps_callstack:push('_init', '@', string_quote(script.__path))
 	local instance = setmetatable({
 		__owner = owner,
@@ -177,19 +183,20 @@ clib.lps_instance_init_cb = wrap_callback(function(script_data, owner)
 		_init(instance)
 	end
 	set_lua_instance(owner, instance)
-	return owner
 end)
 
--- void (*lps_instance_finish_cb)(godot_pluginscript_instance_data *data);
-clib.lps_instance_finish_cb = wrap_callback(function(data)
+-- void (*)(godot_pluginscript_instance_data *data);
+pluginscript_callbacks.instance_finish = wrap_callback(function(data)
 	lps_callstack:push('finish')
 	set_lua_instance(data, nil)
 end)
 
--- godot_bool (*lps_instance_set_prop_cb)(godot_pluginscript_instance_data *data, const godot_string *name, const godot_variant *value);
-clib.lps_instance_set_prop_cb = wrap_callback(function(data, name, value)
-	name = tostring(name)
+-- godot_bool (*)(godot_pluginscript_instance_data *data, const godot_string *name, const godot_variant *value);
+pluginscript_callbacks.instance_set_prop = wrap_callback(function(data, name, value)
 	local self = get_lua_instance(data)
+	name = tostring(ffi_cast('godot_string *', name))
+	value = ffi_cast('godot_variant *', value)
+
 	local script = self.__script
 	lps_callstack:push('set', string_quote(name), '@', string_quote(script.__path))
 	local prop = script.__properties[name]
@@ -210,10 +217,12 @@ clib.lps_instance_set_prop_cb = wrap_callback(function(data, name, value)
 	return false
 end, false)
 
--- godot_bool (*lps_instance_get_prop_cb)(godot_pluginscript_instance_data *data, const godot_string *name, godot_variant *ret);
-clib.lps_instance_get_prop_cb = wrap_callback(function(data, name, ret)
-	name = tostring(name)
+-- godot_bool (*)(godot_pluginscript_instance_data *data, const godot_string *name, godot_variant *ret);
+pluginscript_callbacks.instance_get_prop = wrap_callback(function(data, name, ret)
 	local self = get_lua_instance(data)
+	name = tostring(ffi_cast('godot_string *', name))
+	ret = ffi_cast('godot_variant *', ret)
+
 	local script = self.__script
 	lps_callstack:push('get', string_quote(name), '@', string_quote(script.__path))
 	local prop = script.__properties[name]
@@ -243,11 +252,14 @@ clib.lps_instance_get_prop_cb = wrap_callback(function(data, name, ret)
 	return false
 end, false)
 
--- void (*lps_instance_call_method_cb)(godot_pluginscript_instance_data *data, const godot_string_name *method, const godot_variant **args, int argcount, godot_variant *ret, godot_variant_call_error *error);
-
-clib.lps_instance_call_method_cb = wrap_callback(function(data, name, args, argcount, ret, err)
-	name = tostring(name)
+-- void (*)(godot_pluginscript_instance_data *data, const godot_string_name *method, const godot_variant **args, int argcount, godot_variant *ret, godot_variant_call_error *error);
+pluginscript_callbacks.instance_call_method = wrap_callback(function(data, name, args, argcount, ret, err)
 	local self = get_lua_instance(data)
+	name = tostring(ffi_cast('godot_string_name *', name))
+	args = ffi_cast('godot_variant **', args)
+	ret = ffi_cast('godot_variant *', ret)
+	err = ffi_cast('godot_variant_call_error *', err)
+
 	local script = self.__script
 	lps_callstack:push('call', name, '@', script.__path)
 	local method = script[name]
@@ -270,8 +282,8 @@ clib.lps_instance_call_method_cb = wrap_callback(function(data, name, args, argc
 	end
 end)
 
--- void (*lps_instance_notification_cb)(godot_pluginscript_instance_data *data, int notification);
-clib.lps_instance_notification_cb = wrap_callback(function(data, what)
+-- void (*)(godot_pluginscript_instance_data *data, int notification);
+pluginscript_callbacks.instance_notification = wrap_callback(function(data, what)
 	local self = get_lua_instance(data)
 	local script = self.__script
 	lps_callstack:push('_notification', '@', script.__path)
