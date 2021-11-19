@@ -1368,17 +1368,6 @@ const godot_gdnative_core_api_struct *hgdn_core_api;
 const godot_gdnative_core_1_1_api_struct *hgdn_core_1_1_api;
 const godot_gdnative_core_1_2_api_struct *hgdn_core_1_2_api;
 godot_object *hgdn_library;
-
-// Global PluginScript callbacks
-void (*lps_language_add_global_constant_cb)(const godot_string *name, const godot_variant *value);
-void (*lps_script_init_cb)(godot_pluginscript_script_manifest *manifest, const godot_string *path, const godot_string *source, godot_error *error);
-void (*lps_script_finish_cb)(godot_pluginscript_script_data *data);
-godot_pluginscript_instance_data *(*lps_instance_init_cb)(godot_pluginscript_script_data *data, godot_object *owner);
-void (*lps_instance_finish_cb)(godot_pluginscript_instance_data *data);
-godot_bool (*lps_instance_set_prop_cb)(godot_pluginscript_instance_data *data, const godot_string *name, const godot_variant *value);
-godot_bool (*lps_instance_get_prop_cb)(godot_pluginscript_instance_data *data, const godot_string *name, godot_variant *ret);
-void (*lps_instance_call_method_cb)(godot_pluginscript_instance_data *data, const godot_string_name *method, const godot_variant **args, int argcount, godot_variant *ret, godot_variant_call_error *error);
-void (*lps_instance_notification_cb)(godot_pluginscript_instance_data *data, int notification);
 ]]
 
 local pluginscript_callbacks, active_library_path, in_editor = ...

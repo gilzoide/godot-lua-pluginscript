@@ -37,17 +37,6 @@
 	lua_getfield(L, -1, name), \
 	lua_remove(L, -2)
 
-// Callbacks to be implemented in Lua
-void (*lps_language_add_global_constant_cb)(const godot_string *name, const godot_variant *value);
-void (*lps_script_init_cb)(godot_pluginscript_script_manifest *manifest, const godot_string *path, const godot_string *source, godot_error *error);
-void (*lps_script_finish_cb)(godot_pluginscript_script_data *data);
-godot_pluginscript_instance_data *(*lps_instance_init_cb)(godot_pluginscript_script_data *data, godot_object *owner);
-void (*lps_instance_finish_cb)(godot_pluginscript_instance_data *data);
-godot_bool (*lps_instance_set_prop_cb)(godot_pluginscript_instance_data *data, const godot_string *name, const godot_variant *value);
-godot_bool (*lps_instance_get_prop_cb)(godot_pluginscript_instance_data *data, const godot_string *name, godot_variant *ret);
-void (*lps_instance_call_method_cb)(godot_pluginscript_instance_data *data, const godot_string_name *method, const godot_variant **args, int argcount, godot_variant *ret, godot_variant_call_error *error);
-void (*lps_instance_notification_cb)(godot_pluginscript_instance_data *data, int notification);
-
 // Active shared library path, for loading symbols in FFI
 static hgdn_string lps_active_library_path;
 static bool in_editor;
