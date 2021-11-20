@@ -27,7 +27,7 @@
 -- executable folder.
 -- @module package_extras
 
-local active_library_dirsep_pos = active_library_path:match("()[^/]+%.%w+$")
+local active_library_dirsep_pos = active_library_path:match("()[^/]+$")
 
 local ProjectSettings = ProjectSettings
 local execdir_repl =
