@@ -198,7 +198,7 @@ end
 --   metamethod.
 -- * (*optional*) `hint`: one of `Enumerations.PropertyHint`. Default to `PropertyHint.NONE`.
 -- * (*optional*) `hint_string`: the hint text, required for some hints like `RANGE`.
--- * (*optional*) `usage`: one of `Enumerations.PropertyUsage`. Default to `PropertyUsage.DEFAULT`.
+-- * (*optional*) `usage`: one of `Enumerations.PropertyUsage`. Default to `PropertyUsage.NOEDITOR`.
 -- * (*optional*) `rset_mode`: one of `Enumerations.RPCMode`. Default to `RPCMode.DISABLED`.
 --
 -- TODO: accept hints directly (`range = '1,10'`; `enum = 'value1,value2,value3'`; `file = '*.png'`, etc...).
@@ -213,6 +213,7 @@ end
 --         hint = PropertyHint.RANGE,
 --         hint_text = '1,100',
 --     }
+-- @param metadata  Property default value or metadata table
 -- @treturn table
 -- @raise If neither default value, type or getter is passed.
 -- @see lps_coroutine.lua
@@ -251,6 +252,17 @@ function property(metadata)
 	prop.default_value = default_value
 	prop.type = property_type
 	prop.getter = getter
+	prop.usage = prop.usage or PropertyUsage.NOEDITOR
+	return prop
+end
+
+--- Alias for `property` that always adds `PropertyUsage.EDITOR` to the usage flags.
+-- This is a shortcut for creating properties that are exported to the editor.
+-- @param metadata  Property default value or metadata table
+-- @see property
+function export(metadata)
+	local prop = property(metadata)
+	prop.usage = prop.usage and bor(prop.usage, PropertyUsage.EDITOR) or PropertyUsage.DEFAULT
 	return prop
 end
 

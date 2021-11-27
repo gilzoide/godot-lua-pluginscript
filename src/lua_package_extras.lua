@@ -27,14 +27,12 @@
 -- executable folder.
 -- @module package_extras
 
-local active_library_dirsep_pos = active_library_path:match("()[^/]+%.%w+$")
-
-local ProjectSettings = ProjectSettings
+local ProjectSettings, OS = ProjectSettings, OS
 local execdir_repl =
 	OS:has_feature("standalone")
-	and active_library_path:sub(1, active_library_dirsep_pos - 1)
-	or tostring(ProjectSettings:globalize_path("res://"))
-execdir_repl = execdir_repl:sub(1, -2)  -- Remove trailing slash
+	and OS:get_executable_path():get_base_dir()
+	or ProjectSettings:globalize_path("res://")
+execdir_repl = tostring(execdir_repl:trim_suffix('/'))
 
 -- Supports "res://" and "user://" paths
 -- Replaces "!" for executable path on standalone builds or project path otherwise

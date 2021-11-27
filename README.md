@@ -125,6 +125,7 @@ MyClass.something_happened = signal()
 MyClass.something_happened_with_args = signal("arg1", "arg2")
 
 -- Values defined in table are registered as properties of the class
+-- By default, properties are not exported to the editor
 MyClass.some_prop = 42
 
 -- The `property` function adds metadata to defined properties,
@@ -146,8 +147,8 @@ MyClass.some_prop_with_details = property {
   -- ["set"] or ["setter"] = setter function or method name, optional
   set = 'set_some_prop_with_details',
   -- ["usage"] = property usage, from `enum godot_property_usage_flags`
-  -- optional, default to `PropertyUsage.DEFAULT`
-  usage = PropertyUsage.DEFAULT,
+  -- optional, default to `PropertyUsage.NOEDITOR`
+  usage = PropertyUsage.NOEDITOR,
   -- ["hint"] = property hint, from `enum godot_property_hint`
   -- optional, default to `PropertyHint.NONE`
   hint = PropertyHint.RANGE,
@@ -156,6 +157,14 @@ MyClass.some_prop_with_details = property {
   -- ["rset_mode"] = property remote set mode, from `enum godot_method_rpc_mode`
   -- optional, default to `RPCMode.DISABLED`
   rset_mode = RPCMode.MASTER,
+}
+-- The `export` function is an alias for `property` that always exports
+-- properties to the editor
+MyClass.exported_prop = export { "This property appears in the editor" }
+MyClass.another_exported_prop = export {
+  [[This one also appears in the editor,
+now with a multiline TextArea for edition]],
+  hint = PropertyHint.MULTILINE_TEXT,
 }
 
 -- Functions defined in table are public methods
@@ -261,7 +270,7 @@ make android-x86_64 \   # Android x86_64
     NDK_TOOLCHAIN_BIN=/path/to/ndk/toolchains/llvm/prebuild/host_os-arch/bin   
 
 # Cross-compiling for iOS in a OSX environment
-make ios64 \    # XCFramework with iOS arm64 and simulator arm64 + x86_64
+make ios64 \    # Dylibs for iOS arm64 and simulator arm64 + x86_64
     # Optional: minimum iOS version to target. If absent, uses 8.0
     IOS_VERSION_MIN=X.Y
     # Optional: code sign identity. If absent, `codesign` is not performed

@@ -1371,12 +1371,7 @@ godot_object *hgdn_library;
 ]]
 
 local pluginscript_callbacks, in_editor, active_library_path = ...
-local clib
-if active_library_path then
-	clib = ffi.load(active_library_path, true)
-else
-	clib = ffi.C
-end
+local clib = active_library_path and ffi.load(active_library_path, true) or ffi.C
 
 local api = clib.hgdn_core_api
 local api_1_1 = clib.hgdn_core_1_1_api
