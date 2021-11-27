@@ -1,5 +1,11 @@
 # Changelog
 ## [Unreleased]
+### Added
+- Support for running without JIT enabled
+- Support for iOS builds
+
+### Fixed
+- Quote `CODE_SIGN_IDENTITY` argument passed to `codesign` invocations
 
 
 ## [0.3.1]
