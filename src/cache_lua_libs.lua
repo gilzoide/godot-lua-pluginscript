@@ -32,6 +32,9 @@ table.pack = table.pack or function(...)
 	return { ..., n = select('#', ...) }
 end
 
+-- Bitwise operations for LuaJIT or 5.2 or 5.3+ operators
+local bor = bit.bor or bit32.bor or load[[function(a,b)return a|b end]]
+
 -- Lua library functions
 local coroutine_resume, coroutine_running, coroutine_status, coroutine_yield
     = coroutine.resume, coroutine.running, coroutine.status, coroutine.yield

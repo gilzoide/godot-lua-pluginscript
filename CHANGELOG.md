@@ -3,9 +3,16 @@
 ### Added
 - Support for running without JIT enabled
 - Support for iOS builds
+- `export` function, an alias for `property` that always marks the property as
+  exported
 
 ### Fixed
 - Quote `CODE_SIGN_IDENTITY` argument passed to `codesign` invocations
+
+### Changed
+- **BREAKING CHANGE**: properties are not exported by default. Either pass
+  a usage with `PropertyUsage.EDITOR` the bit set or call `export` instead of
+  `property`
 
 
 ## [0.3.1]
