@@ -28,6 +28,7 @@
 -- `x/y/z`, `r/g/b`, `s/t/p`, `width/height/depth`, the pair `u/v`. `Vector2` with
 -- two adjacent components may be get/set with pairs like `xy` or `yz`:
 --     typedef union godot_vector3 {
+--         uint8_t data[12];
 --         float elements[3];
 --         // xyz
 --         struct { float x, y, z; };
