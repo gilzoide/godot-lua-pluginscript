@@ -117,7 +117,7 @@ endif
 $(BUILD_FOLDERS):
 	mkdir -p $@
 
-build/%/language_gdnative.o: src/language_gdnative.c
+build/%/language_gdnative.o: src/language_gdnative.c lib/high-level-gdnative/hgdn.h
 	$(_CC) -o $@ $< -c $(CFLAGS)
 build/%/language_in_editor_callbacks.o: src/language_in_editor_callbacks.c
 	$(_CC) -o $@ $< -c $(CFLAGS)
