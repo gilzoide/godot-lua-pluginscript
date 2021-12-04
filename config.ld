@@ -1,5 +1,5 @@
 project = "Godot Lua PluginScript"
-readme = "README.md"
+topics = { "CHANGELOG.md", "README.md" }
 format = "markdown"
 file = { "src", "lps_coroutine.lua" }
 boilerplate = true
