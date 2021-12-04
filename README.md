@@ -1,6 +1,6 @@
 # Godot Lua PluginScript
 
-<img src="blog/icon.png" alt="Lua PluginScript icon" width="128" height="128"/>
+<img src="extras/icon.png" alt="Lua PluginScript icon" width="128" height="128"/>
 
 GDNative + PluginScript library that adds support for [Lua](https://www.lua.org/)
 as a scripting language in [Godot](https://godotengine.org/).
@@ -97,9 +97,9 @@ should be able to `require` the installed modules.
 
 ## Articles
 
-1. [Designing Godot Lua PluginScript](https://github.com/gilzoide/godot-lua-pluginscript/blob/main/blog/1-design-en.md)
-2. [Implementing the library's skeleton](https://github.com/gilzoide/godot-lua-pluginscript/blob/main/blog/2-infrastructure-en.md)
-3. [Integrating LuaJIT and FFI](https://github.com/gilzoide/godot-lua-pluginscript/blob/main/blog/3-luajit-callbacks-en.md)
+1. [Designing Godot Lua PluginScript](https://github.com/gilzoide/godot-lua-pluginscript/blob/main/extras/articles/1-design-en.md)
+2. [Implementing the library's skeleton](https://github.com/gilzoide/godot-lua-pluginscript/blob/main/extras/articles/2-infrastructure-en.md)
+3. [Integrating LuaJIT and FFI](https://github.com/gilzoide/godot-lua-pluginscript/blob/main/extras/articles/3-luajit-callbacks-en.md)
 4. Initializing and finalizing scripts (TODO)
 
 
