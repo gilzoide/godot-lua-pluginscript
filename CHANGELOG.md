@@ -8,10 +8,11 @@
 
 ### Fixed
 - Quote `CODE_SIGN_IDENTITY` argument passed to `codesign` invocations
+- ABI mismatch for math types in Linux x86_64 + Mono ([#4](https://github.com/gilzoide/godot-lua-pluginscript/issues/4#issuecomment-985423759))
 
 ### Changed
 - **BREAKING CHANGE**: properties are not exported by default. Either pass
-  a usage with `PropertyUsage.EDITOR` the bit set or call `export` instead of
+  a usage with the `PropertyUsage.EDITOR` bit set or call `export` instead of
   `property`
 
 
