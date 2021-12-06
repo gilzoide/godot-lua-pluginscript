@@ -23,6 +23,7 @@ jobs:
               make osx-arm64 CC=clang SDKROOT=/Library/Developer/CommandLineTools/SDKs/MacOSX11.1.sdk
               make osx-x86_64 CC=clang
               make osx64
+              make ios64
             arch: x86_64-arm64
     steps:
       - uses: actions/checkout@v2
