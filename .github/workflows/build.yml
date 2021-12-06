@@ -16,8 +16,8 @@ jobs:
             make: |
               make linux32
               make linux64
-              make mingw-windows32
-              make mingw-windows64
+              make mingw-windows32 CC=gcc-win32
+              make mingw-windows64 CC=gcc-win32
             arch: x86-x86_64
             artifact_name: linux-windows-x86-x86_64
             artifact_paths: |
@@ -41,7 +41,7 @@ jobs:
         if: ${{ startsWith(matrix.os, 'ubuntu') }}
         run: |
           sudo apt-get update
-          sudo apt-get install libc6-dev-i386 mingw-w64
+          sudo apt-get install libc6-dev-i386 gcc-mingw-w64
       - name: Build native LuaJIT
         run: make native-luajit
       - name: Build artifact
