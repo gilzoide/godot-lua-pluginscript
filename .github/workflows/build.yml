@@ -14,10 +14,10 @@ jobs:
         include:
           - os: ubuntu-latest
             make: |
+              make mingw-windows32
+              make mingw-windows64
               make linux32
               make linux64
-              make mingw-windows32 CC=gcc-win32
-              make mingw-windows64 CC=gcc-win32
             arch: x86-x86_64
             artifact_name: linux-windows-x86-x86_64
             artifact_paths: |
