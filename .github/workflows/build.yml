@@ -20,7 +20,7 @@ jobs:
             artifact_paths: build/windows_*/lua*.dll
           - os: ubuntu-latest
             make: |
-              sudo apt-get install libc6:i386
+              sudo apt-get install libc6-dev-i386
               make linux32
               make linux64
             arch: x86-x86_64
