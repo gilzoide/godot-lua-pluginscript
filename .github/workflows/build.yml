@@ -14,14 +14,15 @@ jobs:
         include:
           - os: windows-latest
             make: |
-              make windows64 CC=gcc
               make windows32 CC="gcc -m32"
+              make windows64 CC=gcc
             arch: x86-x86_64
             artifact_paths: build/windows_*/lua*.dll
           - os: ubuntu-latest
             make: |
-              make linux64
+              sudo apt-get install libc6:i386
               make linux32
+              make linux64
             arch: x86-x86_64
             artifact_paths: build/linux_*/liblua_pluginscript.so
           - os: macos-latest
