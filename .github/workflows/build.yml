@@ -13,16 +13,20 @@ jobs:
         os: [windows-latest, ubuntu-latest, macos-latest]
         include:
           - os: windows-latest
-            make: make windows64 CC=gcc
-            arch: x86_64
+            make: |
+              make windows64 CC=gcc
+              make windows32 CC="gcc -m32"
+            arch: x86-x86_64
           - os: ubuntu-latest
-            make: make linux64
-            arch: x86_64
+            make: |
+              make linux64
+              make linux32
+            arch: x86-x86_64
           - os: macos-latest
             make: |
               make osx64
               make ios64
-            arch: x86_64-arm64
+            arch: arm64-x86_64
     steps:
       - uses: actions/checkout@v2
         with:
