@@ -17,16 +17,22 @@ jobs:
               make windows64 CC=gcc
               make windows32 CC="gcc -m32"
             arch: x86-x86_64
+            artifact_paths: build/windows_*/lua*.dll
           - os: ubuntu-latest
             make: |
               make linux64
               make linux32
             arch: x86-x86_64
+            artifact_paths: build/linux_*/liblua_pluginscript.so
           - os: macos-latest
             make: |
               make osx64
               make ios64
             arch: arm64-x86_64
+            artifact_paths: |
+              build/osx_arm64_x86_64/lua_pluginscript.dylib
+              build/ios_arm64/lua_pluginscript.dylib
+              build/ios_simulator_arm64_x86_64/lua_pluginscript.dylib
     steps:
       - uses: actions/checkout@v2
         with:
@@ -41,5 +47,5 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.os }}_${{ matrix.arch }}
-          path: build/*/*lua*.*
+          path: ${{ matrix.artifact_paths }}
 
