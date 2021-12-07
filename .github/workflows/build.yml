@@ -64,9 +64,11 @@ jobs:
         with:
           submodules: true
       - name: Install dependencies
-        run: brew install lua
+        run: brew install lua@5.1
       - name: Build artifact
         run: make ${{ matrix.target }}
+        env:
+          LUA_BIN: lua5.1
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
