@@ -175,12 +175,12 @@ plugin/luasrcdiet/%.lua: lib/luasrcdiet/luasrcdiet/%.lua | plugin/luasrcdiet
 plugin/luasrcdiet/%: lib/luasrcdiet/% | plugin/luasrcdiet
 	cp $< $@
 
-build/$(GDNLIB_ENTRY_PREFIX)/%: %
+build/$(GDNLIB_ENTRY_PREFIX)/%:
 	@mkdir -p $(dir $@)
-	cp $< $@
+	cp $* $@
 $(addprefix build/,$(DIST_SRC)): | build
 	cp $(notdir $@) $@
-build/lua_pluginscript.zip: $(DIST_DEST)
+build/lua_pluginscript.zip: $(LUASRCDIET_DEST) $(DIST_DEST)
 	cd build && zip lua_pluginscript $(DIST_ZIP_SRC)
 build/project.godot: src/tools/project.godot | build
 	cp $< $@
