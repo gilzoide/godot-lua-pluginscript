@@ -186,7 +186,7 @@ build/project.godot: src/tools/project.godot | build
 	cp $< $@
 
 # Phony targets
-.PHONY: clean dist docs test unzip-to-build
+.PHONY: clean dist docs test set-version unzip-to-build
 clean:
 	$(RM) -r build/*/ plugin/luasrcdiet/*
 
@@ -198,6 +198,11 @@ docs:
 test: $(DIST_DEST) build/project.godot
 	$(GODOT_BIN) --path build --no-window --quit --script "$(CURDIR)/src/test/init.lua"
 
+set-version:
+	sed -i -E -e 's/[0-9]+\.[0-9]+\.[0-9]+/$(VERSION)/' \
+		src/late_globals.lua \
+		plugin/plugin.cfg
+
 unzip-to-build:
 ifneq (,$(filter http://% https://%,$(ZIP_URL)))
 	curl -L $(ZIP_URL) -o $(ZIP_URL_DOWNLOAD_OUTPUT)
@@ -205,6 +210,7 @@ ifneq (,$(filter http://% https://%,$(ZIP_URL)))
 else
 	cd build && unzip -u $(ZIP_URL)
 endif
+
 
 # Miscelaneous targets
 plugin: $(LUASRCDIET_DEST)
