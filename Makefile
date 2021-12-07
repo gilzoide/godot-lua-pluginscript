@@ -43,7 +43,7 @@ BUILD_FOLDERS = \
 	build build/native build/$(GDNLIB_ENTRY_PREFIX) \
 	build/windows_x86 build/windows_x86_64 \
 	build/linux_x86 build/linux_x86_64 \
-	build/osx_x86_64 build/osx_arm64 build/osx_universal64 \
+	build/osx_x86_64 build/osx_arm64 build/osx_arm64_x86_64 \
 	build/ios_armv7s build/ios_arm64 build/ios_simulator_arm64 build/ios_simulator_x86_64 build/ios_simulator_arm64_x86_64 \
 	build/android_armv7a build/android_aarch64 build/android_x86 build/android_x86_64
 
@@ -161,7 +161,7 @@ build/%/lua_pluginscript.dylib: $(BUILT_OBJS) build/%/luajit/src/libluajit.a
 	$(_CC) -o $@ $^ -shared $(CFLAGS) $(LDFLAGS)
 	$(call STRIP_CMD,-x $@)
 	$(call CODESIGN_CMD,$@)
-build/osx_universal64/lua_pluginscript.dylib: build/osx_x86_64/lua_pluginscript.dylib build/osx_arm64/lua_pluginscript.dylib | build/osx_universal64
+build/osx_arm64_x86_64/lua_pluginscript.dylib: build/osx_x86_64/lua_pluginscript.dylib build/osx_arm64/lua_pluginscript.dylib | build/osx_arm64_x86_64
 	$(_LIPO) $^ -create -output $@
 build/ios_simulator_arm64_x86_64/lua_pluginscript.dylib: build/ios_simulator_arm64/lua_pluginscript.dylib build/ios_simulator_x86_64/lua_pluginscript.dylib | build/ios_simulator_arm64_x86_64
 	$(_LIPO) $^ -create -output $@
@@ -244,7 +244,7 @@ osx-arm64: CFLAGS += $(_ADD_CFLAGS)
 osx-arm64: MAKE_LUAJIT_ARGS += TARGET_FLAGS="$(_ADD_CFLAGS)" MACOSX_DEPLOYMENT_TARGET="$(MACOSX_DEPLOYMENT_TARGET)"
 osx-arm64: build/osx_arm64/lua_pluginscript.dylib
 
-osx64: osx-x86_64 osx-arm64 build/osx_universal64/lua_pluginscript.dylib
+osx64: osx-x86_64 osx-arm64 build/osx_arm64_x86_64/lua_pluginscript.dylib
 
 # Note: newer OSX systems can't run i386 apps, so LuaJIT can't build properly with the current Makefile
 #ios-armv7s: _ADD_CFLAGS = -isysroot "$(shell xcrun --sdk iphoneos --show-sdk-path)" -arch armv7s -miphoneos-version-min=$(IOS_VERSION_MIN)

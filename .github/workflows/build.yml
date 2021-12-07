@@ -10,24 +10,38 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [windows-latest, ubuntu-latest, macos-latest]
+        os: [ubuntu-latest, macos-latest]
         include:
-          - os: windows-latest
-            make: make windows64 CC=gcc
-            arch: x86_64
           - os: ubuntu-latest
-            make: make linux64
-            arch: x86_64
+            make: |
+              make mingw-windows32 CC=gcc
+              make mingw-windows64 CC=gcc
+              make linux32
+              make linux64
+            arch: x86-x86_64
+            artifact_name: linux-windows-x86-x86_64
+            artifact_paths: |
+              build/linux_*/liblua_pluginscript.so
+              build/windows_*/lua*.dll
           - os: macos-latest
             make: |
-              make osx-arm64 CC=clang SDKROOT=/Library/Developer/CommandLineTools/SDKs/MacOSX11.1.sdk
-              make osx-x86_64 CC=clang
               make osx64
-            arch: x86_64-arm64
+              make ios64
+            arch: arm64-x86_64
+            artifact_name: osx-ios-arm64-x86_64
+            artifact_paths: |
+              build/osx_arm64_x86_64/lua_pluginscript.dylib
+              build/ios_arm64/lua_pluginscript.dylib
+              build/ios_simulator_arm64_x86_64/lua_pluginscript.dylib
     steps:
       - uses: actions/checkout@v2
         with:
           submodules: true
+      - name: Install dependencies
+        if: ${{ startsWith(matrix.os, 'ubuntu') }}
+        run: |
+          sudo apt-get update
+          sudo apt-get install libc6-dev-i386 gcc-mingw-w64
       - name: Build native LuaJIT
         run: make native-luajit
       - name: Build artifact
@@ -37,6 +51,6 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ matrix.os }}_${{ matrix.arch }}
-          path: build/*/*lua*.*
+          name: ${{ matrix.artifact_name }}
+          path: ${{ matrix.artifact_paths }}
 
