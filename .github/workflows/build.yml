@@ -34,8 +34,8 @@ jobs:
     strategy:
       matrix:
         target:
-          - mingw-windows32 CC=gcc
-          - mingw-windows64 CC=gcc
+          - mingw-windows32
+          - mingw-windows64
     steps:
       - uses: actions/checkout@v2
         with:
@@ -46,6 +46,8 @@ jobs:
           sudo apt-get install lua5.1 libc6-dev-i386 gcc-mingw-w64
       - name: Build artifact
         run: make ${{ matrix.target }}
+        env:
+          CC: gcc
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
