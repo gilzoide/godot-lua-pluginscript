@@ -79,4 +79,29 @@ jobs:
             build/osx_arm64_x86_64/lua_pluginscript.dylib
             build/ios_arm64/lua_pluginscript.dylib
             build/ios_simulator_arm64_x86_64/lua_pluginscript.dylib
+  build_android:
+    name: Build Android
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target:
+          - android-armv7a
+          - android-aarch64
+          - android-x86
+          - android-x86_64
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install lua5.1 libc6-dev-i386
+      - name: Build artifact
+        run: make ${{ matrix.target }} NDK_TOOLCHAIN_BIN=$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: android-armv7a-aarch64-x86-x86_64
+          path: build/android_*/liblua_pluginscript.so
 
