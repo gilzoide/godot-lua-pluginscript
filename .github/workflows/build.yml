@@ -6,7 +6,7 @@ defaults:
 
 jobs:
   build_linux:
-    name: Build (Linux x86/x86_64)
+    name: Build Linux
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -29,7 +29,7 @@ jobs:
           name: linux-x86-x86_64
           path: build/linux_*/liblua_pluginscript.so
   build_windows:
-    name: Build (Windows x86/x86_64)
+    name: Build Windows
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -43,7 +43,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install lua5.1 gcc-mingw-w64
+          sudo apt-get install lua5.1 libc6-dev-i386 gcc-mingw-w64
       - name: Build artifact
         run: make ${{ matrix.target }}
       - name: Upload artifact
@@ -52,7 +52,7 @@ jobs:
           name: windows-x86-x86_64
           path: build/windows_*/lua*.dll
   build_osx_ios:
-    name: Build (OSX arm64/x86_64, iOS arm64, iOS simulator arm64/x86_64)
+    name: Build OSX/iOS
     runs-on: macos-latest
     strategy:
       matrix:
@@ -64,7 +64,7 @@ jobs:
         with:
           submodules: true
       - name: Install dependencies
-        run: brew install lua@5.1
+        run: brew install lua
       - name: Build artifact
         run: make ${{ matrix.target }}
       - name: Upload artifact
