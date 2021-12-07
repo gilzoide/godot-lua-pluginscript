@@ -1,5 +1,8 @@
 # Changelog
-## [Unreleased](https://github.com/gilzoide/godot-lua-pluginscript/compare/0.3.1...HEAD)
+## [Unreleased](https://github.com/gilzoide/godot-lua-pluginscript/compare/0.4.0...HEAD)
+
+
+## [0.4.0](https://github.com/gilzoide/godot-lua-pluginscript/releases/tag/0.4.0)
 ### Added
 
 - Support for running without JIT enabled
