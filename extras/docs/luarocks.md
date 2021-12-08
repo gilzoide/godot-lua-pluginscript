@@ -6,6 +6,9 @@ Lua modules available at [LuaRocks](https://luarocks.org/) can be installed loca
 luarocks install --lua-version 5.1 --tree <local modules folder name> <module name>
 ```
 
+**TIP**: put an empty `.gdignore` file in the local modules folder, so that
+Godot doesn't try importing the installed `*.lua` files as Lua scripts.
+
 Adjust the package paths using the [Lua PluginScript project settings](configuring.md)
 and scripts should be able to `require` the installed modules.
 

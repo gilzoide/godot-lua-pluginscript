@@ -12,8 +12,7 @@ written in GDScript / C# / Visual Script and vice-versa.
 This way, one can use the language that best suits the implementation for each
 script and all of them can understand each other.
 
-This plugin is available in the Asset Library as [Lua PluginScript](https://godotengine.org/asset-library/asset/1078)
-and has [online documentation](https://gilzoide.github.io/godot-lua-pluginscript/topics/README.md.html).
+This plugin is available in the Asset Library as [Lua PluginScript](https://godotengine.org/asset-library/asset/1078).
 
 For some usage examples, check out [lps\_coroutine.lua](lps_coroutine.lua)
 and [plugin/lua\_repl.lua](plugin/lua_repl.lua).
