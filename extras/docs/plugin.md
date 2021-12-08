@@ -25,7 +25,7 @@ use their value in a next expression.
 ![](plugin-repl.png)
 
 
-## Script minifier
+## Minify on release export
 
 If the [**Lua PluginScript/Export/Minify On Release Export**](Configuring.md)
 setting is enabled, Lua scripts will get minified when exporting a release
