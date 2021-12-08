@@ -13,7 +13,7 @@ STRIP ?= strip
 CODESIGN ?= codesign
 XCODEBUILD ?= xcodebuild
 # Configurable paths
-NDK_TOOLCHAIN_BIN ?=
+NDK_TOOLCHAIN_BIN ?= $(wildcard $(ANDROID_NDK_ROOT)/toolchains/llvm/prebuilt/*/bin)
 ZIP_URL ?=
 ZIP_URL_DOWNLOAD_OUTPUT ?= /tmp/godot-lua-pluginscript-unzip-to-build.zip
 
