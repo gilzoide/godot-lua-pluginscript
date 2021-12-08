@@ -17,7 +17,7 @@ Windows.32="res://addons/godot-lua-pluginscript/build/windows_x86/lua_pluginscri
 X11.64="res://addons/godot-lua-pluginscript/build/linux_x86_64/liblua_pluginscript.so"
 X11.32="res://addons/godot-lua-pluginscript/build/linux_x86/liblua_pluginscript.so"
 iOS.arm64="res://addons/godot-lua-pluginscript/build/ios_arm64/lua_pluginscript.dylib"
-iOS.x86_64="res://addons/godot-lua-pluginscript/build/ios_simulator_x86_64/lua_pluginscript.dylib"
+iOS.x86_64="res://addons/godot-lua-pluginscript/build/ios_simulator_arm64_x86_64/lua_pluginscript.dylib"
 
 [dependencies]
 
