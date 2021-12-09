@@ -42,6 +42,7 @@ Either:
 - [Editor plugin (REPL and minify on release export)](extras/docs/plugin.md)
 - [Using LuaRocks](extras/docs/luarocks.md)
 - [Building](extras/docs/building.md)
+- [Changelog](CHANGELOG.md)
 
 
 ## Goals
