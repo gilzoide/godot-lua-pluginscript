@@ -115,7 +115,7 @@ end
 
 -- History handlers
 function LuaREPL:set_history(index)
-	if index >= 0 and index < #self.history then
+	if index >= 0 and index <= #self.history then
 		self.current_history = index
 		local text = self.history:safe_get(self.current_history) or ""
 		self.line_edit.text = text
