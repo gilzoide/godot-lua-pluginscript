@@ -82,6 +82,7 @@ LUA_INIT_SCRIPT_SRC = \
 	src/godot_rid.lua \
 	src/godot_node_path.lua \
 	src/godot_dictionary.lua \
+	src/godot_array_commons.lua \
 	src/godot_array.lua \
 	src/godot_pool_byte_array.lua \
 	src/godot_pool_int_array.lua \

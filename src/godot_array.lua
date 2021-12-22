@@ -69,7 +69,7 @@ local methods = {
 	end,
 	--- Returns `true` if the Array is empty.
 	-- @function empty
-	empty = api.godot_array_empty,
+	empty = array_empty,
 	--- Removes the first occurrence of a value from the array.
 	-- To remove an element by index, use `remove` instead.
 	-- @function erase
@@ -242,11 +242,7 @@ local methods = {
 -- @return[1] Value
 -- @treturn[2] nil  If index is invalid (`index < 0` or `index >= size()`)
 -- @see get
-methods.safe_get = function(self, index)
-	if index >= 0 and index < #self then
-		return self:get(index)
-	end
-end
+methods.safe_get = array_safe_get
 
 --- Set a new `value` for `index`.
 -- Unlike Lua tables, indices start at 0 instead of 1.
@@ -259,13 +255,7 @@ end
 -- @param value
 -- @raise If `index < 0`
 -- @see set
-methods.safe_set = function(self, index, value)
-	assert(index >= 0, "Array index must be non-negative")
-	if index >= #self then
-		self:resize(index + 1)
-	end
-	self:set(index, value)
-end
+methods.safe_set = array_safe_set
 
 --- Alias of `push_back`.
 -- @function append
@@ -281,6 +271,12 @@ methods.extend = function(self, iterable)
 		self:push_back(value)
 	end
 end
+
+--- Returns a String with each element of the array joined with the given `delimiter`.
+-- @function join
+-- @param[opt=""] delimiter  
+-- @treturn String
+methods.join = array_join
 
 if api_1_1 ~= nil then
 	--- Returns a copy of the Array.
@@ -310,22 +306,6 @@ if api_1_1 ~= nil then
 	methods.shuffle = api_1_1.godot_array_shuffle
 end
 
---- Returns a String with each element of the array joined with the given `delimiter`.
--- @function join
--- @param[opt=""] delimiter  
--- @treturn String
-methods.join = function(self, delimiter)
-	if #self == 0 then
-		return String()
-	end
-	local result = String(self:get(0))
-	delimiter = String(delimiter or "")
-	for i = 1, #self - 1 do
-		result = result .. delimiter .. self:get(i)
-	end
-	return result
-end
-
 --- Static Functions.
 -- These don't receive `self` and should be called directly as `Array.static_function(...)`
 -- @section static_funcs
@@ -341,17 +321,6 @@ methods.from = function(iterable)
 	local arr = Array()
 	arr:extend(iterable)
 	return arr
-end
-
-local function array_next(self, index)
-	index = index + 1
-	if index > 0 and index <= #self then
-		return index, self:get(index - 1)
-	end
-end
-
-local function array_ipairs(self)
-	return array_next, self, 0
 end
 
 --- Metamethods
@@ -375,9 +344,7 @@ Array = ffi_metatype('godot_array', {
 	-- @param index
 	-- @return Method or element or `nil`
 	-- @see safe_get
-	__index = function(self, index)
-		return methods[index] or methods.safe_get(self, index - 1)
-	end,
+	__index = array_generate__index(methods),
 	--- Alias for `safe_set(index - 1, value)`.
 	--
 	-- Like Lua tables, indices start at 1. For 0-based indexing, call `set` or
@@ -386,9 +353,7 @@ Array = ffi_metatype('godot_array', {
 	-- @tparam int index
 	-- @param value
 	-- @see safe_set
-	__newindex = function(self, index, value)
-		methods.safe_set(self, index - 1, value)
-	end,
+	__newindex = array__newindex,
 	--- Returns a Lua string representation of this Array.
 	-- @function __tostring
 	-- @treturn string
@@ -403,9 +368,7 @@ Array = ffi_metatype('godot_array', {
 	-- @function __len
 	-- @treturn int
 	-- @see size
-	__len = function(self)
-		return methods.size(self)
-	end,
+	__len = array__len,
 	--- Returns an iterator for Array's elements, called by the idiom `ipairs(array)`.
 	-- @usage
 	--     for i, v in ipairs(array) do

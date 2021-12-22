@@ -110,7 +110,7 @@ local methods = {
 	-- @treturn[1] String
 	-- @treturn[2] nil  If index is invalid (`index < 0` or `index >= size()`)
 	-- @see get
-	safe_get = Array.safe_get,
+	safe_get = array_safe_get,
 	--- Set a new string for `index`.
 	-- Unlike Lua tables, indices start at 0 instead of 1.
 	-- For 1-based indexing, use the idiom `array[index] = value` instead.
@@ -135,7 +135,7 @@ local methods = {
 	-- @param value  New value, stringified with `GD.str`
 	-- @raise If `index < 0`
 	-- @see set
-	safe_set = Array.safe_set,
+	safe_set = array_safe_set,
 	--- Inserts a new element at a given position in the array.
 	-- The position must be valid, or at the end of the array (`index == size()`).
 	-- @function insert
@@ -173,9 +173,7 @@ local methods = {
 	--- Returns `true` if the array is empty.
 	-- @function empty
 	-- @treturn bool
-	empty = function(self)
-		return #self == 0
-	end,
+	empty = array_empty,
 	--- Returns the [Read](#Class_PoolStringArray_Read) access for the array.
 	-- @function read
 	-- @treturn Read
@@ -213,7 +211,7 @@ end
 -- @function join
 -- @param[opt=""] delimiter  
 -- @treturn String
-methods.join = Array.join
+methods.join = array_join
 
 --- Static Functions.
 -- These don't receive `self` and should be called directly as `PoolStringArray.static_function(...)`
@@ -247,7 +245,7 @@ PoolStringArray = ffi_metatype('godot_pool_string_array', {
 	-- @param ...  Initial elements, added with `push_back`
 	-- @treturn PoolStringArray
 	__new = function(mt, ...)
-		local self = ffi.new(mt)
+		local self = ffi_new(mt)
 		api.godot_pool_string_array_new(self)
 		methods.push_back(self, ...)
 		return self
@@ -261,9 +259,7 @@ PoolStringArray = ffi_metatype('godot_pool_string_array', {
 	-- @param index
 	-- @return Method or element or `nil`
 	-- @see safe_get
-	__index = function(self, index)
-		return methods[index] or methods.safe_get(self, index - 1)
-	end,
+	__index = array_generate__index(methods),
 	--- Alias for `safe_set(index - 1, value)`.
 	--
 	-- Like Lua tables, indices start at 1. For 0-based indexing, call `set` or
@@ -272,9 +268,7 @@ PoolStringArray = ffi_metatype('godot_pool_string_array', {
 	-- @tparam int index
 	-- @param value
 	-- @see safe_set
-	__newindex = function(self, index, value)
-		methods.safe_set(self, index - 1, value)
-	end,
+	__newindex = array__newindex,
 	--- Returns a Lua string representation of this array.
 	-- @function __tostring
 	-- @treturn string
@@ -289,9 +283,7 @@ PoolStringArray = ffi_metatype('godot_pool_string_array', {
 	-- @function __len
 	-- @treturn int
 	-- @see size
-	__len = function(self)
-		return methods.size(self)
-	end,
+	__len = array__len,
 	--- Returns an iterator for array's elements, called by the idiom `ipairs(array)`.
 	-- @usage
 	--     for i, str in ipairs(array) do
