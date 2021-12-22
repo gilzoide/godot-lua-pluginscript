@@ -88,6 +88,9 @@ local methods = {
 	varianttype = VariantType.PoolVector2Array,
 
 	--- Get the vector at `index`.
+	-- Unlike Lua tables, indices start at 0 instead of 1.
+	-- For 1-based indexing, use the idiom `array[index]` instead.
+	--
 	-- If `index` is invalid (`index < 0` or `index >= size()`), the application will crash.
 	-- For a safe version that returns `nil` if `index` is invalid, use `safe_get` or the idiom `array[index]` instead.
 	-- @function get
@@ -96,6 +99,9 @@ local methods = {
 	-- @see safe_get
 	get = api.godot_pool_vector2_array_get,
 	--- Get the vector at `index`.
+	-- Unlike Lua tables, indices start at 0 instead of 1.
+	-- For 1-based indexing, use the idiom `array[index]` instead.
+	--
 	-- The idiom `array[index]` also calls this method.
 	-- @function safe_get
 	-- @tparam int index
@@ -104,6 +110,9 @@ local methods = {
 	-- @see get
 	safe_get = Array.safe_get,
 	--- Set a new vector for `index`.
+	-- Unlike Lua tables, indices start at 0 instead of 1.
+	-- For 1-based indexing, use the idiom `array[index] = value` instead.
+	--
 	-- If `index` is invalid (`index < 0` or `index >= size()`), the application will crash.
 	-- For a safe approach that `resize`s if `index >= size()`, use `safe_set` or the idiom `array[index] = value` instead.
 	-- @function set
@@ -112,6 +121,9 @@ local methods = {
 	-- @see safe_set
 	set = api.godot_pool_vector2_array_set,
 	--- Set a new vector for `index`.
+	-- Unlike Lua tables, indices start at 0 instead of 1.
+	-- For 1-based indexing, use the idiom `array[index] = value` instead.
+	--
 	-- If `index >= size()`, the array is `resize`d first.
 	-- The idiom `array[index] = value` also calls this method.
 	-- @function safe_set
@@ -245,20 +257,28 @@ PoolVector2Array = ffi_metatype('godot_pool_vector2_array', {
 		return self
 	end,
 	__gc = api.godot_pool_vector2_array_destroy,
-	--- Returns method named `index` or the result of `safe_get`.
+	--- Returns method named `index` or the result of `safe_get(index - 1)`.
+	-- 
+	-- Like Lua tables, indices start at 1. For 0-based indexing, call `get` or
+	-- `safe_get` directly.
 	-- @function __index
 	-- @param index
 	-- @return Method or element or `nil`
 	-- @see safe_get
 	__index = function(self, index)
-		return methods[index] or methods.safe_get(self, index)
+		return methods[index] or methods.safe_get(self, index - 1)
 	end,
-	--- Alias for `safe_set`.
+	--- Alias for `safe_set(index - 1, value)`.
+	--
+	-- Like Lua tables, indices start at 1. For 0-based indexing, call `set` or
+	-- `safe_set` directly.
 	-- @function __newindex
 	-- @tparam int index
 	-- @param value
 	-- @see safe_set
-	__newindex = methods.safe_set,
+	__newindex = function(self, index, value)
+		methods.safe_set(self, index - 1, value)
+	end,
 	--- Returns a Lua string representation of this array.
 	-- @function __tostring
 	-- @treturn string
@@ -284,10 +304,13 @@ PoolVector2Array = ffi_metatype('godot_pool_vector2_array', {
 	-- @function __ipairs
 	-- @treturn function
 	-- @treturn PoolVector2Array  self
+	-- @treturn int  0
 	__ipairs = array_ipairs,
 	--- Alias for `__ipairs`, called by the idiom `pairs(array)`.
 	-- @function __pairs
 	-- @treturn function
 	-- @treturn PoolVector2Array  self
+	-- @treturn int  0
+	-- @see __ipairs
 	__pairs = array_ipairs,
 })

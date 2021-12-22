@@ -1,6 +1,12 @@
 # Changelog
 ## [Unreleased](https://github.com/gilzoide/godot-lua-pluginscript/compare/0.4.0...HEAD)
 
+### Changed
+
+- **BREAKING CHANGE**: `Array` and `Pool*Array`'s `__index` and `__newindex`
+  metamethods now use 1-based indices to match Lua tables.
+  For 0-based indexing, use `get`/`set` or `safe_get`/`safe_set` instead.
+
 
 ## [0.4.0](https://github.com/gilzoide/godot-lua-pluginscript/releases/tag/0.4.0)
 ### Added
