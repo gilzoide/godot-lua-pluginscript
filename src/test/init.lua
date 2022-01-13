@@ -29,18 +29,22 @@ function TestRunner:_init()
 	local current_script_filename = current_script_path:get_file()
 	local current_script_base_dir = current_script_path:get_base_dir()
 
+	local additional_path = current_script_base_dir:plus_file('../../lib/luaunit')
+	package.path = string.format('%s/?.lua;%s/?/init.lua;', additional_path, additional_path) .. package.path
+
 	local dir, all_passed = Directory:new(), true
 	assert(dir:open(current_script_base_dir) == GD.OK)
 	dir:list_dir_begin(true)
 	repeat
 		local filename = dir:get_next()
-		if filename ~= '' and filename ~= current_script_filename then
+		if filename:ends_with('.lua') and filename ~= current_script_filename then
 			local script = GD.load(current_script_base_dir:plus_file(filename))
 			local instance = script:new()
 			local lua_instance = GD.get_lua_instance(instance)
 			local success = xpcall(lua_instance.unittest, GD.print_error, lua_instance)
 			print(string.format('%s %s: %s', success and '✓' or '🗴', filename, success and 'passed' or 'failed'))
 			all_passed = all_passed and success
+			instance:pcall('queue_free')
 		end
 	until filename == ''
 	dir:list_dir_end()
