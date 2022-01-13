@@ -10,3 +10,6 @@
 [submodule "lib/luasrcdiet"]
 	path = lib/luasrcdiet
 	url = https://github.com/jirutka/luasrcdiet.git
+[submodule "lib/luaunit"]
+	path = lib/luaunit
+	url = https://github.com/bluebird75/luaunit.git
