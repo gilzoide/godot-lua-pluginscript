@@ -40,6 +40,9 @@ function TestRunner:_init()
 		if filename:ends_with('.lua') and filename ~= current_script_filename then
 			local script = GD.load(current_script_base_dir:plus_file(filename))
 			local instance = script:new()
+			if instance:is_class('Node') then
+				self.root:add_child(instance)
+			end
 			local lua_instance = GD.get_lua_instance(instance)
 			print(string.format('> %s:', filename))
 			for i, method in ipairs(script:get_script_method_list()) do

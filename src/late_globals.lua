@@ -141,7 +141,7 @@ setmetatable(_G, {
 			rawset(self, key, singleton)
 			return singleton
 		end
-		local cls = wrapper_for_class(gd_key)
+		local cls = ClassWrapper_cache[key]
 		if cls then
 			rawset(self, key, cls)
 			return cls
@@ -154,8 +154,8 @@ _G.Engine = Engine
 _G.ClassDB = ClassDB
 _G.ResourceLoader = ResourceLoader
 -- These classes are registered with a prepending "_" in ClassDB
-File = ClassWrapper:new("_File")
-Directory = ClassWrapper:new("_Directory")
-Thread = ClassWrapper:new("_Thread")
-Mutex = ClassWrapper:new("_Mutex")
-Semaphore = ClassWrapper:new("_Semaphore")
+File = ClassWrapper_cache._File
+Directory = ClassWrapper_cache._Directory
+Thread = ClassWrapper_cache._Thread
+Mutex = ClassWrapper_cache._Mutex
+Semaphore = ClassWrapper_cache._Semaphore

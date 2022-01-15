@@ -328,7 +328,7 @@ _Object = ffi_metatype('godot_object', {
 	__concat = concat_gdvalues,
 })
 
-Object = ClassWrapper:new 'Object'
+Object = ClassWrapper_cache.Object
 Object.is_instance_valid = methods.is_instance_valid
 --- (`(godot_object *) NULL`): The `null` Object, useful as default values of properties.
 Object.null = ffi_new('godot_object *', nil)

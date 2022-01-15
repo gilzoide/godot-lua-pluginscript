@@ -96,7 +96,6 @@ local class_methods = {
 }
 local ClassWrapper = {
 	new = function(self, class_name)
-		class_name = tostring(class_name)
 		return setmetatable({
 			--- (`string`) Class name
 			class_name = class_name,
@@ -136,15 +135,23 @@ local ClassWrapper = {
 	end,
 }
 
-local function wrapper_for_class(class_name)
-	if ClassDB:class_exists(class_name) then
-		return ClassWrapper:new(class_name)
-	end
-end
-
 local function is_class_wrapper(v)
 	return getmetatable(v) == ClassWrapper
 end
+
+
+local ClassWrapper_cache = setmetatable({}, {
+	__index = function(self, class_name)
+		if not ClassDB:class_exists(class_name) then
+			return nil
+		end
+		class_name = tostring(class_name)
+		local cls = ClassWrapper:new(class_name)
+		rawset(self, class_name, cls)
+		return cls
+	end,
+})
+
 
 --- MethodBind metatype, wrapper for `godot_method_bind`.
 -- These are returned by `ClassWrapper:__index` and GDNative's `godot_method_bind_get_method`.
