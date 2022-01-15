@@ -96,6 +96,7 @@ local class_methods = {
 }
 local ClassWrapper = {
 	new = function(self, class_name)
+		class_name = tostring(class_name)
 		return setmetatable({
 			--- (`string`) Class name
 			class_name = class_name,
@@ -134,6 +135,12 @@ local ClassWrapper = {
 		return self.class_name
 	end,
 }
+
+local function wrapper_for_class(class_name)
+	if ClassDB:class_exists(class_name) then
+		return ClassWrapper:new(class_name)
+	end
+end
 
 local function is_class_wrapper(v)
 	return getmetatable(v) == ClassWrapper

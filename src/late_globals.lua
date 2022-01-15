@@ -141,8 +141,8 @@ setmetatable(_G, {
 			rawset(self, key, singleton)
 			return singleton
 		end
-		if ClassDB:class_exists(gd_key) then
-			local cls = ClassWrapper:new(key)
+		local cls = wrapper_for_class(gd_key)
+		if cls then
 			rawset(self, key, cls)
 			return cls
 		end

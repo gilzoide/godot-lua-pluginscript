@@ -126,7 +126,15 @@ pluginscript_callbacks.script_init = wrap_callback(function(manifest, path, sour
 		elseif k == 'is_tool' then
 			manifest.is_tool = bool(v)
 		elseif k == 'extends' then
-			manifest.base = ffi_gc(StringName(v), nil)
+			local cls = is_class_wrapper(v) and v or wrapper_for_class(v)
+			if not cls then
+				api.godot_print_error(
+					string_format('Invalid value for "extends": %q is not a Godot class', v),
+					path, path, -1
+				)
+				return
+			end
+			manifest.base = ffi_gc(StringName(cls.class_name), nil)
 		elseif type(v) == 'function' then
 			local method = method_to_dictionary(v)
 			method.name = String(k)
