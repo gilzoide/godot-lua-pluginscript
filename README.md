@@ -41,6 +41,7 @@ Either:
 - [Configuring](extras/docs/configuring.md)
 - [Editor plugin (REPL and minify on release export)](extras/docs/plugin.md)
 - [Using LuaRocks](extras/docs/luarocks.md)
+- [Known limitations](extras/docs/limitations.md)
 - [Building](extras/docs/building.md)
 - [Changelog](CHANGELOG.md)
 
