@@ -41,9 +41,14 @@ function TestRunner:_init()
 			local script = GD.load(current_script_base_dir:plus_file(filename))
 			local instance = script:new()
 			local lua_instance = GD.get_lua_instance(instance)
-			local success = xpcall(lua_instance.unittest, GD.print_error, lua_instance)
-			print(string.format('%s %s: %s', success and '✓' or '🗴', filename, success and 'passed' or 'failed'))
-			all_passed = all_passed and success
+			print(string.format('> %s:', filename))
+			for i, method in ipairs(script:get_script_method_list()) do
+				if method.name:begins_with("test") then
+					local success = xpcall(lua_instance[tostring(method.name)], GD.print_error, lua_instance)
+					print(string.format('  %s %s: %s', success and '✓' or '🗴', method.name, success and 'passed' or 'failed'))
+					all_passed = all_passed and success
+				end
+			end
 			instance:pcall('queue_free')
 		end
 	until filename == ''
