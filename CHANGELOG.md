@@ -5,6 +5,10 @@
 
 - `join` method for all `Pool*Array` metatypes with the same implementation as
   for `Array` and `PoolStringArray`.
+- Possibility for using `ClassWrapper`s as `extends` of a script instead of
+  their string name. E.g. script: `return { extends = Node }`
+- `Object:get_class_wrapper` method that returns the `ClassWrapper` associated
+  with the Object's class.
 
 ### Changed
 

@@ -286,6 +286,14 @@ methods.pcall = function(self, method, ...)
 	end
 end
 
+--- Get the `OOP.ClassWrapper` associated with this Object's class.
+-- `OOP.ClassWrapper` instances are cached internally.
+-- @function get_class_wrapper
+-- @treturn ClassWrapper
+methods.get_class_wrapper = function(self)
+	return ClassWrapper_cache[self:get_class()]
+end
+
 _Object = ffi_metatype('godot_object', {
 	__new = function(mt, init)
 		if ffi_istype(mt, init) then
