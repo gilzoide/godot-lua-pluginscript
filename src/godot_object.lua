@@ -213,7 +213,7 @@ local methods = {
 	-- @function set
 	-- @param property
 	-- @param value
-	set = api.godot_method_bind_get_method('Object', 'set'),
+	set = Object_set,
 	--- If set to `true`, signal emission is blocked.
 	-- @function set_block_signals
 	-- @param enable
@@ -326,7 +326,7 @@ _Object = ffi_metatype('godot_object', {
 	-- @param value
 	-- @see set
 	__newindex = function(self, property, value)
-		methods.set(self, property, value)
+		Object_set(self, property, value)
 	end,
 	--- Concatenates values.
 	-- @function __concat

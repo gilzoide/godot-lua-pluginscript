@@ -19,8 +19,12 @@
   metamethods now use 1-based indices to match Lua tables.
   For 0-based indexing, use `get`/`set` or `safe_get`/`safe_set` instead.
 - **BREAKING CHANGE**: property setter functions don't receive property name
-  anymore. That is, instead of `function(self, property_name, value)`, setters
-  now look like `function(self, value)`.
+  anymore ([#5](https://github.com/gilzoide/godot-lua-pluginscript/issues/5#issuecomment-999876834)).
+  That is, instead of `function(self, property_name, value)`, setters now look
+  like `function(self, value)`.
+- **BREAKING CHANGE**: `ScriptInstace:__newindex` now calls `set` when the
+  property is known to the script's base class ([#5](https://github.com/gilzoide/godot-lua-pluginscript/issues/5)).
+  E.g. in `self.name = 'some_name'`, given `self` is a `Node`
 
 
 ## [0.4.0](https://github.com/gilzoide/godot-lua-pluginscript/releases/tag/0.4.0)

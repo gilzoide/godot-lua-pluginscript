@@ -213,7 +213,7 @@ pluginscript_callbacks.instance_set_prop = wrap_callback(function(data, name, va
 		if setter then
 			setter(self, value:unbox())
 		else
-			self[name] = value:unbox()
+			rawset(self, name, value:unbox())
 		end
 		return true
 	else
