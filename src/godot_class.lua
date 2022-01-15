@@ -93,6 +93,22 @@ local class_methods = {
 	get_parent_class = function(self)
 		return ClassDB:get_parent_class(self.class_name)
 	end,
+	--- Returns whether class has a property named `name`.
+	-- Only properties from `ClassDB:class_get_property_list()` returns true.
+	-- @function has_property
+	-- @tparam string name  Property name
+	-- @treturn bool
+	has_property = function(self, name)
+		local cache = self.known_properties
+		if not cache then
+			cache = {}
+			for _, prop in ipairs(ClassDB:class_get_property_list(self.class_name)) do
+				cache[tostring(prop.name)] = true
+			end
+			self.known_properties = cache
+		end
+		return cache[name] ~= nil
+	end,
 }
 local ClassWrapper = {
 	new = function(self, class_name)

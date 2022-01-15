@@ -9,6 +9,9 @@
   their string name. E.g. script: `return { extends = Node }`
 - `Object:get_class_wrapper` method that returns the `ClassWrapper` associated
   with the Object's class.
+- `ClassWrapper:has_property` method that returns whether a class has a property
+  with the passed name. Properties are considered available if they are found in
+  the result of `ClassDB:class_get_property_list`.
 
 ### Changed
 
