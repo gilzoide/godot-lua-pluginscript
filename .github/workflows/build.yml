@@ -118,3 +118,25 @@ jobs:
             build/android_x86/liblua_pluginscript.so
             build/android_x86_64/liblua_pluginscript.so
 
+  build_distribution_zip:
+    needs: [build_linux, build_windows, build_osx_ios, build_android]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Download artifacts
+        id: download
+        user: actions/download-artifact@v2
+        with:
+          path: artifacts
+      - name: Copy artifacts to build folder
+        run: cp -r ${{ steps.download.outputs.download-path }}/*/build/* build
+      - name: Make distribution
+        run: make dist
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: lua_pluginscript-${{ github.sha }}
+          path: build/lua_pluginscript.zip
+
