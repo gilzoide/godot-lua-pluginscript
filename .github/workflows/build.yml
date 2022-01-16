@@ -131,7 +131,7 @@ jobs:
         with:
           path: artifacts
       - name: Copy artifacts to build folder
-        run: cp -r ${{ steps.download.outputs.download-path }}/*/build/* build
+        run: cp -r ${{ steps.download.outputs.download-path }}/*/* build
       - name: Make distribution
         run: make dist
       - name: Upload artifact
