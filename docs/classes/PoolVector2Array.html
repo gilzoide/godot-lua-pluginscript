@@ -85,7 +85,13 @@
 </ul>
 <h2>Topics</h2>
 <ul class="">
+  <li><a href="../topics/CHANGELOG.md.html">CHANGELOG</a></li>
   <li><a href="../topics/README.md.html">README</a></li>
+  <li><a href="../topics/building.md.html">building</a></li>
+  <li><a href="../topics/configuring.md.html">configuring</a></li>
+  <li><a href="../topics/limitations.md.html">limitations</a></li>
+  <li><a href="../topics/luarocks.md.html">luarocks</a></li>
+  <li><a href="../topics/plugin.md.html">plugin</a></li>
 </ul>
 <h2>Examples</h2>
 <ul class="nowrap">
@@ -133,6 +139,10 @@
 	<tr>
 	<td class="name" nowrap><a href="#PoolVector2Array:invert">PoolVector2Array:invert ()</a></td>
 	<td class="summary">Reverses the order of the elements in the array.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PoolVector2Array:join">PoolVector2Array:join ([delimiter=""])</a></td>
+	<td class="summary">Returns a String with each element of the array joined with the given <code>delimiter</code>.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#PoolVector2Array:push_back">PoolVector2Array:push_back (...)</a></td>
@@ -186,7 +196,7 @@
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#PoolVector2Array:__index">PoolVector2Array:__index (index)</a></td>
-	<td class="summary">Returns method named <code>index</code> or the result of <a href="../classes/PoolVector2Array.html#PoolVector2Array:safe_get">safe_get</a>.</td>
+	<td class="summary">Returns method named <code>index</code> or the result of <code>safe_get(index - 1)</code>.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#PoolVector2Array:__ipairs">PoolVector2Array:__ipairs ()</a></td>
@@ -202,7 +212,7 @@
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#PoolVector2Array:__newindex">PoolVector2Array:__newindex (index, value)</a></td>
-	<td class="summary">Alias for <a href="../classes/PoolVector2Array.html#PoolVector2Array:safe_set">safe_set</a>.</td>
+	<td class="summary">Alias for <code>safe_set(index - 1, value)</code>.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#PoolVector2Array:__pairs">PoolVector2Array:__pairs ()</a></td>
@@ -333,7 +343,10 @@
     </dt>
     <dd>
     Get the vector at <code>index</code>.
- If <code>index</code> is invalid (<code>index &lt; 0</code> or <code>index &gt;= size()</code>), the application will crash.
+ Unlike Lua tables, indices start at 0 instead of 1.
+ For 1-based indexing, use the idiom <code>array[index]</code> instead.</p>
+
+<p> If <code>index</code> is invalid (<code>index &lt; 0</code> or <code>index &gt;= size()</code>), the application will crash.
  For a safe version that returns <code>nil</code> if <code>index</code> is invalid, use <a href="../classes/PoolVector2Array.html#PoolVector2Array:safe_get">safe_get</a> or the idiom <code>array[index]</code> instead.
 
 
@@ -425,6 +438,37 @@
 
 
 
+
+
+
+
+</dd>
+    <dt>
+    <a name = "PoolVector2Array:join"></a>
+    <strong>PoolVector2Array:join ([delimiter=""])</strong>
+    </dt>
+    <dd>
+    Returns a String with each element of the array joined with the given <code>delimiter</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">delimiter</span>
+
+
+
+         (<em>default</em> "")
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
 
 
 
@@ -526,7 +570,10 @@
     </dt>
     <dd>
     Get the vector at <code>index</code>.
- The idiom <code>array[index]</code> also calls this method.
+ Unlike Lua tables, indices start at 0 instead of 1.
+ For 1-based indexing, use the idiom <code>array[index]</code> instead.</p>
+
+<p> The idiom <code>array[index]</code> also calls this method.
 
 
     <h3>Parameters:</h3>
@@ -568,7 +615,10 @@
     </dt>
     <dd>
     Set a new vector for <code>index</code>.
- If <code>index &gt;= size()</code>, the array is <a href="../classes/PoolVector2Array.html#PoolVector2Array:resize">resize</a>d first.
+ Unlike Lua tables, indices start at 0 instead of 1.
+ For 1-based indexing, use the idiom <code>array[index] = value</code> instead.</p>
+
+<p> If <code>index &gt;= size()</code>, the array is <a href="../classes/PoolVector2Array.html#PoolVector2Array:resize">resize</a>d first.
  The idiom <code>array[index] = value</code> also calls this method.
 
 
@@ -605,7 +655,10 @@
     </dt>
     <dd>
     Set a new vector for <code>index</code>.
- If <code>index</code> is invalid (<code>index &lt; 0</code> or <code>index &gt;= size()</code>), the application will crash.
+ Unlike Lua tables, indices start at 0 instead of 1.
+ For 1-based indexing, use the idiom <code>array[index] = value</code> instead.</p>
+
+<p> If <code>index</code> is invalid (<code>index &lt; 0</code> or <code>index &gt;= size()</code>), the application will crash.
  For a safe approach that <a href="../classes/PoolVector2Array.html#PoolVector2Array:resize">resize</a>s if <code>index &gt;= size()</code>, use <a href="../classes/PoolVector2Array.html#PoolVector2Array:safe_set">safe_set</a> or the idiom <code>array[index] = value</code> instead.
 
 
@@ -762,7 +815,10 @@
     <strong>PoolVector2Array:__index (index)</strong>
     </dt>
     <dd>
-    Returns method named <code>index</code> or the result of <a href="../classes/PoolVector2Array.html#PoolVector2Array:safe_get">safe_get</a>.
+    Returns method named <code>index</code> or the result of <code>safe_get(index - 1)</code>. </p>
+
+<p> Like Lua tables, indices start at 1. For 0-based indexing, call <a href="../classes/PoolVector2Array.html#PoolVector2Array:get">get</a> or
+ <a href="../classes/PoolVector2Array.html#PoolVector2Array:safe_get">safe_get</a> directly.
 
 
     <h3>Parameters:</h3>
@@ -807,6 +863,9 @@
         <li>
            <span class="types"><a class="type" href="../classes/PoolVector2Array.html#">PoolVector2Array</a></span>
         self</li>
+        <li>
+           <span class="types"><span class="type">int</span></span>
+        0</li>
     </ol>
 
 
@@ -878,7 +937,10 @@
     <strong>PoolVector2Array:__newindex (index, value)</strong>
     </dt>
     <dd>
-    Alias for <a href="../classes/PoolVector2Array.html#PoolVector2Array:safe_set">safe_set</a>.
+    Alias for <code>safe_set(index - 1, value)</code>. </p>
+
+<p> Like Lua tables, indices start at 1. For 0-based indexing, call <a href="../classes/PoolVector2Array.html#PoolVector2Array:set">set</a> or
+ <a href="../classes/PoolVector2Array.html#PoolVector2Array:safe_set">safe_set</a> directly.
 
 
     <h3>Parameters:</h3>
@@ -924,9 +986,16 @@
         <li>
            <span class="types"><a class="type" href="../classes/PoolVector2Array.html#">PoolVector2Array</a></span>
         self</li>
+        <li>
+           <span class="types"><span class="type">int</span></span>
+        0</li>
     </ol>
 
 
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/PoolVector2Array.html#PoolVector2Array:__ipairs">__ipairs</a>
+    </ul>
 
 
 </dd>
@@ -1139,7 +1208,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2021-11-26 22:39:39 </i>
+<i style="float:right;">Last updated 2022-01-16 10:30:57 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>

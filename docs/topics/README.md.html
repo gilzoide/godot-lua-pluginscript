@@ -33,15 +33,12 @@
 <h2>Contents</h2>
 <ul>
 <li><a href="#Installing">Installing </a></li>
-<li><a href="#Project_Settings___Plugin">Project Settings + Plugin </a></li>
-<li><a href="#Using_LuaRocks">Using LuaRocks </a></li>
+<li><a href="#Documentation">Documentation </a></li>
 <li><a href="#Goals">Goals </a></li>
 <li><a href="#Non_goals">Non-goals </a></li>
 <li><a href="#Articles">Articles </a></li>
 <li><a href="#Script_example">Script example </a></li>
 <li><a href="#Status">Status </a></li>
-<li><a href="#Documentation">Documentation </a></li>
-<li><a href="#Building">Building </a></li>
 <li><a href="#Third_party_software">Third-party software </a></li>
 <li><a href="#Other_projects_for_using_Lua_in_Godot">Other projects for using Lua in Godot </a></li>
 </ul>
@@ -49,7 +46,13 @@
 
 <h2>Topics</h2>
 <ul class="">
+  <li><a href="../topics/CHANGELOG.md.html">CHANGELOG</a></li>
   <li><strong>README</strong></li>
+  <li><a href="../topics/building.md.html">building</a></li>
+  <li><a href="../topics/configuring.md.html">configuring</a></li>
+  <li><a href="../topics/limitations.md.html">limitations</a></li>
+  <li><a href="../topics/luarocks.md.html">luarocks</a></li>
+  <li><a href="../topics/plugin.md.html">plugin</a></li>
 </ul>
 <h2>Modules</h2>
 <ul class="nowrap">
@@ -107,7 +110,7 @@
 
 <h1>Godot Lua PluginScript</h1>
 
-<p><img src="blog/icon.png" alt="Lua PluginScript icon" width="128" height="128"/></p>
+<p><img src="extras/icon.png" alt="Lua PluginScript icon" width="128" height="128"/></p>
 
 <p>GDNative + PluginScript library that adds support for <a href="https://www.lua.org/">Lua</a>
 as a scripting language in <a href="https://godotengine.org/">Godot</a>.</p>
@@ -119,8 +122,7 @@ written in GDScript / C# / Visual Script and vice-versa.
 This way, one can use the language that best suits the implementation for each
 script and all of them can understand each other.</p>
 
-<p>This plugin is available in the Asset Library as <a href="https://godotengine.org/asset-library/asset/1078">Lua PluginScript</a>
-and has <a href="https://gilzoide.github.io/godot-lua-pluginscript/topics/README.md.html">online documentation</a>.</p>
+<p>This plugin is available in the Asset Library as <a href="https://godotengine.org/asset-library/asset/1078">Lua PluginScript</a>.</p>
 
 <p>For some usage examples, check out <a href="lps_coroutine.lua">lps_coroutine.lua</a>
 and <a href="plugin/lua_repl.lua">plugin/lua_repl.lua</a>.</p>
@@ -146,47 +148,18 @@ and <a href="plugin/lua_repl.lua">plugin/lua_repl.lua</a>.</p>
 </ul>
 
 
-<p><a name="Project_Settings___Plugin"></a></p>
-<h2>Project Settings + Plugin</h2>
-
-<p>In the <code>Project -&gt; Project Settings...</code> window, some settings are available:</p>
+<p><a name="Documentation"></a></p>
+<h2>Documentation</h2>
 
 <ul>
-    <li><strong>Lua PluginScript/Package Path/Behavior</strong>: Whether templates will replace
-    <a href="https://www.lua.org/manual/5.1/manual.html#pdf-package.path">package.path</a>,
-    be appended to it or prepended to it.
-    Default behavior: <code>replace</code>.</li>
-    <li><strong>Lua PluginScript/Package Path/Templates</strong>: String array of templates to be
-    injected into <a href="https://www.lua.org/manual/5.1/manual.html#pdf-package.path">package.path</a>.
-    Default templates: <code>res://?.lua</code> and <code>res://?/init.lua</code>.</li>
-    <li><strong>Lua PluginScript/Package C Path/Behavior</strong>: Whether templates will replace
-    <a href="https://www.lua.org/manual/5.1/manual.html#pdf-package.cpath">package.cpath</a>,
-    be appended to it or prepended to it.
-    Default behavior: <code>replace</code>.</li>
-    <li><strong>Lua PluginScript/Package C Path/Templates</strong>: String array of templates to be
-    injected into <a href="https://www.lua.org/manual/5.1/manual.html#pdf-package.cpath">package.cpath</a>.
-    Default templates: <code>!/?.dll</code> and <code>!/loadall.dll</code> on Windows, <code>!/?.so</code> and <code>!/loadall.so</code> elsewhere.</li>
-    <li><strong>Lua PluginScript/Export/Minify On Release Export</strong>: Whether Lua scritps
-    should be minified on release exports.
-    Defaults to <code>true</code>.</li>
+    <li><a href="https://gilzoide.github.io/godot-lua-pluginscript/topics/README.md.html">API reference</a></li>
+    <li><a href="extras/docs/configuring.md">Configuring</a></li>
+    <li><a href="extras/docs/plugin.md">Editor plugin (REPL and minify on release export)</a></li>
+    <li><a href="extras/docs/luarocks.md">Using LuaRocks</a></li>
+    <li><a href="extras/docs/limitations.md">Known limitations</a></li>
+    <li><a href="extras/docs/building.md">Building</a></li>
+    <li><a href="CHANGELOG.md">Changelog</a></li>
 </ul>
-
-<p>Also, an editor plugin is included, currently with a barebones REPL for Lua
-expressions, located in the bottom panel of the editor.
-Enable the <code>Lua PluginScript</code> plugin in the <code>Plugins</code> tab of the Project Settings window.</p>
-
-
-<p><a name="Using_LuaRocks"></a></p>
-<h2>Using LuaRocks</h2>
-
-<p>Lua modules available at <a href="https://luarocks.org/">LuaRocks</a> can be installed locally to the project:</p>
-
-<pre><code> luarocks install --lua-version 5.1 --tree &lt;local modules folder name&gt; &lt;module name&gt;
-</code></pre>
-
-
-<p>Adjust the package paths using the settings described above and Lua PluginScript
-should be able to <a href="https://www.lua.org/manual/5.1/manual.html#pdf-require">require</a> the installed modules.</p>
 
 
 <p><a name="Goals"></a></p>
@@ -219,9 +192,9 @@ should be able to <a href="https://www.lua.org/manual/5.1/manual.html#pdf-requir
 <h2>Articles</h2>
 
 <ol>
-    <li><a href="https://github.com/gilzoide/godot-lua-pluginscript/blob/main/blog/1-design-en.md">Designing Godot Lua PluginScript</a></li>
-    <li><a href="https://github.com/gilzoide/godot-lua-pluginscript/blob/main/blog/2-infrastructure-en.md">Implementing the library's skeleton</a></li>
-    <li><a href="https://github.com/gilzoide/godot-lua-pluginscript/blob/main/blog/3-luajit-callbacks-en.md">Integrating LuaJIT and FFI</a></li>
+    <li><a href="https://github.com/gilzoide/godot-lua-pluginscript/blob/main/extras/articles/1-design-en.md">Designing Godot Lua PluginScript</a></li>
+    <li><a href="https://github.com/gilzoide/godot-lua-pluginscript/blob/main/extras/articles/2-infrastructure-en.md">Implementing the library's skeleton</a></li>
+    <li><a href="https://github.com/gilzoide/godot-lua-pluginscript/blob/main/extras/articles/3-luajit-callbacks-en.md">Integrating LuaJIT and FFI</a></li>
     <li>Initializing and finalizing scripts (TODO)</li>
 </ol>
 
@@ -342,101 +315,6 @@ now with a multiline TextArea for edition]]</span>,
 </ul>
 
 
-<p><a name="Documentation"></a></p>
-<h2>Documentation</h2>
-<p>The API is documented using <a href="https://stevedonovan.github.io/ldoc/manual/doc.md.html">LDoc</a>.
-Documentation may be generated with the following command:</p>
-
-
-<pre>
-make docs
-</pre>
-
-
-
-<p><a name="Building"></a></p>
-<h2>Building</h2>
-
-<p>This project uses git submodules for its dependencies, so be sure to activate
-submodules before building.</p>
-
-
-<pre>
-# clone this repository <span class="keyword">and</span> activate submodules <span class="keyword">in</span> a single command
-git clone <span class="comment">--recurse-submodules https://github.com/gilzoide/godot-lua-pluginscript.git
-</span>
-# <span class="keyword">or</span> clone it normally <span class="keyword">and</span> <span class="keyword">then</span> activate submodules
-git clone https://github.com/gilzoide/godot-lua-pluginscript.git
-cd godot-lua-pluginscript
-git submodule init
-git submodule update
-</pre>
-
-
-<p>Build using <a href="https://www.gnu.org/software/make/">make</a> from project root,
-specifying the system as target:</p>
-
-
-<pre>
-# Choose one of the supported platforms, based on your operating system
-make windows64  # x86_64
-make windows32  # x86
-make linux64    # x86_64
-make linux32    # x86
-make osx64 \    # <span class="string">"universal"</span> multiarch x86_64 + amd64 dylib
-    # Optional: deployment target. If absent, uses <span class="number">10.7</span> <span class="keyword">for</span> x86_64 <span class="keyword">and</span> <span class="number">11.0</span> <span class="keyword">for</span> arm64
-    MACOSX_DEPLOYMENT_TARGET=XX.YY \
-    # Optional: code sign identity. If absent, <span class="backtick"><code>codesign</code></span> is <span class="keyword">not</span> performed
-    CODE_SIGN_IDENTITY=&lt;identity&gt; \
-    # Optional: additional flags passed to <span class="backtick"><code>codesign</code></span>
-    OTHER_CODE_SIGN_FLAGS=&lt;flags&gt;
-
-# Cross-compiling <span class="keyword">for</span> Windows using MinGW
-make mingw-windows64  # x86_64
-make mingw-windows32  # x86
-
-# Cross-compiling <span class="keyword">for</span> Android using NDK
-make android-armv7a \   # Android ARMv7
-    NDK_TOOLCHAIN_BIN=/path/to/ndk/toolchains/llvm/prebuild/host_os-arch/bin
-make android-aarch64 \  # Android ARM64
-    NDK_TOOLCHAIN_BIN=/path/to/ndk/toolchains/llvm/prebuild/host_os-arch/bin
-make android-x86 \      # Android x86
-    NDK_TOOLCHAIN_BIN=/path/to/ndk/toolchains/llvm/prebuild/host_os-arch/bin
-make android-x86_64 \   # Android x86_64
-    NDK_TOOLCHAIN_BIN=/path/to/ndk/toolchains/llvm/prebuild/host_os-arch/bin
-
-# Cross-compiling <span class="keyword">for</span> iOS <span class="keyword">in</span> a OSX environment
-make ios64 \    # Dylibs <span class="keyword">for</span> iOS arm64 <span class="keyword">and</span> simulator arm64 + x86_64
-    # Optional: minimum iOS version to target. If absent, uses <span class="number">8.0</span>
-    IOS_VERSION_MIN=X.Y
-    # Optional: code sign identity. If absent, <span class="backtick"><code>codesign</code></span> is <span class="keyword">not</span> performed
-    CODE_SIGN_IDENTITY=&lt;identity&gt; \
-    # Optional: additional flags passed to <span class="backtick"><code>codesign</code></span>
-    OTHER_CODE_SIGN_FLAGS=&lt;flags&gt;
-</pre>
-
-
-<p>If you plan in using the export plugin, the following is also required:</p>
-
-
-<pre>
-make plugin
-</pre>
-
-
-<p>The GDNativeLibrary file <code>lua_pluginscript.gdnlib</code> is already configured to use
-the built files stored in the <code>build</code> folder, so that one can use this
-repository directly inside a Godot project under the folder <code>addons/godot-lua-pluginscript</code>.</p>
-
-<p>After building the desired libraries, a distribution zip can be built with:</p>
-
-
-<pre>
-make dist
-</pre>
-
-
-
 <p><a name="Third_party_software"></a></p>
 <h2>Third-party software</h2>
 
@@ -468,7 +346,7 @@ make dist
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2021-11-26 22:39:39 </i>
+<i style="float:right;">Last updated 2022-01-16 10:30:57 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>

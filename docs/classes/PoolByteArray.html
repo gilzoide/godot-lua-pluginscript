@@ -85,7 +85,13 @@
 </ul>
 <h2>Topics</h2>
 <ul class="">
+  <li><a href="../topics/CHANGELOG.md.html">CHANGELOG</a></li>
   <li><a href="../topics/README.md.html">README</a></li>
+  <li><a href="../topics/building.md.html">building</a></li>
+  <li><a href="../topics/configuring.md.html">configuring</a></li>
+  <li><a href="../topics/limitations.md.html">limitations</a></li>
+  <li><a href="../topics/luarocks.md.html">luarocks</a></li>
+  <li><a href="../topics/plugin.md.html">plugin</a></li>
 </ul>
 <h2>Examples</h2>
 <ul class="nowrap">
@@ -139,6 +145,10 @@
 	<td class="summary">Reverses the order of the elements in the array.</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#PoolByteArray:join">PoolByteArray:join ([delimiter=""])</a></td>
+	<td class="summary">Returns a String with each element of the array joined with the given <code>delimiter</code>.</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#PoolByteArray:push_back">PoolByteArray:push_back (...)</a></td>
 	<td class="summary">Append elements at the end of the array.</td>
 	</tr>
@@ -190,7 +200,7 @@
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#PoolByteArray:__index">PoolByteArray:__index (index)</a></td>
-	<td class="summary">Returns method named <code>index</code> or the result of <a href="../classes/PoolByteArray.html#PoolByteArray:safe_get">safe_get</a>.</td>
+	<td class="summary">Returns method named <code>index</code> or the result of <code>safe_get(index - 1)</code>.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#PoolByteArray:__ipairs">PoolByteArray:__ipairs ()</a></td>
@@ -206,7 +216,7 @@
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#PoolByteArray:__newindex">PoolByteArray:__newindex (index, value)</a></td>
-	<td class="summary">Alias for <a href="../classes/PoolByteArray.html#PoolByteArray:safe_set">safe_set</a>.</td>
+	<td class="summary">Alias for <code>safe_set(index - 1, value)</code>.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#PoolByteArray:__pairs">PoolByteArray:__pairs ()</a></td>
@@ -338,7 +348,10 @@
     </dt>
     <dd>
     Get the byte at <code>index</code>.
- If <code>index</code> is invalid (<code>index &lt; 0</code> or <code>index &gt;= size()</code>), the application will crash.
+ Unlike Lua tables, indices start at 0 instead of 1.
+ For 1-based indexing, use the idiom <code>array[index]</code> instead.</p>
+
+<p> If <code>index</code> is invalid (<code>index &lt; 0</code> or <code>index &gt;= size()</code>), the application will crash.
  For a safe version that returns <code>nil</code> if <code>index</code> is invalid, use <a href="../classes/PoolByteArray.html#PoolByteArray:safe_get">safe_get</a> or the idiom <code>array[index]</code> instead.
 
 
@@ -462,6 +475,37 @@
 
 </dd>
     <dt>
+    <a name = "PoolByteArray:join"></a>
+    <strong>PoolByteArray:join ([delimiter=""])</strong>
+    </dt>
+    <dd>
+    Returns a String with each element of the array joined with the given <code>delimiter</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">delimiter</span>
+
+
+
+         (<em>default</em> "")
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
     <a name = "PoolByteArray:push_back"></a>
     <strong>PoolByteArray:push_back (...)</strong>
     </dt>
@@ -557,7 +601,10 @@
     </dt>
     <dd>
     Get the byte at <code>index</code>.
- The idiom <code>array[index]</code> also calls this method.
+ Unlike Lua tables, indices start at 0 instead of 1.
+ For 1-based indexing, use the idiom <code>array[index]</code> instead.</p>
+
+<p> The idiom <code>array[index]</code> also calls this method.
 
 
     <h3>Parameters:</h3>
@@ -599,7 +646,10 @@
     </dt>
     <dd>
     Set a new byte for <code>index</code>.
- If <code>index &gt;= size()</code>, the array is <a href="../classes/PoolByteArray.html#PoolByteArray:resize">resize</a>d first.
+ Unlike Lua tables, indices start at 0 instead of 1.
+ For 1-based indexing, use the idiom <code>array[index] = value</code> instead.</p>
+
+<p> If <code>index &gt;= size()</code>, the array is <a href="../classes/PoolByteArray.html#PoolByteArray:resize">resize</a>d first.
  The idiom <code>array[index] = value</code> also calls this method.
 
 
@@ -636,7 +686,10 @@
     </dt>
     <dd>
     Set a new byte for <code>index</code>.
- If <code>index</code> is invalid (<code>index &lt; 0</code> or <code>index &gt;= size()</code>), the application will crash.
+ Unlike Lua tables, indices start at 0 instead of 1.
+ For 1-based indexing, use the idiom <code>array[index] = value</code> instead.</p>
+
+<p> If <code>index</code> is invalid (<code>index &lt; 0</code> or <code>index &gt;= size()</code>), the application will crash.
  For a safe approach that <a href="../classes/PoolByteArray.html#PoolByteArray:resize">resize</a>s if <code>index &gt;= size()</code>, use <a href="../classes/PoolByteArray.html#PoolByteArray:safe_set">safe_set</a> or the idiom <code>array[index] = value</code> instead.
 
 
@@ -793,7 +846,10 @@
     <strong>PoolByteArray:__index (index)</strong>
     </dt>
     <dd>
-    Returns method named <code>index</code> or the result of <a href="../classes/PoolByteArray.html#PoolByteArray:safe_get">safe_get</a>.
+    Returns method named <code>index</code> or the result of <code>safe_get(index - 1)</code>. </p>
+
+<p> Like Lua tables, this uses 1-based indexing. For 0-based indexing, call
+ <a href="../classes/PoolByteArray.html#PoolByteArray:get">get</a> or <a href="../classes/PoolByteArray.html#PoolByteArray:safe_get">safe_get</a> directly.
 
 
     <h3>Parameters:</h3>
@@ -838,6 +894,9 @@
         <li>
            <span class="types"><a class="type" href="../classes/PoolByteArray.html#">PoolByteArray</a></span>
         self</li>
+        <li>
+           <span class="types"><span class="type">int</span></span>
+        0</li>
     </ol>
 
 
@@ -909,7 +968,10 @@
     <strong>PoolByteArray:__newindex (index, value)</strong>
     </dt>
     <dd>
-    Alias for <a href="../classes/PoolByteArray.html#PoolByteArray:safe_set">safe_set</a>.
+    Alias for <code>safe_set(index - 1, value)</code>. </p>
+
+<p> Like Lua tables, indices start at 1. For 0-based indexing, call <a href="../classes/PoolByteArray.html#PoolByteArray:set">set</a> or
+ <a href="../classes/PoolByteArray.html#PoolByteArray:safe_set">safe_set</a> directly.
 
 
     <h3>Parameters:</h3>
@@ -955,9 +1017,16 @@
         <li>
            <span class="types"><a class="type" href="../classes/PoolByteArray.html#">PoolByteArray</a></span>
         self</li>
+        <li>
+           <span class="types"><span class="type">int</span></span>
+        0</li>
     </ol>
 
 
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/PoolByteArray.html#PoolByteArray:__ipairs">__ipairs</a>
+    </ul>
 
 
 </dd>
@@ -1175,7 +1244,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2021-11-26 22:39:39 </i>
+<i style="float:right;">Last updated 2022-01-16 10:30:57 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>

@@ -1,0 +1,156 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Godot Lua PluginScript</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Enabling">Enabling </a></li>
+<li><a href="#REPL">REPL </a></li>
+<li><a href="#Minify_on_release_export">Minify on release export </a></li>
+</ul>
+
+
+<h2>Topics</h2>
+<ul class="">
+  <li><a href="../topics/CHANGELOG.md.html">CHANGELOG</a></li>
+  <li><a href="../topics/README.md.html">README</a></li>
+  <li><a href="../topics/building.md.html">building</a></li>
+  <li><a href="../topics/configuring.md.html">configuring</a></li>
+  <li><a href="../topics/limitations.md.html">limitations</a></li>
+  <li><a href="../topics/luarocks.md.html">luarocks</a></li>
+  <li><strong>plugin</strong></li>
+</ul>
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/Enumerations.html">Enumerations</a></li>
+  <li><a href="../modules/GD.html">GD</a></li>
+  <li><a href="../modules/Globals.html">Globals</a></li>
+  <li><a href="../modules/OOP.html">OOP</a></li>
+  <li><a href="../modules/math_extras.html">math_extras</a></li>
+  <li><a href="../modules/package_extras.html">package_extras</a></li>
+  <li><a href="../modules/script_metadata.html">script_metadata</a></li>
+  <li><a href="../modules/string_extras.html">string_extras</a></li>
+</ul>
+<h2>Scripts</h2>
+<ul class="nowrap">
+  <li><a href="../scripts/lps_coroutine.lua.html">lps_coroutine.lua</a></li>
+</ul>
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><a href="../classes/AABB.html">AABB</a></li>
+  <li><a href="../classes/Array.html">Array</a></li>
+  <li><a href="../classes/Basis.html">Basis</a></li>
+  <li><a href="../classes/Color.html">Color</a></li>
+  <li><a href="../classes/Dictionary.html">Dictionary</a></li>
+  <li><a href="../classes/NodePath.html">NodePath</a></li>
+  <li><a href="../classes/Object.html">Object</a></li>
+  <li><a href="../classes/Plane.html">Plane</a></li>
+  <li><a href="../classes/PoolByteArray.html">PoolByteArray</a></li>
+  <li><a href="../classes/PoolColorArray.html">PoolColorArray</a></li>
+  <li><a href="../classes/PoolIntArray.html">PoolIntArray</a></li>
+  <li><a href="../classes/PoolRealArray.html">PoolRealArray</a></li>
+  <li><a href="../classes/PoolStringArray.html">PoolStringArray</a></li>
+  <li><a href="../classes/PoolVector2Array.html">PoolVector2Array</a></li>
+  <li><a href="../classes/PoolVector3Array.html">PoolVector3Array</a></li>
+  <li><a href="../classes/Quat.html">Quat</a></li>
+  <li><a href="../classes/RID.html">RID</a></li>
+  <li><a href="../classes/Rect2.html">Rect2</a></li>
+  <li><a href="../classes/String.html">String</a></li>
+  <li><a href="../classes/StringName.html">StringName</a></li>
+  <li><a href="../classes/Transform.html">Transform</a></li>
+  <li><a href="../classes/Transform2D.html">Transform2D</a></li>
+  <li><a href="../classes/Variant.html">Variant</a></li>
+  <li><a href="../classes/Vector2.html">Vector2</a></li>
+  <li><a href="../classes/Vector3.html">Vector3</a></li>
+</ul>
+<h2>Examples</h2>
+<ul class="nowrap">
+  <li><a href="../examples/lps_coroutine.lua.html">lps_coroutine.lua</a></li>
+  <li><a href="../examples/lua_repl.lua.html">lua_repl.lua</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+
+<h1>Editor Plugin</h1>
+
+<p>Lua PluginScript comes with an editor plugin that has an interactive Lua
+console and an export plugin that minifies Lua scripts.</p>
+
+
+<p><a name="Enabling"></a></p>
+<h2>Enabling</h2>
+
+<p>The plugin can be enabled in the project's <code>Project -&gt; Project Settings...</code>
+window, in the <code>Plugins</code> tab:</p>
+
+<p><img src="plugin-enabling.png" alt=""/></p>
+
+
+<p><a name="REPL"></a></p>
+<h2>REPL</h2>
+
+<p>An interactive Lua console is available on the bottom panel, for testing Lua
+expressions.
+It comes with a basic input history, so that pressing the up/down arrows move
+between already given inputs.
+Just like Lua/LuaJIT's interactive interpreter, <code>local</code> variables do not
+persist between expressions, so they should be declared globally if you want to
+use their value in a next expression.</p>
+
+<p><img src="plugin-repl.png" alt=""/></p>
+
+
+<p><a name="Minify_on_release_export"></a></p>
+<h2>Minify on release export</h2>
+
+<p>If the <a href="Configuring.md"><strong>Lua PluginScript/Export/Minify On Release Export</strong></a>
+setting is enabled, Lua scripts will get minified when exporting a release
+version of the game/application.
+Minification uses <a href="https://github.com/jirutka/luasrcdiet">LuaSrcDiet</a> and its
+<a href="https://github.com/jirutka/luasrcdiet/blob/master/doc/features-and-usage.adoc#features">maximum settings</a>.</p>
+
+<p>Notice that minification messes with the scritps' line numbers and consequently
+with stack traces.
+That is why minification is not available for debug builds.</p>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2022-01-16 10:30:57 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

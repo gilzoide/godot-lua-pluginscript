@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Godot Lua PluginScript</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Project_Settings">Project Settings </a></li>
+<li><a href="#Configuring__package_path__and__package_cpath_">Configuring `package.path` and `package.cpath` </a></li>
+</ul>
+
+
+<h2>Topics</h2>
+<ul class="">
+  <li><a href="../topics/CHANGELOG.md.html">CHANGELOG</a></li>
+  <li><a href="../topics/README.md.html">README</a></li>
+  <li><a href="../topics/building.md.html">building</a></li>
+  <li><strong>configuring</strong></li>
+  <li><a href="../topics/limitations.md.html">limitations</a></li>
+  <li><a href="../topics/luarocks.md.html">luarocks</a></li>
+  <li><a href="../topics/plugin.md.html">plugin</a></li>
+</ul>
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/Enumerations.html">Enumerations</a></li>
+  <li><a href="../modules/GD.html">GD</a></li>
+  <li><a href="../modules/Globals.html">Globals</a></li>
+  <li><a href="../modules/OOP.html">OOP</a></li>
+  <li><a href="../modules/math_extras.html">math_extras</a></li>
+  <li><a href="../modules/package_extras.html">package_extras</a></li>
+  <li><a href="../modules/script_metadata.html">script_metadata</a></li>
+  <li><a href="../modules/string_extras.html">string_extras</a></li>
+</ul>
+<h2>Scripts</h2>
+<ul class="nowrap">
+  <li><a href="../scripts/lps_coroutine.lua.html">lps_coroutine.lua</a></li>
+</ul>
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><a href="../classes/AABB.html">AABB</a></li>
+  <li><a href="../classes/Array.html">Array</a></li>
+  <li><a href="../classes/Basis.html">Basis</a></li>
+  <li><a href="../classes/Color.html">Color</a></li>
+  <li><a href="../classes/Dictionary.html">Dictionary</a></li>
+  <li><a href="../classes/NodePath.html">NodePath</a></li>
+  <li><a href="../classes/Object.html">Object</a></li>
+  <li><a href="../classes/Plane.html">Plane</a></li>
+  <li><a href="../classes/PoolByteArray.html">PoolByteArray</a></li>
+  <li><a href="../classes/PoolColorArray.html">PoolColorArray</a></li>
+  <li><a href="../classes/PoolIntArray.html">PoolIntArray</a></li>
+  <li><a href="../classes/PoolRealArray.html">PoolRealArray</a></li>
+  <li><a href="../classes/PoolStringArray.html">PoolStringArray</a></li>
+  <li><a href="../classes/PoolVector2Array.html">PoolVector2Array</a></li>
+  <li><a href="../classes/PoolVector3Array.html">PoolVector3Array</a></li>
+  <li><a href="../classes/Quat.html">Quat</a></li>
+  <li><a href="../classes/RID.html">RID</a></li>
+  <li><a href="../classes/Rect2.html">Rect2</a></li>
+  <li><a href="../classes/String.html">String</a></li>
+  <li><a href="../classes/StringName.html">StringName</a></li>
+  <li><a href="../classes/Transform.html">Transform</a></li>
+  <li><a href="../classes/Transform2D.html">Transform2D</a></li>
+  <li><a href="../classes/Variant.html">Variant</a></li>
+  <li><a href="../classes/Vector2.html">Vector2</a></li>
+  <li><a href="../classes/Vector3.html">Vector3</a></li>
+</ul>
+<h2>Examples</h2>
+<ul class="nowrap">
+  <li><a href="../examples/lps_coroutine.lua.html">lps_coroutine.lua</a></li>
+  <li><a href="../examples/lua_repl.lua.html">lua_repl.lua</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+
+<h1>Available configurations</h1>
+
+<p><a name="Project_Settings"></a></p>
+<h2>Project Settings</h2>
+<p>In the <code>Project -&gt; Project Settings...</code> window, the following configurations are available:</p>
+
+<ul>
+    <li><strong>Lua PluginScript/Package Path/Behavior</strong>: Whether templates will replace
+    <a href="https://www.lua.org/manual/5.1/manual.html#pdf-package.path">package.path</a>,
+    be appended to it or prepended to it.
+    Default behavior: <code>replace</code>.</li>
+    <li><strong>Lua PluginScript/Package Path/Templates</strong>: List of templates to be
+    injected into <a href="https://www.lua.org/manual/5.1/manual.html#pdf-package.path">package.path</a>.
+    Default templates: <code>res://?.lua</code> and <code>res://?/init.lua</code>.</li>
+    <li><strong>Lua PluginScript/Package C Path/Behavior</strong>: Whether templates will replace
+    <a href="https://www.lua.org/manual/5.1/manual.html#pdf-package.cpath">package.cpath</a>,
+    be appended to it or prepended to it.
+    Default behavior: <code>replace</code>.</li>
+    <li><strong>Lua PluginScript/Package C Path/Templates</strong>: List of templates to be
+    injected into <a href="https://www.lua.org/manual/5.1/manual.html#pdf-package.cpath">package.cpath</a>.
+    Default templates: <code>!/?.dll</code> and <code>!/loadall.dll</code> on Windows,
+    <code>!/?.so</code> and <code>!/loadall.so</code> elsewhere.</li>
+    <li><strong>Lua PluginScript/Export/Minify On Release Export</strong>: Whether Lua scritps
+    should be minified on release exports.
+    Defaults to <code>true</code>.</li>
+</ul>
+
+<p><a name="Configuring__package_path__and__package_cpath_"></a></p>
+<h2>Configuring <a href="https://www.lua.org/manual/5.1/manual.html#pdf-package.path">package.path</a> and <a href="https://www.lua.org/manual/5.1/manual.html#pdf-package.cpath">package.cpath</a></h2>
+<p>Templates for <a href="https://www.lua.org/manual/5.1/manual.html#pdf-package.path">package.path</a> and <a href="https://www.lua.org/manual/5.1/manual.html#pdf-package.cpath">package.cpath</a> accept paths starting with
+Godot's Resource path <code>res://</code> and User path <code>user://</code>.</p>
+
+<p>Also, the special character <code>!</code> represents the executable directory.
+When running a standalone build, it will be replaced by the directory of the executable path
+(<a href="https://docs.godotengine.org/en/stable/classes/class_os.html#class-os-method-get-executable-path"><code>OS.get_executable_path().get_base_dir()</code></a>).
+When opening the project from the editor, it will be replaced by the project root
+(<a href="https://docs.godotengine.org/en/stable/classes/class_projectsettings.html#class-projectsettings-method-globalize-path"><code>ProjectSettings.globalize_path(&quot;res://&quot;)</code></a>).</p>
+
+<p>When the behavior is configured to <code>replace</code>, paths coming from the environment
+variables <code>LUA_PATH</code> and <code>LUA_CPATH</code> will also be replaced.</p>
+
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2022-01-16 10:30:57 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

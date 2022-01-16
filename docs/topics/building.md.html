@@ -1,0 +1,225 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Godot Lua PluginScript</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Submodules">Submodules </a></li>
+<li><a href="#Libraries">Libraries </a></li>
+<li><a href="#Export_plugin">Export plugin </a></li>
+<li><a href="#Distribution_ZIP">Distribution ZIP </a></li>
+<li><a href="#API_documentation">API documentation </a></li>
+</ul>
+
+
+<h2>Topics</h2>
+<ul class="">
+  <li><a href="../topics/CHANGELOG.md.html">CHANGELOG</a></li>
+  <li><a href="../topics/README.md.html">README</a></li>
+  <li><strong>building</strong></li>
+  <li><a href="../topics/configuring.md.html">configuring</a></li>
+  <li><a href="../topics/limitations.md.html">limitations</a></li>
+  <li><a href="../topics/luarocks.md.html">luarocks</a></li>
+  <li><a href="../topics/plugin.md.html">plugin</a></li>
+</ul>
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/Enumerations.html">Enumerations</a></li>
+  <li><a href="../modules/GD.html">GD</a></li>
+  <li><a href="../modules/Globals.html">Globals</a></li>
+  <li><a href="../modules/OOP.html">OOP</a></li>
+  <li><a href="../modules/math_extras.html">math_extras</a></li>
+  <li><a href="../modules/package_extras.html">package_extras</a></li>
+  <li><a href="../modules/script_metadata.html">script_metadata</a></li>
+  <li><a href="../modules/string_extras.html">string_extras</a></li>
+</ul>
+<h2>Scripts</h2>
+<ul class="nowrap">
+  <li><a href="../scripts/lps_coroutine.lua.html">lps_coroutine.lua</a></li>
+</ul>
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><a href="../classes/AABB.html">AABB</a></li>
+  <li><a href="../classes/Array.html">Array</a></li>
+  <li><a href="../classes/Basis.html">Basis</a></li>
+  <li><a href="../classes/Color.html">Color</a></li>
+  <li><a href="../classes/Dictionary.html">Dictionary</a></li>
+  <li><a href="../classes/NodePath.html">NodePath</a></li>
+  <li><a href="../classes/Object.html">Object</a></li>
+  <li><a href="../classes/Plane.html">Plane</a></li>
+  <li><a href="../classes/PoolByteArray.html">PoolByteArray</a></li>
+  <li><a href="../classes/PoolColorArray.html">PoolColorArray</a></li>
+  <li><a href="../classes/PoolIntArray.html">PoolIntArray</a></li>
+  <li><a href="../classes/PoolRealArray.html">PoolRealArray</a></li>
+  <li><a href="../classes/PoolStringArray.html">PoolStringArray</a></li>
+  <li><a href="../classes/PoolVector2Array.html">PoolVector2Array</a></li>
+  <li><a href="../classes/PoolVector3Array.html">PoolVector3Array</a></li>
+  <li><a href="../classes/Quat.html">Quat</a></li>
+  <li><a href="../classes/RID.html">RID</a></li>
+  <li><a href="../classes/Rect2.html">Rect2</a></li>
+  <li><a href="../classes/String.html">String</a></li>
+  <li><a href="../classes/StringName.html">StringName</a></li>
+  <li><a href="../classes/Transform.html">Transform</a></li>
+  <li><a href="../classes/Transform2D.html">Transform2D</a></li>
+  <li><a href="../classes/Variant.html">Variant</a></li>
+  <li><a href="../classes/Vector2.html">Vector2</a></li>
+  <li><a href="../classes/Vector3.html">Vector3</a></li>
+</ul>
+<h2>Examples</h2>
+<ul class="nowrap">
+  <li><a href="../examples/lps_coroutine.lua.html">lps_coroutine.lua</a></li>
+  <li><a href="../examples/lua_repl.lua.html">lua_repl.lua</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+
+<h1>Building</h1>
+
+<p><a name="Submodules"></a></p>
+<h2>Submodules</h2>
+
+<p>This project uses git submodules for its dependencies, so be sure to activate
+submodules before building.</p>
+
+
+<pre>
+# clone this repository <span class="keyword">and</span> activate submodules <span class="keyword">in</span> a single command
+git clone <span class="comment">--recurse-submodules https://github.com/gilzoide/godot-lua-pluginscript.git
+</span>
+# <span class="keyword">or</span> clone it normally <span class="keyword">and</span> <span class="keyword">then</span> activate submodules
+git clone https://github.com/gilzoide/godot-lua-pluginscript.git
+cd godot-lua-pluginscript
+git submodule init
+git submodule update
+</pre>
+
+
+<p><a name="Libraries"></a></p>
+<h2>Libraries</h2>
+
+<p>Build the libraries using <a href="https://www.gnu.org/software/make/">make</a> from
+project root, specifying the system as target:</p>
+
+
+<pre>
+# Choose one of the supported platforms, based on your operating system
+make windows64  # x86_64
+make windows32  # x86
+make linux64    # x86_64
+make linux32    # x86
+make osx64 \    # multiarch x86_64 + amd64 dylib
+    # Optional: deployment target. If absent, uses <span class="number">10.7</span> <span class="keyword">for</span> x86_64 <span class="keyword">and</span> <span class="number">11.0</span> <span class="keyword">for</span> arm64
+    MACOSX_DEPLOYMENT_TARGET=XX.YY \
+    # Optional: code sign identity. If absent, <span class="backtick"><code>codesign</code></span> is <span class="keyword">not</span> performed
+    CODE_SIGN_IDENTITY=&lt;identity&gt; \
+    # Optional: additional flags passed to <span class="backtick"><code>codesign</code></span>
+    OTHER_CODE_SIGN_FLAGS=&lt;flags&gt;
+
+# Cross-compiling <span class="keyword">for</span> Windows using MinGW
+make mingw-windows64  # x86_64
+make mingw-windows32  # x86
+
+# Cross-compiling <span class="keyword">for</span> Android using NDK
+make android-armv7a \   # Android ARMv7
+    # Optional: NDK toolchain <span class="string">"bin"</span> folder. Defaults to $ANDROID_NDK_ROOT/toolchains/llvm/prebuild/*/bin
+    NDK_TOOLCHAIN_BIN=$ANDROID_NDK_ROOT/toolchains/llvm/prebuild/*/bin
+make android-aarch64 \  # Android ARM64
+    NDK_TOOLCHAIN_BIN=$ANDROID_NDK_ROOT/toolchains/llvm/prebuild/*/bin
+make android-x86 \      # Android x86
+    NDK_TOOLCHAIN_BIN=$ANDROID_NDK_ROOT/toolchains/llvm/prebuild/*/bin
+make android-x86_64 \   # Android x86_64
+    NDK_TOOLCHAIN_BIN=$ANDROID_NDK_ROOT/toolchains/llvm/prebuild/*/bin
+
+# Cross-compiling <span class="keyword">for</span> iOS <span class="keyword">in</span> a OSX environment
+make ios64 \    # Dylibs <span class="keyword">for</span> iOS arm64 <span class="keyword">and</span> simulator arm64 + x86_64
+    # Optional: minimum iOS version to target. If absent, uses <span class="number">8.0</span>
+    IOS_VERSION_MIN=X.Y
+    # Optional: code sign identity. If absent, <span class="backtick"><code>codesign</code></span> is <span class="keyword">not</span> performed
+    CODE_SIGN_IDENTITY=&lt;identity&gt; \
+    # Optional: additional flags passed to <span class="backtick"><code>codesign</code></span>
+    OTHER_CODE_SIGN_FLAGS=&lt;flags&gt;
+</pre>
+
+
+<p>The GDNativeLibrary file <code>lua_pluginscript.gdnlib</code> is already configured to use
+the built files stored in the <code>build</code> folder, so that one can use this
+repository directly inside a Godot project under the folder <code>addons/godot-lua-pluginscript</code>.</p>
+
+
+<p><a name="Export_plugin"></a></p>
+<h2>Export plugin</h2>
+
+<p>If you plan in using the export plugin, the following is also required:</p>
+
+
+<pre>
+make plugin
+</pre>
+
+
+
+<p><a name="Distribution_ZIP"></a></p>
+<h2>Distribution ZIP</h2>
+
+<p>After building the desired libraries, a distribution zip can be built with:</p>
+
+
+<pre>
+make dist
+</pre>
+
+
+
+<p><a name="API_documentation"></a></p>
+<h2>API documentation</h2>
+
+<p>The API is documented using <a href="https://stevedonovan.github.io/ldoc/manual/doc.md.html">LDoc</a>
+and may be generated with the following command:</p>
+
+
+<pre>
+make docs
+</pre>
+
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2022-01-16 10:30:57 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>
