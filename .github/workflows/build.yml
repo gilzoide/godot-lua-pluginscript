@@ -1,5 +1,5 @@
 name: Build
-on: workflow_dispatch
+on: push
 defaults:
   run:
     shell: bash
@@ -27,7 +27,10 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: linux-x86-x86_64
-          path: build/linux_*/liblua_pluginscript.so
+          path: |
+            build/linux_x86/liblua_pluginscript.so
+            build/linux_x86_64/liblua_pluginscript.so
+
   build_windows:
     name: Build Windows
     runs-on: ubuntu-latest
@@ -52,7 +55,12 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: windows-x86-x86_64
-          path: build/windows_*/lua*.dll
+          path: |
+            build/windows_x86/lua51.dll
+            build/windows_x86/lua_pluginscript.dll
+            build/windows_x86_64/lua51.dll
+            build/windows_x86_64/lua_pluginscript.dll
+
   build_osx_ios:
     name: Build OSX/iOS
     runs-on: macos-latest
@@ -79,6 +87,7 @@ jobs:
             build/osx_arm64_x86_64/lua_pluginscript.dylib
             build/ios_arm64/lua_pluginscript.dylib
             build/ios_simulator_arm64_x86_64/lua_pluginscript.dylib
+
   build_android:
     name: Build Android
     runs-on: ubuntu-latest
