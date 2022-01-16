@@ -112,5 +112,9 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: android-armv7a-aarch64-x86-x86_64
-          path: build/android_*/liblua_pluginscript.so
+          path: |
+            build/android_armv7a/liblua_pluginscript.so
+            build/android_aarch64/liblua_pluginscript.so
+            build/android_x86/liblua_pluginscript.so
+            build/android_x86_64/liblua_pluginscript.so
 
