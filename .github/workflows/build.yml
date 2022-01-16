@@ -119,6 +119,7 @@ jobs:
             build/android_x86_64/liblua_pluginscript.so
 
   build_distribution_zip:
+    name: Build distribution zip
     needs: [build_linux, build_windows, build_osx_ios, build_android]
     runs-on: ubuntu-latest
     steps:
@@ -138,5 +139,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: lua_pluginscript-${{ github.sha }}
-          path: build/lua_pluginscript.zip
+          path: |
+            build/LICENSE
+            build/addons/godot-lua-pluginscript/**
 
