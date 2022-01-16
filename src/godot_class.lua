@@ -53,6 +53,7 @@ local VariantCallError = ffi_typeof('godot_variant_call_error')
 local _Object  -- forward local declaration
 local Object_call = api.godot_method_bind_get_method('Object', 'call')
 local Object_get = api.godot_method_bind_get_method('Object', 'get')
+local Object_set = api.godot_method_bind_get_method('Object', 'set')
 local Object_has_method = api.godot_method_bind_get_method('Object', 'has_method')
 local Object_is_class = api.godot_method_bind_get_method('Object', 'is_class')
 
@@ -92,6 +93,22 @@ local class_methods = {
 	-- @treturn String
 	get_parent_class = function(self)
 		return ClassDB:get_parent_class(self.class_name)
+	end,
+	--- Returns whether class has a property named `name`.
+	-- Only properties from `ClassDB:class_get_property_list()` returns true.
+	-- @function has_property
+	-- @tparam string name  Property name
+	-- @treturn bool
+	has_property = function(self, name)
+		local cache = self.known_properties
+		if not cache then
+			cache = {}
+			for _, prop in ipairs(ClassDB:class_get_property_list(self.class_name)) do
+				cache[tostring(prop.name)] = true
+			end
+			self.known_properties = cache
+		end
+		return cache[name] ~= nil
 	end,
 }
 local ClassWrapper = {
@@ -138,6 +155,20 @@ local ClassWrapper = {
 local function is_class_wrapper(v)
 	return getmetatable(v) == ClassWrapper
 end
+
+
+local ClassWrapper_cache = setmetatable({}, {
+	__index = function(self, class_name)
+		if not ClassDB:class_exists(class_name) then
+			return nil
+		end
+		class_name = tostring(class_name)
+		local cls = ClassWrapper:new(class_name)
+		rawset(self, class_name, cls)
+		return cls
+	end,
+})
+
 
 --- MethodBind metatype, wrapper for `godot_method_bind`.
 -- These are returned by `ClassWrapper:__index` and GDNative's `godot_method_bind_get_method`.
@@ -243,6 +274,17 @@ local ScriptInstance = {
 		local script_value = instance_methods[key] or rawget(self, '__script')[key]
 		if script_value ~= nil then return script_value end
 		return rawget(self, '__owner')[key]
+	end,
+	--- Calls `Object:set` if `key` is the name of a property known to base class, `rawset` otherwise.
+	-- @function __newindex
+	-- @param key
+	-- @param value
+	__newindex = function(self, key, value)
+		if self:get_class_wrapper():has_property(key) then
+			Object_set(rawget(self, '__owner'), key, value)
+		else
+			rawset(self, key, value)
+		end
 	end,
 	--- Returns a Lua string representation of `__owner`, as per `Object:to_string`.
 	-- @function __tostring

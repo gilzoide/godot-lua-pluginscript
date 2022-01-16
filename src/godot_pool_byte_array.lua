@@ -90,6 +90,9 @@ local methods = {
 	varianttype = VariantType.PoolByteArray,
 
 	--- Get the byte at `index`.
+	-- Unlike Lua tables, indices start at 0 instead of 1.
+	-- For 1-based indexing, use the idiom `array[index]` instead.
+	--
 	-- If `index` is invalid (`index < 0` or `index >= size()`), the application will crash.
 	-- For a safe version that returns `nil` if `index` is invalid, use `safe_get` or the idiom `array[index]` instead.
 	-- @function get
@@ -98,14 +101,20 @@ local methods = {
 	-- @see safe_get
 	get = api.godot_pool_byte_array_get,
 	--- Get the byte at `index`.
+	-- Unlike Lua tables, indices start at 0 instead of 1.
+	-- For 1-based indexing, use the idiom `array[index]` instead.
+	--
 	-- The idiom `array[index]` also calls this method.
 	-- @function safe_get
 	-- @tparam int index
 	-- @treturn[1] int
 	-- @treturn[2] nil  If index is invalid (`index < 0` or `index >= size()`)
 	-- @see get
-	safe_get = Array.safe_get,
+	safe_get = array_safe_get,
 	--- Set a new byte for `index`.
+	-- Unlike Lua tables, indices start at 0 instead of 1.
+	-- For 1-based indexing, use the idiom `array[index] = value` instead.
+	--
 	-- If `index` is invalid (`index < 0` or `index >= size()`), the application will crash.
 	-- For a safe approach that `resize`s if `index >= size()`, use `safe_set` or the idiom `array[index] = value` instead.
 	-- @function set
@@ -114,6 +123,9 @@ local methods = {
 	-- @see safe_set
 	set = api.godot_pool_byte_array_set,
 	--- Set a new byte for `index`.
+	-- Unlike Lua tables, indices start at 0 instead of 1.
+	-- For 1-based indexing, use the idiom `array[index] = value` instead.
+	--
 	-- If `index >= size()`, the array is `resize`d first.
 	-- The idiom `array[index] = value` also calls this method.
 	-- @function safe_set
@@ -121,7 +133,7 @@ local methods = {
 	-- @tparam int byte
 	-- @raise If `index < 0`
 	-- @see set
-	safe_set = Array.safe_set,
+	safe_set = array_safe_set,
 	--- Inserts a new element at a given position in the array.
 	-- The position must be valid, or at the end of the array (`idx == size()`).
 	-- @function insert
@@ -157,9 +169,7 @@ local methods = {
 	--- Returns `true` if the array is empty.
 	-- @function empty
 	-- @treturn bool
-	empty = function(self)
-		return #self == 0
-	end,
+	empty = array_empty,
 	--- Returns the [Read](#Class_PoolByteArray._Read) access for the array.
 	-- @function read
 	-- @treturn Read
@@ -199,6 +209,12 @@ methods.extend = function(self, iterable)
 		end
 	end
 end
+
+--- Returns a String with each element of the array joined with the given `delimiter`.
+-- @function join
+-- @param[opt=""] delimiter  
+-- @treturn String
+methods.join = array_join
 
 --- Returns a Lua string with the array's bytes.
 -- @function get_string
@@ -253,26 +269,30 @@ PoolByteArray = ffi_metatype('godot_pool_byte_array', {
 	-- @param ...  Initial elements, added with `push_back`
 	-- @treturn PoolByteArray
 	__new = function(mt, ...)
-		local self = ffi.new(mt)
+		local self = ffi_new(mt)
 		api.godot_pool_byte_array_new(self)
 		methods.push_back(self, ...)
 		return self
 	end,
 	__gc = api.godot_pool_byte_array_destroy,
-	--- Returns method named `index` or the result of `safe_get`.
+	--- Returns method named `index` or the result of `safe_get(index - 1)`.
+	-- 
+	-- Like Lua tables, this uses 1-based indexing. For 0-based indexing, call
+	-- `get` or `safe_get` directly.
 	-- @function __index
 	-- @param index
 	-- @return Method or element or `nil`
 	-- @see safe_get
-	__index = function(self, index)
-		return methods[index] or methods.safe_get(self, index)
-	end,
-	--- Alias for `safe_set`.
+	__index = array_generate__index(methods),
+	--- Alias for `safe_set(index - 1, value)`.
+	--
+	-- Like Lua tables, indices start at 1. For 0-based indexing, call `set` or
+	-- `safe_set` directly.
 	-- @function __newindex
 	-- @tparam int index
 	-- @param value
 	-- @see safe_set
-	__newindex = methods.safe_set,
+	__newindex = array__newindex,
 	--- Returns a Lua string representation of this array.
 	-- To get a string with the array contents, use `get_string` instead.
 	-- @function __tostring
@@ -289,9 +309,7 @@ PoolByteArray = ffi_metatype('godot_pool_byte_array', {
 	-- @function __len
 	-- @treturn int
 	-- @see size
-	__len = function(self)
-		return methods.size(self)
-	end,
+	__len = array__len,
 	--- Returns an iterator for array's elements, called by the idiom `ipairs(array)`.
 	-- @usage
 	--     for i, byte in ipairs(array) do
@@ -300,10 +318,13 @@ PoolByteArray = ffi_metatype('godot_pool_byte_array', {
 	-- @function __ipairs
 	-- @treturn function
 	-- @treturn PoolByteArray  self
+	-- @treturn int  0
 	__ipairs = array_ipairs,
 	--- Alias for `__ipairs`, called by the idiom `pairs(array)`.
 	-- @function __pairs
 	-- @treturn function
 	-- @treturn PoolByteArray  self
+	-- @treturn int  0
+	-- @see __ipairs
 	__pairs = array_ipairs,
 })

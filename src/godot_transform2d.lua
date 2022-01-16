@@ -24,6 +24,7 @@
 --- Transform2D metatype, wrapper for `godot_transform2d`.
 -- Constructed using the idiom `Transform2D(...)`, which calls `__new`.
 --     typedef union godot_transform2d {
+--         uint8_t data[24];
 --         float elements[6];
 --         Vector2 columns[3];
 --         struct { Vector2 x, y, origin; };

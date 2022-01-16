@@ -108,25 +108,33 @@ pluginscript_callbacks.script_init = wrap_callback(function(manifest, path, sour
 		return
 	end
 	local co = lps_coroutine_pool:acquire(script)
-	local success, metadata = coroutine_resume(co)
+	local success, script = coroutine_resume(co)
 	if not success then
-		print_coroutine_error(co, metadata, 'Error loading script metadata: ')
+		print_coroutine_error(co, script, 'Error loading script metadata: ')
 		return
 	end
 	lps_coroutine_pool:release(co)
-	if type(metadata) ~= 'table' then
+	if type(script) ~= 'table' then
 		api.godot_print_error('Script must return a table', path, path, -1)
 		return
 	end
 
 	local known_properties = {}
-	for k, v in pairs(metadata) do
+	for k, v in pairs(script) do
 		if k == 'class_name' then
 			manifest.name = ffi_gc(StringName(v), nil)
 		elseif k == 'is_tool' then
 			manifest.is_tool = bool(v)
 		elseif k == 'extends' then
-			manifest.base = ffi_gc(StringName(v), nil)
+			local cls = is_class_wrapper(v) and v or ClassWrapper_cache[v]
+			if not cls then
+				api.godot_print_error(
+					string_format('Invalid value for "extends": %q is not a Godot class', v),
+					path, path, -1
+				)
+				return
+			end
+			manifest.base = ffi_gc(StringName(cls.class_name), nil)
 		elseif type(v) == 'function' then
 			local method = method_to_dictionary(v)
 			method.name = String(k)
@@ -141,15 +149,15 @@ pluginscript_callbacks.script_init = wrap_callback(function(manifest, path, sour
 			local prop_dict, default_value = property_to_dictionary(prop)
 			prop_dict.name = String(k)
 			-- Maintain default value directly for __indexing
-			metadata[k] = default_value
+			script[k] = default_value
 			manifest.properties:append(prop_dict)
 		end
 	end
-	metadata.__path = path
-	metadata.__properties = known_properties
+	script.__path = path
+	script.__properties = known_properties
 
-	local metadata_index = pointer_to_index(touserdata(metadata))
-	lps_scripts[metadata_index] = metadata
+	local metadata_index = pointer_to_index(touserdata(script))
+	lps_scripts[metadata_index] = script
 	manifest.data = ffi_cast('void *', metadata_index)
 	err[0] = Error.OK
 end)
@@ -203,9 +211,9 @@ pluginscript_callbacks.instance_set_prop = wrap_callback(function(data, name, va
 	if prop then
 		local setter = prop.setter
 		if setter then
-			setter(self, name, value:unbox())
+			setter(self, value:unbox())
 		else
-			self[name] = value:unbox()
+			rawset(self, name, value:unbox())
 		end
 		return true
 	else

@@ -24,6 +24,7 @@
 --- Transform metatype, wrapper for `godot_transform`.
 -- Constructed using the idiom `Transform(...)`, which calls `__new`.
 --     typedef union godot_transform {
+--         uint8_t data[48];
 --         float elements[12];
 --         struct { Basis basis; Vector3 origin; };
 --     } godot_transform;

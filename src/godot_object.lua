@@ -213,7 +213,7 @@ local methods = {
 	-- @function set
 	-- @param property
 	-- @param value
-	set = api.godot_method_bind_get_method('Object', 'set'),
+	set = Object_set,
 	--- If set to `true`, signal emission is blocked.
 	-- @function set_block_signals
 	-- @param enable
@@ -286,6 +286,14 @@ methods.pcall = function(self, method, ...)
 	end
 end
 
+--- Get the `OOP.ClassWrapper` associated with this Object's class.
+-- `OOP.ClassWrapper` instances are cached internally.
+-- @function get_class_wrapper
+-- @treturn ClassWrapper
+methods.get_class_wrapper = function(self)
+	return ClassWrapper_cache[self:get_class()]
+end
+
 _Object = ffi_metatype('godot_object', {
 	__new = function(mt, init)
 		if ffi_istype(mt, init) then
@@ -318,7 +326,7 @@ _Object = ffi_metatype('godot_object', {
 	-- @param value
 	-- @see set
 	__newindex = function(self, property, value)
-		methods.set(self, property, value)
+		Object_set(self, property, value)
 	end,
 	--- Concatenates values.
 	-- @function __concat
@@ -328,7 +336,7 @@ _Object = ffi_metatype('godot_object', {
 	__concat = concat_gdvalues,
 })
 
-Object = ClassWrapper:new 'Object'
+Object = ClassWrapper_cache.Object
 Object.is_instance_valid = methods.is_instance_valid
 --- (`(godot_object *) NULL`): The `null` Object, useful as default values of properties.
 Object.null = ffi_new('godot_object *', nil)

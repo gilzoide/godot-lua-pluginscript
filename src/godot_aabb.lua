@@ -24,6 +24,7 @@
 --- AABB metatype, wrapper for `godot_aabb`.
 -- Constructed using the idiom `AABB(...)`, which calls `__new`.
 --     typedef union godot_aabb {
+--         uint8_t data[24];
 --         float elements[6];
 --         struct { Vector3 position, size; };
 --     } godot_aabb;

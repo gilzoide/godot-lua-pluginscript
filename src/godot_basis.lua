@@ -26,6 +26,7 @@
 --
 -- The matrix rows may be accessed through `rows` or in bulk through `elements`:
 --     typedef union godot_basis {
+--         uint8_t data[36];
 --         float elements[9];
 --         Vector3 rows[3];
 --     } godot_basis;

@@ -27,6 +27,7 @@
 -- The X and Y components may be accessed through `elements` or the pairs
 -- `x/y`, `r/g`, `s/t`, `u/v`, `width/height`:
 --     typedef union godot_vector2 {
+--         uint8_t data[8];
 --         float elements[2];
 --         // xy
 --         struct { float x, y; };

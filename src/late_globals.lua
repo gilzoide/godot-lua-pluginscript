@@ -48,8 +48,8 @@ GD = {
 	PropertyHint = PropertyHint,
 	--- `Enumerations.PropertyUsage`
 	PropertyUsage = PropertyUsage,
-	--- Project version: 0.3.1
-	_VERSION = '0.3.1',
+	--- Project version: 0.4.0
+	_VERSION = '0.4.0',
 }
 
 local global_constants = api.godot_get_global_constants()
@@ -141,8 +141,8 @@ setmetatable(_G, {
 			rawset(self, key, singleton)
 			return singleton
 		end
-		if ClassDB:class_exists(gd_key) then
-			local cls = ClassWrapper:new(key)
+		local cls = ClassWrapper_cache[key]
+		if cls then
 			rawset(self, key, cls)
 			return cls
 		end
@@ -154,8 +154,8 @@ _G.Engine = Engine
 _G.ClassDB = ClassDB
 _G.ResourceLoader = ResourceLoader
 -- These classes are registered with a prepending "_" in ClassDB
-File = ClassWrapper:new("_File")
-Directory = ClassWrapper:new("_Directory")
-Thread = ClassWrapper:new("_Thread")
-Mutex = ClassWrapper:new("_Mutex")
-Semaphore = ClassWrapper:new("_Semaphore")
+File = ClassWrapper_cache._File
+Directory = ClassWrapper_cache._Directory
+Thread = ClassWrapper_cache._Thread
+Mutex = ClassWrapper_cache._Mutex
+Semaphore = ClassWrapper_cache._Semaphore

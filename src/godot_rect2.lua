@@ -27,6 +27,7 @@
 -- Components may be accessed through `elements`, individually using
 -- `x/y/width/height` or as `Vector2` `position/size`:
 --     typedef union godot_rect2 {
+--         uint8_t data[16];
 --         float elements[4];
 --         struct { float x, y, width, height; };
 --         struct { Vector2 position; Vector2 size; };

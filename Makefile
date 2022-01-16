@@ -13,7 +13,7 @@ STRIP ?= strip
 CODESIGN ?= codesign
 XCODEBUILD ?= xcodebuild
 # Configurable paths
-NDK_TOOLCHAIN_BIN ?=
+NDK_TOOLCHAIN_BIN ?= $(wildcard $(ANDROID_NDK_ROOT)/toolchains/llvm/prebuilt/*/bin)
 ZIP_URL ?=
 ZIP_URL_DOWNLOAD_OUTPUT ?= /tmp/godot-lua-pluginscript-unzip-to-build.zip
 
@@ -43,7 +43,7 @@ BUILD_FOLDERS = \
 	build build/native build/$(GDNLIB_ENTRY_PREFIX) \
 	build/windows_x86 build/windows_x86_64 \
 	build/linux_x86 build/linux_x86_64 \
-	build/osx_x86_64 build/osx_arm64 build/osx_universal64 \
+	build/osx_x86_64 build/osx_arm64 build/osx_arm64_x86_64 \
 	build/ios_armv7s build/ios_arm64 build/ios_simulator_arm64 build/ios_simulator_x86_64 build/ios_simulator_arm64_x86_64 \
 	build/android_armv7a build/android_aarch64 build/android_x86 build/android_x86_64
 
@@ -51,7 +51,7 @@ LUASRCDIET_SRC = $(wildcard lib/luasrcdiet/luasrcdiet/*.lua) lib/luasrcdiet/COPY
 LUASRCDIET_DEST = $(addprefix plugin/luasrcdiet/,$(notdir $(LUASRCDIET_SRC)))
 LUASRCDIET_FLAGS = --maximum --quiet --noopt-binequiv
 
-DIST_BUILT_LIBS = $(filter-out build/osx_arm64/% build/osx_x86_64/% build/ios_arm64/% build/ios_simulator_%,$(wildcard build/*/*lua*.* build/*.xcframework/Info.plist build/*.xcframework/*/*))
+DIST_BUILT_LIBS = $(filter-out build/osx_arm64/% build/osx_x86_64/% build/ios_simulator_arm64/% build/ios_simulator_x86_64/%,$(wildcard build/*/*lua*.*))
 DIST_SRC = LICENSE
 DIST_ADDONS_SRC = LICENSE lps_coroutine.lua lua_pluginscript.gdnlib build/.gdignore $(wildcard build/jit/*.lua plugin/*.* plugin/in_editor_callbacks/* plugin/*/.gdignore) $(DIST_BUILT_LIBS) $(LUASRCDIET_DEST)
 DIST_ZIP_SRC = $(DIST_SRC) $(addprefix $(GDNLIB_ENTRY_PREFIX)/,$(DIST_ADDONS_SRC))
@@ -82,6 +82,7 @@ LUA_INIT_SCRIPT_SRC = \
 	src/godot_rid.lua \
 	src/godot_node_path.lua \
 	src/godot_dictionary.lua \
+	src/godot_array_commons.lua \
 	src/godot_array.lua \
 	src/godot_pool_byte_array.lua \
 	src/godot_pool_int_array.lua \
@@ -117,7 +118,7 @@ endif
 $(BUILD_FOLDERS):
 	mkdir -p $@
 
-build/%/language_gdnative.o: src/language_gdnative.c
+build/%/language_gdnative.o: src/language_gdnative.c lib/high-level-gdnative/hgdn.h
 	$(_CC) -o $@ $< -c $(CFLAGS)
 build/%/language_in_editor_callbacks.o: src/language_in_editor_callbacks.c
 	$(_CC) -o $@ $< -c $(CFLAGS)
@@ -161,7 +162,7 @@ build/%/lua_pluginscript.dylib: $(BUILT_OBJS) build/%/luajit/src/libluajit.a
 	$(_CC) -o $@ $^ -shared $(CFLAGS) $(LDFLAGS)
 	$(call STRIP_CMD,-x $@)
 	$(call CODESIGN_CMD,$@)
-build/osx_universal64/lua_pluginscript.dylib: build/osx_x86_64/lua_pluginscript.dylib build/osx_arm64/lua_pluginscript.dylib | build/osx_universal64
+build/osx_arm64_x86_64/lua_pluginscript.dylib: build/osx_x86_64/lua_pluginscript.dylib build/osx_arm64/lua_pluginscript.dylib | build/osx_arm64_x86_64
 	$(_LIPO) $^ -create -output $@
 build/ios_simulator_arm64_x86_64/lua_pluginscript.dylib: build/ios_simulator_arm64/lua_pluginscript.dylib build/ios_simulator_x86_64/lua_pluginscript.dylib | build/ios_simulator_arm64_x86_64
 	$(_LIPO) $^ -create -output $@
@@ -175,18 +176,18 @@ plugin/luasrcdiet/%.lua: lib/luasrcdiet/luasrcdiet/%.lua | plugin/luasrcdiet
 plugin/luasrcdiet/%: lib/luasrcdiet/% | plugin/luasrcdiet
 	cp $< $@
 
-build/$(GDNLIB_ENTRY_PREFIX)/%: %
+build/$(GDNLIB_ENTRY_PREFIX)/%:
 	@mkdir -p $(dir $@)
-	cp $< $@
+	cp $* $@
 $(addprefix build/,$(DIST_SRC)): | build
 	cp $(notdir $@) $@
-build/lua_pluginscript.zip: $(DIST_DEST)
+build/lua_pluginscript.zip: $(LUASRCDIET_DEST) $(DIST_DEST)
 	cd build && zip lua_pluginscript $(DIST_ZIP_SRC)
 build/project.godot: src/tools/project.godot | build
 	cp $< $@
 
 # Phony targets
-.PHONY: clean dist docs test unzip-to-build
+.PHONY: clean dist docs test set-version unzip-to-build
 clean:
 	$(RM) -r build/*/ plugin/luasrcdiet/*
 
@@ -198,6 +199,11 @@ docs:
 test: $(DIST_DEST) build/project.godot
 	$(GODOT_BIN) --path build --no-window --quit --script "$(CURDIR)/src/test/init.lua"
 
+set-version:
+	sed -i -E -e 's/[0-9]+\.[0-9]+\.[0-9]+/$(VERSION)/' \
+		src/late_globals.lua \
+		plugin/plugin.cfg
+
 unzip-to-build:
 ifneq (,$(filter http://% https://%,$(ZIP_URL)))
 	curl -L $(ZIP_URL) -o $(ZIP_URL_DOWNLOAD_OUTPUT)
@@ -205,6 +211,7 @@ ifneq (,$(filter http://% https://%,$(ZIP_URL)))
 else
 	cd build && unzip -u $(ZIP_URL)
 endif
+
 
 # Miscelaneous targets
 plugin: $(LUASRCDIET_DEST)
@@ -244,7 +251,7 @@ osx-arm64: CFLAGS += $(_ADD_CFLAGS)
 osx-arm64: MAKE_LUAJIT_ARGS += TARGET_FLAGS="$(_ADD_CFLAGS)" MACOSX_DEPLOYMENT_TARGET="$(MACOSX_DEPLOYMENT_TARGET)"
 osx-arm64: build/osx_arm64/lua_pluginscript.dylib
 
-osx64: osx-x86_64 osx-arm64 build/osx_universal64/lua_pluginscript.dylib
+osx64: osx-x86_64 osx-arm64 build/osx_arm64_x86_64/lua_pluginscript.dylib
 
 # Note: newer OSX systems can't run i386 apps, so LuaJIT can't build properly with the current Makefile
 #ios-armv7s: _ADD_CFLAGS = -isysroot "$(shell xcrun --sdk iphoneos --show-sdk-path)" -arch armv7s -miphoneos-version-min=$(IOS_VERSION_MIN)

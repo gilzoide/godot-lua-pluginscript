@@ -2,6 +2,6 @@ logs/
 build/
 .xmake/
 .cache/
-docs/
+/docs/
 plugin/luasrcdiet/*
 !plugin/luasrcdiet/.gdignore

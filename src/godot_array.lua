@@ -30,6 +30,9 @@ local methods = {
 	varianttype = VariantType.Array,
 
 	--- Returns the value at `index`.
+	-- Unlike Lua tables, indices start at 0 instead of 1.
+	-- For 1-based indexing, use the idiom `array[index]` instead.
+	--
 	-- If `index` is invalid (`index < 0` or `index >= size()`), the application will crash.
 	-- For a safe version that returns `nil` if `index` is invalid, use `safe_get` or the idiom `array[index]` instead.
 	-- @function get
@@ -40,6 +43,9 @@ local methods = {
 		return ffi_gc(api.godot_array_get(self, index), api.godot_variant_destroy):unbox()
 	end,
 	--- Set a new `value` for `index`.
+	-- Unlike Lua tables, indices start at 0 instead of 1.
+	-- For 1-based indexing, use the idiom `array[index] = value` instead.
+	--
 	-- If `index` is invalid (`index < 0` or `index >= size()`), the application will crash.
 	-- For a safe approach that `resize`s if `index >= size()`, use `safe_set` or the idiom `array[index] = value` instead.
 	-- @function set
@@ -63,7 +69,7 @@ local methods = {
 	end,
 	--- Returns `true` if the Array is empty.
 	-- @function empty
-	empty = api.godot_array_empty,
+	empty = array_empty,
 	--- Removes the first occurrence of a value from the array.
 	-- To remove an element by index, use `remove` instead.
 	-- @function erase
@@ -227,19 +233,21 @@ local methods = {
 }
 
 --- Returns the value at `index`.
+-- Unlike Lua tables, indices start at 0 instead of 1.
+-- For 1-based indexing, use the idiom `array[index]` instead.
+--
 -- The idiom `array[index]` also calls this method.
 -- @function safe_get
 -- @tparam int index
 -- @return[1] Value
 -- @treturn[2] nil  If index is invalid (`index < 0` or `index >= size()`)
 -- @see get
-methods.safe_get = function(self, index)
-	if index >= 0 and index < #self then
-		return self:get(index)
-	end
-end
+methods.safe_get = array_safe_get
 
 --- Set a new `value` for `index`.
+-- Unlike Lua tables, indices start at 0 instead of 1.
+-- For 1-based indexing, use the idiom `array[index]` instead.
+--
 -- If `index >= size()`, the Array is `resize`d first.
 -- The idiom `array[index] = value` also calls this method.
 -- @function safe_set
@@ -247,13 +255,7 @@ end
 -- @param value
 -- @raise If `index < 0`
 -- @see set
-methods.safe_set = function(self, index, value)
-	assert(index >= 0, "Array index must be non-negative")
-	if index >= #self then
-		self:resize(index + 1)
-	end
-	self:set(index, value)
-end
+methods.safe_set = array_safe_set
 
 --- Alias of `push_back`.
 -- @function append
@@ -269,6 +271,12 @@ methods.extend = function(self, iterable)
 		self:push_back(value)
 	end
 end
+
+--- Returns a String with each element of the array joined with the given `delimiter`.
+-- @function join
+-- @param[opt=""] delimiter  
+-- @treturn String
+methods.join = array_join
 
 if api_1_1 ~= nil then
 	--- Returns a copy of the Array.
@@ -298,22 +306,6 @@ if api_1_1 ~= nil then
 	methods.shuffle = api_1_1.godot_array_shuffle
 end
 
---- Returns a String with each element of the array joined with the given `delimiter`.
--- @function join
--- @param[opt=""] delimiter  
--- @treturn String
-methods.join = function(self, delimiter)
-	if #self == 0 then
-		return String()
-	end
-	local result = String(self[0])
-	delimiter = String(delimiter or "")
-	for i = 1, #self - 1 do
-		result = result .. delimiter .. self[i]
-	end
-	return result
-end
-
 --- Static Functions.
 -- These don't receive `self` and should be called directly as `Array.static_function(...)`
 -- @section static_funcs
@@ -331,17 +323,6 @@ methods.from = function(iterable)
 	return arr
 end
 
-local function array_next(self, index)
-	index = index + 1
-	if index < #self then
-		return index, self:get(index)
-	end
-end
-
-local function array_ipairs(self)
-	return array_next, self, -1
-end
-
 --- Metamethods
 -- @section metamethods
 Array = ffi_metatype('godot_array', {
@@ -355,20 +336,24 @@ Array = ffi_metatype('godot_array', {
 		return self
 	end,
 	__gc = api.godot_array_destroy,
-	--- Returns method named `index` or the result of `safe_get`.
+	--- Returns method named `index` or the result of `safe_get(index - 1)`.
+	-- 
+	-- Like Lua tables, indices start at 1. For 0-based indexing, call `get` or
+	-- `safe_get` directly.
 	-- @function __index
 	-- @param index
 	-- @return Method or element or `nil`
 	-- @see safe_get
-	__index = function(self, index)
-		return methods[index] or methods.safe_get(self, index)
-	end,
-	--- Alias for `safe_set`.
+	__index = array_generate__index(methods),
+	--- Alias for `safe_set(index - 1, value)`.
+	--
+	-- Like Lua tables, indices start at 1. For 0-based indexing, call `set` or
+	-- `safe_set` directly.
 	-- @function __newindex
 	-- @tparam int index
 	-- @param value
 	-- @see safe_set
-	__newindex = methods.safe_set,
+	__newindex = array__newindex,
 	--- Returns a Lua string representation of this Array.
 	-- @function __tostring
 	-- @treturn string
@@ -383,9 +368,7 @@ Array = ffi_metatype('godot_array', {
 	-- @function __len
 	-- @treturn int
 	-- @see size
-	__len = function(self)
-		return methods.size(self)
-	end,
+	__len = array__len,
 	--- Returns an iterator for Array's elements, called by the idiom `ipairs(array)`.
 	-- @usage
 	--     for i, v in ipairs(array) do
@@ -394,11 +377,13 @@ Array = ffi_metatype('godot_array', {
 	-- @function __ipairs
 	-- @treturn function
 	-- @treturn Array  self
+	-- @treturn int  0
 	__ipairs = array_ipairs,
 	--- Alias for `__ipairs`, called by the idiom `pairs(array)`.
 	-- @function __pairs
 	-- @treturn function
 	-- @treturn Array  self
+	-- @treturn int  0
 	-- @see __ipairs
 	__pairs = array_ipairs,
 })

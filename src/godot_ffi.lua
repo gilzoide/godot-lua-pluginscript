@@ -127,6 +127,9 @@ typedef struct godot_variant {
 
 // Math type definitions copied from HGDN
 typedef union godot_vector2 {
+	// raw data, must be the first field for guaranteeing ABI compatibility with Godot
+	uint8_t data[sizeof(godot_real[2])];
+	// float elements
 	godot_real elements[2];
 	// xy
 	struct { godot_real x, y; };
@@ -141,6 +144,9 @@ typedef union godot_vector2 {
 } godot_vector2;
 
 typedef union godot_vector3 {
+	// raw data, must be the first field for guaranteeing ABI compatibility with Godot
+	uint8_t data[sizeof(godot_real[3])];
+	// float elements
 	godot_real elements[3];
 	// xyz
 	struct { godot_real x, y, z; };
@@ -162,6 +168,8 @@ typedef union godot_vector3 {
 } godot_vector3;
 
 typedef union godot_color {
+	// raw data, must be the first field for guaranteeing ABI compatibility with Godot
+	uint8_t data[sizeof(godot_real[4])];
 	godot_real elements[4];
 	struct { godot_real r, g, b, a; };
 	struct { godot_vector2 rg; godot_vector2 ba; };
@@ -171,17 +179,23 @@ typedef union godot_color {
 } godot_color;
 
 typedef union godot_rect2 {
+	// raw data, must be the first field for guaranteeing ABI compatibility with Godot
+	uint8_t data[sizeof(godot_real[4])];
 	godot_real elements[4];
 	struct { godot_real x, y, width, height; };
 	struct { godot_vector2 position; godot_vector2 size; };
 } godot_rect2;
 
 typedef union godot_plane {
+	// raw data, must be the first field for guaranteeing ABI compatibility with Godot
+	uint8_t data[sizeof(godot_real[4])];
 	godot_real elements[4];
 	struct { godot_vector3 normal; godot_real d; };
 } godot_plane;
 
 typedef union godot_quat {
+	// raw data, must be the first field for guaranteeing ABI compatibility with Godot
+	uint8_t data[sizeof(godot_real[4])];
 	godot_real elements[4];
 	struct { godot_real x, y, z, w; };
 	struct { godot_vector2 xy; godot_vector2 zw; };
@@ -191,22 +205,30 @@ typedef union godot_quat {
 } godot_quat;
 
 typedef union godot_basis {
+	// raw data, must be the first field for guaranteeing ABI compatibility with Godot
+	uint8_t data[sizeof(godot_real[9])];
 	godot_real elements[9];
 	godot_vector3 rows[3];
 } godot_basis;
 
 typedef union godot_aabb {
+	// raw data, must be the first field for guaranteeing ABI compatibility with Godot
+	uint8_t data[sizeof(godot_real[6])];
 	godot_real elements[6];
 	struct { godot_vector3 position, size; };
 } godot_aabb;
 
 typedef union godot_transform2d {
+	// raw data, must be the first field for guaranteeing ABI compatibility with Godot
+	uint8_t data[sizeof(godot_real[6])];
 	godot_real elements[6];
 	godot_vector2 columns[3];
 	struct { godot_vector2 x, y, origin; };
 } godot_transform2d;
 
 typedef union godot_transform {
+	// raw data, must be the first field for guaranteeing ABI compatibility with Godot
+	uint8_t data[sizeof(godot_real[12])];
 	godot_real elements[12];
 	struct { godot_basis basis; godot_vector3 origin; };
 } godot_transform;

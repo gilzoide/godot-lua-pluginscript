@@ -11,13 +11,13 @@ Android.armeabi-v7a="res://addons/godot-lua-pluginscript/build/android_armv7a/li
 Android.arm64-v8a="res://addons/godot-lua-pluginscript/build/android_aarch64/liblua_pluginscript.so"
 Android.x86="res://addons/godot-lua-pluginscript/build/android_x86/liblua_pluginscript.so"
 Android.x86_64="res://addons/godot-lua-pluginscript/build/android_x86_64/liblua_pluginscript.so"
-OSX.64="res://addons/godot-lua-pluginscript/build/osx_universal64/lua_pluginscript.dylib"
+OSX.64="res://addons/godot-lua-pluginscript/build/osx_arm64_x86_64/lua_pluginscript.dylib"
 Windows.64="res://addons/godot-lua-pluginscript/build/windows_x86_64/lua_pluginscript.dll"
 Windows.32="res://addons/godot-lua-pluginscript/build/windows_x86/lua_pluginscript.dll"
 X11.64="res://addons/godot-lua-pluginscript/build/linux_x86_64/liblua_pluginscript.so"
 X11.32="res://addons/godot-lua-pluginscript/build/linux_x86/liblua_pluginscript.so"
 iOS.arm64="res://addons/godot-lua-pluginscript/build/ios_arm64/lua_pluginscript.dylib"
-iOS.x86_64="res://addons/godot-lua-pluginscript/build/ios_simulator_x86_64/lua_pluginscript.dylib"
+iOS.x86_64="res://addons/godot-lua-pluginscript/build/ios_simulator_arm64_x86_64/lua_pluginscript.dylib"
 
 [dependencies]
 

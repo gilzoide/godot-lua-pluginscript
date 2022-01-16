@@ -5,38 +5,103 @@ defaults:
     shell: bash
 
 jobs:
-  build:
-    name: Build
-    runs-on: ${{ matrix.os }}
+  build_linux:
+    name: Build Linux
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        os: [windows-latest, ubuntu-latest, macos-latest]
-        include:
-          - os: windows-latest
-            make: make windows64 CC=gcc
-            arch: x86_64
-          - os: ubuntu-latest
-            make: make linux64
-            arch: x86_64
-          - os: macos-latest
-            make: |
-              make osx-arm64 CC=clang SDKROOT=/Library/Developer/CommandLineTools/SDKs/MacOSX11.1.sdk
-              make osx-x86_64 CC=clang
-              make osx64
-            arch: x86_64-arm64
+        target:
+          - linux64
+          - linux32
     steps:
       - uses: actions/checkout@v2
         with:
           submodules: true
-      - name: Build native LuaJIT
-        run: make native-luajit
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install lua5.1 libc6-dev-i386
       - name: Build artifact
-        run: ${{ matrix.make }}
-        env:
-          LUA_BIN: build/native/luajit/src/luajit
+        run: make ${{ matrix.target }}
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ matrix.os }}_${{ matrix.arch }}
-          path: build/*/*lua*.*
+          name: linux-x86-x86_64
+          path: build/linux_*/liblua_pluginscript.so
+  build_windows:
+    name: Build Windows
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target:
+          - mingw-windows32
+          - mingw-windows64
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install lua5.1 libc6-dev-i386 gcc-mingw-w64
+      - name: Build artifact
+        run: make ${{ matrix.target }}
+        env:
+          CC: gcc
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: windows-x86-x86_64
+          path: build/windows_*/lua*.dll
+  build_osx_ios:
+    name: Build OSX/iOS
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        target:
+          - osx64
+          - ios64
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Install dependencies
+        run: brew install lua@5.1
+      - name: Build artifact
+        run: make ${{ matrix.target }}
+        env:
+          LUA_BIN: lua5.1
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: osx-ios-arm64-x86_64
+          path: |
+            build/osx_arm64_x86_64/lua_pluginscript.dylib
+            build/ios_arm64/lua_pluginscript.dylib
+            build/ios_simulator_arm64_x86_64/lua_pluginscript.dylib
+  build_android:
+    name: Build Android
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target:
+          - android-armv7a
+          - android-aarch64
+          - android-x86
+          - android-x86_64
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install lua5.1 libc6-dev-i386
+      - name: Build artifact
+        run: make ${{ matrix.target }}
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: android-armv7a-aarch64-x86-x86_64
+          path: build/android_*/liblua_pluginscript.so
 

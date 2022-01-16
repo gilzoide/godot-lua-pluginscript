@@ -29,6 +29,7 @@
 -- pairs `rg/gb/ba`. `Vector3` with three adjacent components may be get/set with
 -- the triplets `rgb/gba`:
 --     typedef union godot_color {
+--         uint8_t data[16];
 --         float elements[4];
 --         struct { float r, g, b, a; };
 --         struct { Vector2 rg; Vector2 ba; };
