@@ -20,7 +20,7 @@ jobs:
         uses: vitorgus/setup-godot@v1
         with:
           godot-version: 3.4
-          download-templates: false
+          download-templates: ''
       - name: Build and test
         run: make test-linux64 DEBUG=1
 
