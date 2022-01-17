@@ -112,6 +112,12 @@ ifneq (,$(CODE_SIGN_IDENTITY))
 	CODESIGN_CMD = codesign -s "$(CODE_SIGN_IDENTITY)" $1 $(OTHER_CODE_SIGN_FLAGS)
 endif
 
+define GEN_TEST
+test-$1: $1 $(DIST_DEST) build/project.godot
+	cp $2 build/addons/godot-lua-pluginscript/$2
+	$(GODOT_BIN) --path build --no-window --quit --script "$(CURDIR)/src/test/init.lua"
+endef
+
 # Avoid removing intermediate files created by chained implicit rules
 .PRECIOUS: build/%/luajit build/%/init_script.c $(BUILT_OBJS) build/%/lua51.dll $(MAKE_LUAJIT_OUTPUT)
 
@@ -187,7 +193,7 @@ build/project.godot: src/tools/project.godot | build
 	cp $< $@
 
 # Phony targets
-.PHONY: clean dist docs test set-version unzip-to-build
+.PHONY: clean dist docs set-version unzip-to-build
 clean:
 	$(RM) -r build/*/ plugin/luasrcdiet/*
 
@@ -195,9 +201,6 @@ dist: build/lua_pluginscript.zip
 
 docs:
 	ldoc .
-
-test: $(DIST_DEST) build/project.godot
-	$(GODOT_BIN) --path build --no-window --quit --script "$(CURDIR)/src/test/init.lua"
 
 set-version:
 	sed -i -E -e 's/[0-9]+\.[0-9]+\.[0-9]+/$(VERSION)/' \
@@ -224,20 +227,26 @@ native-luajit: build/native/luajit/src/luajit.o
 linux32: MAKE_LUAJIT_ARGS += CC="$(CC) -m32 -fPIC"
 linux32: CFLAGS += -m32 -fPIC
 linux32: build/linux_x86/liblua_pluginscript.so
+$(eval $(call GEN_TEST,linux32,build/linux_x86/liblua_pluginscript.so))
 
 linux64: MAKE_LUAJIT_ARGS += CC="$(CC) -fPIC"
 linux64: CFLAGS += -fPIC
 linux64: build/linux_x86_64/liblua_pluginscript.so
+$(eval $(call GEN_TEST,linux64,build/linux_x86_64/liblua_pluginscript.so))
 
 windows32: build/windows_x86/lua_pluginscript.dll
+$(eval $(call GEN_TEST,windows32,build/windows_x86/lua_pluginscript.dll))
 mingw-windows32: CROSS = i686-w64-mingw32-
 mingw-windows32: MAKE_LUAJIT_ARGS += HOST_CC="$(CC) -m32" CROSS="$(CROSS)" LDFLAGS=-static-libgcc
 mingw-windows32: windows32
+$(eval $(call GEN_TEST,mingw-windows32,build/windows_x86/lua_pluginscript.dll))
 
 windows64: build/windows_x86_64/lua_pluginscript.dll
+$(eval $(call GEN_TEST,windows64,build/windows_x86_64/lua_pluginscript.dll))
 mingw-windows64: CROSS = x86_64-w64-mingw32-
 mingw-windows64: MAKE_LUAJIT_ARGS += HOST_CC="$(CC)" CROSS="$(CROSS)" LDFLAGS=-static-libgcc
 mingw-windows64: windows64
+$(eval $(call GEN_TEST,mingw-windows64,build/windows_x86_64/lua_pluginscript.dll))
 
 osx-x86_64: MACOSX_DEPLOYMENT_TARGET ?= 10.7
 osx-x86_64: _ADD_CFLAGS = -isysroot '$(shell xcrun --sdk macosx --show-sdk-path)' -arch x86_64
@@ -252,6 +261,7 @@ osx-arm64: MAKE_LUAJIT_ARGS += TARGET_FLAGS="$(_ADD_CFLAGS)" MACOSX_DEPLOYMENT_T
 osx-arm64: build/osx_arm64/lua_pluginscript.dylib
 
 osx64: osx-x86_64 osx-arm64 build/osx_arm64_x86_64/lua_pluginscript.dylib
+$(eval $(call GEN_TEST,osx64,build/osx_arm64_x86_64/lua_pluginscript.dylib))
 
 # Note: newer OSX systems can't run i386 apps, so LuaJIT can't build properly with the current Makefile
 #ios-armv7s: _ADD_CFLAGS = -isysroot "$(shell xcrun --sdk iphoneos --show-sdk-path)" -arch armv7s -miphoneos-version-min=$(IOS_VERSION_MIN)
