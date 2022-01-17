@@ -114,6 +114,7 @@ endif
 
 define GEN_TEST
 test-$1: $1 $(LUASRCDIET_DEST) $(DIST_DEST) build/project.godot
+	@mkdir -p $(dir build/addons/godot-lua-pluginscript/$2)
 	cp $2 build/addons/godot-lua-pluginscript/$2
 	$(GODOT_BIN) --path build --no-window --quit --script "$(CURDIR)/src/test/init.lua"
 endef
