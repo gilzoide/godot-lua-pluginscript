@@ -113,7 +113,7 @@ ifneq (,$(CODE_SIGN_IDENTITY))
 endif
 
 define GEN_TEST
-test-$1: $1 $(DIST_DEST) build/project.godot
+test-$1: $1 $(LUASRCDIET_DEST) $(DIST_DEST) build/project.godot
 	cp $2 build/addons/godot-lua-pluginscript/$2
 	$(GODOT_BIN) --path build --no-window --quit --script "$(CURDIR)/src/test/init.lua"
 endef
