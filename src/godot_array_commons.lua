@@ -68,7 +68,7 @@ local function array_generate__index(methods)
 	end
 end
 
-local function array__newindex(methods)
+local function array__newindex(self, index, value)
 	array_safe_set(self, index - 1, value)
 end
 
