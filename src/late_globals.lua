@@ -129,7 +129,7 @@ function GD.yield(object, signal_name)
 	if object and signal_name then
 		object:connect(signal_name, co_obj, "resume", Array(), Object.CONNECT_ONESHOT)
 	end
-	coroutine_yield(co_obj)
+	return coroutine_yield(co_obj)
 end
 
 local Engine = api.godot_global_get_singleton("Engine")
