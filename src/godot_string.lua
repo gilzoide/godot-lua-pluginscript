@@ -314,7 +314,12 @@ local methods = {
 	-- @param[opt=true] allow_empty  If absent or truthy, inserts empty substrings in the resulting Array
 	-- @treturn String
 	split = function(self, splitter, allow_empty)
-		return ffi_gc(api.godot_string_split_allow_empty(self, str(splitter), allow_empty == nil or allow_empty), api.godot_array_destroy)
+		allow_empty = allow_empty == nil or allow_empty
+		if allow_empty then
+			return ffi_gc(api.godot_string_split_allow_empty(self, str(splitter)), api.godot_array_destroy)
+		else
+			return ffi_gc(api.godot_string_split(self, str(splitter)), api.godot_array_destroy)
+		end
 	end,
 	--- Splits the String in numbers by using a delimiter and returns an array of reals.
 	-- @function split_floats
