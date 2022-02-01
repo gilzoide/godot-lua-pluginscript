@@ -326,9 +326,11 @@ local methods = {
 	split_floats = function(self, splitter, allow_empty)
 		allow_empty = allow_empty == nil or allow_empty
 		if ffi_istype(Array, splitter) then
-			return ffi_gc(api.godot_string_split_floats_mk_allows_empty(self, splitter, allow_empty), api.godot_array_destroy)
+			local split_floats_method = allow_empty and api.godot_string_split_floats_mk_allows_empty or api.godot_string_split_floats_mk
+			return ffi_gc(split_floats_method(self, splitter), api.godot_array_destroy)
 		else
-			return ffi_gc(api.godot_string_split_floats_allows_empty(self, str(splitter), allow_empty), api.godot_array_destroy)
+			local split_floats_method = allow_empty and api.godot_string_split_floats_allows_empty or api.godot_string_split_floats
+			return ffi_gc(split_floats_method(self, str(splitter)), api.godot_array_destroy)
 		end
 	end,
 	--- Splits the String in integers by using a delimiter string and returns an array of integers.
@@ -339,9 +341,11 @@ local methods = {
 	split_ints = function(self, splitter, allow_empty)
 		allow_empty = allow_empty == nil or allow_empty
 		if ffi_istype(Array, splitter) then
-			return ffi_gc(api.godot_string_split_ints_mk_allows_empty(self, splitter, allow_empty), api.godot_array_destroy)
+			local split_ints_method = allow_empty and api.godot_string_split_ints_mk_allows_empty or api.godot_string_split_ints_mk
+			return ffi_gc(split_ints_method(self, splitter), api.godot_array_destroy)
 		else
-			return ffi_gc(api.godot_string_split_ints_allows_empty(self, str(splitter), allow_empty), api.godot_array_destroy)
+			local split_ints_method = allow_empty and api.godot_string_split_ints_allows_empty or api.godot_string_split_ints
+			return ffi_gc(split_ints_method(self, str(splitter)), api.godot_array_destroy)
 		end
 	end,
 	--- Splits the String by whitespace and returns an array of the substrings.
