@@ -76,6 +76,18 @@ local function array__len(self)
 	return self:size()
 end
 
+local function array__eq(a, b)
+	if #a ~= #b then
+		return false
+	end
+	for i = 1, #a do
+		if a[i] ~= b[i] then
+			return false
+		end
+	end
+	return true
+end
+
 local function array_generate_get_buffer(ctype)
 	local element_size = ffi_sizeof(ctype)
 	return function(self)

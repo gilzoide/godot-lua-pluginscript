@@ -301,6 +301,11 @@ PoolRealArray = ffi_metatype('godot_pool_real_array', {
 	-- @treturn int  0
 	-- @see __ipairs
 	__pairs = array_ipairs,
+	--- Equality operation
+	-- @function __eq
+	-- @tparam Array|PoolByteArray|PoolIntArray|PoolRealArray|PoolStringArray|PoolVector2Array|PoolVector3Array|PoolColorArray|table a
+	-- @tparam Array|PoolByteArray|PoolIntArray|PoolRealArray|PoolStringArray|PoolVector2Array|PoolVector3Array|PoolColorArray|table b
+	-- @treturn bool
+	__eq = array__eq,
 })
-
 
