@@ -4,6 +4,9 @@ defaults:
   run:
     shell: bash
 
+env:
+  DEBUG: 1
+
 jobs:
   build_linux:
     name: Build Linux
@@ -138,7 +141,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: lua_pluginscript-${{ github.sha }}
+          name: lua_pluginscript
           path: |
             build/LICENSE
             build/addons/godot-lua-pluginscript/**

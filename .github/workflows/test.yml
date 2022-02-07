@@ -4,6 +4,9 @@ defaults:
   run:
     shell: bash
 
+env:
+  DEBUG: 1
+
 jobs:
   test:
     name: Run tests
@@ -22,5 +25,5 @@ jobs:
           godot-version: 3.4
           download-templates: ''
       - name: Build and test
-        run: make test-linux64 DEBUG=1
+        run: make test-linux64
 
