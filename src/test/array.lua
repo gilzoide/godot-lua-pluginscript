@@ -28,4 +28,13 @@ function Test:test_array_newindex()
 	lu.assert_equals(2, #arr)
 end
 
+function Test:sort(a, b)
+	return a < b
+end
+function Test:test_sort()
+	local arr = Array(1, 6, 3, 7, 3)
+	arr:sort_custom(self, 'sort')
+	lu.assert_equals(Array(1, 3, 3, 6, 7), arr)
+end
+
 return Test

@@ -198,7 +198,7 @@ local methods = {
 	-- @tparam Object object
 	-- @param func  Method name
 	sort_custom = function(self, obj, func)
-		api.godot_array_sort_custom(self, obj, str(func))
+		api.godot_array_sort_custom(self, _Object(obj), str(func))
 	end,
 	--- Finds the index of an existing value (or the insertion index that maintains sorting order, if the value is not yet present in the Array) using binary search.
 	-- @function bsearch
