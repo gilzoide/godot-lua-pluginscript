@@ -107,6 +107,7 @@ ifneq (1,$(DEBUG))
 else
 	LUA_INIT_SCRIPT_TO_USE = build/init_script.lua
 	STRIP_CMD =
+	LDOC_ARGS = --all
 endif
 EMBED_SCRIPT_SED += src/tools/embed_to_c.sed src/tools/add_script_c_decl.sed
 
@@ -203,7 +204,7 @@ clean:
 dist: build/lua_pluginscript.zip
 
 docs:
-	ldoc .
+	ldoc . $(LDOC_ARGS)
 
 set-version:
 	sed -i -E -e 's/[0-9]+\.[0-9]+\.[0-9]+/$(VERSION)/' \
