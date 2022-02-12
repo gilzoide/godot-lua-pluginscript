@@ -62,6 +62,7 @@ LUA_INIT_SCRIPT_SRC = \
 	src/godot_ffi.lua \
 	src/cache_lua_libs.lua \
 	src/lua_globals.lua \
+	src/lua_object_helper.lua \
 	src/lua_string_extras.lua \
 	src/godot_enums.lua \
 	src/godot_class.lua \
@@ -91,6 +92,7 @@ LUA_INIT_SCRIPT_SRC = \
 	src/godot_pool_vector2_array.lua \
 	src/godot_pool_vector3_array.lua \
 	src/godot_pool_color_array.lua \
+	src/pluginscript_script.lua \
 	src/pluginscript_class_metadata.lua \
 	src/pluginscript_callbacks.lua \
 	src/late_globals.lua \

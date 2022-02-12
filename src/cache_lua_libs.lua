@@ -52,8 +52,8 @@ local setthreadfunc, touserdata
     = setthreadfunc, touserdata
 
 -- FFI
-local ffi_cast, ffi_copy, ffi_gc, ffi_istype, ffi_metatype, ffi_new, ffi_sizeof, ffi_string, ffi_typeof
-    = ffi.cast, ffi.copy, ffi.gc, ffi.istype, ffi.metatype, ffi.new, ffi.sizeof, ffi.string, ffi.typeof
+local ffi_cast, ffi_cdef, ffi_copy, ffi_gc, ffi_istype, ffi_metatype, ffi_new, ffi_sizeof, ffi_string, ffi_typeof
+    = ffi.cast, ffi.cdef, ffi.copy, ffi.gc, ffi.istype, ffi.metatype, ffi.new, ffi.sizeof, ffi.string, ffi.typeof
 
 -- Weak tables
 local weak_k = { __mode = 'k' }

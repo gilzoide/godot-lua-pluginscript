@@ -23,10 +23,6 @@
 local lps_scripts = {}
 local lps_instances = setmetatable({}, weak_k)
 
-local function pointer_to_index(ptr)
-	return tonumber(ffi_cast('uintptr_t', ptr))
-end
-
 local function get_lua_instance(ptr)
 	return lps_instances[pointer_to_index(ptr)]
 end
@@ -153,24 +149,20 @@ pluginscript_callbacks.script_init = wrap_callback(function(manifest, path, sour
 			manifest.properties:append(prop_dict)
 		end
 	end
-	script.__path = path
-	script.__properties = known_properties
-
-	local metadata_index = pointer_to_index(touserdata(script))
-	lps_scripts[metadata_index] = script
-	manifest.data = ffi_cast('void *', metadata_index)
+	manifest.data = LuaScriptWrapper_new(path, known_properties, script)
 	err[0] = Error.OK
 end)
 
 -- void (*)(godot_pluginscript_script_data *data);
 pluginscript_callbacks.script_finish = wrap_callback(function(data)
+	local script = ffi_cast('lps_lua_script *', data)
 	lps_callstack:push('script_finish')
-	lps_scripts[pointer_to_index(data)] = nil
+	LuaScriptWrapper_destroy(script)
 end)
 
 -- void (*)(godot_pluginscript_script_data *data, godot_object *owner);
-pluginscript_callbacks.instance_init = wrap_callback(function(script_data, owner)
-	local script = lps_scripts[pointer_to_index(script_data)]
+pluginscript_callbacks.instance_init = wrap_callback(function(data, owner)
+	local script = ffi_cast('lps_lua_script *', data)
 	owner = ffi_cast('godot_object *', owner)
 
 	lps_callstack:push('_init', '@', string_quote(script.__path))
