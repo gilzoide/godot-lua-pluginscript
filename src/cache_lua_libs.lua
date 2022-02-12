@@ -66,3 +66,14 @@ local ERROR_PATH_LINE_MESSAGE_PATT = '"([^"]+)"[^:]*:(%d*):%s*(.*)'
 local function string_quote(s)
 	return string_format('%q', s)
 end
+
+local function first_index_not_nil(obj, ...)
+	for i = 1, select('#', ...) do
+		local index = select(i, ...)
+		local value = obj[index]
+		if value ~= nil then
+			return value
+		end
+	end
+	return nil
+end

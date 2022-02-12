@@ -224,7 +224,7 @@ function property(metadata)
 		default_value = metadata
 		property_type = get_property_type(metadata)
 	else
-		default_value = metadata.default_value or metadata.default or metadata[1]
+		default_value = first_index_not_nil(metadata, 'default_value', 'default', 1)
 		local explicit_type = metadata.type or metadata[2]
 		if is_class_wrapper(explicit_type) then
 			assert(explicit_type:inherits('Resource'), string_format("Only classes based on Resource are supported as property types, found %q", explicit_type.class_name))
