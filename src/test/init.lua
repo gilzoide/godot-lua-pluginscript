@@ -43,11 +43,10 @@ function TestRunner:_init()
 			if instance:is_class('Node') then
 				self.root:add_child(instance)
 			end
-			local lua_instance = GD.get_lua_instance(instance)
 			print(string.format('> %s:', filename))
 			for i, method in ipairs(script:get_script_method_list()) do
 				if method.name:begins_with("test") then
-					local success = xpcall(lua_instance[tostring(method.name)], GD.print_error, lua_instance)
+					local success = xpcall(instance[tostring(method.name)], GD.print_error, instance)
 					print(string.format('  %s %s: %s', success and '✓' or '🗴', method.name, success and 'passed' or 'failed'))
 					all_passed = all_passed and success
 				end

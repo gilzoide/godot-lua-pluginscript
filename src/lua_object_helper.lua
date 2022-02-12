@@ -27,15 +27,14 @@
 -- and are only unreferenced when `LuaObject_destroy` is called.
 -- Thus this struct must used with care.
 --
--- This is used internally for having `LuaScriptWrapper` be a struct that
--- reference tables.
+-- This is used internally for having `LuaScriptWrapper` and `LuaScriptInstance`
+-- be structs that reference tables.
 --
 --     typedef struct {
 --       void *address;
 --     } lps_lua_object;
 --
 -- @module LuaObject
--- @local
 
 ffi_cdef[[
 typedef struct {
@@ -43,12 +42,12 @@ typedef struct {
 } lps_lua_object;
 ]]
 
+local lps_lua_objects = {}
+
 --- Helper function to convert a `void *` to a table index.
 local function pointer_to_index(ptr)
 	return tonumber(ffi_cast('uintptr_t', ptr))
 end
-
-local lps_lua_objects = {}
 
 --- Gets the Lua object referenced by a LuaObject
 local function LuaObject_get(self)

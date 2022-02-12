@@ -202,10 +202,10 @@ static godot_pluginscript_instance_data *lps_instance_init(godot_pluginscript_sc
 	lps_push_callback(lps_L, "instance_init");
 	lua_pushlightuserdata(lps_L, (void *) data);
 	lua_pushlightuserdata(lps_L, (void *) owner);
-	if (lua_pcall(lps_L, 2, 0, 0) != LUA_OK) {
-		return NULL;
-	}
-	return owner;
+	void *result = NULL;
+	lua_pushlightuserdata(lps_L, (void *) &result);
+	lua_pcall(lps_L, 3, 0, 0);
+	return result;
 }
 
 static void lps_instance_finish(godot_pluginscript_instance_data *data) {

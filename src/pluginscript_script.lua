@@ -30,11 +30,11 @@
 --     } lps_lua_script;
 --
 -- @module LuaScriptWrapper
--- @local
 
 ffi_cdef[[
 typedef struct {
 	godot_string_name __path;
+	godot_string_name __base;
 	lps_lua_object __properties;
 	lps_lua_object __implementation;
 } lps_lua_script;
@@ -42,12 +42,14 @@ typedef struct {
 
 --- Allocs and returns a pointer to a `LuaScriptWrapper`.
 -- @param path  Script path
+-- @tparam string|nil base  Base class name. Defaults to "Reference".
 -- @tparam table properties  Known properties from script
 -- @tparam table implementation  Script implementation
 -- @treturn LuaScriptWrapper
-local function LuaScriptWrapper_new(path, properties, implementation)
+local function LuaScriptWrapper_new(path, base, properties, implementation)
 	local self = ffi_cast('lps_lua_script *', api.godot_alloc(ffi_sizeof('lps_lua_script')))
 	self.__path = ffi_gc(StringName(path), nil)
+	self.__base = ffi_gc(StringName(base or 'Reference'), nil)
 	self.__properties = LuaObject(properties)
 	self.__implementation = LuaObject(implementation)
 	return self
@@ -62,6 +64,13 @@ local function LuaScriptWrapper_destroy(self)
 	api.godot_free(self)
 end
 
+local methods = {
+	has_property = function(self, name)
+		return self.__properties[name] ~= nil
+			or ClassWrapper_cache[self.__base]:has_property(name)
+	end,
+}
+
 --- @type LuaScriptWrapper
 local LuaScriptWrapper = ffi_metatype('lps_lua_script', {
 	--- Forwards indexing to script implementation
@@ -69,6 +78,7 @@ local LuaScriptWrapper = ffi_metatype('lps_lua_script', {
 	-- @param index
 	-- @return Value
 	__index = function(self, index)
-		return self.__implementation[index]
+		return methods[index]
+			or self.__implementation[index]
 	end,
 })

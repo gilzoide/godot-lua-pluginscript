@@ -93,6 +93,7 @@ LUA_INIT_SCRIPT_SRC = \
 	src/godot_pool_vector3_array.lua \
 	src/godot_pool_color_array.lua \
 	src/pluginscript_script.lua \
+	src/pluginscript_instance.lua \
 	src/pluginscript_class_metadata.lua \
 	src/pluginscript_callbacks.lua \
 	src/late_globals.lua \
