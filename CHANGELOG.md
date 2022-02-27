@@ -13,6 +13,10 @@
   with the passed name. Properties are considered available if they are found in
   the result of `ClassDB:class_get_property_list`.
 
+### Fixed
+
+- Return values passed to `lps_coroutine:resume(...)` when calling `GD.yield()`.
+
 ### Changed
 
 - **BREAKING CHANGE**: `Array` and `Pool*Array`'s `__index` and `__newindex`
