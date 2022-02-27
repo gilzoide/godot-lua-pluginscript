@@ -95,7 +95,7 @@ local class_methods = {
 		return ClassDB:get_parent_class(self.class_name)
 	end,
 	--- Returns whether class has a property named `name`.
-	-- Only properties from `ClassDB:class_get_property_list()` returns true.
+	-- Only properties from `ClassDB:class_get_property_list()` return true.
 	-- @function has_property
 	-- @tparam string name  Property name
 	-- @treturn bool

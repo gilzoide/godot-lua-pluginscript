@@ -65,6 +65,11 @@ local function LuaScriptWrapper_destroy(self)
 end
 
 local methods = {
+	--- Returns whether this script or its base class has a property named `name`.
+	-- @function has_property
+	-- @tparam string name  Property name
+	-- @treturn bool
+	-- @see OOP.ClassWrapper:has_property
 	has_property = function(self, name)
 		return self.__properties[name] ~= nil
 			or ClassWrapper_cache[self.__base]:has_property(name)

@@ -17,6 +17,7 @@ function Test:test_WhenSettingPropertyInClass_SetterIsCalled()
 	self.name = name
 	lu.assert_equals(self.name, name)
 	lu.assert_equals(self:get 'name', name)
+	lu.assert_nil(self:rawget 'name')
 end
 
 function Test:test_WhenSettingPropertyInScript_SetterIsCalled()

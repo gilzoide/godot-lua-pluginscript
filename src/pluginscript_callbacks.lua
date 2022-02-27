@@ -175,21 +175,21 @@ pluginscript_callbacks.instance_init = wrap_callback(function(data, owner, resul
 
 	lps_callstack:push('_init', '@', string_quote(script.__path))
 
-	local instance = LuaScriptInstance_new(owner, script)
+	local self = LuaScriptInstance_new(owner, script)
 	for name, prop in pairs(script.__properties) do
 		if not prop.getter then
 			local property_initializer = property_initializer_for_type[prop.type]
 			if property_initializer then
-				instance:rawset(name, property_initializer(prop.default_value))
+				self:rawset(name, property_initializer(prop.default_value))
 			end
 		end
 	end
 	local _init = script._init
 	if _init then
-		_init(instance)
+		_init(self)
 	end
-	result[0] = instance
-	set_lua_instance(owner, instance)
+	result[0] = self
+	set_lua_instance(self.__owner, self)
 end)
 
 -- void (*)(godot_pluginscript_instance_data *data);
