@@ -13,3 +13,6 @@
 [submodule "lib/luaunit"]
 	path = lib/luaunit
 	url = https://github.com/bluebird75/luaunit.git
+[submodule "lib/debugger_lua"]
+	path = lib/debugger_lua
+	url = https://github.com/slembcke/debugger.lua.git
