@@ -46,19 +46,18 @@ end
 -- Class/Object definitions
 local ClassDB = api.godot_global_get_singleton("ClassDB")
 
-local Variant_p_array = ffi_typeof('godot_variant *[?]')
-local const_Variant_pp = ffi_typeof('const godot_variant **')
-local VariantCallError = ffi_typeof('godot_variant_call_error')
-
 local _Object  -- forward local declaration
 local Object_call = api.godot_method_bind_get_method('Object', 'call')
 local Object_get = api.godot_method_bind_get_method('Object', 'get')
 local Object_set = api.godot_method_bind_get_method('Object', 'set')
 local Object_has_method = api.godot_method_bind_get_method('Object', 'has_method')
 local Object_is_class = api.godot_method_bind_get_method('Object', 'is_class')
+local Reference_init_ref = api.godot_method_bind_get_method('Reference', 'init_ref')
+local Reference_reference = api.godot_method_bind_get_method('Reference', 'reference')
+local Reference_unreference = api.godot_method_bind_get_method('Reference', 'unreference')
 
 local function Object_gc(obj)
-	if Object_call(obj, 'unreference') then
+	if Reference_unreference(obj) then
 		api.godot_object_destroy(obj)
 	end
 end
@@ -75,10 +74,10 @@ local class_methods = {
 	-- @treturn Object
 	new = function(self, ...)
 		local obj = self.constructor()
-		if Object_call(obj, 'init_ref') then
+		if Object_is_class(obj, 'Reference') and Reference_init_ref(obj) then
 			ffi_gc(obj, Object_gc)
 		end
-		Object_call(obj, '_init', ...)
+		obj:pcall('_init', ...)
 		return obj
 	end,
 	--- Returns whether this Class inherits a `parent` Class.
@@ -178,21 +177,20 @@ local MethodBind = ffi.metatype('godot_method_bind', {
 	-- @function __call
 	-- @tparam Object object
 	-- @param ...
-	-- @return[1]  Method return value
-	-- @treturn[2] nil  If call errored
+	-- @return  Method return value
 	__call = function(self, obj, ...)
 		local argc = select('#', ...)
-		local argv = ffi_new(Variant_p_array, argc)
+		local argv = ffi_new('godot_variant *[?]', argc)
 		for i = 1, argc do
 			local arg = select(i, ...)
 			argv[i - 1] = Variant(arg)
 		end
-		local r_error = ffi_new(VariantCallError)
-		local value = ffi_gc(api.godot_method_bind_call(self, _Object(obj), ffi_cast(const_Variant_pp, argv), argc, r_error), api.godot_variant_destroy)
+		local r_error = ffi_new('godot_variant_call_error')
+		local value = ffi_gc(api.godot_method_bind_call(self, _Object(obj), ffi_cast('const godot_variant **', argv), argc, r_error), api.godot_variant_destroy)
 		if r_error.error == CallError.OK then
 			return value:unbox()
 		else
-			return nil
+			error(r_error.error)
 		end
 	end,
 })

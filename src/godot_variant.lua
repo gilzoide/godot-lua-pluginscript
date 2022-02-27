@@ -110,7 +110,7 @@ local methods = {
 	-- @treturn Object
 	as_object = function(self)
 		local obj = api.godot_variant_as_object(self)
-		if obj ~= nil and obj:call('reference') then
+		if obj ~= nil and Object_is_class(obj, 'Reference') and Reference_reference(obj) then
 			ffi_gc(obj, Object_gc)
 		end
 		return obj
@@ -193,13 +193,13 @@ local methods = {
 	-- @see call
 	pcall = function(self, method, ...)
 		local argc = select('#', ...)
-		local argv = ffi_new(Variant_p_array, argc)
+		local argv = ffi_new('godot_variant *[?]', argc)
 		for i = 1, argc do
 			local arg = select(i, ...)
 			argv[i - 1] = Variant(arg)
 		end
-		local r_error = ffi_new(VariantCallError)
-		local value = ffi_gc(api.godot_variant_call(self, str(method), ffi_cast(const_Variant_pp, argv), argc, r_error), api.godot_variant_destroy)
+		local r_error = ffi_new('godot_variant_call_error')
+		local value = ffi_gc(api.godot_variant_call(self, str(method), ffi_cast('const godot_variant **', argv), argc, r_error), api.godot_variant_destroy)
 		if r_error.error == CallError.OK then
 			return true, value:unbox()
 		else

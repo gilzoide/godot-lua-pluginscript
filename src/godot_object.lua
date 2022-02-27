@@ -34,21 +34,18 @@ local methods = {
 	-- @param[opt] arguments  Array of Dictionaries, each containing name: String and type: int (see `Variant.Type`) entries.
 	add_user_signal = api.godot_method_bind_get_method('Object', 'add_user_signal'),
 	--- Calls the `method` on the Object and returns the result.
-	-- Fails silently if Object doesn't have a method named `method`.
-	-- Use `pcall` instead if you want to know if `method` exists.
 	-- @function call
 	-- @param method  Method name
 	-- @param ...
-	-- @return[1] Method result
-	-- @treturn[2] nil  If method does not exist or errors
+	-- @return Method result
 	-- @see pcall
 	call = function(self, method, ...)
 		local result = Object_call(self, method, ...)
 		-- Workaround for correcting reference counts of instantiated scripts
 		-- Godot initializes the reference count when constructing a Variant from
 		-- the Object and Lua automatically references it again (count == 2)
-		if method == 'new' and Object_is_class(self, 'Script') then
-			Object_call(result, 'unreference')
+		if method == 'new' and Object_is_class(self, 'Script') and Object_is_class(result, 'Reference') then
+			Reference_unreference(result)
 		end
 		return result
 	end,
