@@ -137,7 +137,7 @@ pluginscript_callbacks.script_init = wrap_callback(function(manifest, path, sour
 			base_class = cls.class_name
 			manifest.base = ffi_gc(StringName(base_class), nil)
 		elseif type(v) == 'function' then
-			local method = method_to_dictionary(v)
+			local method = Dictionary()
 			method.name = String(k)
 			manifest.methods:append(method)
 		elseif is_signal(v) then
@@ -217,6 +217,7 @@ pluginscript_callbacks.instance_set_prop = wrap_callback(function(data, name, va
 		if setter then
 			setter(self, value:unbox())
 		else
+			-- Avoid infinite recursion from `self[name] = value`, since `__newindex` calls `Object:set`
 			self:rawset(name, value:unbox())
 		end
 		return true

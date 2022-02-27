@@ -1,4 +1,4 @@
--- @file pluginscript_class_metadata.lua  Helpers for Script/Class metadata (properties, methods, signals)
+-- @file pluginscript_property.lua  Property declarations for scripts
 -- This file is part of Godot Lua PluginScript: https://github.com/gilzoide/godot-lua-pluginscript
 --
 -- Copyright (C) 2021 Gil Barbosa Reis.
@@ -21,11 +21,10 @@
 -- FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 -- IN THE SOFTWARE.
 
---- Scripts metadata.
--- This includes properties, signals and methods.
--- @module script_metadata
+--- Property declarations for scripts.
+-- @module property
 
--- Map names and types to godot_variant_type
+--- Map names and types to `godot_variant_type`
 local property_types = {
 	bool = VariantType.Bool, [bool] = VariantType.Bool,
 	int = VariantType.Int, [int] = VariantType.Int,
@@ -59,6 +58,7 @@ local property_types = {
 	PoolColorArray = VariantType.PoolColorArray, [PoolColorArray] = VariantType.PoolColorArray,
 }
 
+--- Map types to property initializer function
 local property_initializer_for_type = {
 	[VariantType.Bool] = function(default_value)
 		return default_value or false
@@ -143,6 +143,7 @@ local property_initializer_for_type = {
 	end,
 }
 
+--- Get the `VariantType` a value would have after converting to `Variant`
 local function get_property_type(value)
 	local t = type(value)
 	if t == 'boolean' then
@@ -161,12 +162,15 @@ local function get_property_type(value)
 	return VariantType.Nil
 end
 
+--- Property metatable, used only to check if a value is a property.
 local Property = {}
 
+--- Checks if `value` is a `Property`.
 local function is_property(value)
 	return getmetatable(value) == Property
 end
 
+--- Transforms a `Property` into a `Dictionary`, for populating scripts metadata.
 local function property_to_dictionary(prop)
 	local default_value = prop.default_value
 	local dict = Dictionary {
@@ -264,37 +268,4 @@ function export(metadata)
 	local prop = property(metadata)
 	prop.usage = prop.usage and bor(prop.usage, PropertyUsage.EDITOR) or PropertyUsage.DEFAULT
 	return prop
-end
-
-
-local Signal = {}
-
-local function is_signal(value)
-	return getmetatable(value) == Signal
-end
-
-local function signal_to_dictionary(sig)
-	local args = Array()
-	for i = 1, #sig do
-		args:append(Dictionary{ name = String(sig[i]) })
-	end
-	local dict = Dictionary()
-	dict.args = args
-	return dict
-end
-
---- Create a signal table.
--- This is only useful for declaring scripts' signals.
--- @usage
---     MyClass.something_happened = signal()
---     MyClass.something_happened_with_args = signal('arg1', 'arg2', 'etc')
--- @param ...  Signal argument names
--- @treturn table
--- @see lps_coroutine.lua
-function signal(...)
-	return setmetatable({ ... }, Signal)
-end
-
-local function method_to_dictionary(f)
-	return Dictionary()
 end
