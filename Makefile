@@ -97,6 +97,7 @@ LUA_INIT_SCRIPT_SRC = \
 	src/pluginscript_property.lua \
 	src/pluginscript_signal.lua \
 	src/pluginscript_callbacks.lua \
+	src/lua_object_wrapper.lua \
 	src/late_globals.lua \
 	src/lua_package_extras.lua \
 	src/lua_math_extras.lua \

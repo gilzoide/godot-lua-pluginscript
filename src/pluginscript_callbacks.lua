@@ -20,15 +20,14 @@
 -- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 -- FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 -- IN THE SOFTWARE.
-local lps_scripts = {}
-local lps_instances = setmetatable({}, weak_k)
+local lps_next_instance_data
 
 local function get_lua_instance(ptr)
-	return lps_instances[pointer_to_index(ptr)]
+	return lps_lua_objects[pointer_to_index(ptr)]
 end
 
 local function set_lua_instance(ptr, instance)
-	lps_instances[pointer_to_index(ptr)] = instance
+	lps_lua_objects[pointer_to_index(ptr)] = instance
 end
 
 local lps_coroutine_pool = {
@@ -175,7 +174,8 @@ pluginscript_callbacks.instance_init = wrap_callback(function(data, owner, resul
 
 	lps_callstack:push('_init', '@', string_quote(script.__path))
 
-	local self = LuaScriptInstance_new(owner, script)
+	local self = LuaScriptInstance_new(owner, script, lps_next_instance_data)
+	lps_next_instance_data = nil
 	for name, prop in pairs(script.__properties) do
 		if not prop.getter then
 			local property_initializer = property_initializer_for_type[prop.type]

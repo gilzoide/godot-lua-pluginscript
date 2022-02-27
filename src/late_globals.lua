@@ -101,8 +101,6 @@ function GD.load(path)
 	return ResourceLoader:load(path)
 end
 
-local library_resource_dir = clib.hgdn_library.resource_path:get_base_dir()
-local CoroutineObject = GD.load(library_resource_dir:plus_file('lps_coroutine.lua'))
 
 --- Yield the current running Lua thread, returning a wrapper Object with the `lps_coroutine.lua` script attached.
 -- If an `object` and `signal` are passed, this coroutine will resume automatically when object emits the signal.
@@ -119,13 +117,7 @@ local CoroutineObject = GD.load(library_resource_dir:plus_file('lps_coroutine.lu
 function GD.yield(object, signal_name)
 	local co, is_main = coroutine_running()
 	assert(co and not is_main, "GD.yield can be called only from script methods")
-	local co_obj = lps_instances[co]
-	if not co_obj then
-		co_obj = CoroutineObject:new()
-		local co_obj_table = get_lua_instance(co_obj)
-		co_obj_table.coroutine = co
-		lps_instances[co] = co_obj_table
-	end
+	local co_obj = get_script_instance_for_lua_object(co)
 	if object and signal_name then
 		object:connect(signal_name, co_obj, "resume", Array(), Object.CONNECT_ONESHOT)
 	end

@@ -56,7 +56,7 @@ local ffi_cast, ffi_cdef, ffi_copy, ffi_gc, ffi_istype, ffi_metatype, ffi_new, f
     = ffi.cast, ffi.cdef, ffi.copy, ffi.gc, ffi.istype, ffi.metatype, ffi.new, ffi.sizeof, ffi.string, ffi.typeof
 
 -- Weak tables
-local weak_k = { __mode = 'k' }
+local weak_kv = { __mode = 'kv' }
 
 -- Some useful patterns
 local ERROR_LINE_MESSAGE_PATT = ':(%d+):%s*(.*)'

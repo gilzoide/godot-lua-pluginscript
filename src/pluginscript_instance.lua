@@ -31,25 +31,26 @@ ffi_cdef[[
 typedef struct {
 	godot_object *__owner;
 	lps_lua_script *__script;
-	lps_lua_object __table;
+	lps_lua_object __data;
 } lps_script_instance;
 ]]
 
 --- Allocs and returns a pointer to a `LuaScriptInstance`.
 -- @tparam Object owner
 -- @tparam table script
-local function LuaScriptInstance_new(owner, script)
+-- @param[opt={}] data
+local function LuaScriptInstance_new(owner, script, data)
 	local self = ffi_cast('lps_script_instance *', api.godot_alloc(ffi_sizeof('lps_script_instance')))
 	self.__owner = owner
 	self.__script = script
-	self.__table = LuaObject({})
+	self.__data = LuaObject(data or {})
 	return self
 end
 
 --- Frees all memory associated with a `LuaScriptInstance`.
 -- @tparam LuaScriptInstance self
 local function LuaScriptInstance_destroy(self)
-	LuaObject_destroy(self.__table)
+	LuaObject_destroy(self.__data)
 	api.godot_free(self)
 end
 
@@ -57,19 +58,19 @@ local methods = {
 	fillvariant = function(var, self)
 		api.godot_variant_new_object(var, self.__owner)
 	end,
-	--- Get a value from `__table`, bypassing the check for getters.
+	--- Get a value from `__data`, bypassing the check for getters.
 	-- @function rawget
 	-- @param index
 	-- @return
 	rawget = function(self, index)
-		return self.__table[index]
+		return self.__data[index]
 	end,
-	--- Sets a value on the `__table`, bypassing the check for setters.
+	--- Sets a value on the `__data`, bypassing the check for setters.
 	-- @function rawset
 	-- @param index
 	-- @param value
 	rawset = function(self, index, value)
-		self.__table[index] = value
+		self.__data[index] = value
 	end,
 }
 local LuaScriptInstance = ffi_metatype('lps_script_instance', {
@@ -83,7 +84,7 @@ local LuaScriptInstance = ffi_metatype('lps_script_instance', {
 	-- @tfield LuaScriptWrapper __script
 	
 	--- `LuaObject` that references an internal table for holding arbitrary data.
-	-- @tfield LuaObject __table
+	-- @tfield LuaObject __data
 	
 	--- Try indexing `__owner`, then `__data`, then `__script`.
 	-- @function __index

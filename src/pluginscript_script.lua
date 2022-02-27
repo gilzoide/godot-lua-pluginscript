@@ -57,7 +57,7 @@ local function LuaScriptWrapper_new(path, base, properties, implementation)
 end
 
 --- Frees all memory associated with a `LuaScriptWrapper`.
--- @tparam LuaScriptWrapper script_wrapper 
+-- @tparam LuaScriptWrapper self 
 local function LuaScriptWrapper_destroy(self)
 	api.godot_string_name_destroy(self.__path)
 	LuaObject_destroy(self.__properties)

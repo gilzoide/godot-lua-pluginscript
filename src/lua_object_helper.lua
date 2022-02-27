@@ -79,7 +79,7 @@ local LuaObject = ffi_metatype('lps_lua_object', {
 	-- @function __new
 	-- @param obj  Lua object
 	__new = function(mt, obj)
-		local self = ffi_new(mt, { __address = touserdata(obj) })
+		local self = ffi_new(mt, touserdata(obj))
 		LuaObject_set(self, obj)
 		return self
 	end,
@@ -112,5 +112,11 @@ local LuaObject = ffi_metatype('lps_lua_object', {
 	-- @function __ipairs
 	__ipairs = function(self)
 		return ipairs(LuaObject_get(self))
+	end,
+	--- Forwards call to referenced Lua object
+	-- @function __call
+	-- @param ...
+	__call = function(self, ...)
+		return LuaObject_get(self)(...)
 	end,
 })
