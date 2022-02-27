@@ -29,8 +29,19 @@ function TestRunner:_init()
 	local current_script_filename = current_script_path:get_file()
 	local current_script_base_dir = current_script_path:get_base_dir()
 
-	local additional_path = current_script_base_dir:plus_file('../../lib/luaunit')
-	package.path = string.format('%s/?.lua;%s/?/init.lua;', additional_path, additional_path) .. package.path
+	local additional_paths = { '../../lib/luaunit', '../../lib/debugger_lua' }
+	for _, path in ipairs(additional_paths) do
+		local additional_path = current_script_base_dir:plus_file(path)
+		package.path = string.format('%s/?.lua;%s/?/init.lua;', additional_path, additional_path) .. package.path
+	end
+
+	local function error_handler(msg)
+		if os.getenv('DEBUG_INTERACTIVE') then
+			require('debugger')()
+		else
+			GD.print_error(msg)
+		end
+	end
 
 	local dir, all_passed = Directory:new(), true
 	assert(dir:open(current_script_base_dir) == GD.OK)
@@ -43,10 +54,11 @@ function TestRunner:_init()
 			if instance:is_class('Node') then
 				self.root:add_child(instance)
 			end
+			local lua_instance = GD.get_lua_instance(instance)
 			print(string.format('> %s:', filename))
 			for i, method in ipairs(script:get_script_method_list()) do
 				if method.name:begins_with("test") then
-					local success = xpcall(instance[tostring(method.name)], GD.print_error, instance)
+					local success = xpcall(lua_instance[tostring(method.name)], error_handler, lua_instance)
 					print(string.format('  %s %s: %s', success and '✓' or '🗴', method.name, success and 'passed' or 'failed'))
 					all_passed = all_passed and success
 				end
