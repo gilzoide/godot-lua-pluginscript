@@ -85,17 +85,17 @@ local LuaScriptInstance = ffi_metatype('lps_script_instance', {
 	--- `LuaObject` that references an internal table for holding arbitrary data.
 	-- @tfield LuaObject __table
 	
-	--- Try indexing `__script`, then `__owner`, then `__table`.
+	--- Try indexing `__owner`, then `__data`, then `__script`.
 	-- @function __index
 	-- @param key
 	-- @return
 	-- @see Object.__index
 	__index = function(self, key)
-		local value = methods[key] or self.__script[key]
+		local value = methods[key] or self.__owner[key]
 		if value ~= nil then return value end
-		value = self.__owner[key]
+		value = self.__data[key]
 		if value ~= nil then return value end
-		return self.__table[key]
+		return self.__script[key]
 	end,
 	--- Calls `Object:set` if `key` is the name of a property known to base class, `rawset` otherwise.
 	-- @function __newindex
