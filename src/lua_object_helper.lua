@@ -31,14 +31,14 @@
 -- be structs that reference tables.
 --
 --     typedef struct {
---       void *address;
+--       void *__address;
 --     } lps_lua_object;
 --
 -- @module LuaObject
 
 ffi_cdef[[
 typedef struct {
-	void *address;
+	void *__address;
 } lps_lua_object;
 ]]
 
@@ -51,14 +51,14 @@ end
 
 --- Gets the Lua object referenced by a LuaObject
 local function LuaObject_get(self)
-	return lps_lua_objects[pointer_to_index(self.address)]
+	return lps_lua_objects[pointer_to_index(self.__address)]
 end
 
 --- Sets the Lua object referenced by a LuaObject
 -- @tparam LuaObject self 
 -- @param value
 local function LuaObject_set(self, value)
-	lps_lua_objects[pointer_to_index(self.address)] = value
+	lps_lua_objects[pointer_to_index(self.__address)] = value
 end
 
 --- Unreference the Lua object, removing it from cache.
@@ -69,6 +69,9 @@ end
 
 --- @type LuaObject
 local LuaObject = ffi_metatype('lps_lua_object', {
+	--- Wrapped reference memory address
+	-- @tfield void* __address
+
 	--- LuaObject constructor, called by the idiom `LuaObject(obj)`.
 	--
 	-- This registers the object in the global cache table, indexed by its
@@ -76,7 +79,7 @@ local LuaObject = ffi_metatype('lps_lua_object', {
 	-- @function __new
 	-- @param obj  Lua object
 	__new = function(mt, obj)
-		local self = ffi_new(mt, { address = touserdata(obj) })
+		local self = ffi_new(mt, { __address = touserdata(obj) })
 		LuaObject_set(self, obj)
 		return self
 	end,

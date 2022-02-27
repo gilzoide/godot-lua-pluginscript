@@ -25,6 +25,7 @@
 --
 --     typedef struct {
 --       godot_string_name __path;
+--       godot_string_name __base;
 --       lps_lua_object __properties;
 --       lps_lua_object __implementation;
 --     } lps_lua_script;
@@ -64,20 +65,30 @@ local function LuaScriptWrapper_destroy(self)
 	api.godot_free(self)
 end
 
+--- @type LuaScriptWrapper
 local methods = {
 	--- Returns whether this script or its base class has a property named `name`.
 	-- @function has_property
 	-- @tparam string name  Property name
 	-- @treturn bool
-	-- @see OOP.ClassWrapper:has_property
 	has_property = function(self, name)
 		return self.__properties[name] ~= nil
 			or ClassWrapper_cache[self.__base]:has_property(name)
 	end,
 }
-
---- @type LuaScriptWrapper
 local LuaScriptWrapper = ffi_metatype('lps_lua_script', {
+	--- Script path, usually relative to `res://`
+	-- @tfield StringName __path
+	
+	--- Base class name
+	-- @tfield StringName __base
+	
+	--- Table of known properties
+	-- @tfield LuaObject __properties
+	
+	--- Table returned from script file, holding method implementations
+	-- @tfield LuaObject __implementation
+
 	--- Forwards indexing to script implementation
 	-- @function __index
 	-- @param index

@@ -75,15 +75,15 @@ local methods = {
 local LuaScriptInstance = ffi_metatype('lps_script_instance', {
 	--- `Object` that this script instance is attached to.
 	-- This is the Godot side of the instance.
-	-- @field __owner
+	-- @tfield Object __owner
 	
 	--- `LuaScriptWrapper` for script, the one returned by the Lua script when loading it as a PluginScript.
 	-- Note that calling `Object:get_script` will return an `Object` rather
 	-- than this wrapper.
-	-- @field __script
+	-- @tfield LuaScriptWrapper __script
 	
 	--- `LuaObject` that references an internal table for holding arbitrary data.
-	-- @field __table
+	-- @tfield LuaObject __table
 	
 	--- Try indexing `__script`, then `__owner`, then `__table`.
 	-- @function __index
