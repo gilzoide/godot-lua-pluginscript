@@ -275,7 +275,7 @@ pluginscript_callbacks.instance_call_method = wrap_callback(function(data, name,
 	err = ffi_cast('godot_variant_call_error *', err)
 
 	local script = self.__script
-	lps_callstack:push('call', name, '@', script.__path)
+	lps_callstack:push('call', name, '@', string_quote(script.__path))
 
 	local method = script[name]
 	if method ~= nil then
@@ -302,7 +302,7 @@ pluginscript_callbacks.instance_notification = wrap_callback(function(data, what
 	local self = ffi_cast('lps_script_instance *', data)
 	
 	local script = self.__script
-	lps_callstack:push('_notification', '@', script.__path)
+	lps_callstack:push('_notification', '@', string_quote(script.__path))
 
 	local _notification = script._notification
 	if _notification then
