@@ -276,11 +276,7 @@ end
 -- @treturn[2] bool `false` if method does not exist
 -- @see call
 methods.pcall = function(self, method, ...)
-	if Object_has_method(self, method) then
-		return true, methods.call(self, method, ...)
-	else
-		return false
-	end
+	return pcall(methods.call, self, method, ...)
 end
 
 --- Get the `OOP.ClassWrapper` associated with this Object's class.
