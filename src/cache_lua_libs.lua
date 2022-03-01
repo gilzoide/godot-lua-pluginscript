@@ -67,11 +67,15 @@ local function string_quote(s)
 	return string_format('%q', s)
 end
 
+local function is_not_nil(value)
+	return type(value) ~= 'nil'
+end
+
 local function first_index_not_nil(obj, ...)
 	for i = 1, select('#', ...) do
 		local index = select(i, ...)
 		local value = obj[index]
-		if value ~= nil then
+		if is_not_nil(value) then
 			return value
 		end
 	end

@@ -93,9 +93,9 @@ local LuaScriptInstance = ffi_metatype('lps_script_instance', {
 	-- @see Object.__index
 	__index = function(self, key)
 		local value = methods[key] or self.__owner[key]
-		if value ~= nil then return value end
+		if is_not_nil(value) then return value end
 		value = self.__data[key]
-		if value ~= nil then return value end
+		if is_not_nil(value) then return value end
 		return self.__script[key]
 	end,
 	--- Calls `Object:set` if `key` is the name of a property known to base class, `rawset` otherwise.
