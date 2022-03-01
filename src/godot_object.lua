@@ -267,13 +267,14 @@ if api_1_1 ~= nil then
 	methods.is_instance_valid = api_1_1.godot_is_instance_valid
 end
 
---- Calls the `method` on the Object and returns the result.
+--- Make a protected call to method with the passed name and arguments.
 -- @function pcall
 -- @param method  Method name
 -- @param ...
--- @treturn[1] bool `true` if method exists
--- @return[1] Method result
--- @treturn[2] bool `false` if method does not exist
+-- @treturn[1] bool  `true` if method was called successfully
+-- @return[1] Method call result
+-- @treturn[2] bool  `false` on errors
+-- @return[2] Error message
 -- @see call
 methods.pcall = function(self, method, ...)
 	return pcall(methods.call, self, method, ...)
