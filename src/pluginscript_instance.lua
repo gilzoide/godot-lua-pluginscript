@@ -25,6 +25,13 @@
 -- These are created when a PluginScript is instanced and are only directly
 -- accessible in the script's functions as the `self` parameter or gotten from
 -- `Object`s using `GD.get_lua_instance`.
+-- 
+--     typedef struct {
+--       godot_object *__owner;
+--       lps_lua_script *__script;
+--       lps_lua_object __data;
+--     } lps_script_instance;
+--
 -- @module LuaScriptInstance
 
 ffi_cdef[[
@@ -80,10 +87,10 @@ LuaScriptInstance = ffi_metatype('lps_script_instance', {
 	-- This is the Godot side of the instance.
 	-- @tfield Object __owner
 	
-	--- `LuaScriptWrapper` for script, the one returned by the Lua script when loading it as a PluginScript.
-	-- Note that calling `Object:get_script` will return an `Object` rather
-	-- than this wrapper.
-	-- @tfield LuaScriptWrapper __script
+	--- `LuaScript` for instance, the one returned by the Lua script when
+	-- loading it as a PluginScript. Note that calling `Object:get_script` will
+	-- return an `Object` rather than this wrapper.
+	-- @tfield LuaScript __script
 	
 	--- `LuaObject` that references an internal table for holding arbitrary data.
 	-- @tfield LuaObject __data

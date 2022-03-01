@@ -153,7 +153,7 @@ pluginscript_callbacks.script_init = wrap_callback(function(manifest, path, sour
 			manifest.properties:append(prop_dict)
 		end
 	end
-	manifest.data = LuaScriptWrapper_new(path, base_class, known_properties, script)
+	manifest.data = LuaScript_new(path, base_class, known_properties, script)
 	err[0] = Error.OK
 end)
 
@@ -163,7 +163,7 @@ pluginscript_callbacks.script_finish = wrap_callback(function(data)
 
 	lps_callstack:push('script_finish')
 
-	LuaScriptWrapper_destroy(script)
+	LuaScript_destroy(script)
 end)
 
 -- void (*)(godot_pluginscript_script_data *data, godot_object *owner, void **result);

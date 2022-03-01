@@ -30,7 +30,7 @@
 --       lps_lua_object __implementation;
 --     } lps_lua_script;
 --
--- @module LuaScriptWrapper
+-- @module LuaScript
 
 ffi_cdef[[
 typedef struct {
@@ -41,13 +41,13 @@ typedef struct {
 } lps_lua_script;
 ]]
 
---- Allocs and returns a pointer to a `LuaScriptWrapper`.
+--- Allocs and returns a pointer to a `LuaScript`.
 -- @param path  Script path
 -- @tparam string|nil base  Base class name. Defaults to "Reference".
 -- @tparam table properties  Known properties from script
 -- @tparam table implementation  Script implementation
--- @treturn LuaScriptWrapper
-local function LuaScriptWrapper_new(path, base, properties, implementation)
+-- @treturn LuaScript
+local function LuaScript_new(path, base, properties, implementation)
 	local self = ffi_cast('lps_lua_script *', api.godot_alloc(ffi_sizeof('lps_lua_script')))
 	self.__path = ffi_gc(StringName(path), nil)
 	self.__base = ffi_gc(StringName(base or 'Reference'), nil)
@@ -56,16 +56,16 @@ local function LuaScriptWrapper_new(path, base, properties, implementation)
 	return self
 end
 
---- Frees all memory associated with a `LuaScriptWrapper`.
--- @tparam LuaScriptWrapper self 
-local function LuaScriptWrapper_destroy(self)
+--- Frees all memory associated with a `LuaScript`.
+-- @tparam LuaScript self 
+local function LuaScript_destroy(self)
 	api.godot_string_name_destroy(self.__path)
 	LuaObject_destroy(self.__properties)
 	LuaObject_destroy(self.__implementation)
 	api.godot_free(self)
 end
 
---- @type LuaScriptWrapper
+--- @type LuaScript
 local methods = {
 	--- Returns whether this script or its base class has a property named `name`.
 	-- @function has_property
@@ -76,7 +76,7 @@ local methods = {
 			or ClassWrapper_cache[self.__base]:has_property(name)
 	end,
 }
-local LuaScriptWrapper = ffi_metatype('lps_lua_script', {
+local LuaScript = ffi_metatype('lps_lua_script', {
 	--- Script path, usually relative to `res://`
 	-- @tfield StringName __path
 	

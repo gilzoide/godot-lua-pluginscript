@@ -27,7 +27,7 @@
 -- and are only unreferenced when `LuaObject_destroy` is called.
 -- Thus this struct must used with care.
 --
--- This is used internally for having `LuaScriptWrapper` and `LuaScriptInstance`
+-- This is used internally for having `LuaScript` and `LuaScriptInstance`
 -- be structs that reference tables.
 --
 --     typedef struct {
