@@ -62,7 +62,7 @@ LUA_INIT_SCRIPT_SRC = \
 	src/godot_ffi.lua \
 	src/cache_lua_libs.lua \
 	src/lua_globals.lua \
-	src/lua_object_helper.lua \
+	src/lua_object_struct.lua \
 	src/lua_string_extras.lua \
 	src/godot_enums.lua \
 	src/godot_class.lua \

@@ -1,4 +1,4 @@
--- @file lua_object_helper.lua  Helper struct for storing Lua references
+-- @file lua_object_struct.lua  Helper struct for storing Lua references
 -- This file is part of Godot Lua PluginScript: https://github.com/gilzoide/godot-lua-pluginscript
 --
 -- Copyright (C) 2021 Gil Barbosa Reis.
@@ -21,7 +21,7 @@
 -- FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 -- IN THE SOFTWARE.
 
---- Internal struct to store references to Lua objects, like tables.
+--- Internal struct to store references to Lua objects, like tables and coroutines.
 -- 
 -- References are stored in a global cache table, indexed by their own address,
 -- and are only unreferenced when `LuaObject_destroy` is called.
@@ -78,6 +78,7 @@ local LuaObject = ffi_metatype('lps_lua_object', {
 	-- own address.
 	-- @function __new
 	-- @param obj  Lua object
+	-- @local
 	__new = function(mt, obj)
 		local self = ffi_new(mt, touserdata(obj))
 		LuaObject_set(self, obj)
