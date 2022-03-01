@@ -58,6 +58,8 @@ local methods = {
 	fillvariant = function(var, self)
 		api.godot_variant_new_object(var, self.__owner)
 	end,
+	varianttype = VariantType.Object,
+
 	--- Get a value from `__data`, bypassing the check for getters.
 	-- @function rawget
 	-- @param index
@@ -92,11 +94,15 @@ local LuaScriptInstance = ffi_metatype('lps_script_instance', {
 	-- @return
 	-- @see Object.__index
 	__index = function(self, key)
-		local value = methods[key] or self.__owner[key]
+		local value = methods[key]
+		if is_not_nil(value) then return value end
+		local script_value = self.__script[key]
+		if type(script_value) == 'function' then return script_value end
+		value = self.__owner[key]
 		if is_not_nil(value) then return value end
 		value = self.__data[key]
 		if is_not_nil(value) then return value end
-		return self.__script[key]
+		return script_value
 	end,
 	--- Calls `Object:set` if `key` is the name of a property known to base class, `rawset` otherwise.
 	-- @function __newindex
