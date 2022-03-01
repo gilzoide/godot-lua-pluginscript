@@ -75,7 +75,7 @@ local methods = {
 		self.__data[index] = value
 	end,
 }
-local LuaScriptInstance = ffi_metatype('lps_script_instance', {
+LuaScriptInstance = ffi_metatype('lps_script_instance', {
 	--- `Object` that this script instance is attached to.
 	-- This is the Godot side of the instance.
 	-- @tfield Object __owner

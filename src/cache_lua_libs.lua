@@ -58,6 +58,10 @@ local ffi_cast, ffi_cdef, ffi_copy, ffi_gc, ffi_istype, ffi_metatype, ffi_new, f
 -- Weak tables
 local weak_kv = { __mode = 'kv' }
 
+-- Forward declarations
+local _Object
+local LuaScriptInstance
+
 -- Some useful patterns
 local ERROR_LINE_MESSAGE_PATT = ':(%d+):%s*(.*)'
 local ERROR_PATH_LINE_MESSAGE_PATT = '"([^"]+)"[^:]*:(%d*):%s*(.*)'

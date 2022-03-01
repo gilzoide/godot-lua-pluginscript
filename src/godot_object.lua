@@ -291,8 +291,10 @@ _Object = ffi_metatype('godot_object', {
 	__new = function(mt, init)
 		if ffi_istype(mt, init) then
 			return init
-		else
+		elseif ffi_istype(LuaScriptInstance, init) then
 			return init.__owner
+		else
+			error(string_format('Object or LuaScriptInstance expected, got %q', type(init)))
 		end
 	end,
 	--- Returns a Lua string representation of this Object, as per `to_string`.
@@ -330,6 +332,8 @@ _Object = ffi_metatype('godot_object', {
 })
 
 Object = ClassWrapper_cache.Object
+Object.call = methods.call
+Object.pcall = methods.pcall
 Object.is_instance_valid = methods.is_instance_valid
 --- (`(godot_object *) NULL`): The `null` Object, useful as default values of properties.
 Object.null = ffi_new('godot_object *', nil)

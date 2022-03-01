@@ -46,7 +46,6 @@ end
 -- Class/Object definitions
 local ClassDB = api.godot_global_get_singleton("ClassDB")
 
-local _Object  -- forward local declaration
 local Object_call = api.godot_method_bind_get_method('Object', 'call')
 local Object_get = api.godot_method_bind_get_method('Object', 'get')
 local Object_set = api.godot_method_bind_get_method('Object', 'set')
