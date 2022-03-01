@@ -37,10 +37,12 @@ function TestRunner:_init()
 
 	local function error_handler(msg)
 		if os.getenv('DEBUG_INTERACTIVE') then
-			require('debugger')()
-		else
-			GD.print_error(msg)
+			local have_dbg, dbg = pcall(require, 'debugger')
+			if have_dbg then
+				return dbg()
+			end
 		end
+		GD.print_error(msg)
 	end
 
 	local dir, all_passed = Directory:new(), true
