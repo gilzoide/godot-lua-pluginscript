@@ -77,3 +77,8 @@ local function first_index_not_nil(obj, ...)
 	end
 	return nil
 end
+
+local function has_length(value)
+	local t = type(value)
+	return t == 'table' or t == 'userdata' or t == 'cdata'
+end
