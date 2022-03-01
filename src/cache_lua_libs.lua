@@ -63,10 +63,6 @@ local ERROR_LINE_MESSAGE_PATT = ':(%d+):%s*(.*)'
 local ERROR_PATH_LINE_MESSAGE_PATT = '"([^"]+)"[^:]*:(%d*):%s*(.*)'
 
 -- Some useful functions
-local function string_quote(s)
-	return string_format('%q', s)
-end
-
 local function is_not_nil(value)
 	return type(value) ~= 'nil'
 end
