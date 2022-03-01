@@ -180,7 +180,7 @@ local methods = {
 	-- @function get_type_name
 	-- @treturn string
 	get_type_name = function(self)
-		return variant_type[self:get_type()]
+		return VariantType[self:get_type()]
 	end,
 	--- Try calling method with the passed name and arguments.
 	-- @function pcall
