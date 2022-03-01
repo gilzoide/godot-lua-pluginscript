@@ -12,10 +12,20 @@
 - `ClassWrapper:has_property` method that returns whether a class has a property
   with the passed name. Properties are considered available if they are found in
   the result of `ClassDB:class_get_property_list`.
+- Library mapping for `Server` platform pointing to the `linux_x86_64` build.
+- `string.quote` function for quoting values.
+- [build] Passing `DEBUG=1` to `make docs` adds `--all` flag to `ldoc`, which
+  adds documentation for locals.
+- [build] Passing `DEBUG_INTERACTIVE=1` to `make test*` makes errors trigger
+  a [debugger.lua](https://github.com/slembcke/debugger.lua) breakpoint, for
+  debuging tests.
 
 ### Fixed
 
 - Return values passed to `lps_coroutine:resume(...)` when calling `GD.yield()`.
+- Comparing `Array` and `Pool*Array`s against Lua primitives like `nil` and
+  numbers now return `false` instead of raising.
+- Support for `false` as the default value for a property.
 
 ### Changed
 
@@ -26,9 +36,13 @@
   anymore ([#5](https://github.com/gilzoide/godot-lua-pluginscript/issues/5#issuecomment-999876834)).
   That is, instead of `function(self, property_name, value)`, setters now look
   like `function(self, value)`.
-- **BREAKING CHANGE**: `ScriptInstace:__newindex` now calls `set` when the
-  property is known to the script's base class ([#5](https://github.com/gilzoide/godot-lua-pluginscript/issues/5)).
-  E.g. in `self.name = 'some_name'`, given `self` is a `Node`
+- **BREAKING CHANGE**: script instances are now structs instead of tables.
+  They still have a backing table for storing data, but indexing now calls
+  getter and setter functions for known properties. Use `rawget` and `rawset`
+  to bypass getter/setter functions and access the data table directly.
+  ([#5](https://github.com/gilzoide/godot-lua-pluginscript/issues/5))
+- **BREAKING CHANGE**: `Object.call` now raises instead of failing silently.
+  Use `Object.pcall` to protect from errors.
 
 
 ## [0.4.0](https://github.com/gilzoide/godot-lua-pluginscript/releases/tag/0.4.0)
