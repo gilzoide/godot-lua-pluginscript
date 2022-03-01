@@ -188,8 +188,19 @@ local MethodBind = ffi.metatype('godot_method_bind', {
 		local value = ffi_gc(api.godot_method_bind_call(self, _Object(obj), ffi_cast('const godot_variant **', argv), argc, r_error), api.godot_variant_destroy)
 		if r_error.error == CallError.OK then
 			return value:unbox()
-		else
-			error(r_error.error)
+		elseif r_error.error == CallError.ERROR_INVALID_METHOD then
+			error("Invalid method")
+		elseif r_error.error == CallError.ERROR_INVALID_ARGUMENT then
+			error(string_format("Invalid argument #%d, expected %s",
+				r_error.argument + 1,
+				VariantType[tonumber(r_error.expected)]
+			))
+		elseif r_error.error == CallError.ERROR_TOO_MANY_ARGUMENTS then
+			error("Too many arguments")
+		elseif r_error.error == CallError.ERROR_TOO_FEW_ARGUMENTS then
+			error("Too few arguments")
+		elseif r_error.error == CallError.ERROR_INSTANCE_IS_NULL then
+			error("Instance is null")
 		end
 	end,
 })
