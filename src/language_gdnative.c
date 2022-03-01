@@ -52,8 +52,8 @@ extern const size_t LUA_INIT_SCRIPT_SIZE;
 // Active shared library path, for loading symbols in FFI
 static hgdn_string lps_active_library_path;
 #endif
-static bool in_editor;
-static int pcall_error_handler_index;
+static bool lps_in_editor;
+static int lps_pcall_error_handler_index;
 static lua_State *lps_L;
 
 // Language functions
@@ -123,7 +123,7 @@ static godot_pluginscript_language_data *lps_language_init() {
 
 	// maintain C pcall error handler in the stack, used by all callbacks
 	lua_pushcfunction(L, &lps_pcall_error_handler);
-	pcall_error_handler_index = lua_gettop(L);
+	lps_pcall_error_handler_index = lua_gettop(L);
 
 	if (luaL_loadbufferx(L, LUA_INIT_SCRIPT, LUA_INIT_SCRIPT_SIZE - 1, "lps_init_script", "t") != LUA_OK) {
 		LPS_PCALL_CONSUME_ERROR(L, "Error loading Lua language initialization script");
@@ -135,13 +135,13 @@ static godot_pluginscript_language_data *lps_language_init() {
 	lua_pushvalue(L, -1);
 	lua_setfield(L, LUA_REGISTRYINDEX, PLUGINSCRIPT_CALLBACKS_KEY);
 
-	lua_pushboolean(L, in_editor);
+	lua_pushboolean(L, lps_in_editor);
 #ifdef LUAJIT_DYNAMICALLY_LINKED
 	lua_pushlstring(L, lps_active_library_path.ptr, lps_active_library_path.length);
 #else
 	lua_pushnil(L);
 #endif
-	if (lua_pcall(L, 3, 0, pcall_error_handler_index) != LUA_OK) {
+	if (lua_pcall(L, 3, 0, lps_pcall_error_handler_index) != LUA_OK) {
 		LPS_PCALL_CONSUME_ERROR(L, "Error in Lua language initialization script");
 	}
 	return L;
@@ -156,7 +156,7 @@ static void lps_language_add_global_constant(godot_pluginscript_language_data *d
 	LPS_PUSH_CALLBACK(lps_L, "language_add_global_constant");
 	lua_pushlightuserdata(lps_L, (void *) name);
 	lua_pushlightuserdata(lps_L, (void *) value);
-	if (lua_pcall(lps_L, 2, 0, pcall_error_handler_index) != LUA_OK) {
+	if (lua_pcall(lps_L, 2, 0, lps_pcall_error_handler_index) != LUA_OK) {
 		LPS_PCALL_CONSUME_ERROR(lps_L, "Error in add_global_constant");
 	}
 }
@@ -180,7 +180,7 @@ static godot_pluginscript_script_manifest lps_script_init(godot_pluginscript_lan
 	lua_pushlightuserdata(lps_L, (void *) path);
 	lua_pushlightuserdata(lps_L, (void *) source);
 	lua_pushlightuserdata(lps_L, (void *) &cb_error);
-	if (lua_pcall(lps_L, 4, 0, pcall_error_handler_index) != LUA_OK) {
+	if (lua_pcall(lps_L, 4, 0, lps_pcall_error_handler_index) != LUA_OK) {
 		LPS_PCALL_CONSUME_ERROR(lps_L, "Error in script_init");
 	}
 	if (error) {
@@ -193,7 +193,7 @@ static godot_pluginscript_script_manifest lps_script_init(godot_pluginscript_lan
 static void lps_script_finish(godot_pluginscript_script_data *data) {
 	LPS_PUSH_CALLBACK(lps_L, "script_finish");
 	lua_pushlightuserdata(lps_L, (void *) data);
-	if (lua_pcall(lps_L, 1, 0, pcall_error_handler_index) != LUA_OK) {
+	if (lua_pcall(lps_L, 1, 0, lps_pcall_error_handler_index) != LUA_OK) {
 		LPS_PCALL_CONSUME_ERROR(lps_L, "Error in script_finish");
 	}
 }
@@ -206,7 +206,7 @@ static godot_pluginscript_instance_data *lps_instance_init(godot_pluginscript_sc
 	lua_pushlightuserdata(lps_L, (void *) owner);
 	void *result = NULL;
 	lua_pushlightuserdata(lps_L, (void *) &result);
-	if (lua_pcall(lps_L, 3, 0, pcall_error_handler_index) != LUA_OK) {
+	if (lua_pcall(lps_L, 3, 0, lps_pcall_error_handler_index) != LUA_OK) {
 		LPS_PCALL_CONSUME_ERROR(lps_L, "Error in instance_init");
 	}
 	return result;
@@ -215,7 +215,7 @@ static godot_pluginscript_instance_data *lps_instance_init(godot_pluginscript_sc
 static void lps_instance_finish(godot_pluginscript_instance_data *data) {
 	LPS_PUSH_CALLBACK(lps_L, "instance_finish");
 	lua_pushlightuserdata(lps_L, (void *) data);
-	if (lua_pcall(lps_L, 1, 0, pcall_error_handler_index) != LUA_OK) {
+	if (lua_pcall(lps_L, 1, 0, lps_pcall_error_handler_index) != LUA_OK) {
 		LPS_PCALL_CONSUME_ERROR(lps_L, "Error in instance_finish");
 	}
 }
@@ -225,7 +225,7 @@ static godot_bool lps_instance_set_prop(godot_pluginscript_instance_data *data, 
 	lua_pushlightuserdata(lps_L, (void *) data);
 	lua_pushlightuserdata(lps_L, (void *) name);
 	lua_pushlightuserdata(lps_L, (void *) value);
-	if (lua_pcall(lps_L, 3, 1, pcall_error_handler_index) != LUA_OK) {
+	if (lua_pcall(lps_L, 3, 1, lps_pcall_error_handler_index) != LUA_OK) {
 		LPS_PCALL_CONSUME_ERROR(lps_L, "Error in instance_set_prop");
 		return false;
 	}
@@ -239,7 +239,7 @@ static godot_bool lps_instance_get_prop(godot_pluginscript_instance_data *data, 
 	lua_pushlightuserdata(lps_L, (void *) data);
 	lua_pushlightuserdata(lps_L, (void *) name);
 	lua_pushlightuserdata(lps_L, (void *) value_ret);
-	if (lua_pcall(lps_L, 3, 1, pcall_error_handler_index) != LUA_OK) {
+	if (lua_pcall(lps_L, 3, 1, lps_pcall_error_handler_index) != LUA_OK) {
 		LPS_PCALL_CONSUME_ERROR(lps_L, "Error in instance_get_prop");
 		return false;
 	}
@@ -260,7 +260,7 @@ static godot_variant lps_instance_call_method(godot_pluginscript_instance_data *
 	lua_pushinteger(lps_L, argcount);
 	lua_pushlightuserdata(lps_L, (void *) &var);
 	lua_pushlightuserdata(lps_L, (void *) error);
-	if (lua_pcall(lps_L, 6, 0, pcall_error_handler_index) != LUA_OK) {
+	if (lua_pcall(lps_L, 6, 0, lps_pcall_error_handler_index) != LUA_OK) {
 		LPS_PCALL_CONSUME_ERROR(lps_L, "Error in instance_call_method");
 	}
 	return var;
@@ -270,7 +270,7 @@ static void lps_instance_notification(godot_pluginscript_instance_data *data, in
 	LPS_PUSH_CALLBACK(lps_L, "instance_notification");
 	lua_pushlightuserdata(lps_L, (void *) data);
 	lua_pushinteger(lps_L, notification);
-	if (lua_pcall(lps_L, 2, 0, pcall_error_handler_index) != LUA_OK) {
+	if (lua_pcall(lps_L, 2, 0, lps_pcall_error_handler_index) != LUA_OK) {
 		LPS_PCALL_CONSUME_ERROR(lps_L, "Error in instance_notification");
 	}
 }
@@ -283,7 +283,7 @@ godot_string lps_get_template_source_code(godot_pluginscript_language_data *data
 	lua_pushlightuserdata(lps_L, (void *) class_name);
 	lua_pushlightuserdata(lps_L, (void *) base_class_name);
 	lua_pushlightuserdata(lps_L, (void *) &ret);
-	if (lua_pcall(lps_L, 3, 0, pcall_error_handler_index) != LUA_OK) {
+	if (lua_pcall(lps_L, 3, 0, lps_pcall_error_handler_index) != LUA_OK) {
 		LPS_PCALL_CONSUME_ERROR(lps_L, "Error in get_template_source_code");
 	}
 	return ret;
@@ -297,7 +297,7 @@ godot_bool lps_validate(godot_pluginscript_language_data *data, const godot_stri
 	lua_pushlightuserdata(lps_L, (void *) test_error);
 	lua_pushlightuserdata(lps_L, (void *) path);
 	lua_pushlightuserdata(lps_L, (void *) functions);
-	if (lua_pcall(lps_L, 6, 1, pcall_error_handler_index) != LUA_OK) {
+	if (lua_pcall(lps_L, 6, 1, lps_pcall_error_handler_index) != LUA_OK) {
 		LPS_PCALL_CONSUME_ERROR(lps_L, "Error in validate");
 		return false;
 	}
@@ -314,7 +314,7 @@ godot_string lps_make_function(godot_pluginscript_language_data *data, const god
 	lua_pushlightuserdata(lps_L, (void *) name);
 	lua_pushlightuserdata(lps_L, (void *) args);
 	lua_pushlightuserdata(lps_L, (void *) &ret);
-	if (lua_pcall(lps_L, 4, 0, pcall_error_handler_index) != LUA_OK) {
+	if (lua_pcall(lps_L, 4, 0, lps_pcall_error_handler_index) != LUA_OK) {
 		LPS_PCALL_CONSUME_ERROR(lps_L, "Error in make_function");
 	}
 	return ret;
@@ -379,8 +379,8 @@ GDN_EXPORT void PREFIX_SYMBOL(gdnative_init)(godot_gdnative_init_options *option
 		return;
 	}
 
-	in_editor = options->in_editor;
-	if (in_editor) {
+	lps_in_editor = options->in_editor;
+	if (lps_in_editor) {
 		lps_register_in_editor_callbacks(&lps_language_desc);
 	}
 
