@@ -102,7 +102,7 @@ jobs:
           - android-x86
           - android-x86_64
     env:
-      ANDROID_NDK_VERSION: r21c
+      ANDROID_NDK_VERSION: 21.4.7075529
       ANDROID_NDK_ROOT: $ANDROID_HOME/ndk/$ANDROID_NDK_VERSION
     steps:
       - uses: actions/checkout@v2
