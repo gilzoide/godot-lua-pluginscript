@@ -20,6 +20,7 @@
 -- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 -- FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 -- IN THE SOFTWARE.
+
 local lps_scripts = {}
 local lps_instances = setmetatable({}, weak_k)
 
@@ -97,6 +98,14 @@ pluginscript_callbacks.script_init = wrap_callback(function(manifest, path, sour
 	manifest = ffi_cast('godot_pluginscript_script_manifest *', manifest)
 	path = tostring(ffi_cast('godot_string *', path))
 	source = tostring(ffi_cast('godot_string *', source))
+    local is_yue = path:sub(-4) == '.yue' 
+
+    if is_yue then
+        local yue = require('yue')
+        local codes, err, globals = yue.to_lua(source)
+        source = codes
+    end
+
 	err = ffi_cast('godot_error *', err)
 
 	lps_callstack:push('script_load', '@', string_quote(path))
@@ -114,14 +123,28 @@ pluginscript_callbacks.script_init = wrap_callback(function(manifest, path, sour
 		return
 	end
 	lps_coroutine_pool:release(co)
+
 	if type(script) ~= 'table' then
 		api.godot_print_error('Script must return a table', path, path, -1)
 		return
 	end
 
+    if is_yue then
+        if script.__base ~= nil then
+            script = script.__base
+        end
+    end
+
 	local known_properties = {}
 	for k, v in pairs(script) do
-		if k == 'class_name' then
+        if is_yue and (
+                k == '__class' or
+                k == '__index' or
+                k == '__base'
+            )
+        then
+
+        elseif k == 'class_name' then
 			manifest.name = ffi_gc(StringName(v), nil)
 		elseif k == 'is_tool' then
 			manifest.is_tool = bool(v)

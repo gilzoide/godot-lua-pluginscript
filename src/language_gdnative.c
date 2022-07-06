@@ -351,6 +351,51 @@ static godot_pluginscript_language_desc lps_language_desc = {
 	},
 };
 
+static godot_pluginscript_language_desc lps_yue_language_desc = {
+	.name = "YueScript",
+	.type = "YueScript",
+	.extension = "yue",
+	.recognized_extensions = (const char *[]){ "yue", NULL },
+	.init = &lps_language_init,
+	.finish = &lps_language_finish,
+	.reserved_words = (const char *[]){
+		// Lua keywords
+		"and", "break", "do", "else", "elseif",
+		"false", "for", "if", "in",
+		"local", "nil", "not", "or", "return",
+		"then", "true", "until", "while",
+		// Other remarkable identifiers
+		"self", "_G", "_VERSION",
+        // YueScript specific keywords
+        "@", "@@", "continue", "class", "extends", 
+        "export", "switch", "super", "unless", 
+        "when", "with", 
+#if LUA_VERSION_NUM >= 502
+		"_ENV",
+#endif
+		"bool", "int", "float",
+		NULL
+	},
+	.comment_delimiters = (const char *[]){ "--", NULL },
+	.string_delimiters = (const char *[]){ "' '", "\" \"", "[[ ]]", "[=[ ]=]", NULL },
+	.has_named_classes = false,
+	.supports_builtin_mode = false,
+	.add_global_constant = &lps_language_add_global_constant,
+
+	.script_desc = {
+		.init = &lps_script_init,
+		.finish = &lps_script_finish,
+		.instance_desc = {
+			.init = &lps_instance_init,
+			.finish = &lps_instance_finish,
+			.set_prop = &lps_instance_set_prop,
+			.get_prop = &lps_instance_get_prop,
+			.call_method = &lps_instance_call_method,
+			.notification = &lps_instance_notification,
+		},
+	},
+};
+
 #define PREFIX_SYMBOL(s) lps_ ## s
 
 // GDNative functions
@@ -365,6 +410,7 @@ GDN_EXPORT void PREFIX_SYMBOL(gdnative_init)(godot_gdnative_init_options *option
 	in_editor = options->in_editor;
 	if (in_editor) {
 		lps_register_in_editor_callbacks(&lps_language_desc);
+		lps_register_in_editor_callbacks(&lps_yue_language_desc);
 	}
 
 #ifdef LUAJIT_DYNAMICALLY_LINKED
@@ -386,6 +432,7 @@ GDN_EXPORT void PREFIX_SYMBOL(gdnative_init)(godot_gdnative_init_options *option
 #endif
 
 	hgdn_pluginscript_api->godot_pluginscript_register_language(&lps_language_desc);
+	hgdn_pluginscript_api->godot_pluginscript_register_language(&lps_yue_language_desc);
 }
 
 GDN_EXPORT void PREFIX_SYMBOL(gdnative_terminate)(godot_gdnative_terminate_options *options) {
