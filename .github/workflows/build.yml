@@ -112,7 +112,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install lua5.1 libc6-dev-i386
-          sudo $ANDROID_HOME/tools/bin/sdkmanager --install "ndk;$ANDROID_NDK_VERSION"
+          $ANDROID_HOME/tools/bin/sdkmanager --install "ndk;$ANDROID_NDK_VERSION"
       - name: Build artifact
         run: make ${{ matrix.target }}
       - name: Upload artifact
