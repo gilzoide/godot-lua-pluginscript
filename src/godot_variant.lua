@@ -110,7 +110,7 @@ local methods = {
 	-- @treturn Object
 	as_object = function(self)
 		local obj = api.godot_variant_as_object(self)
-		if obj ~= nil and obj:call('reference') then
+		if obj ~= nil and Object_is_class(obj, 'Reference') and Reference_reference(obj) then
 			ffi_gc(obj, Object_gc)
 		end
 		return obj
@@ -180,47 +180,38 @@ local methods = {
 	-- @function get_type_name
 	-- @treturn string
 	get_type_name = function(self)
-		return variant_type[self:get_type()]
+		return VariantType[self:get_type()]
 	end,
-	--- Try calling method with the passed name and arguments.
-	-- @function pcall
+	--- Call method with the passed name and arguments.
+	-- @function call
 	-- @param method  Method name, stringified with `GD.str`
 	-- @param ...  Arguments passed to method
-	-- @treturn[1] bool  `true` if method was called successfully
-	-- @return[1] Method call result
-	-- @treturn[2] bool  `false` on errors
-	-- @treturn[2] godot_variant_call_error  Error struct
-	-- @see call
-	pcall = function(self, method, ...)
+	-- @return Method call result
+	-- @see pcall
+	call = function(self, method, ...)
 		local argc = select('#', ...)
-		local argv = ffi_new(Variant_p_array, argc)
+		local argv = ffi_new('godot_variant *[?]', argc)
 		for i = 1, argc do
 			local arg = select(i, ...)
 			argv[i - 1] = Variant(arg)
 		end
-		local r_error = ffi_new(VariantCallError)
-		local value = ffi_gc(api.godot_variant_call(self, str(method), ffi_cast(const_Variant_pp, argv), argc, r_error), api.godot_variant_destroy)
+		local r_error = ffi_new('godot_variant_call_error')
+		local value = ffi_gc(api.godot_variant_call(self, str(method), ffi_cast('const godot_variant **', argv), argc, r_error), api.godot_variant_destroy)
 		if r_error.error == CallError.OK then
-			return true, value:unbox()
-		else
-			return false, r_error
-		end
-	end,
-	--- Try calling method with the passed name and arguments.
-	-- Fails silently if call errors.
-	-- Use `pcall` instead if you need to know if the call succeeded.
-	-- @function call
-	-- @param method  Method name, stringified with `GD.str`
-	-- @param ...  Arguments passed to method
-	-- @return[1] Method call result
-	-- @treturn[2] nil  If call failed
-	-- @see pcall
-	call = function(self, method, ...)
-		local success, value = self:pcall(method, ...)
-		if success then
-			return value
-		else
-			return nil
+			return value:unbox()
+		elseif r_error.error == CallError.ERROR_INVALID_METHOD then
+			error("Invalid method")
+		elseif r_error.error == CallError.ERROR_INVALID_ARGUMENT then
+			error(string_format("Invalid argument #%d, expected %s",
+				r_error.argument + 1,
+				VariantType[tonumber(r_error.expected)]
+			))
+		elseif r_error.error == CallError.ERROR_TOO_MANY_ARGUMENTS then
+			error("Too many arguments")
+		elseif r_error.error == CallError.ERROR_TOO_FEW_ARGUMENTS then
+			error("Too few arguments")
+		elseif r_error.error == CallError.ERROR_INSTANCE_IS_NULL then
+			error("Instance is null")
 		end
 	end,
 	--- Returns `true` if Variant has method `method`.
@@ -299,6 +290,19 @@ local methods = {
 		end
 	end,
 }
+
+--- Make a protected call to method with the passed name and arguments.
+-- @function pcall
+-- @param method  Method name, stringified with `GD.str`
+-- @param ...  Arguments passed to method
+-- @treturn[1] bool  `true` if method was called successfully
+-- @return[1] Method call result
+-- @treturn[2] bool  `false` on errors
+-- @return[2] Error message
+-- @see call
+methods.pcall = function(self, method, ...)
+	return pcall(methods.call, self, method, ...)
+end
 
 Variant = ffi_metatype("godot_variant", {
 	--- Variant constructor, called by the idiom `Variant(value)`.

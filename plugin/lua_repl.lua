@@ -68,8 +68,8 @@ function LuaREPL:printn(msg)
 	self:print('\n')
 end
 
-function LuaREPL:printf(...)
-	self:print(string.format(...))
+function LuaREPL:printf(fmt, ...)
+	self:print(string.format(tostring(fmt), ...))
 end
 
 -- Runs a line, printing the results/error

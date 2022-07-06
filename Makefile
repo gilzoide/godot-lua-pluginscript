@@ -62,6 +62,7 @@ LUA_INIT_SCRIPT_SRC = \
 	src/godot_ffi.lua \
 	src/cache_lua_libs.lua \
 	src/lua_globals.lua \
+	src/lua_object_struct.lua \
 	src/lua_string_extras.lua \
 	src/godot_enums.lua \
 	src/godot_class.lua \
@@ -91,8 +92,12 @@ LUA_INIT_SCRIPT_SRC = \
 	src/godot_pool_vector2_array.lua \
 	src/godot_pool_vector3_array.lua \
 	src/godot_pool_color_array.lua \
-	src/pluginscript_class_metadata.lua \
+	src/pluginscript_script.lua \
+	src/pluginscript_instance.lua \
+	src/pluginscript_property.lua \
+	src/pluginscript_signal.lua \
 	src/pluginscript_callbacks.lua \
+	src/lua_object_wrapper.lua \
 	src/late_globals.lua \
 	src/lua_package_extras.lua \
 	src/lua_math_extras.lua \
@@ -105,6 +110,7 @@ ifneq (1,$(DEBUG))
 else
 	LUA_INIT_SCRIPT_TO_USE = build/init_script.lua
 	STRIP_CMD =
+	LDOC_ARGS = --all
 endif
 EMBED_SCRIPT_SED += src/tools/embed_to_c.sed src/tools/add_script_c_decl.sed
 
@@ -201,7 +207,7 @@ clean:
 dist: build/lua_pluginscript.zip
 
 docs:
-	ldoc .
+	ldoc . $(LDOC_ARGS)
 
 set-version:
 	sed -i -E -e 's/[0-9]+\.[0-9]+\.[0-9]+/$(VERSION)/' \

@@ -43,11 +43,11 @@ local LuaCoroutine = {
 -- @treturn string
 -- @see coroutine.status
 function LuaCoroutine:get_status()
-	local co = assert(self.coroutine, "no coroutine attached")
+	local co = assert(GD.get_lua_instance(self.__data.__address), "no coroutine attached")
 	return co_status(co)
 end
 
---- Returns whether coroutine is valid (`coroutine.status(self.coroutine) ~= 'dead'`).
+--- Returns whether coroutine is valid (`self:get_status() ~= 'dead'`).
 -- @function is_valid
 -- @treturn bool
 function LuaCoroutine:is_valid()
@@ -71,7 +71,7 @@ end
 -- @return
 -- @raise If `coroutine.resume` returns `false`
 function LuaCoroutine:resume(...)
-	local co = assert(self.coroutine, "no coroutine attached")
+	local co = assert(GD.get_lua_instance(self.__data.__address), "no coroutine attached")
 	local _, result = assert(co_resume(co, ...))
 	if co_status(co) == 'dead' then
 		self:emit_signal('completed', result)

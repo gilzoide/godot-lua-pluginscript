@@ -20,19 +20,14 @@
 -- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 -- FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 -- IN THE SOFTWARE.
-local lps_scripts = {}
-local lps_instances = setmetatable({}, weak_k)
-
-local function pointer_to_index(ptr)
-	return tonumber(ffi_cast('uintptr_t', ptr))
-end
+local lps_next_instance_data
 
 local function get_lua_instance(ptr)
-	return lps_instances[pointer_to_index(ptr)]
+	return lps_lua_objects[pointer_to_index(ptr)]
 end
 
 local function set_lua_instance(ptr, instance)
-	lps_instances[pointer_to_index(ptr)] = instance
+	lps_lua_objects[pointer_to_index(ptr)] = instance
 end
 
 local lps_coroutine_pool = {
@@ -88,7 +83,9 @@ pluginscript_callbacks.wrap_callback = wrap_callback
 -- void (*)(const godot_string *name, const godot_variant *value);
 pluginscript_callbacks.language_add_global_constant = wrap_callback(function(name, value)
 	name = tostring(ffi_cast('godot_string *', name))
+
 	lps_callstack:push('add_global', string_quote(name))
+
 	_G[name] = ffi_cast('godot_variant *', value):unbox()
 end)
 
@@ -100,6 +97,7 @@ pluginscript_callbacks.script_init = wrap_callback(function(manifest, path, sour
 	err = ffi_cast('godot_error *', err)
 
 	lps_callstack:push('script_load', '@', string_quote(path))
+
 	local script, err_message = loadstring(source, path)
 	if not script then
 		local line, msg = string_match(err_message, ERROR_LINE_MESSAGE_PATT)
@@ -119,6 +117,7 @@ pluginscript_callbacks.script_init = wrap_callback(function(manifest, path, sour
 		return
 	end
 
+	local base_class
 	local known_properties = {}
 	for k, v in pairs(script) do
 		if k == 'class_name' then
@@ -134,9 +133,10 @@ pluginscript_callbacks.script_init = wrap_callback(function(manifest, path, sour
 				)
 				return
 			end
-			manifest.base = ffi_gc(StringName(cls.class_name), nil)
+			base_class = cls.class_name
+			manifest.base = ffi_gc(StringName(base_class), nil)
 		elseif type(v) == 'function' then
-			local method = method_to_dictionary(v)
+			local method = Dictionary()
 			method.name = String(k)
 			manifest.methods:append(method)
 		elseif is_signal(v) then
@@ -153,67 +153,72 @@ pluginscript_callbacks.script_init = wrap_callback(function(manifest, path, sour
 			manifest.properties:append(prop_dict)
 		end
 	end
-	script.__path = path
-	script.__properties = known_properties
-
-	local metadata_index = pointer_to_index(touserdata(script))
-	lps_scripts[metadata_index] = script
-	manifest.data = ffi_cast('void *', metadata_index)
+	manifest.data = LuaScript_new(path, base_class, known_properties, script)
 	err[0] = Error.OK
 end)
 
 -- void (*)(godot_pluginscript_script_data *data);
 pluginscript_callbacks.script_finish = wrap_callback(function(data)
+	local script = ffi_cast('lps_lua_script *', data)
+
 	lps_callstack:push('script_finish')
-	lps_scripts[pointer_to_index(data)] = nil
+
+	LuaScript_destroy(script)
 end)
 
--- void (*)(godot_pluginscript_script_data *data, godot_object *owner);
-pluginscript_callbacks.instance_init = wrap_callback(function(script_data, owner)
-	local script = lps_scripts[pointer_to_index(script_data)]
+-- void (*)(godot_pluginscript_script_data *data, godot_object *owner, void **result);
+pluginscript_callbacks.instance_init = wrap_callback(function(data, owner, result)
+	local script = ffi_cast('lps_lua_script *', data)
 	owner = ffi_cast('godot_object *', owner)
+	result = ffi_cast('lps_script_instance **', result)
 
 	lps_callstack:push('_init', '@', string_quote(script.__path))
-	local instance = setmetatable({
-		__owner = owner,
-		__script = script,
-	}, ScriptInstance)
+
+	local self = LuaScriptInstance_new(owner, script, lps_next_instance_data)
+	lps_next_instance_data = nil
 	for name, prop in pairs(script.__properties) do
 		if not prop.getter then
 			local property_initializer = property_initializer_for_type[prop.type]
 			if property_initializer then
-				rawset(instance, name, property_initializer(prop.default_value))
+				self:rawset(name, property_initializer(prop.default_value))
 			end
 		end
 	end
 	local _init = script._init
 	if _init then
-		_init(instance)
+		_init(self)
 	end
-	set_lua_instance(owner, instance)
+	result[0] = self
+	set_lua_instance(self.__owner, self)
 end)
 
 -- void (*)(godot_pluginscript_instance_data *data);
 pluginscript_callbacks.instance_finish = wrap_callback(function(data)
+	local self = ffi_cast('lps_script_instance *', data)
+	
 	lps_callstack:push('finish')
-	set_lua_instance(data, nil)
+
+	set_lua_instance(self.__owner, nil)
+	LuaScriptInstance_destroy(self)
 end)
 
 -- godot_bool (*)(godot_pluginscript_instance_data *data, const godot_string *name, const godot_variant *value);
 pluginscript_callbacks.instance_set_prop = wrap_callback(function(data, name, value)
-	local self = get_lua_instance(data)
+	local self = ffi_cast('lps_script_instance *', data)
 	name = tostring(ffi_cast('godot_string *', name))
 	value = ffi_cast('godot_variant *', value)
 
 	local script = self.__script
 	lps_callstack:push('set', string_quote(name), '@', string_quote(script.__path))
+
 	local prop = script.__properties[name]
 	if prop then
 		local setter = prop.setter
 		if setter then
 			setter(self, value:unbox())
 		else
-			rawset(self, name, value:unbox())
+			-- Avoid infinite recursion from `self[name] = value`, since `__newindex` calls `Object:set`
+			self:rawset(name, value:unbox())
 		end
 		return true
 	else
@@ -227,12 +232,13 @@ end, false)
 
 -- godot_bool (*)(godot_pluginscript_instance_data *data, const godot_string *name, godot_variant *ret);
 pluginscript_callbacks.instance_get_prop = wrap_callback(function(data, name, ret)
-	local self = get_lua_instance(data)
+	local self = ffi_cast('lps_script_instance *', data)
 	name = tostring(ffi_cast('godot_string *', name))
 	ret = ffi_cast('godot_variant *', ret)
 
 	local script = self.__script
 	lps_callstack:push('get', string_quote(name), '@', string_quote(script.__path))
+
 	local prop = script.__properties[name]
 	if prop then
 		local getter, value = prop.getter, nil
@@ -240,7 +246,7 @@ pluginscript_callbacks.instance_get_prop = wrap_callback(function(data, name, re
 			value = getter(self)
 		else
 			-- Avoid infinite recursion from `self[name]`, since `__index` may call `Object:get`
-			value = rawget(self, name)
+			value = self:rawget(name)
 			if value == nil then
 				value = prop.default_value
 			end
@@ -262,14 +268,15 @@ end, false)
 
 -- void (*)(godot_pluginscript_instance_data *data, const godot_string_name *method, const godot_variant **args, int argcount, godot_variant *ret, godot_variant_call_error *error);
 pluginscript_callbacks.instance_call_method = wrap_callback(function(data, name, args, argcount, ret, err)
-	local self = get_lua_instance(data)
+	local self = ffi_cast('lps_script_instance *', data)
 	name = tostring(ffi_cast('godot_string_name *', name))
 	args = ffi_cast('godot_variant **', args)
 	ret = ffi_cast('godot_variant *', ret)
 	err = ffi_cast('godot_variant_call_error *', err)
 
 	local script = self.__script
-	lps_callstack:push('call', name, '@', script.__path)
+	lps_callstack:push('call', name, '@', string_quote(script.__path))
+
 	local method = script[name]
 	if method ~= nil then
 		local args_table = {}
@@ -292,9 +299,11 @@ end)
 
 -- void (*)(godot_pluginscript_instance_data *data, int notification);
 pluginscript_callbacks.instance_notification = wrap_callback(function(data, what)
-	local self = get_lua_instance(data)
+	local self = ffi_cast('lps_script_instance *', data)
+	
 	local script = self.__script
-	lps_callstack:push('_notification', '@', script.__path)
+	lps_callstack:push('_notification', '@', string_quote(script.__path))
+
 	local _notification = script._notification
 	if _notification then
 		return _notification(self, what)
