@@ -101,6 +101,8 @@ jobs:
           - android-aarch64
           - android-x86
           - android-x86_64
+    env:
+      ANDROID_NDK_VERSION: 21.4.7075529
     steps:
       - uses: actions/checkout@v2
         with:
@@ -109,6 +111,10 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install lua5.1 libc6-dev-i386
+      - name: Setup NDK
+        run: |
+          $ANDROID_HOME/tools/bin/sdkmanager --install "ndk;$ANDROID_NDK_VERSION"
+          echo "ANDROID_NDK_ROOT=$ANDROID_HOME/ndk/$ANDROID_NDK_VERSION" >> $GITHUB_ENV
       - name: Build artifact
         run: make ${{ matrix.target }}
       - name: Upload artifact
