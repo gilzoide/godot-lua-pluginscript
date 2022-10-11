@@ -266,6 +266,9 @@ function export(metadata)
 	return prop
 end
 
+-- Another alias for `export` since it's a reserved keyword in
+-- YueScript
+exp = export
 
 local Signal = {}
 
