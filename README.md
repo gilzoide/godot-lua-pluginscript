@@ -9,6 +9,9 @@ Being a GDNative library, recompiling the engine is not required, so anyone
 with a built release copied to their project can use it.
 Being a PluginScript language, Lua can seamlessly communicate with scripts
 written in GDScript / C# / Visual Script and vice-versa.
+Since the Godot object model is dynamic at runtime, any Godot objects'
+properties/methods can be accessed from Lua, including singletons like `OS`,
+`ClassDB` and custom singleton nodes.
 This way, one can use the language that best suits the implementation for each
 script and all of them can understand each other.
 
@@ -37,7 +40,8 @@ Either:
 
 ## Documentation
 
-- [API reference](https://gilzoide.github.io/godot-lua-pluginscript/topics/README.md.html)
+- [From GDScript to Lua](extras/docs/from-gdscript-to-lua.md)
+- [Lua-specific API reference](https://gilzoide.github.io/godot-lua-pluginscript/topics/README.md.html)
 - [Configuring](extras/docs/configuring.md)
 - [Editor plugin (REPL and minify on release export)](extras/docs/plugin.md)
 - [Using LuaRocks](extras/docs/luarocks.md)
@@ -51,7 +55,11 @@ Either:
 - Provide support for Lua as a scripting language in Godot in a way that does
   not require compiling the engine from scratch
 - Be able to seamlessly communicate with any other language supported by Godot,
-  like GDScript, Visual Script and C#, in an idiomatic way
+  like GDScript, Visual Script and C#, in an idiomatic way.
+  This includes being able to dynamically access any Godot object's properties
+  and methods using Lua's index/method notation
+- Have automatic global access to Godot's singleton objects and custom
+  singleton nodes
 - Simple script description interface that doesn't need `require`ing anything
 - Support for LuaJIT and Lua 5.2+
 - Support paths relative to `res://*` and exported game/app executable path for
@@ -62,7 +70,7 @@ Either:
 
 ## Non-goals
 
-- Provide calls to all core Godot classes' methods via native method bindings
+- Provide calls to core Godot classes' methods via native method bindings
 - Support multithreading on the Lua side
 
 
