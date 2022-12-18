@@ -9,12 +9,16 @@ Check out [GDScript Basics](https://docs.godotengine.org/en/stable/tutorials/scr
 GDScript:
 ```gdscript
 extends Node
+# optionally, give your class a name
+class_name MyClass
 ```
 
 Lua:
 ```lua
 local MyClass = {
   extends = Node,
+  -- optionally, give your class a name
+  class_name = 'MyClass',
 }
 
 -- Returning the class table is mandatory when creating Godot Lua scripts
@@ -394,3 +398,21 @@ return MyClass
 ```
 `GD.yield` should be used instead of Lua's `coroutine.yield` if you want to wait for Godot Objects' signals.
 Lua methods that call `GD.yield` return [LuaCoroutine](../../lps_coroutine.lua) objects, which are analogous to GDScript's [GDScriptFunctionState](https://docs.godotengine.org/en/stable/classes/class_gdscriptfunctionstate.html).
+
+
+## Tool scripts
+GDScript:
+```gdscript
+tool
+extends Node
+```
+
+Lua:
+```lua
+local MyClass = {
+  is_tool = true,
+  extends = Node,
+}
+
+return MyClass
+```

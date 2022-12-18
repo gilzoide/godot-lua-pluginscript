@@ -94,7 +94,7 @@ local MyClass = {}
 MyClass.is_tool = true
 
 -- Optional: set base class by name, defaults to 'Reference'
-MyClass.extends = 'Node'
+MyClass.extends = Node
 
 -- Optional: give your class a name
 MyClass.class_name = 'MyClass'
@@ -151,6 +151,11 @@ function MyClass:_ready()  -- `function t:f(...)` is an alias for `function t.f(
   -- Singletons are available globally
   local os_name = OS:get_name()
   print("MyClass instance is ready! Running on a " .. os_name .. " system")
+
+  -- There is no `onready` keyword like in GDScript
+  -- Just get the needed values on `_ready` method
+  -- Also, Lua doesn't have the `$child_node` syntax, use `get_node` instead
+  self.some_grandchild_node = self:get_node("some/grandchild_node")
 end
 
 function MyClass:set_some_prop_with_details(value)
