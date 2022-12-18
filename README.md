@@ -202,14 +202,16 @@ return MyClass
 This project uses the following software:
 
 - [godot-headers](https://github.com/godotengine/godot-headers): headers for
-  GDNative, released under the MIT license
+  GDNative, distributed under the MIT license
 - [LuaJIT](https://luajit.org/luajit.html): Just-In-Time Compiler (JIT) for the
-  Lua programming language, released under the MIT license
+  Lua programming language, distributed under the MIT license
 - [High Level GDNative (HGDN)](https://github.com/gilzoide/high-level-gdnative):
   higher level GDNative API header, released to the Public Domain
 - [LuaSrcDiet](https://github.com/jirutka/luasrcdiet): compresses Lua source
-  code by removing unnecessary characters, released under the MIT license
-
+  code by removing unnecessary characters, distributed under the MIT license
+- [LuaUnit](https://github.com/bluebird75/luaunit): unit-testing framework for
+  Lua, distributed under the BSD license
+ 
 
 ## Other projects for using Lua in Godot
 

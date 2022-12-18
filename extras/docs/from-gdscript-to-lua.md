@@ -416,3 +416,6 @@ local MyClass = {
 
 return MyClass
 ```
+
+
+TODO: set/get, dictionary (mainly `pairs`)
