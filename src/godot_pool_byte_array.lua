@@ -184,6 +184,17 @@ local methods = {
 	end,
 }
 
+if api_1_3 ~= nil then
+	--- Returns true if the array contains the given `value`.
+	-- @function has
+	-- @tparam byte
+	-- @treturn bool
+	methods.has = api_1_3.godot_pool_byte_array_has
+	--- Sorts the elements of the array in ascending order.
+	-- @function sort
+	methods.sort = api_1_3.godot_pool_byte_array_sort
+end
+
 --- Alias for `push_back`.
 -- @function append
 -- @param ...
