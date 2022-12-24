@@ -17,7 +17,7 @@ jobs:
           - linux64
           - linux32
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           submodules: true
       - name: Install dependencies
@@ -27,7 +27,7 @@ jobs:
       - name: Build artifact
         run: make ${{ matrix.target }}
       - name: Upload artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: linux-x86-x86_64
           path: |
@@ -43,7 +43,7 @@ jobs:
           - mingw-windows32
           - mingw-windows64
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           submodules: true
       - name: Install dependencies
@@ -55,7 +55,7 @@ jobs:
         env:
           CC: gcc
       - name: Upload artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: windows-x86-x86_64
           path: |
@@ -73,7 +73,7 @@ jobs:
           - osx64
           - ios64
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           submodules: true
       - name: Install dependencies
@@ -83,7 +83,7 @@ jobs:
         env:
           LUA_BIN: lua5.1
       - name: Upload artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: osx-ios-arm64-x86_64
           path: |
@@ -104,7 +104,7 @@ jobs:
     env:
       ANDROID_NDK_VERSION: 21.4.7075529
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           submodules: true
       - name: Install dependencies
@@ -118,7 +118,7 @@ jobs:
       - name: Build artifact
         run: make ${{ matrix.target }}
       - name: Upload artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: android-armv7a-aarch64-x86-x86_64
           path: |
@@ -132,12 +132,12 @@ jobs:
     needs: [build_linux, build_windows, build_osx_ios, build_android]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           submodules: true
       - name: Download artifacts
         id: download
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           path: artifacts
       - name: Copy artifacts to build folder
@@ -145,7 +145,7 @@ jobs:
       - name: Make distribution
         run: make dist
       - name: Upload artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: lua_pluginscript
           path: |
