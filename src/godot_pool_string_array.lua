@@ -188,6 +188,19 @@ local methods = {
 	end,
 }
 
+if api_1_3 ~= nil then
+	--- Returns true if the array contains the given `value`.
+	-- @function has
+	-- @param Value, stringified with `GD.str`
+	-- @treturn bool
+	methods.has = function(self, value)
+		return api_1_3.godot_pool_string_array_has(self, str(value))
+	end
+	--- Sorts the elements of the array in ascending order.
+	-- @function sort
+	methods.sort = api_1_3.godot_pool_string_array_sort
+end
+
 --- Alias for `push_back`.
 -- @function append
 -- @param ...
