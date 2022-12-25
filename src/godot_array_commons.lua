@@ -77,7 +77,7 @@ local function array__len(self)
 end
 
 local function array__eq(a, b)
-	if #a ~= #b then
+	if not has_length(a) or not has_length(b) or #a ~= #b then
 		return false
 	end
 	for i = 1, #a do

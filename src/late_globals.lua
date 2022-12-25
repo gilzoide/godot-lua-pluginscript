@@ -66,11 +66,11 @@ api.godot_dictionary_destroy(global_constants)
 -- @treturn String
 GD.str = str
 
---- Returns the Lua table associated with an `Object`, if it has a Lua
--- Script attached.
+--- Returns the Lua script instance associated with an `Object`, if it
+-- has a Lua Script attached.
 -- @function GD.get_lua_instance
 -- @tparam Object  object
--- @treturn[1] table
+-- @treturn[1] LuaScriptInstance
 -- @treturn[2] nil  If Object has no Lua Script attached
 GD.get_lua_instance = get_lua_instance
 
@@ -101,11 +101,9 @@ function GD.load(path)
 	return ResourceLoader:load(path)
 end
 
-local library_resource_dir = clib.hgdn_library.resource_path:get_base_dir()
-local CoroutineObject = GD.load(library_resource_dir:plus_file('lps_coroutine.lua'))
 
 --- Yield the current running Lua thread, returning a wrapper Object with the `lps_coroutine.lua` script attached.
--- If an `object` and `signal` are passed, this coroutine will resume automatically when object emits the signal.
+-- If an `object` and `signal_name` are passed, this coroutine will resume automatically when object emits the signal.
 -- If the same coroutine yields more than once, the same object will be returned.
 -- This is similar to GDScript's [yield](https://docs.godotengine.org/en/stable/classes/class_%40gdscript.html#class-gdscript-method-yield).
 -- @usage
@@ -113,19 +111,13 @@ local CoroutineObject = GD.load(library_resource_dir:plus_file('lps_coroutine.lu
 --     GD.yield(self:get_tree():create_timer(2), "timeout")
 --     print('2 seconds have passed!')
 -- @tparam[opt] Object object
--- @param[opt] signal_name
--- @treturn Object  Coroutine object
+-- @tparam[opt] string|String|StringName signal_name
+-- @return Value passed to coroutine object's `resume` call, if any
 -- @see lps_coroutine.lua
 function GD.yield(object, signal_name)
 	local co, is_main = coroutine_running()
 	assert(co and not is_main, "GD.yield can be called only from script methods")
-	local co_obj = lps_instances[co]
-	if not co_obj then
-		co_obj = CoroutineObject:new()
-		local co_obj_table = get_lua_instance(co_obj)
-		co_obj_table.coroutine = co
-		lps_instances[co] = co_obj_table
-	end
+	local co_obj = get_script_instance_for_lua_object(co)
 	if object and signal_name then
 		object:connect(signal_name, co_obj, "resume", Array(), Object.CONNECT_ONESHOT)
 	end

@@ -34,21 +34,18 @@ local methods = {
 	-- @param[opt] arguments  Array of Dictionaries, each containing name: String and type: int (see `Variant.Type`) entries.
 	add_user_signal = api.godot_method_bind_get_method('Object', 'add_user_signal'),
 	--- Calls the `method` on the Object and returns the result.
-	-- Fails silently if Object doesn't have a method named `method`.
-	-- Use `pcall` instead if you want to know if `method` exists.
 	-- @function call
 	-- @param method  Method name
 	-- @param ...
-	-- @return[1] Method result
-	-- @treturn[2] nil  If method does not exist or errors
+	-- @return Method result
 	-- @see pcall
 	call = function(self, method, ...)
 		local result = Object_call(self, method, ...)
 		-- Workaround for correcting reference counts of instantiated scripts
 		-- Godot initializes the reference count when constructing a Variant from
 		-- the Object and Lua automatically references it again (count == 2)
-		if method == 'new' and Object_is_class(self, 'Script') then
-			Object_call(result, 'unreference')
+		if method == 'new' and Object_is_class(self, 'Script') and Object_is_class(result, 'Reference') then
+			Reference_unreference(result)
 		end
 		return result
 	end,
@@ -270,20 +267,17 @@ if api_1_1 ~= nil then
 	methods.is_instance_valid = api_1_1.godot_is_instance_valid
 end
 
---- Calls the `method` on the Object and returns the result.
+--- Make a protected call to method with the passed name and arguments.
 -- @function pcall
 -- @param method  Method name
 -- @param ...
--- @treturn[1] bool `true` if method exists
--- @return[1] Method result
--- @treturn[2] bool `false` if method does not exist
+-- @treturn[1] bool  `true` if method was called successfully
+-- @return[1] Method call result
+-- @treturn[2] bool  `false` on errors
+-- @return[2] Error message
 -- @see call
 methods.pcall = function(self, method, ...)
-	if Object_has_method(self, method) then
-		return true, methods.call(self, method, ...)
-	else
-		return false
-	end
+	return pcall(methods.call, self, method, ...)
 end
 
 --- Get the `OOP.ClassWrapper` associated with this Object's class.
@@ -298,8 +292,10 @@ _Object = ffi_metatype('godot_object', {
 	__new = function(mt, init)
 		if ffi_istype(mt, init) then
 			return init
-		else
+		elseif ffi_istype(LuaScriptInstance, init) then
 			return init.__owner
+		else
+			error(string_format('Object or LuaScriptInstance expected, got %q', type(init)))
 		end
 	end,
 	--- Returns a Lua string representation of this Object, as per `to_string`.
@@ -337,6 +333,8 @@ _Object = ffi_metatype('godot_object', {
 })
 
 Object = ClassWrapper_cache.Object
+Object.call = methods.call
+Object.pcall = methods.pcall
 Object.is_instance_valid = methods.is_instance_valid
 --- (`(godot_object *) NULL`): The `null` Object, useful as default values of properties.
 Object.null = ffi_new('godot_object *', nil)

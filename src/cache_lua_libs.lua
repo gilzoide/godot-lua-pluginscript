@@ -52,17 +52,37 @@ local setthreadfunc, touserdata
     = setthreadfunc, touserdata
 
 -- FFI
-local ffi_cast, ffi_copy, ffi_gc, ffi_istype, ffi_metatype, ffi_new, ffi_sizeof, ffi_string, ffi_typeof
-    = ffi.cast, ffi.copy, ffi.gc, ffi.istype, ffi.metatype, ffi.new, ffi.sizeof, ffi.string, ffi.typeof
+local ffi_cast, ffi_cdef, ffi_copy, ffi_gc, ffi_istype, ffi_metatype, ffi_new, ffi_sizeof, ffi_string, ffi_typeof
+    = ffi.cast, ffi.cdef, ffi.copy, ffi.gc, ffi.istype, ffi.metatype, ffi.new, ffi.sizeof, ffi.string, ffi.typeof
 
 -- Weak tables
-local weak_k = { __mode = 'k' }
+local weak_kv = { __mode = 'kv' }
+
+-- Forward declarations
+local _Object
+local LuaScriptInstance
 
 -- Some useful patterns
 local ERROR_LINE_MESSAGE_PATT = ':(%d+):%s*(.*)'
 local ERROR_PATH_LINE_MESSAGE_PATT = '"([^"]+)"[^:]*:(%d*):%s*(.*)'
 
 -- Some useful functions
-local function string_quote(s)
-	return string_format('%q', s)
+local function is_not_nil(value)
+	return type(value) ~= 'nil'
+end
+
+local function first_index_not_nil(obj, ...)
+	for i = 1, select('#', ...) do
+		local index = select(i, ...)
+		local value = obj[index]
+		if is_not_nil(value) then
+			return value
+		end
+	end
+	return nil
+end
+
+local function has_length(value)
+	local t = type(value)
+	return t == 'table' or t == 'userdata' or t == 'cdata'
 end
