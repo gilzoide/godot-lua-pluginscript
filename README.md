@@ -211,6 +211,8 @@ This project uses the following software:
   code by removing unnecessary characters, distributed under the MIT license
 - [LuaUnit](https://github.com/bluebird75/luaunit): unit-testing framework for
   Lua, distributed under the BSD license
+- [debugger.lua](https://github.com/slembcke/debugger.lua): dependency free,
+  single file embeddable debugger for Lua, distributed under the MIT license
  
 
 ## Other projects for using Lua in Godot
