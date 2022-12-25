@@ -18,7 +18,7 @@
   adds documentation for locals.
 - [build] Passing `DEBUG_INTERACTIVE=1` to `make test*` makes errors trigger
   a [debugger.lua](https://github.com/slembcke/debugger.lua) breakpoint, for
-  debuging tests.
+  debugging tests.
 
 ### Fixed
 

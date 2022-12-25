@@ -131,6 +131,11 @@ local MyClass = { extends = Node }
 
 MyClass.some_property = "Hello!"
 
+MyClass.some_property_with_metadata = property({
+  default = 42,
+  type = int,
+})
+
 function MyClass:_ready()
   -- object properties need to be accessed from `self`
   print(self.some_property)  --> "Hello!"
@@ -140,8 +145,11 @@ function MyClass:_ready()
   -- This does not error, you simply get a `nil` value
   print(self.property_not_declared)  --> nil
 
-  -- This does not error, a new property is created
+  -- This does not error, the value is set correctly
   self.another_property_not_declared = "value"
+  -- WARNING: properties not declared in `MyClass` are
+  -- only available in Lua
+  -- GDScript / C# will not be able to access them
 end
 
 return MyClass
@@ -236,6 +244,101 @@ local MyClass = { extends = Node }
 -- Just get the value in `_ready` method explicitly
 function MyClass:_ready()
   local some_child_node = self:get_node("child_node")
+end
+
+return MyClass
+```
+
+
+## Property setter functions
+GDScript:
+```gdscript
+extends Node
+
+
+# Declaring
+var with_setter setget setter_function
+
+
+func setter_function(new_value):
+    print('with_setter new value = ' + new_value)
+    # setting value without `self.` bypasses setter
+    with_setter = new_value
+
+# Calling
+func _ready():
+    # using `self.` calls the setter function
+    self.with_setter = 'set via setter'
+    # without `self.`, setter function won't be called
+    with_setter = 'this will not call setter function'
+```
+
+Lua:
+```lua
+local MyClass = { extends = Node }
+
+-- Declaring
+MyClass.with_setter = property({
+  type = String,
+  set = function(self, new_value)
+    print('with_setter new value = ' .. new_value)
+    -- bypass call to setter function using `rawset`
+    self:rawset('with_setter', new_value)
+  end,
+})
+
+-- Calling
+function MyClass:_ready()
+  -- using indexing syntax calls the setter functions
+  self.with_setter = 'set via setter'
+  -- to bypass setter functions, use the `rawset` method
+  self:rawset('with_setter', 'this will not call setter function')
+end
+
+return MyClass
+```
+
+
+## Property getter functions
+GDScript:
+```gdscript
+extends Node
+
+
+# Declaring
+var with_getter setget , getter_function = 'default value'
+
+
+func getter_function():
+    return 'constant from getter'
+
+# Calling
+func _ready():
+    # using `self.` calls the getter function
+    print(self.with_getter)  #--> 'constant from getter'
+    # without `self.`, getter function won't be called
+    print(with_getter)  #--> 'default value'
+```
+
+Lua:
+```lua
+local MyClass = { extends = Node }
+
+-- Declaring
+MyClass.with_getter = property({
+  default = 'default value',
+  type = String,
+  get = function(self)
+    return 'constant from getter'
+  end,
+})
+
+-- Calling
+function MyClass:_ready()
+  -- using indexing syntax calls the getter function
+  print(self.with_getter)  --> 'constant from getter'
+  -- to bypass getter functions, use the `rawget` method
+  print(self:rawget('with_getter'))  --> 'default value'
 end
 
 return MyClass
@@ -418,4 +521,4 @@ return MyClass
 ```
 
 
-TODO: set/get, dictionary (mainly `pairs`)
+TODO: dictionary (mainly `pairs`)
