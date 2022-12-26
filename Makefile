@@ -210,7 +210,7 @@ docs:
 	ldoc . $(LDOC_ARGS)
 
 set-version:
-	sed -i -E -e 's/[0-9]+\.[0-9]+\.[0-9]+/$(VERSION)/' \
+	sed -i '' -E -e 's/[0-9]+\.[0-9]+\.[0-9]+/$(VERSION)/' \
 		src/late_globals.lua \
 		plugin/plugin.cfg
 
