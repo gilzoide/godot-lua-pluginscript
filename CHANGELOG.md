@@ -1,6 +1,7 @@
 # Changelog
-## [Unreleased](https://github.com/gilzoide/godot-lua-pluginscript/compare/0.4.0...HEAD)
+## [Unreleased](https://github.com/gilzoide/godot-lua-pluginscript/compare/0.5.0...HEAD)
 
+## [0.5.0](https://github.com/gilzoide/godot-lua-pluginscript/releases/tag/0.5.0)
 ### Added
 
 - `join` method for all `Pool*Array` metatypes with the same implementation as
