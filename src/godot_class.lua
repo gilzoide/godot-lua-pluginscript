@@ -46,19 +46,17 @@ end
 -- Class/Object definitions
 local ClassDB = api.godot_global_get_singleton("ClassDB")
 
-local Variant_p_array = ffi_typeof('godot_variant *[?]')
-local const_Variant_pp = ffi_typeof('const godot_variant **')
-local VariantCallError = ffi_typeof('godot_variant_call_error')
-
-local _Object  -- forward local declaration
 local Object_call = api.godot_method_bind_get_method('Object', 'call')
 local Object_get = api.godot_method_bind_get_method('Object', 'get')
 local Object_set = api.godot_method_bind_get_method('Object', 'set')
 local Object_has_method = api.godot_method_bind_get_method('Object', 'has_method')
 local Object_is_class = api.godot_method_bind_get_method('Object', 'is_class')
+local Reference_init_ref = api.godot_method_bind_get_method('Reference', 'init_ref')
+local Reference_reference = api.godot_method_bind_get_method('Reference', 'reference')
+local Reference_unreference = api.godot_method_bind_get_method('Reference', 'unreference')
 
 local function Object_gc(obj)
-	if Object_call(obj, 'unreference') then
+	if Reference_unreference(obj) then
 		api.godot_object_destroy(obj)
 	end
 end
@@ -75,10 +73,10 @@ local class_methods = {
 	-- @treturn Object
 	new = function(self, ...)
 		local obj = self.constructor()
-		if Object_call(obj, 'init_ref') then
+		if Object_is_class(obj, 'Reference') and Reference_init_ref(obj) then
 			ffi_gc(obj, Object_gc)
 		end
-		Object_call(obj, '_init', ...)
+		obj:pcall('_init', ...)
 		return obj
 	end,
 	--- Returns whether this Class inherits a `parent` Class.
@@ -95,7 +93,7 @@ local class_methods = {
 		return ClassDB:get_parent_class(self.class_name)
 	end,
 	--- Returns whether class has a property named `name`.
-	-- Only properties from `ClassDB:class_get_property_list()` returns true.
+	-- Only properties from `ClassDB:class_get_property_list()` return true.
 	-- @function has_property
 	-- @tparam string name  Property name
 	-- @treturn bool
@@ -178,21 +176,31 @@ local MethodBind = ffi.metatype('godot_method_bind', {
 	-- @function __call
 	-- @tparam Object object
 	-- @param ...
-	-- @return[1]  Method return value
-	-- @treturn[2] nil  If call errored
+	-- @return  Method return value
 	__call = function(self, obj, ...)
 		local argc = select('#', ...)
-		local argv = ffi_new(Variant_p_array, argc)
+		local argv = ffi_new('godot_variant *[?]', argc)
 		for i = 1, argc do
 			local arg = select(i, ...)
 			argv[i - 1] = Variant(arg)
 		end
-		local r_error = ffi_new(VariantCallError)
-		local value = ffi_gc(api.godot_method_bind_call(self, _Object(obj), ffi_cast(const_Variant_pp, argv), argc, r_error), api.godot_variant_destroy)
+		local r_error = ffi_new('godot_variant_call_error')
+		local value = ffi_gc(api.godot_method_bind_call(self, _Object(obj), ffi_cast('const godot_variant **', argv), argc, r_error), api.godot_variant_destroy)
 		if r_error.error == CallError.OK then
 			return value:unbox()
-		else
-			return nil
+		elseif r_error.error == CallError.ERROR_INVALID_METHOD then
+			error("Invalid method")
+		elseif r_error.error == CallError.ERROR_INVALID_ARGUMENT then
+			error(string_format("Invalid argument #%d, expected %s",
+				r_error.argument + 1,
+				VariantType[tonumber(r_error.expected)]
+			))
+		elseif r_error.error == CallError.ERROR_TOO_MANY_ARGUMENTS then
+			error("Too many arguments")
+		elseif r_error.error == CallError.ERROR_TOO_FEW_ARGUMENTS then
+			error("Too few arguments")
+		elseif r_error.error == CallError.ERROR_INSTANCE_IS_NULL then
+			error("Instance is null")
 		end
 	end,
 })
@@ -222,81 +230,5 @@ local MethodBindByName = {
 	__call = function(self, obj, ...)
 		return obj:call(self.method_name, ...)
 	end,
-}
-
-
---- Script instance metatable, the Lua side of a Lua script instance.
--- These are created when a PluginScript is instanced and are only directly
--- accessible in the script's functions as the `self` parameter.
--- @type ScriptInstance
-local instance_methods = {
-	fillvariant = function(var, self)
-		api.godot_variant_new_object(var, rawget(self, '__owner'))
-	end,
-	--- Forwards a call to `__owner` using `Object:pcall`.
-	-- @function pcall
-	-- @param method  Method name
-	-- @param ...
-	-- @treturn[1] bool `true` if method exists
-	-- @return[1] Method result
-	-- @treturn[2] bool `false` if method does not exist
-	-- @see Object.pcall
-	pcall = function(self, ...)
-		return rawget(self, '__owner'):pcall(...)
-	end,
-	--- Forwards a call to `__owner` using `Object:call`.
-	-- @function call
-	-- @param method  Method name
-	-- @param ...
-	-- @return[1] Method result
-	-- @treturn[2] nil  If method does not exist or errors
-	-- @see Object.call
-	call = function(self, ...)
-		return rawget(self, '__owner'):call(...)
-	end,
-}
-local ScriptInstance = {
-	--- `Object` that this script instance is attached to.
-	-- This is the Godot side of the instance.
-	-- @field __owner
-	
-	--- Lua script table, the one returned by the Lua script when loading it as a PluginScript.
-	-- Note that calling `Object:get_script` will return an `Object` rather
-	-- than this table.
-	-- @field __script
-	
-	--- Try indexing `__script`, then `__owner`.
-	-- @function __index
-	-- @param key
-	-- @return
-	-- @see Object.__index
-	__index = function(self, key)
-		local script_value = instance_methods[key] or rawget(self, '__script')[key]
-		if script_value ~= nil then return script_value end
-		return rawget(self, '__owner')[key]
-	end,
-	--- Calls `Object:set` if `key` is the name of a property known to base class, `rawset` otherwise.
-	-- @function __newindex
-	-- @param key
-	-- @param value
-	__newindex = function(self, key, value)
-		if self:get_class_wrapper():has_property(key) then
-			Object_set(rawget(self, '__owner'), key, value)
-		else
-			rawset(self, key, value)
-		end
-	end,
-	--- Returns a Lua string representation of `__owner`, as per `Object:to_string`.
-	-- @function __tostring
-	-- @treturn string
-	__tostring = function(self)
-		return tostring(rawget(self, '__owner'))
-	end,
-	--- Concatenates values.
-	-- @function __concat
-	-- @param a  First value, stringified with `GD.str`
-	-- @param b  First value, stringified with `GD.str`
-	-- @treturn String
-	__concat = concat_gdvalues,
 }
 

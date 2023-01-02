@@ -408,8 +408,10 @@ typedef enum {
 	GODOT_PROPERTY_HINT_FLAGS, ///< hint_text= "flag1,flag2,etc" (as bit flags)
 	GODOT_PROPERTY_HINT_LAYERS_2D_RENDER,
 	GODOT_PROPERTY_HINT_LAYERS_2D_PHYSICS,
+	GODOT_PROPERTY_HINT_LAYERS_2D_NAVIGATION,
 	GODOT_PROPERTY_HINT_LAYERS_3D_RENDER,
 	GODOT_PROPERTY_HINT_LAYERS_3D_PHYSICS,
+	GODOT_PROPERTY_HINT_LAYERS_3D_NAVIGATION,
 	GODOT_PROPERTY_HINT_FILE, ///< a file path must be passed, hint_text (optionally) is a filter "*.png,*.wav,*.doc,"
 	GODOT_PROPERTY_HINT_DIR, ///< a directory path must be passed
 	GODOT_PROPERTY_HINT_GLOBAL_FILE, ///< a file path must be passed, hint_text (optionally) is a filter "*.png,*.wav,*.doc,"
@@ -1295,6 +1297,31 @@ typedef struct godot_gdnative_core_1_2_api_struct {
 	godot_object *(*godot_instance_from_id)(godot_int p_instance_id);
 } godot_gdnative_core_1_2_api_struct;
 
+typedef struct godot_gdnative_core_1_3_api_struct {
+	unsigned int type;
+	godot_gdnative_api_version version;
+	const godot_gdnative_api_struct *next;
+	void (*godot_dictionary_merge)(godot_dictionary *p_self, const godot_dictionary *p_dictionary, const godot_bool p_overwrite);
+	godot_bool (*godot_pool_byte_array_has)(const godot_pool_byte_array *p_self, const uint8_t p_data);
+	void (*godot_pool_byte_array_sort)(godot_pool_byte_array *p_self);
+	godot_bool (*godot_pool_int_array_has)(const godot_pool_int_array *p_self, const godot_int p_data);
+	void (*godot_pool_int_array_sort)(godot_pool_int_array *p_self);
+	godot_bool (*godot_pool_real_array_has)(const godot_pool_real_array *p_self, const godot_real p_data);
+	void (*godot_pool_real_array_sort)(godot_pool_real_array *p_self);
+	godot_bool (*godot_pool_string_array_has)(const godot_pool_string_array *p_self, const godot_string *p_data);
+	godot_string (*godot_pool_string_array_join)(const godot_pool_string_array *p_self, const godot_string *p_delimiter);
+	void (*godot_pool_string_array_sort)(godot_pool_string_array *p_self);
+	godot_bool (*godot_pool_vector2_array_has)(const godot_pool_vector2_array *p_self, const godot_vector2 *p_data);
+	void (*godot_pool_vector2_array_sort)(godot_pool_vector2_array *p_self);
+	godot_bool (*godot_pool_vector3_array_has)(const godot_pool_vector3_array *p_self, const godot_vector3 *p_data);
+	void (*godot_pool_vector3_array_sort)(godot_pool_vector3_array *p_self);
+	godot_bool (*godot_pool_color_array_has)(const godot_pool_color_array *p_self, const godot_color *p_data);
+	void (*godot_pool_color_array_sort)(godot_pool_color_array *p_self);
+	godot_string (*godot_string_join)(const godot_string *p_self, const godot_array *p_parts);
+	godot_string (*godot_string_num_uint64)(uint64_t p_num, godot_int p_base);
+	godot_string (*godot_string_num_uint64_capitalized)(uint64_t p_num, godot_int p_base, godot_bool p_capitalize_hex);
+} godot_gdnative_core_1_3_api_struct;
+
 // PluginScript
 typedef void godot_pluginscript_instance_data;
 typedef void godot_pluginscript_script_data;
@@ -1389,6 +1416,7 @@ typedef struct godot_pluginscript_language_desc {
 const godot_gdnative_core_api_struct *hgdn_core_api;
 const godot_gdnative_core_1_1_api_struct *hgdn_core_1_1_api;
 const godot_gdnative_core_1_2_api_struct *hgdn_core_1_2_api;
+const godot_gdnative_core_1_3_api_struct *hgdn_core_1_3_api;
 godot_object *hgdn_library;
 ]]
 
@@ -1398,4 +1426,5 @@ local clib = active_library_path and ffi.load(active_library_path, true) or ffi.
 local api = clib.hgdn_core_api
 local api_1_1 = clib.hgdn_core_1_1_api
 local api_1_2 = clib.hgdn_core_1_2_api
+local api_1_3 = clib.hgdn_core_1_3_api
 

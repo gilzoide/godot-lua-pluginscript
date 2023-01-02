@@ -188,6 +188,19 @@ local methods = {
 	end,
 }
 
+if api_1_3 ~= nil then
+	--- Returns true if the array contains the given `value`.
+	-- @function has
+	-- @param Value, stringified with `GD.str`
+	-- @treturn bool
+	methods.has = function(self, value)
+		return api_1_3.godot_pool_string_array_has(self, str(value))
+	end
+	--- Sorts the elements of the array in ascending order.
+	-- @function sort
+	methods.sort = api_1_3.godot_pool_string_array_sort
+end
+
 --- Alias for `push_back`.
 -- @function append
 -- @param ...
@@ -301,4 +314,10 @@ PoolStringArray = ffi_metatype('godot_pool_string_array', {
 	-- @treturn int  0
 	-- @see __ipairs
 	__pairs = array_ipairs,
+	--- Equality operation
+	-- @function __eq
+	-- @tparam Array|PoolByteArray|PoolIntArray|PoolRealArray|PoolStringArray|PoolVector2Array|PoolVector3Array|PoolColorArray|table a
+	-- @tparam Array|PoolByteArray|PoolIntArray|PoolRealArray|PoolStringArray|PoolVector2Array|PoolVector3Array|PoolColorArray|table b
+	-- @treturn bool
+	__eq = array__eq,
 })

@@ -153,6 +153,17 @@ if api_1_2 ~= nil then
 	end
 end
 
+if api_1_3 ~= nil then
+	--- Adds elements from `dictionary` to this Dictionary.
+	-- By default, duplicate keys will not be copied over, unless `overwrite` is `true`.
+	-- @function merge
+	-- @tparam Dictionary dictionary
+	-- @param[opt=false] overwrite
+	methods.merge = function(self, dictionary, overwrite)
+		api_1_3.godot_dictionary_merge(self, dictionary, overwrite or false)
+	end
+end
+
 Dictionary = ffi_metatype('godot_dictionary', {
 	--- Dictionary constructor, called by the idiom `Dictionary(value)`.
 	-- @function __new

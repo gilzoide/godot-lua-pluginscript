@@ -198,7 +198,7 @@ local methods = {
 	-- @tparam Object object
 	-- @param func  Method name
 	sort_custom = function(self, obj, func)
-		api.godot_array_sort_custom(self, obj, str(func))
+		api.godot_array_sort_custom(self, _Object(obj), str(func))
 	end,
 	--- Finds the index of an existing value (or the insertion index that maintains sorting order, if the value is not yet present in the Array) using binary search.
 	-- @function bsearch
@@ -386,4 +386,10 @@ Array = ffi_metatype('godot_array', {
 	-- @treturn int  0
 	-- @see __ipairs
 	__pairs = array_ipairs,
+	--- Equality operation
+	-- @function __eq
+	-- @tparam Array|PoolByteArray|PoolIntArray|PoolRealArray|PoolStringArray|PoolVector2Array|PoolVector3Array|PoolColorArray|table a
+	-- @tparam Array|PoolByteArray|PoolIntArray|PoolRealArray|PoolStringArray|PoolVector2Array|PoolVector3Array|PoolColorArray|table b
+	-- @treturn bool
+	__eq = array__eq,
 })

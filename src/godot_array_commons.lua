@@ -68,12 +68,24 @@ local function array_generate__index(methods)
 	end
 end
 
-local function array__newindex(methods)
+local function array__newindex(self, index, value)
 	array_safe_set(self, index - 1, value)
 end
 
 local function array__len(self)
 	return self:size()
+end
+
+local function array__eq(a, b)
+	if not has_length(a) or not has_length(b) or #a ~= #b then
+		return false
+	end
+	for i = 1, #a do
+		if a[i] ~= b[i] then
+			return false
+		end
+	end
+	return true
 end
 
 local function array_generate_get_buffer(ctype)
