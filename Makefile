@@ -16,6 +16,7 @@ XCODEBUILD ?= xcodebuild
 NDK_TOOLCHAIN_BIN ?= $(wildcard $(ANDROID_NDK_ROOT)/toolchains/llvm/prebuilt/*/bin)
 ZIP_URL ?=
 ZIP_URL_DOWNLOAD_OUTPUT ?= /tmp/godot-lua-pluginscript-unzip-to-build.zip
+ZIP_TEMP_FOLDER ?= /tmp/godot-lua-pluginscript-unzip-to-build
 
 
 CFLAGS += -std=c11 -Ilib/godot-headers -Ilib/high-level-gdnative -Ilib/luajit/src
@@ -238,12 +239,14 @@ set-version:
 		plugin/plugin.cfg
 
 unzip-to-build:
+	$(RM) -r $(ZIP_TEMP_FOLDER)/*
 ifneq (,$(filter http://% https://%,$(ZIP_URL)))
 	curl -L $(ZIP_URL) -o $(ZIP_URL_DOWNLOAD_OUTPUT)
-	cd build && unzip -u $(ZIP_URL_DOWNLOAD_OUTPUT)
+	unzip $(ZIP_URL_DOWNLOAD_OUTPUT) -d $(ZIP_TEMP_FOLDER)
 else
-	cd build && unzip -u $(ZIP_URL)
+	unzip $(ZIP_URL) -d $(ZIP_TEMP_FOLDER)
 endif
+	cp -R $(ZIP_TEMP_FOLDER)/addons/godot-lua-pluginscript/build/. build
 
 
 # Miscelaneous targets
