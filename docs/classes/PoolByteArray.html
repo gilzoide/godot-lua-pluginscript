@@ -73,10 +73,14 @@
   <li><a href="../modules/Enumerations.html">Enumerations</a></li>
   <li><a href="../modules/GD.html">GD</a></li>
   <li><a href="../modules/Globals.html">Globals</a></li>
+  <li><a href="../modules/LuaObject.html">LuaObject</a></li>
+  <li><a href="../modules/LuaScript.html">LuaScript</a></li>
+  <li><a href="../modules/LuaScriptInstance.html">LuaScriptInstance</a></li>
   <li><a href="../modules/OOP.html">OOP</a></li>
   <li><a href="../modules/math_extras.html">math_extras</a></li>
   <li><a href="../modules/package_extras.html">package_extras</a></li>
-  <li><a href="../modules/script_metadata.html">script_metadata</a></li>
+  <li><a href="../modules/property.html">property</a></li>
+  <li><a href="../modules/signal.html">signal</a></li>
   <li><a href="../modules/string_extras.html">string_extras</a></li>
 </ul>
 <h2>Scripts</h2>
@@ -89,6 +93,7 @@
   <li><a href="../topics/README.md.html">README</a></li>
   <li><a href="../topics/building.md.html">building</a></li>
   <li><a href="../topics/configuring.md.html">configuring</a></li>
+  <li><a href="../topics/from-gdscript-to-lua.md.html">from-gdscript-to-lua</a></li>
   <li><a href="../topics/limitations.md.html">limitations</a></li>
   <li><a href="../topics/luarocks.md.html">luarocks</a></li>
   <li><a href="../topics/plugin.md.html">plugin</a></li>
@@ -131,6 +136,10 @@
 	<tr>
 	<td class="name" nowrap><a href="#PoolByteArray:get_string">PoolByteArray:get_string ()</a></td>
 	<td class="summary">Returns a Lua string with the array's bytes.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PoolByteArray:has">PoolByteArray:has (value)</a></td>
+	<td class="summary">Returns true if the array contains the given <code>value</code>.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#PoolByteArray:hex_encode">PoolByteArray:hex_encode ()</a></td>
@@ -181,6 +190,10 @@
 	<td class="summary">Returns the size of the array.</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#PoolByteArray:sort">PoolByteArray:sort ()</a></td>
+	<td class="summary">Sorts the elements of the array in ascending order.</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#PoolByteArray:write">PoolByteArray:write ()</a></td>
 	<td class="summary">Returns the <a href="#Class_PoolByteArray_Write">Write</a> access for the array.</td>
 	</tr>
@@ -197,6 +210,10 @@
 	<tr>
 	<td class="name" nowrap><a href="#PoolByteArray:__concat">PoolByteArray:__concat (a, b)</a></td>
 	<td class="summary">Concatenates values.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PoolByteArray:__eq">PoolByteArray:__eq (a, b)</a></td>
+	<td class="summary">Equality operation</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#PoolByteArray:__index">PoolByteArray:__index (index)</a></td>
@@ -395,6 +412,37 @@
     <ol>
 
            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "PoolByteArray:has"></a>
+    <strong>PoolByteArray:has (value)</strong>
+    </dt>
+    <dd>
+    Returns true if the array contains the given <code>value</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">value</span>
+            <span class="types"><span class="type">byte</span></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
 
 
 
@@ -741,6 +789,20 @@
 
 </dd>
     <dt>
+    <a name = "PoolByteArray:sort"></a>
+    <strong>PoolByteArray:sort ()</strong>
+    </dt>
+    <dd>
+    Sorts the elements of the array in ascending order.
+
+
+
+
+
+
+
+</dd>
+    <dt>
     <a name = "PoolByteArray:write"></a>
     <strong>PoolByteArray:write ()</strong>
     </dt>
@@ -832,6 +894,43 @@
     <ol>
 
            <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "PoolByteArray:__eq"></a>
+    <strong>PoolByteArray:__eq (a, b)</strong>
+    </dt>
+    <dd>
+    Equality operation
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+            <span class="types"><a class="type" href="../classes/Array.html#">Array</a>, <a class="type" href="../classes/PoolByteArray.html#">PoolByteArray</a>, <a class="type" href="../classes/PoolIntArray.html#">PoolIntArray</a>, <a class="type" href="../classes/PoolRealArray.html#">PoolRealArray</a>, <a class="type" href="../classes/PoolStringArray.html#">PoolStringArray</a>, <a class="type" href="../classes/PoolVector2Array.html#">PoolVector2Array</a>, <a class="type" href="../classes/PoolVector3Array.html#">PoolVector3Array</a>, <a class="type" href="../classes/PoolColorArray.html#">PoolColorArray</a> or <a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+
+
+
+        </li>
+        <li><span class="parameter">b</span>
+            <span class="types"><a class="type" href="../classes/Array.html#">Array</a>, <a class="type" href="../classes/PoolByteArray.html#">PoolByteArray</a>, <a class="type" href="../classes/PoolIntArray.html#">PoolIntArray</a>, <a class="type" href="../classes/PoolRealArray.html#">PoolRealArray</a>, <a class="type" href="../classes/PoolStringArray.html#">PoolStringArray</a>, <a class="type" href="../classes/PoolVector2Array.html#">PoolVector2Array</a>, <a class="type" href="../classes/PoolVector3Array.html#">PoolVector3Array</a>, <a class="type" href="../classes/PoolColorArray.html#">PoolColorArray</a> or <a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
 
 
 
@@ -1244,7 +1343,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2022-01-16 10:30:57 </i>
+<i style="float:right;">Last updated 2023-01-02 21:12:30 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>

@@ -35,7 +35,6 @@
 <li><a href="#Class_ClassWrapper">Class ClassWrapper </a></li>
 <li><a href="#Class_MethodBind">Class MethodBind </a></li>
 <li><a href="#Class_MethodBindByName">Class MethodBindByName </a></li>
-<li><a href="#Class_ScriptInstance">Class ScriptInstance </a></li>
 </ul>
 
 
@@ -44,10 +43,14 @@
   <li><a href="../modules/Enumerations.html">Enumerations</a></li>
   <li><a href="../modules/GD.html">GD</a></li>
   <li><a href="../modules/Globals.html">Globals</a></li>
+  <li><a href="../modules/LuaObject.html">LuaObject</a></li>
+  <li><a href="../modules/LuaScript.html">LuaScript</a></li>
+  <li><a href="../modules/LuaScriptInstance.html">LuaScriptInstance</a></li>
   <li><strong>OOP</strong></li>
   <li><a href="../modules/math_extras.html">math_extras</a></li>
   <li><a href="../modules/package_extras.html">package_extras</a></li>
-  <li><a href="../modules/script_metadata.html">script_metadata</a></li>
+  <li><a href="../modules/property.html">property</a></li>
+  <li><a href="../modules/signal.html">signal</a></li>
   <li><a href="../modules/string_extras.html">string_extras</a></li>
 </ul>
 <h2>Scripts</h2>
@@ -88,6 +91,7 @@
   <li><a href="../topics/README.md.html">README</a></li>
   <li><a href="../topics/building.md.html">building</a></li>
   <li><a href="../topics/configuring.md.html">configuring</a></li>
+  <li><a href="../topics/from-gdscript-to-lua.md.html">from-gdscript-to-lua</a></li>
   <li><a href="../topics/limitations.md.html">limitations</a></li>
   <li><a href="../topics/luarocks.md.html">luarocks</a></li>
   <li><a href="../topics/plugin.md.html">plugin</a></li>
@@ -164,41 +168,6 @@
 	<tr>
 	<td class="name" nowrap><a href="#MethodBindByName:new">MethodBindByName:new (method_name)</a></td>
 	<td class="summary">Create a new method binding by name.</td>
-	</tr>
-</table>
-<h2><a href="#Class_ScriptInstance">Class ScriptInstance </a></h2>
-<table class="function_list">
-	<tr>
-	<td class="name" nowrap><a href="#ScriptInstance.__owner">ScriptInstance.__owner</a></td>
-	<td class="summary"><a href="../classes/Object.html#">Object</a> that this script instance is attached to.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#ScriptInstance.__script">ScriptInstance.__script</a></td>
-	<td class="summary">Lua script table, the one returned by the Lua script when loading it as a PluginScript.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#ScriptInstance:__concat">ScriptInstance:__concat (a, b)</a></td>
-	<td class="summary">Concatenates values.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#ScriptInstance:__index">ScriptInstance:__index (key)</a></td>
-	<td class="summary">Try indexing <a href="../modules/OOP.html#ScriptInstance.__script">__script</a>, then <a href="../modules/OOP.html#ScriptInstance.__owner">__owner</a>.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#ScriptInstance:__newindex">ScriptInstance:__newindex (key, value)</a></td>
-	<td class="summary">Calls <a href="../classes/Object.html#Object:set">Object:set</a> if <code>key</code> is the name of a property known to base class, <a href="https://www.lua.org/manual/5.1/manual.html#pdf-rawset">rawset</a> otherwise.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#ScriptInstance:__tostring">ScriptInstance:__tostring ()</a></td>
-	<td class="summary">Returns a Lua string representation of <a href="../modules/OOP.html#ScriptInstance.__owner">__owner</a>, as per <a href="../classes/Object.html#Object:to_string">Object:to_string</a>.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#ScriptInstance:call">ScriptInstance:call (method, ...)</a></td>
-	<td class="summary">Forwards a call to <a href="../modules/OOP.html#ScriptInstance.__owner">__owner</a> using <a href="../classes/Object.html#Object:call">Object:call</a>.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#ScriptInstance:pcall">ScriptInstance:pcall (method, ...)</a></td>
-	<td class="summary">Forwards a call to <a href="../modules/OOP.html#ScriptInstance.__owner">__owner</a> using <a href="../classes/Object.html#Object:pcall">Object:pcall</a>.</td>
 	</tr>
 </table>
 
@@ -339,7 +308,7 @@
     </dt>
     <dd>
     Returns whether class has a property named <code>name</code>.
- Only properties from <code>ClassDB:class_get_property_list()</code> returns true.
+ Only properties from <code>ClassDB:class_get_property_list()</code> return true.
 
 
     <h3>Parameters:</h3>
@@ -457,12 +426,6 @@
 
         Method return value
     </ol>
-     <h3>Or</h3>
-    <ol>
-
-           <span class="types"><span class="type">nil</span></span>
-        If call errored
-    </ol>
 
 
 
@@ -501,7 +464,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">object</span>
-            <span class="types"><a class="type" href="../classes/Object.html#">Object</a>, <a class="type" href="../modules/OOP.html#ScriptInstance">ScriptInstance</a> or <a class="type" href="../classes/Variant.html#">Variant</a></span>
+            <span class="types"><a class="type" href="../classes/Object.html#">Object</a>, <span class="type">ScriptInstance</span> or <a class="type" href="../classes/Variant.html#">Variant</a></span>
 
 
 
@@ -555,263 +518,13 @@ method_bind(object, ...)</pre>
 
 </dd>
 </dl>
-    <h2 class="section-header has-description"><a name="Class_ScriptInstance"></a>Class ScriptInstance </h2>
-
-          <div class="section-description">
-          Script instance metatable, the Lua side of a Lua script instance.
- These are created when a PluginScript is instanced and are only directly
- accessible in the script's functions as the <code>self</code> parameter.
-          </div>
-    <dl class="function">
-    <dt>
-    <a name = "ScriptInstance.__owner"></a>
-    <strong>ScriptInstance.__owner</strong>
-    </dt>
-    <dd>
-    <a href="../classes/Object.html#">Object</a> that this script instance is attached to.
- This is the Godot side of the instance.
-
-
-    <ul>
-        <li><span class="parameter">__owner</span>
-
-
-
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "ScriptInstance.__script"></a>
-    <strong>ScriptInstance.__script</strong>
-    </dt>
-    <dd>
-    Lua script table, the one returned by the Lua script when loading it as a PluginScript.
- Note that calling <a href="../classes/Object.html#Object:get_script">Object:get_script</a> will return an <a href="../classes/Object.html#">Object</a> rather
- than this table.
-
-
-    <ul>
-        <li><span class="parameter">__script</span>
-
-
-
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "ScriptInstance:__concat"></a>
-    <strong>ScriptInstance:__concat (a, b)</strong>
-    </dt>
-    <dd>
-    Concatenates values.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">a</span>
-          First value, stringified with <a href="../modules/GD.html#str">GD.str</a>
-        </li>
-        <li><span class="parameter">b</span>
-          First value, stringified with <a href="../modules/GD.html#str">GD.str</a>
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
-
-
-
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "ScriptInstance:__index"></a>
-    <strong>ScriptInstance:__index (key)</strong>
-    </dt>
-    <dd>
-    Try indexing <a href="../modules/OOP.html#ScriptInstance.__script">__script</a>, then <a href="../modules/OOP.html#ScriptInstance.__owner">__owner</a>.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">key</span>
-
-
-
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-
-
-
-    </ol>
-
-
-    <h3>See also:</h3>
-    <ul>
-         <a href="../classes/Object.html#Object:__index">Object.__index</a>
-    </ul>
-
-
-</dd>
-    <dt>
-    <a name = "ScriptInstance:__newindex"></a>
-    <strong>ScriptInstance:__newindex (key, value)</strong>
-    </dt>
-    <dd>
-    Calls <a href="../classes/Object.html#Object:set">Object:set</a> if <code>key</code> is the name of a property known to base class, <a href="https://www.lua.org/manual/5.1/manual.html#pdf-rawset">rawset</a> otherwise.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">key</span>
-
-
-
-        </li>
-        <li><span class="parameter">value</span>
-
-
-
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "ScriptInstance:__tostring"></a>
-    <strong>ScriptInstance:__tostring ()</strong>
-    </dt>
-    <dd>
-    Returns a Lua string representation of <a href="../modules/OOP.html#ScriptInstance.__owner">__owner</a>, as per <a href="../classes/Object.html#Object:to_string">Object:to_string</a>.
-
-
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-
-
-
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "ScriptInstance:call"></a>
-    <strong>ScriptInstance:call (method, ...)</strong>
-    </dt>
-    <dd>
-    Forwards a call to <a href="../modules/OOP.html#ScriptInstance.__owner">__owner</a> using <a href="../classes/Object.html#Object:call">Object:call</a>.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">method</span>
-          Method name
-        </li>
-        <li><span class="parameter">...</span>
-
-
-
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-        Method result
-    </ol>
-     <h3>Or</h3>
-    <ol>
-
-           <span class="types"><span class="type">nil</span></span>
-        If method does not exist or errors
-    </ol>
-
-
-    <h3>See also:</h3>
-    <ul>
-         <a href="../classes/Object.html#Object:call">Object.call</a>
-    </ul>
-
-
-</dd>
-    <dt>
-    <a name = "ScriptInstance:pcall"></a>
-    <strong>ScriptInstance:pcall (method, ...)</strong>
-    </dt>
-    <dd>
-    Forwards a call to <a href="../modules/OOP.html#ScriptInstance.__owner">__owner</a> using <a href="../classes/Object.html#Object:pcall">Object:pcall</a>.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">method</span>
-          Method name
-        </li>
-        <li><span class="parameter">...</span>
-
-
-
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-        <li>
-           <span class="types"><span class="type">bool</span></span>
-        <code>true</code> if method exists</li>
-        <li>
-        Method result</li>
-    </ol>
-     <h3>Or</h3>
-    <ol>
-
-           <span class="types"><span class="type">bool</span></span>
-        <code>false</code> if method does not exist
-    </ol>
-
-
-    <h3>See also:</h3>
-    <ul>
-         <a href="../classes/Object.html#Object:pcall">Object.pcall</a>
-    </ul>
-
-
-</dd>
-</dl>
 
 
 </div> <!-- id="content" -->
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2022-01-16 10:30:57 </i>
+<i style="float:right;">Last updated 2023-01-02 21:12:30 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>

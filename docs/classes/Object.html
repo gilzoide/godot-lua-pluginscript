@@ -71,10 +71,14 @@
   <li><a href="../modules/Enumerations.html">Enumerations</a></li>
   <li><a href="../modules/GD.html">GD</a></li>
   <li><a href="../modules/Globals.html">Globals</a></li>
+  <li><a href="../modules/LuaObject.html">LuaObject</a></li>
+  <li><a href="../modules/LuaScript.html">LuaScript</a></li>
+  <li><a href="../modules/LuaScriptInstance.html">LuaScriptInstance</a></li>
   <li><a href="../modules/OOP.html">OOP</a></li>
   <li><a href="../modules/math_extras.html">math_extras</a></li>
   <li><a href="../modules/package_extras.html">package_extras</a></li>
-  <li><a href="../modules/script_metadata.html">script_metadata</a></li>
+  <li><a href="../modules/property.html">property</a></li>
+  <li><a href="../modules/signal.html">signal</a></li>
   <li><a href="../modules/string_extras.html">string_extras</a></li>
 </ul>
 <h2>Scripts</h2>
@@ -87,6 +91,7 @@
   <li><a href="../topics/README.md.html">README</a></li>
   <li><a href="../topics/building.md.html">building</a></li>
   <li><a href="../topics/configuring.md.html">configuring</a></li>
+  <li><a href="../topics/from-gdscript-to-lua.md.html">from-gdscript-to-lua</a></li>
   <li><a href="../topics/limitations.md.html">limitations</a></li>
   <li><a href="../topics/luarocks.md.html">luarocks</a></li>
   <li><a href="../topics/plugin.md.html">plugin</a></li>
@@ -135,11 +140,11 @@
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#Object:connect">Object:connect (signal, target, method[, binds[, flags]])</a></td>
-	<td class="summary">Connects a <code>signal</code> to a <code>method</code> on a <code>target</code> Object.</td>
+	<td class="summary">Connects a <a href="../modules/signal.html#">signal</a> to a <code>method</code> on a <code>target</code> Object.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#Object:disconnect">Object:disconnect (signal, target, method)</a></td>
-	<td class="summary">Disconnects a <code>signal</code> from a <code>method</code> on the given <code>target</code>.</td>
+	<td class="summary">Disconnects a <a href="../modules/signal.html#">signal</a> from a <code>method</code> on the given <code>target</code>.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#Object:emit_signal">Object:emit_signal (signal, ...)</a></td>
@@ -207,11 +212,11 @@
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#Object:has_signal">Object:has_signal (signal)</a></td>
-	<td class="summary">Returns <code>true</code> if the given <code>signal</code> exists.</td>
+	<td class="summary">Returns <code>true</code> if the given <a href="../modules/signal.html#">signal</a> exists.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#Object:has_user_signal">Object:has_user_signal (signal)</a></td>
-	<td class="summary">Returns <code>true</code> if the given user-defined <code>signal</code> exists.</td>
+	<td class="summary">Returns <code>true</code> if the given user-defined <a href="../modules/signal.html#">signal</a> exists.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#Object:is_blocking_signals">Object:is_blocking_signals ()</a></td>
@@ -223,7 +228,7 @@
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#Object:is_connected">Object:is_connected (signal, target, method)</a></td>
-	<td class="summary">Returns <code>true</code> if a connection exists for a given <code>signal</code>, <code>target</code>, and <code>method</code>.</td>
+	<td class="summary">Returns <code>true</code> if a connection exists for a given <a href="../modules/signal.html#">signal</a>, <code>target</code>, and <code>method</code>.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#Object:is_instance_valid">Object:is_instance_valid ()</a></td>
@@ -239,7 +244,7 @@
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#Object:pcall">Object:pcall (method, ...)</a></td>
-	<td class="summary">Calls the <code>method</code> on the Object and returns the result.</td>
+	<td class="summary">Make a protected call to method with the passed name and arguments.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#Object:property_list_changed_notify">Object:property_list_changed_notify ()</a></td>
@@ -362,8 +367,6 @@
     </dt>
     <dd>
     Calls the <code>method</code> on the Object and returns the result.
- Fails silently if Object doesn't have a method named <code>method</code>.
- Use <a href="../classes/Object.html#Object:pcall">pcall</a> instead if you want to know if <code>method</code> exists.
 
 
     <h3>Parameters:</h3>
@@ -382,12 +385,6 @@
     <ol>
 
         Method result
-    </ol>
-     <h3>Or</h3>
-    <ol>
-
-           <span class="types"><span class="type">nil</span></span>
-        If method does not exist or errors
     </ol>
 
 
@@ -455,7 +452,7 @@
     <strong>Object:connect (signal, target, method[, binds[, flags]])</strong>
     </dt>
     <dd>
-    Connects a <code>signal</code> to a <code>method</code> on a <code>target</code> Object.
+    Connects a <a href="../modules/signal.html#">signal</a> to a <code>method</code> on a <code>target</code> Object.
  Parameters passed in <code>binds</code> will be passed to the method after any parameter used in the call to <a href="../classes/Object.html#Object:emit_signal">emit_signal</a>.
 
 
@@ -508,7 +505,7 @@
     <strong>Object:disconnect (signal, target, method)</strong>
     </dt>
     <dd>
-    Disconnects a <code>signal</code> from a <code>method</code> on the given <code>target</code>.
+    Disconnects a <a href="../modules/signal.html#">signal</a> from a <code>method</code> on the given <code>target</code>.
 
 
     <h3>Parameters:</h3>
@@ -937,7 +934,7 @@
     <strong>Object:has_signal (signal)</strong>
     </dt>
     <dd>
-    Returns <code>true</code> if the given <code>signal</code> exists.
+    Returns <code>true</code> if the given <a href="../modules/signal.html#">signal</a> exists.
 
 
     <h3>Parameters:</h3>
@@ -967,7 +964,7 @@
     <strong>Object:has_user_signal (signal)</strong>
     </dt>
     <dd>
-    Returns <code>true</code> if the given user-defined <code>signal</code> exists.
+    Returns <code>true</code> if the given user-defined <a href="../modules/signal.html#">signal</a> exists.
  Only signals added using <a href="../classes/Object.html#Object:add_user_signal">add_user_signal</a> are taken into account.
 
 
@@ -1054,7 +1051,7 @@
     <strong>Object:is_connected (signal, target, method)</strong>
     </dt>
     <dd>
-    Returns <code>true</code> if a connection exists for a given <code>signal</code>, <code>target</code>, and <code>method</code>.
+    Returns <code>true</code> if a connection exists for a given <a href="../modules/signal.html#">signal</a>, <code>target</code>, and <code>method</code>.
 
 
     <h3>Parameters:</h3>
@@ -1166,7 +1163,7 @@
     <strong>Object:pcall (method, ...)</strong>
     </dt>
     <dd>
-    Calls the <code>method</code> on the Object and returns the result.
+    Make a protected call to method with the passed name and arguments.
 
 
     <h3>Parameters:</h3>
@@ -1185,15 +1182,17 @@
     <ol>
         <li>
            <span class="types"><span class="type">bool</span></span>
-        <code>true</code> if method exists</li>
+        <code>true</code> if method was called successfully</li>
         <li>
-        Method result</li>
+        Method call result</li>
     </ol>
      <h3>Or</h3>
     <ol>
-
+        <li>
            <span class="types"><span class="type">bool</span></span>
-        <code>false</code> if method does not exist
+        <code>false</code> on errors</li>
+        <li>
+        Error message</li>
     </ol>
 
 
@@ -1251,7 +1250,7 @@
     </dt>
     <dd>
     Assigns a new value to the given property.
- If the <code>property</code> does not exist, nothing will happen.
+ If the <a href="../modules/property.html#">property</a> does not exist, nothing will happen.
 
 
     <h3>Parameters:</h3>
@@ -1624,7 +1623,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2022-01-16 10:30:57 </i>
+<i style="float:right;">Last updated 2023-01-02 21:12:30 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>

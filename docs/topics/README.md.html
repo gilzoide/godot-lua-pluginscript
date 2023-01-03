@@ -50,6 +50,7 @@
   <li><strong>README</strong></li>
   <li><a href="../topics/building.md.html">building</a></li>
   <li><a href="../topics/configuring.md.html">configuring</a></li>
+  <li><a href="../topics/from-gdscript-to-lua.md.html">from-gdscript-to-lua</a></li>
   <li><a href="../topics/limitations.md.html">limitations</a></li>
   <li><a href="../topics/luarocks.md.html">luarocks</a></li>
   <li><a href="../topics/plugin.md.html">plugin</a></li>
@@ -59,10 +60,14 @@
   <li><a href="../modules/Enumerations.html">Enumerations</a></li>
   <li><a href="../modules/GD.html">GD</a></li>
   <li><a href="../modules/Globals.html">Globals</a></li>
+  <li><a href="../modules/LuaObject.html">LuaObject</a></li>
+  <li><a href="../modules/LuaScript.html">LuaScript</a></li>
+  <li><a href="../modules/LuaScriptInstance.html">LuaScriptInstance</a></li>
   <li><a href="../modules/OOP.html">OOP</a></li>
   <li><a href="../modules/math_extras.html">math_extras</a></li>
   <li><a href="../modules/package_extras.html">package_extras</a></li>
-  <li><a href="../modules/script_metadata.html">script_metadata</a></li>
+  <li><a href="../modules/property.html">property</a></li>
+  <li><a href="../modules/signal.html">signal</a></li>
   <li><a href="../modules/string_extras.html">string_extras</a></li>
 </ul>
 <h2>Scripts</h2>
@@ -119,6 +124,9 @@ as a scripting language in <a href="https://godotengine.org/">Godot</a>.</p>
 with a built release copied to their project can use it.
 Being a PluginScript language, Lua can seamlessly communicate with scripts
 written in GDScript / C# / Visual Script and vice-versa.
+Since the Godot object model is dynamic at runtime, any Godot objects'
+properties/methods can be accessed from Lua, including singletons like <code>OS</code>,
+<code>ClassDB</code> and custom singleton nodes.
 This way, one can use the language that best suits the implementation for each
 script and all of them can understand each other.</p>
 
@@ -152,7 +160,8 @@ and <a href="plugin/lua_repl.lua">plugin/lua_repl.lua</a>.</p>
 <h2>Documentation</h2>
 
 <ul>
-    <li><a href="https://gilzoide.github.io/godot-lua-pluginscript/topics/README.md.html">API reference</a></li>
+    <li><a href="extras/docs/from-gdscript-to-lua.md">From GDScript to Lua</a></li>
+    <li><a href="https://gilzoide.github.io/godot-lua-pluginscript/topics/README.md.html">Lua-specific API reference</a></li>
     <li><a href="extras/docs/configuring.md">Configuring</a></li>
     <li><a href="extras/docs/plugin.md">Editor plugin (REPL and minify on release export)</a></li>
     <li><a href="extras/docs/luarocks.md">Using LuaRocks</a></li>
@@ -169,7 +178,11 @@ and <a href="plugin/lua_repl.lua">plugin/lua_repl.lua</a>.</p>
     <li>Provide support for Lua as a scripting language in Godot in a way that does
     not require compiling the engine from scratch</li>
     <li>Be able to seamlessly communicate with any other language supported by Godot,
-    like GDScript, Visual Script and C#, in an idiomatic way</li>
+    like GDScript, Visual Script and C#, in an idiomatic way.
+    This includes being able to dynamically access any Godot object's properties
+    and methods using Lua's index/method notation</li>
+    <li>Have automatic global access to Godot's singleton objects and custom
+    singleton nodes</li>
     <li>Simple script description interface that doesn't need <a href="https://www.lua.org/manual/5.1/manual.html#pdf-require">require</a>ing anything</li>
     <li>Support for LuaJIT and Lua 5.2+</li>
     <li>Support paths relative to <code>res://*</code> and exported game/app executable path for
@@ -183,7 +196,7 @@ and <a href="plugin/lua_repl.lua">plugin/lua_repl.lua</a>.</p>
 <h2>Non-goals</h2>
 
 <ul>
-    <li>Provide calls to all core Godot classes' methods via native method bindings</li>
+    <li>Provide calls to core Godot classes' methods via native method bindings</li>
     <li>Support multithreading on the Lua side</li>
 </ul>
 
@@ -213,7 +226,7 @@ and <a href="plugin/lua_repl.lua">plugin/lua_repl.lua</a>.</p>
 </span>MyClass.is_tool = <span class="keyword">true</span>
 
 <span class="comment">-- Optional: set base class by name, defaults to 'Reference'
-</span>MyClass.extends = <span class="string">'Node'</span>
+</span>MyClass.extends = Node
 
 <span class="comment">-- Optional: give your class a name
 </span>MyClass.class_name = <span class="string">'MyClass'</span>
@@ -226,7 +239,7 @@ MyClass.something_happened_with_args = signal(<span class="string">"arg1"</span>
 </span><span class="comment">-- By default, properties are not exported to the editor
 </span>MyClass.some_prop = <span class="number">42</span>
 
-<span class="comment">-- The <code>property</code> function adds metadata to defined properties,
+<span class="comment">-- The <a href="../modules/property.html#">property</a> function adds metadata to defined properties,
 </span><span class="comment">-- like setter and getter functions
 </span>MyClass.some_prop_with_details = property {
   <span class="comment">-- ["default_value"] or ["default"] or [1] = property default value
@@ -256,7 +269,7 @@ MyClass.something_happened_with_args = signal(<span class="string">"arg1"</span>
 </span>  <span class="comment">-- optional, default to <code>RPCMode.DISABLED</code>
 </span>  rset_mode = RPCMode.MASTER,
 }
-<span class="comment">-- The <code>export</code> function is an alias for <code>property</code> that always exports
+<span class="comment">-- The <code>export</code> function is an alias for <a href="../modules/property.html#">property</a> that always exports
 </span><span class="comment">-- properties to the editor
 </span>MyClass.exported_prop = export { <span class="string">"This property appears in the editor"</span> }
 MyClass.another_exported_prop = export {
@@ -270,6 +283,11 @@ now with a multiline TextArea for edition]]</span>,
 </span>  <span class="comment">-- Singletons are available globally
 </span>  <span class="keyword">local</span> os_name = OS:get_name()
   <span class="global">print</span>(<span class="string">"MyClass instance is ready! Running on a "</span> .. os_name .. <span class="string">" system"</span>)
+
+  <span class="comment">-- There is no <code>onready</code> keyword like in GDScript
+</span>  <span class="comment">-- Just get the needed values on <code>_ready</code> method
+</span>  <span class="comment">-- Also, Lua doesn't have the <code>$child_node</code> syntax, use <code>get_node</code> instead
+</span>  self.some_grandchild_node = self:get_node(<span class="string">"some/grandchild_node"</span>)
 <span class="keyword">end</span>
 
 <span class="keyword">function</span> MyClass:set_some_prop_with_details(value)
@@ -322,13 +340,17 @@ now with a multiline TextArea for edition]]</span>,
 
 <ul>
     <li><a href="https://github.com/godotengine/godot-headers">godot-headers</a>: headers for
-    GDNative, released under the MIT license</li>
+    GDNative, distributed under the MIT license</li>
     <li><a href="https://luajit.org/luajit.html">LuaJIT</a>: Just-In-Time Compiler (JIT) for the
-    Lua programming language, released under the MIT license</li>
+    Lua programming language, distributed under the MIT license</li>
     <li><a href="https://github.com/gilzoide/high-level-gdnative">High Level GDNative (HGDN)</a>:
     higher level GDNative API header, released to the Public Domain</li>
     <li><a href="https://github.com/jirutka/luasrcdiet">LuaSrcDiet</a>: compresses Lua source
-    code by removing unnecessary characters, released under the MIT license</li>
+    code by removing unnecessary characters, distributed under the MIT license</li>
+    <li><a href="https://github.com/bluebird75/luaunit">LuaUnit</a>: unit-testing framework for
+    Lua, distributed under the BSD license</li>
+    <li><a href="https://github.com/slembcke/debugger.lua">debugger.lua</a>: dependency free,
+    single file embeddable debugger for Lua, distributed under the MIT license</li>
 </ul>
 
 
@@ -346,7 +368,7 @@ now with a multiline TextArea for edition]]</span>,
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2022-01-16 10:30:57 </i>
+<i style="float:right;">Last updated 2023-01-02 21:12:30 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>

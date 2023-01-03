@@ -32,7 +32,8 @@
 
 <h2>Contents</h2>
 <ul>
-<li><a href="#_Unreleased__https___github_com_gilzoide_godot_lua_pluginscript_compare_0_4_0___HEAD_">[Unreleased](https://github.com/gilzoide/godot-lua-pluginscript/compare/0.4.0...HEAD) </a></li>
+<li><a href="#_Unreleased__https___github_com_gilzoide_godot_lua_pluginscript_compare_0_5_0___HEAD_">[Unreleased](https://github.com/gilzoide/godot-lua-pluginscript/compare/0.5.0...HEAD) </a></li>
+<li><a href="#_0_5_0__https___github_com_gilzoide_godot_lua_pluginscript_releases_tag_0_5_0_">[0.5.0](https://github.com/gilzoide/godot-lua-pluginscript/releases/tag/0.5.0) </a></li>
 <li><a href="#_0_4_0__https___github_com_gilzoide_godot_lua_pluginscript_releases_tag_0_4_0_">[0.4.0](https://github.com/gilzoide/godot-lua-pluginscript/releases/tag/0.4.0) </a></li>
 <li><a href="#_0_3_1__https___github_com_gilzoide_godot_lua_pluginscript_releases_tag_0_3_1_">[0.3.1](https://github.com/gilzoide/godot-lua-pluginscript/releases/tag/0.3.1) </a></li>
 <li><a href="#_0_3_0__https___github_com_gilzoide_godot_lua_pluginscript_releases_tag_0_3_0_">[0.3.0](https://github.com/gilzoide/godot-lua-pluginscript/releases/tag/0.3.0) </a></li>
@@ -48,6 +49,7 @@
   <li><a href="../topics/README.md.html">README</a></li>
   <li><a href="../topics/building.md.html">building</a></li>
   <li><a href="../topics/configuring.md.html">configuring</a></li>
+  <li><a href="../topics/from-gdscript-to-lua.md.html">from-gdscript-to-lua</a></li>
   <li><a href="../topics/limitations.md.html">limitations</a></li>
   <li><a href="../topics/luarocks.md.html">luarocks</a></li>
   <li><a href="../topics/plugin.md.html">plugin</a></li>
@@ -57,10 +59,14 @@
   <li><a href="../modules/Enumerations.html">Enumerations</a></li>
   <li><a href="../modules/GD.html">GD</a></li>
   <li><a href="../modules/Globals.html">Globals</a></li>
+  <li><a href="../modules/LuaObject.html">LuaObject</a></li>
+  <li><a href="../modules/LuaScript.html">LuaScript</a></li>
+  <li><a href="../modules/LuaScriptInstance.html">LuaScriptInstance</a></li>
   <li><a href="../modules/OOP.html">OOP</a></li>
   <li><a href="../modules/math_extras.html">math_extras</a></li>
   <li><a href="../modules/package_extras.html">package_extras</a></li>
-  <li><a href="../modules/script_metadata.html">script_metadata</a></li>
+  <li><a href="../modules/property.html">property</a></li>
+  <li><a href="../modules/signal.html">signal</a></li>
   <li><a href="../modules/string_extras.html">string_extras</a></li>
 </ul>
 <h2>Scripts</h2>
@@ -107,9 +113,11 @@
 
 
 <h1>Changelog</h1>
-<p><a name="_Unreleased__https___github_com_gilzoide_godot_lua_pluginscript_compare_0_4_0___HEAD_"></a></p>
-<h2><a href="https://github.com/gilzoide/godot-lua-pluginscript/compare/0.4.0...HEAD">Unreleased</a></h2>
+<p><a name="_Unreleased__https___github_com_gilzoide_godot_lua_pluginscript_compare_0_5_0___HEAD_"></a></p>
+<h2><a href="https://github.com/gilzoide/godot-lua-pluginscript/compare/0.5.0...HEAD">Unreleased</a></h2>
 
+<p><a name="_0_5_0__https___github_com_gilzoide_godot_lua_pluginscript_releases_tag_0_5_0_"></a></p>
+<h2><a href="https://github.com/gilzoide/godot-lua-pluginscript/releases/tag/0.5.0">0.5.0</a></h2>
 <h3>Added</h3>
 
 <ul>
@@ -122,6 +130,22 @@
     <li><code>ClassWrapper:has_property</code> method that returns whether a class has a property
     with the passed name. Properties are considered available if they are found in
     the result of <code>ClassDB:class_get_property_list</code>.</li>
+    <li>Library mapping for <code>Server</code> platform pointing to the <code>linux_x86_64</code> build.</li>
+    <li><code>string.quote</code> function for quoting values.</li>
+    <li>[build] Passing <code>DEBUG=1</code> to <code>make docs</code> adds <code>--all</code> flag to <code>ldoc</code>, which
+    adds documentation for locals.</li>
+    <li>[build] Passing <code>DEBUG_INTERACTIVE=1</code> to <code>make test*</code> makes errors trigger
+    a <a href="https://github.com/slembcke/debugger.lua">debugger.lua</a> breakpoint, for
+    debugging tests.</li>
+</ul>
+
+<h3>Fixed</h3>
+
+<ul>
+    <li>Return values passed to <code>lps_coroutine:resume(...)</code> when calling <code>GD.yield()</code>.</li>
+    <li>Comparing <a href="../classes/Array.html#">Array</a> and <code>Pool*Array</code>s against Lua primitives like <code>nil</code> and
+    numbers now return <code>false</code> instead of raising.</li>
+    <li>Support for <code>false</code> as the default value for a property.</li>
 </ul>
 
 <h3>Changed</h3>
@@ -134,9 +158,13 @@
     anymore (<a href="https://github.com/gilzoide/godot-lua-pluginscript/issues/5#issuecomment-999876834">#5</a>).
     That is, instead of <code>function(self, property_name, value)</code>, setters now look
     like <code>function(self, value)</code>.</li>
-    <li><strong>BREAKING CHANGE</strong>: <code>ScriptInstace:__newindex</code> now calls <code>set</code> when the
-    property is known to the script's base class (<a href="https://github.com/gilzoide/godot-lua-pluginscript/issues/5">#5</a>).
-    E.g. in <code>self.name = &apos;some_name&apos;</code>, given <code>self</code> is a <code>Node</code></li>
+    <li><strong>BREAKING CHANGE</strong>: script instances are now structs instead of tables.
+    They still have a backing table for storing data, but indexing now calls
+    getter and setter functions for known properties. Use <a href="https://www.lua.org/manual/5.1/manual.html#pdf-rawget">rawget</a> and <a href="https://www.lua.org/manual/5.1/manual.html#pdf-rawset">rawset</a>
+    to bypass getter/setter functions and access the data table directly.
+    (<a href="https://github.com/gilzoide/godot-lua-pluginscript/issues/5">#5</a>)</li>
+    <li><strong>BREAKING CHANGE</strong>: <a href="../classes/Object.html#Object:call">Object.call</a> now raises instead of failing silently.
+    Use <a href="../classes/Object.html#Object:pcall">Object.pcall</a> to protect from errors.</li>
 </ul>
 
 
@@ -147,7 +175,7 @@
 <ul>
     <li>Support for running without JIT enabled</li>
     <li>Support for iOS builds</li>
-    <li><code>export</code> function, an alias for <code>property</code> that always marks the property as
+    <li><code>export</code> function, an alias for <a href="../modules/property.html#">property</a> that always marks the property as
     exported</li>
 </ul>
 
@@ -163,7 +191,7 @@
 <ul>
     <li><strong>BREAKING CHANGE</strong>: properties are not exported by default. Either pass
     a usage with the <code>PropertyUsage.EDITOR</code> bit set or call <code>export</code> instead of
-    <code>property</code></li>
+    <a href="../modules/property.html#">property</a></li>
 </ul>
 
 
@@ -296,7 +324,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2022-01-16 10:30:57 </i>
+<i style="float:right;">Last updated 2023-01-02 21:12:30 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>
