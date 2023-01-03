@@ -185,7 +185,7 @@ local methods = {
 if api_1_3 ~= nil then
 	--- Returns true if the array contains the given `value`.
 	-- @function has
-	-- @tparam Vector2
+	-- @tparam Vector2 value
 	-- @treturn bool
 	methods.has = api_1_3.godot_pool_vector2_array_has
 	--- Sorts the elements of the array in ascending order.
