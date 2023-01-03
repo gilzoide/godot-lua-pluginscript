@@ -225,7 +225,7 @@ build/compile_commands.json: Makefile
 # Phony targets
 .PHONY: clean dist docs set-version unzip-to-build
 clean:
-	$(RM) -r build/*/ plugin/luasrcdiet/*
+	$(RM) -r $(wildcard build/**) plugin/luasrcdiet/*
 
 dist: build/lua_pluginscript.zip
 
