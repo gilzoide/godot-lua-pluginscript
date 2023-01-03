@@ -18,7 +18,7 @@ ZIP_URL ?=
 ZIP_URL_DOWNLOAD_OUTPUT ?= /tmp/godot-lua-pluginscript-unzip-to-build.zip
 
 
-CFLAGS += -std=c11 "-I$(CURDIR)/lib/godot-headers" "-I$(CURDIR)/lib/high-level-gdnative" "-I$(CURDIR)/lib/luajit/src"
+CFLAGS += -std=c11 -Ilib/godot-headers -Ilib/high-level-gdnative -Ilib/luajit/src
 ifeq ($(DEBUG), 1)
 	CFLAGS += -g -O0 -DDEBUG
 else
@@ -133,8 +133,6 @@ $(BUILD_FOLDERS):
 
 build/%/language_gdnative.o: src/language_gdnative.c lib/high-level-gdnative/hgdn.h
 	$(_CC) -o $@ $< -c $(CFLAGS)
-build/%/language_in_editor_callbacks.o: src/language_in_editor_callbacks.c
-	$(_CC) -o $@ $< -c $(CFLAGS)
 
 $(MAKE_LUAJIT_OUTPUT): | build/%/luajit build/jit
 	$(MAKE) -C $(firstword $|) $(and $(TARGET_SYS),TARGET_SYS=$(TARGET_SYS)) $(MAKE_LUAJIT_ARGS)
@@ -199,6 +197,11 @@ build/lua_pluginscript.zip: $(LUASRCDIET_DEST) $(DIST_DEST)
 build/project.godot: src/tools/project.godot | build
 	cp $< $@
 
+build/compile_commands.json: COMPILE_COMMAND = $(_CC) -o build/language_gdnative.o src/language_gdnative.c -c $(CFLAGS)
+build/compile_commands.json: Makefile
+	echo '[{"directory":"$(CURDIR)","file":"src/language_gdnative.c","command":"$(subst ",\",$(COMPILE_COMMAND))"}]' > $@
+
+
 # Phony targets
 .PHONY: clean dist docs set-version unzip-to-build
 clean:
@@ -229,6 +232,9 @@ plugin: $(LUASRCDIET_DEST)
 native-luajit: MACOSX_DEPLOYMENT_TARGET ?= 11.0
 native-luajit: MAKE_LUAJIT_ARGS = MACOSX_DEPLOYMENT_TARGET=$(MACOSX_DEPLOYMENT_TARGET)
 native-luajit: build/native/luajit/src/luajit.o
+
+compilation-database: build/compile_commands.json
+compdb: compilation-database
 
 # Targets by OS + arch
 linux32: MAKE_LUAJIT_ARGS += CC="$(CC) -m32 -fPIC"
