@@ -170,7 +170,7 @@ methods.FLIP_Z = ffi_new('godot_basis', { elements = { 1, 0, 0, 0, 1, 0, 0, 0, -
 
 --- Metamethods
 -- @section metamethods
-Basis = ffi.metatype('godot_basis', {
+Basis = ffi_metatype('godot_basis', {
 	--- Basis constructor, called by the idiom `Basis(...)`.
 	--
 	-- * `Basis()`: `IDENTITY` basis matrix
