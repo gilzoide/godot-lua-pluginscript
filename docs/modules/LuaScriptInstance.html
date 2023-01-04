@@ -1,0 +1,432 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Godot Lua PluginScript</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+<li><a href="#Fields">Fields</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/Enumerations.html">Enumerations</a></li>
+  <li><a href="../modules/GD.html">GD</a></li>
+  <li><a href="../modules/Globals.html">Globals</a></li>
+  <li><a href="../modules/LuaObject.html">LuaObject</a></li>
+  <li><a href="../modules/LuaScript.html">LuaScript</a></li>
+  <li><strong>LuaScriptInstance</strong></li>
+  <li><a href="../modules/OOP.html">OOP</a></li>
+  <li><a href="../modules/math_extras.html">math_extras</a></li>
+  <li><a href="../modules/package_extras.html">package_extras</a></li>
+  <li><a href="../modules/property.html">property</a></li>
+  <li><a href="../modules/signal.html">signal</a></li>
+  <li><a href="../modules/string_extras.html">string_extras</a></li>
+</ul>
+<h2>Scripts</h2>
+<ul class="nowrap">
+  <li><a href="../scripts/lps_coroutine.lua.html">lps_coroutine.lua</a></li>
+</ul>
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><a href="../classes/AABB.html">AABB</a></li>
+  <li><a href="../classes/Array.html">Array</a></li>
+  <li><a href="../classes/Basis.html">Basis</a></li>
+  <li><a href="../classes/Color.html">Color</a></li>
+  <li><a href="../classes/Dictionary.html">Dictionary</a></li>
+  <li><a href="../classes/NodePath.html">NodePath</a></li>
+  <li><a href="../classes/Object.html">Object</a></li>
+  <li><a href="../classes/Plane.html">Plane</a></li>
+  <li><a href="../classes/PoolByteArray.html">PoolByteArray</a></li>
+  <li><a href="../classes/PoolColorArray.html">PoolColorArray</a></li>
+  <li><a href="../classes/PoolIntArray.html">PoolIntArray</a></li>
+  <li><a href="../classes/PoolRealArray.html">PoolRealArray</a></li>
+  <li><a href="../classes/PoolStringArray.html">PoolStringArray</a></li>
+  <li><a href="../classes/PoolVector2Array.html">PoolVector2Array</a></li>
+  <li><a href="../classes/PoolVector3Array.html">PoolVector3Array</a></li>
+  <li><a href="../classes/Quat.html">Quat</a></li>
+  <li><a href="../classes/Rect2.html">Rect2</a></li>
+  <li><a href="../classes/RID.html">RID</a></li>
+  <li><a href="../classes/String.html">String</a></li>
+  <li><a href="../classes/StringName.html">StringName</a></li>
+  <li><a href="../classes/Transform.html">Transform</a></li>
+  <li><a href="../classes/Transform2D.html">Transform2D</a></li>
+  <li><a href="../classes/Variant.html">Variant</a></li>
+  <li><a href="../classes/Vector2.html">Vector2</a></li>
+  <li><a href="../classes/Vector3.html">Vector3</a></li>
+</ul>
+<h2>Topics</h2>
+<ul class="">
+  <li><a href="../topics/CHANGELOG.md.html">CHANGELOG</a></li>
+  <li><a href="../topics/README.md.html">README</a></li>
+  <li><a href="../topics/building.md.html">building</a></li>
+  <li><a href="../topics/configuring.md.html">configuring</a></li>
+  <li><a href="../topics/from-gdscript-to-lua.md.html">from-gdscript-to-lua</a></li>
+  <li><a href="../topics/limitations.md.html">limitations</a></li>
+  <li><a href="../topics/luarocks.md.html">luarocks</a></li>
+  <li><a href="../topics/plugin.md.html">plugin</a></li>
+</ul>
+<h2>Examples</h2>
+<ul class="nowrap">
+  <li><a href="../examples/lps_coroutine.lua.html">lps_coroutine.lua</a></li>
+  <li><a href="../examples/lua_repl.lua.html">lua_repl.lua</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>LuaScriptInstance</code></h1>
+<p>Script instance metatable, the Lua side of a Lua script instance.</p>
+<p>
+
+<p> These are created when a PluginScript is instanced and are only directly
+ accessible in the script's functions as the <code>self</code> parameter or gotten from
+ <a href="../classes/Object.html#">Object</a>s using <a href="../modules/GD.html#get_lua_instance">GD.get_lua_instance</a>.</p>
+
+
+<pre>
+typedef struct {
+  godot_object *__owner;
+  lps_lua_script *__script;
+  lps_lua_object __data;
+} lps_script_instance;
+</pre>
+
+</p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#__concat">__concat (a, b)</a></td>
+	<td class="summary">Concatenates values.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#__index">__index (key)</a></td>
+	<td class="summary">Try indexing <a href="../modules/LuaScriptInstance.html#__owner">__owner</a>, then <a href="../modules/LuaScriptInstance.html#__data">__data</a>, then <a href="../modules/LuaScriptInstance.html#__script">__script</a>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#__newindex">__newindex (key, value)</a></td>
+	<td class="summary">Calls <a href="../classes/Object.html#Object:set">Object:set</a> if <code>key</code> is the name of a property known to base class, <a href="../modules/LuaScriptInstance.html#rawset">rawset</a> otherwise.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#__tostring">__tostring ()</a></td>
+	<td class="summary">Returns a Lua string representation of <a href="../modules/LuaScriptInstance.html#__owner">__owner</a>, as per <a href="../classes/Object.html#Object:to_string">Object:to_string</a>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#rawget">rawget (index)</a></td>
+	<td class="summary">Get a value from <a href="../modules/LuaScriptInstance.html#__data">__data</a>, bypassing the check for getters.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#rawset">rawset (index, value)</a></td>
+	<td class="summary">Sets a value on the <a href="../modules/LuaScriptInstance.html#__data">__data</a>, bypassing the check for setters.</td>
+	</tr>
+</table>
+<h2><a href="#Fields">Fields</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#__data">__data</a></td>
+	<td class="summary"><a href="../modules/LuaObject.html#">LuaObject</a> that references an internal table for holding arbitrary data.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#__owner">__owner</a></td>
+	<td class="summary"><a href="../classes/Object.html#">Object</a> that this script instance is attached to.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#__script">__script</a></td>
+	<td class="summary"><a href="../modules/LuaScript.html#">LuaScript</a> for instance, the one returned by the Lua script when
+ loading it as a PluginScript.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "__concat"></a>
+    <strong>__concat (a, b)</strong>
+    </dt>
+    <dd>
+    Concatenates values.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a</span>
+          First value, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+        <li><span class="parameter">b</span>
+          First value, stringified with <a href="../modules/GD.html#str">GD.str</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="../classes/String.html#">String</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "__index"></a>
+    <strong>__index (key)</strong>
+    </dt>
+    <dd>
+    Try indexing <a href="../modules/LuaScriptInstance.html#__owner">__owner</a>, then <a href="../modules/LuaScriptInstance.html#__data">__data</a>, then <a href="../modules/LuaScriptInstance.html#__script">__script</a>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">key</span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+
+
+
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../classes/Object.html#Object:__index">Object.__index</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "__newindex"></a>
+    <strong>__newindex (key, value)</strong>
+    </dt>
+    <dd>
+    Calls <a href="../classes/Object.html#Object:set">Object:set</a> if <code>key</code> is the name of a property known to base class, <a href="../modules/LuaScriptInstance.html#rawset">rawset</a> otherwise.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">key</span>
+
+
+
+        </li>
+        <li><span class="parameter">value</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "__tostring"></a>
+    <strong>__tostring ()</strong>
+    </dt>
+    <dd>
+    Returns a Lua string representation of <a href="../modules/LuaScriptInstance.html#__owner">__owner</a>, as per <a href="../classes/Object.html#Object:to_string">Object:to_string</a>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "rawget"></a>
+    <strong>rawget (index)</strong>
+    </dt>
+    <dd>
+    Get a value from <a href="../modules/LuaScriptInstance.html#__data">__data</a>, bypassing the check for getters.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">index</span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "rawset"></a>
+    <strong>rawset (index, value)</strong>
+    </dt>
+    <dd>
+    Sets a value on the <a href="../modules/LuaScriptInstance.html#__data">__data</a>, bypassing the check for setters.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">index</span>
+
+
+
+        </li>
+        <li><span class="parameter">value</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Fields"></a>Fields</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "__data"></a>
+    <strong>__data</strong>
+    </dt>
+    <dd>
+    <a href="../modules/LuaObject.html#">LuaObject</a> that references an internal table for holding arbitrary data.
+
+
+    <ul>
+        <li><span class="parameter">__data</span>
+            <span class="types"><span class="type">LuaObject</span></span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "__owner"></a>
+    <strong>__owner</strong>
+    </dt>
+    <dd>
+    <a href="../classes/Object.html#">Object</a> that this script instance is attached to.
+ This is the Godot side of the instance.
+
+
+    <ul>
+        <li><span class="parameter">__owner</span>
+            <span class="types"><a class="type" href="../classes/Object.html#">Object</a></span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "__script"></a>
+    <strong>__script</strong>
+    </dt>
+    <dd>
+    <a href="../modules/LuaScript.html#">LuaScript</a> for instance, the one returned by the Lua script when
+ loading it as a PluginScript.  Note that calling <a href="../classes/Object.html#Object:get_script">Object:get_script</a> will
+ return an <a href="../classes/Object.html#">Object</a> rather than this wrapper.
+
+
+    <ul>
+        <li><span class="parameter">__script</span>
+            <span class="types"><span class="type">LuaScript</span></span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2023-01-04 08:52:34 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

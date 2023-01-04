@@ -32,7 +32,7 @@
 
 <h2>Contents</h2>
 <ul>
-<li><a href="#Functions">Functions</a></li>
+<li><a href="#Class_LuaObject">Class LuaObject </a></li>
 </ul>
 
 
@@ -41,11 +41,11 @@
   <li><a href="../modules/Enumerations.html">Enumerations</a></li>
   <li><a href="../modules/GD.html">GD</a></li>
   <li><a href="../modules/Globals.html">Globals</a></li>
-  <li><a href="../modules/LuaObject.html">LuaObject</a></li>
+  <li><strong>LuaObject</strong></li>
   <li><a href="../modules/LuaScript.html">LuaScript</a></li>
   <li><a href="../modules/LuaScriptInstance.html">LuaScriptInstance</a></li>
   <li><a href="../modules/OOP.html">OOP</a></li>
-  <li><strong>math_extras</strong></li>
+  <li><a href="../modules/math_extras.html">math_extras</a></li>
   <li><a href="../modules/package_extras.html">package_extras</a></li>
   <li><a href="../modules/property.html">property</a></li>
   <li><a href="../modules/signal.html">signal</a></li>
@@ -104,22 +104,57 @@
 
 <div id="content">
 
-<h1>Module <code>math_extras</code></h1>
-<p>Extra functionality for Lua's <a href="https://www.lua.org/manual/5.1/manual.html#5.6">math</a> library.</p>
+<h1>Module <code>LuaObject</code></h1>
+<p>Internal struct to store references to Lua objects, like tables and coroutines.</p>
 <p>
+
+
+<p> References are stored in a global cache table, indexed by their own address,
+ and are only unreferenced when <code>LuaObject_destroy</code> is called.
+ Thus this struct must used with care.</p>
+
+<p> This is used internally for having <a href="../modules/LuaScript.html#">LuaScript</a> and <a href="../modules/LuaScriptInstance.html#">LuaScriptInstance</a>
+ be structs that reference tables.</p>
+
+
+<pre>
+typedef struct {
+  void *__address;
+} lps_lua_object;
+</pre>
 
 </p>
 
 
-<h2><a href="#Functions">Functions</a></h2>
+<h2><a href="#Class_LuaObject">Class LuaObject </a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#math.clamp">math.clamp (x, min, max)</a></td>
-	<td class="summary">Returns the value <code>x</code> clamped between an upper (<code>max</code>) and lower bounds (<code>min</code>).</td>
+	<td class="name" nowrap><a href="#LuaObject.__address">LuaObject.__address</a></td>
+	<td class="summary">Wrapped reference memory address</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#math.lerp">math.lerp (from, to, amount)</a></td>
-	<td class="summary">Linearly interpolates values <code>from</code> and <code>to</code> by <code>amount</code>.</td>
+	<td class="name" nowrap><a href="#LuaObject:__call">LuaObject:__call (...)</a></td>
+	<td class="summary">Forwards call to referenced Lua object</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#LuaObject:__index">LuaObject:__index (index)</a></td>
+	<td class="summary">Forwards indexing to referenced Lua object</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#LuaObject:__ipairs">LuaObject:__ipairs ()</a></td>
+	<td class="summary">Forwards <a href="https://www.lua.org/manual/5.1/manual.html#pdf-ipairs">ipairs</a> to referenced Lua object</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#LuaObject:__len">LuaObject:__len ()</a></td>
+	<td class="summary">Forwards length operator to referenced Lua object</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#LuaObject:__newindex">LuaObject:__newindex (index, value)</a></td>
+	<td class="summary">Forwards indexing to referenced Lua object</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#LuaObject:__pairs">LuaObject:__pairs ()</a></td>
+	<td class="summary">Forwards <a href="https://www.lua.org/manual/5.1/manual.html#pdf-pairs">pairs</a> to referenced Lua object</td>
 	</tr>
 </table>
 
@@ -127,34 +162,64 @@
 <br/>
 
 
-    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+    <h2 class="section-header "><a name="Class_LuaObject"></a>Class LuaObject </h2>
 
     <dl class="function">
     <dt>
-    <a name = "math.clamp"></a>
-    <strong>math.clamp (x, min, max)</strong>
+    <a name = "LuaObject.__address"></a>
+    <strong>LuaObject.__address</strong>
     </dt>
     <dd>
-    Returns the value <code>x</code> clamped between an upper (<code>max</code>) and lower bounds (<code>min</code>).
- Any values comparable by order, that is, with a less than operator, can be passed in.
+    Wrapped reference memory address
+
+
+    <ul>
+        <li><span class="parameter">__address</span>
+            <span class="types"><span class="type">void*</span></span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "LuaObject:__call"></a>
+    <strong>LuaObject:__call (...)</strong>
+    </dt>
+    <dd>
+    Forwards call to referenced Lua object
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">x</span>
-            <span class="types"><a class="type" href="../classes/Vector2.html#">Vector2</a>, <a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Color.html#">Color</a> or <span class="type">number</span></span>
+        <li><span class="parameter">...</span>
 
 
 
         </li>
-        <li><span class="parameter">min</span>
-            <span class="types"><a class="type" href="../classes/Vector2.html#">Vector2</a>, <a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Color.html#">Color</a> or <span class="type">number</span></span>
+    </ul>
 
 
 
-        </li>
-        <li><span class="parameter">max</span>
-            <span class="types"><a class="type" href="../classes/Vector2.html#">Vector2</a>, <a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Color.html#">Color</a> or <span class="type">number</span></span>
+
+
+</dd>
+    <dt>
+    <a name = "LuaObject:__index"></a>
+    <strong>LuaObject:__index (index)</strong>
+    </dt>
+    <dd>
+    Forwards indexing to referenced Lua object
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">index</span>
 
 
 
@@ -164,10 +229,7 @@
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><a class="type" href="../classes/Vector2.html#">Vector2</a>, <a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Color.html#">Color</a> or <span class="type">number</span></span>
-
-
-
+        value
     </ol>
 
 
@@ -175,44 +237,74 @@
 
 </dd>
     <dt>
-    <a name = "math.lerp"></a>
-    <strong>math.lerp (from, to, amount)</strong>
+    <a name = "LuaObject:__ipairs"></a>
+    <strong>LuaObject:__ipairs ()</strong>
     </dt>
     <dd>
-    Linearly interpolates values <code>from</code> and <code>to</code> by <code>amount</code>.
- Equivalent to <code>from + (amount * (to - from))</code>.
+    Forwards <a href="https://www.lua.org/manual/5.1/manual.html#pdf-ipairs">ipairs</a> to referenced Lua object
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "LuaObject:__len"></a>
+    <strong>LuaObject:__len ()</strong>
+    </dt>
+    <dd>
+    Forwards length operator to referenced Lua object
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        Object length, if supported
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "LuaObject:__newindex"></a>
+    <strong>LuaObject:__newindex (index, value)</strong>
+    </dt>
+    <dd>
+    Forwards indexing to referenced Lua object
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">from</span>
-            <span class="types"><a class="type" href="../classes/Vector2.html#">Vector2</a>, <a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Color.html#">Color</a>, <a class="type" href="../classes/Quat.html#">Quat</a> or <span class="type">number</span></span>
+        <li><span class="parameter">index</span>
 
 
 
         </li>
-        <li><span class="parameter">to</span>
-            <span class="types"><a class="type" href="../classes/Vector2.html#">Vector2</a>, <a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Color.html#">Color</a>, <a class="type" href="../classes/Quat.html#">Quat</a> or <span class="type">number</span></span>
-
-
-
-        </li>
-        <li><span class="parameter">amount</span>
-            <span class="types"><span class="type">number</span></span>
+        <li><span class="parameter">value</span>
 
 
 
         </li>
     </ul>
 
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><a class="type" href="../classes/Vector2.html#">Vector2</a>, <a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Color.html#">Color</a>, <a class="type" href="../classes/Quat.html#">Quat</a> or <span class="type">number</span></span>
 
 
 
-    </ol>
+
+</dd>
+    <dt>
+    <a name = "LuaObject:__pairs"></a>
+    <strong>LuaObject:__pairs ()</strong>
+    </dt>
+    <dd>
+    Forwards <a href="https://www.lua.org/manual/5.1/manual.html#pdf-pairs">pairs</a> to referenced Lua object
+
+
+
 
 
 

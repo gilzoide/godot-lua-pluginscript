@@ -32,7 +32,7 @@
 
 <h2>Contents</h2>
 <ul>
-<li><a href="#Functions">Functions</a></li>
+<li><a href="#Class_LuaScript">Class LuaScript </a></li>
 </ul>
 
 
@@ -42,10 +42,10 @@
   <li><a href="../modules/GD.html">GD</a></li>
   <li><a href="../modules/Globals.html">Globals</a></li>
   <li><a href="../modules/LuaObject.html">LuaObject</a></li>
-  <li><a href="../modules/LuaScript.html">LuaScript</a></li>
+  <li><strong>LuaScript</strong></li>
   <li><a href="../modules/LuaScriptInstance.html">LuaScriptInstance</a></li>
   <li><a href="../modules/OOP.html">OOP</a></li>
-  <li><strong>math_extras</strong></li>
+  <li><a href="../modules/math_extras.html">math_extras</a></li>
   <li><a href="../modules/package_extras.html">package_extras</a></li>
   <li><a href="../modules/property.html">property</a></li>
   <li><a href="../modules/signal.html">signal</a></li>
@@ -104,22 +104,49 @@
 
 <div id="content">
 
-<h1>Module <code>math_extras</code></h1>
-<p>Extra functionality for Lua's <a href="https://www.lua.org/manual/5.1/manual.html#5.6">math</a> library.</p>
+<h1>Module <code>LuaScript</code></h1>
+<p>Internal struct that wrap scripts with metadata.</p>
 <p>
+
+
+
+<pre>
+typedef struct {
+  godot_string_name __path;
+  godot_string_name __base;
+  lps_lua_object __properties;
+  lps_lua_object __implementation;
+} lps_lua_script;
+</pre>
 
 </p>
 
 
-<h2><a href="#Functions">Functions</a></h2>
+<h2><a href="#Class_LuaScript">Class LuaScript </a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#math.clamp">math.clamp (x, min, max)</a></td>
-	<td class="summary">Returns the value <code>x</code> clamped between an upper (<code>max</code>) and lower bounds (<code>min</code>).</td>
+	<td class="name" nowrap><a href="#LuaScript.__base">LuaScript.__base</a></td>
+	<td class="summary">Base class name</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#math.lerp">math.lerp (from, to, amount)</a></td>
-	<td class="summary">Linearly interpolates values <code>from</code> and <code>to</code> by <code>amount</code>.</td>
+	<td class="name" nowrap><a href="#LuaScript.__implementation">LuaScript.__implementation</a></td>
+	<td class="summary">Table returned from script file, holding method implementations</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#LuaScript.__path">LuaScript.__path</a></td>
+	<td class="summary">Script path, usually relative to <code>res://</code></td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#LuaScript.__properties">LuaScript.__properties</a></td>
+	<td class="summary">Table of known properties</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#LuaScript:__index">LuaScript:__index (index)</a></td>
+	<td class="summary">Forwards indexing to script implementation</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#LuaScript:has_property">LuaScript:has_property (name)</a></td>
+	<td class="summary">Returns whether this script or its base class has a property named <code>name</code>.</td>
 	</tr>
 </table>
 
@@ -127,34 +154,108 @@
 <br/>
 
 
-    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+    <h2 class="section-header "><a name="Class_LuaScript"></a>Class LuaScript </h2>
 
     <dl class="function">
     <dt>
-    <a name = "math.clamp"></a>
-    <strong>math.clamp (x, min, max)</strong>
+    <a name = "LuaScript.__base"></a>
+    <strong>LuaScript.__base</strong>
     </dt>
     <dd>
-    Returns the value <code>x</code> clamped between an upper (<code>max</code>) and lower bounds (<code>min</code>).
- Any values comparable by order, that is, with a less than operator, can be passed in.
+    Base class name
+
+
+    <ul>
+        <li><span class="parameter">__base</span>
+            <span class="types"><a class="type" href="../classes/StringName.html#">StringName</a></span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "LuaScript.__implementation"></a>
+    <strong>LuaScript.__implementation</strong>
+    </dt>
+    <dd>
+    Table returned from script file, holding method implementations
+
+
+    <ul>
+        <li><span class="parameter">__implementation</span>
+            <span class="types"><span class="type">LuaObject</span></span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "LuaScript.__path"></a>
+    <strong>LuaScript.__path</strong>
+    </dt>
+    <dd>
+    Script path, usually relative to <code>res://</code>
+
+
+    <ul>
+        <li><span class="parameter">__path</span>
+            <span class="types"><a class="type" href="../classes/StringName.html#">StringName</a></span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "LuaScript.__properties"></a>
+    <strong>LuaScript.__properties</strong>
+    </dt>
+    <dd>
+    Table of known properties
+
+
+    <ul>
+        <li><span class="parameter">__properties</span>
+            <span class="types"><span class="type">LuaObject</span></span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "LuaScript:__index"></a>
+    <strong>LuaScript:__index (index)</strong>
+    </dt>
+    <dd>
+    Forwards indexing to script implementation
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">x</span>
-            <span class="types"><a class="type" href="../classes/Vector2.html#">Vector2</a>, <a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Color.html#">Color</a> or <span class="type">number</span></span>
-
-
-
-        </li>
-        <li><span class="parameter">min</span>
-            <span class="types"><a class="type" href="../classes/Vector2.html#">Vector2</a>, <a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Color.html#">Color</a> or <span class="type">number</span></span>
-
-
-
-        </li>
-        <li><span class="parameter">max</span>
-            <span class="types"><a class="type" href="../classes/Vector2.html#">Vector2</a>, <a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Color.html#">Color</a> or <span class="type">number</span></span>
+        <li><span class="parameter">index</span>
 
 
 
@@ -164,10 +265,7 @@
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><a class="type" href="../classes/Vector2.html#">Vector2</a>, <a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Color.html#">Color</a> or <span class="type">number</span></span>
-
-
-
+        Value
     </ol>
 
 
@@ -175,40 +273,25 @@
 
 </dd>
     <dt>
-    <a name = "math.lerp"></a>
-    <strong>math.lerp (from, to, amount)</strong>
+    <a name = "LuaScript:has_property"></a>
+    <strong>LuaScript:has_property (name)</strong>
     </dt>
     <dd>
-    Linearly interpolates values <code>from</code> and <code>to</code> by <code>amount</code>.
- Equivalent to <code>from + (amount * (to - from))</code>.
+    Returns whether this script or its base class has a property named <code>name</code>.
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">from</span>
-            <span class="types"><a class="type" href="../classes/Vector2.html#">Vector2</a>, <a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Color.html#">Color</a>, <a class="type" href="../classes/Quat.html#">Quat</a> or <span class="type">number</span></span>
-
-
-
-        </li>
-        <li><span class="parameter">to</span>
-            <span class="types"><a class="type" href="../classes/Vector2.html#">Vector2</a>, <a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Color.html#">Color</a>, <a class="type" href="../classes/Quat.html#">Quat</a> or <span class="type">number</span></span>
-
-
-
-        </li>
-        <li><span class="parameter">amount</span>
-            <span class="types"><span class="type">number</span></span>
-
-
-
+        <li><span class="parameter">name</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+          Property name
         </li>
     </ul>
 
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><a class="type" href="../classes/Vector2.html#">Vector2</a>, <a class="type" href="../classes/Vector3.html#">Vector3</a>, <a class="type" href="../classes/Color.html#">Color</a>, <a class="type" href="../classes/Quat.html#">Quat</a> or <span class="type">number</span></span>
+           <span class="types"><span class="type">bool</span></span>
 
 
 

@@ -32,23 +32,10 @@
 
 <h2>Contents</h2>
 <ul>
-<li><a href="#Enabling">Enabling </a></li>
-<li><a href="#REPL">REPL </a></li>
-<li><a href="#Minify_on_release_export">Minify on release export </a></li>
+<li><a href="#Functions">Functions</a></li>
 </ul>
 
 
-<h2>Topics</h2>
-<ul class="">
-  <li><a href="../topics/CHANGELOG.md.html">CHANGELOG</a></li>
-  <li><a href="../topics/README.md.html">README</a></li>
-  <li><a href="../topics/building.md.html">building</a></li>
-  <li><a href="../topics/configuring.md.html">configuring</a></li>
-  <li><a href="../topics/from-gdscript-to-lua.md.html">from-gdscript-to-lua</a></li>
-  <li><a href="../topics/limitations.md.html">limitations</a></li>
-  <li><a href="../topics/luarocks.md.html">luarocks</a></li>
-  <li><strong>plugin</strong></li>
-</ul>
 <h2>Modules</h2>
 <ul class="nowrap">
   <li><a href="../modules/Enumerations.html">Enumerations</a></li>
@@ -61,7 +48,7 @@
   <li><a href="../modules/math_extras.html">math_extras</a></li>
   <li><a href="../modules/package_extras.html">package_extras</a></li>
   <li><a href="../modules/property.html">property</a></li>
-  <li><a href="../modules/signal.html">signal</a></li>
+  <li><strong>signal</strong></li>
   <li><a href="../modules/string_extras.html">string_extras</a></li>
 </ul>
 <h2>Scripts</h2>
@@ -86,8 +73,8 @@
   <li><a href="../classes/PoolVector2Array.html">PoolVector2Array</a></li>
   <li><a href="../classes/PoolVector3Array.html">PoolVector3Array</a></li>
   <li><a href="../classes/Quat.html">Quat</a></li>
-  <li><a href="../classes/RID.html">RID</a></li>
   <li><a href="../classes/Rect2.html">Rect2</a></li>
+  <li><a href="../classes/RID.html">RID</a></li>
   <li><a href="../classes/String.html">String</a></li>
   <li><a href="../classes/StringName.html">StringName</a></li>
   <li><a href="../classes/Transform.html">Transform</a></li>
@@ -95,6 +82,17 @@
   <li><a href="../classes/Variant.html">Variant</a></li>
   <li><a href="../classes/Vector2.html">Vector2</a></li>
   <li><a href="../classes/Vector3.html">Vector3</a></li>
+</ul>
+<h2>Topics</h2>
+<ul class="">
+  <li><a href="../topics/CHANGELOG.md.html">CHANGELOG</a></li>
+  <li><a href="../topics/README.md.html">README</a></li>
+  <li><a href="../topics/building.md.html">building</a></li>
+  <li><a href="../topics/configuring.md.html">configuring</a></li>
+  <li><a href="../topics/from-gdscript-to-lua.md.html">from-gdscript-to-lua</a></li>
+  <li><a href="../topics/limitations.md.html">limitations</a></li>
+  <li><a href="../topics/luarocks.md.html">luarocks</a></li>
+  <li><a href="../topics/plugin.md.html">plugin</a></li>
 </ul>
 <h2>Examples</h2>
 <ul class="nowrap">
@@ -106,48 +104,66 @@
 
 <div id="content">
 
+<h1>Module <code>signal</code></h1>
+<p>Signal declarations for scripts.</p>
+<p>
 
-<h1>Editor Plugin</h1>
-
-<p>Lua PluginScript comes with an editor plugin that has an interactive Lua
-console and an export plugin that minifies Lua scripts.</p>
-
-
-<p><a name="Enabling"></a></p>
-<h2>Enabling</h2>
-
-<p>The plugin can be enabled in the project's <code>Project -&gt; Project Settings...</code>
-window, in the <code>Plugins</code> tab:</p>
-
-<p><img src="plugin-enabling.png" alt=""/></p>
+</p>
 
 
-<p><a name="REPL"></a></p>
-<h2>REPL</h2>
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#signal">signal (...)</a></td>
+	<td class="summary">Create a signal table, only useful for declaring scripts' signals.</td>
+	</tr>
+</table>
 
-<p>An interactive Lua console is available on the bottom panel, for testing Lua
-expressions.
-It comes with a basic input history, so that pressing the up/down arrows move
-between already given inputs.
-Just like Lua/LuaJIT's interactive interpreter, <code>local</code> variables do not
-persist between expressions, so they should be declared globally if you want to
-use their value in a next expression.</p>
-
-<p><img src="plugin-repl.png" alt=""/></p>
+<br/>
+<br/>
 
 
-<p><a name="Minify_on_release_export"></a></p>
-<h2>Minify on release export</h2>
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
 
-<p>If the <a href="Configuring.md"><strong>Lua PluginScript/Export/Minify On Release Export</strong></a>
-setting is enabled, Lua scripts will get minified when exporting a release
-version of the game/application.
-Minification uses <a href="https://github.com/jirutka/luasrcdiet">LuaSrcDiet</a> and its
-<a href="https://github.com/jirutka/luasrcdiet/blob/master/doc/features-and-usage.adoc#features">maximum settings</a>.</p>
+    <dl class="function">
+    <dt>
+    <a name = "signal"></a>
+    <strong>signal (...)</strong>
+    </dt>
+    <dd>
+    Create a signal table, only useful for declaring scripts' signals.
 
-<p>Notice that minification messes with the scritps' line numbers and consequently
-with stack traces.
-That is why minification is not available for debug builds.</p>
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+          Signal argument names
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+
+
+
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../examples/lps_coroutine.lua.html#">lps_coroutine.lua</a>
+    </ul>
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">MyClass.something_happened = signal()
+MyClass.something_happened_with_args = signal(<span class="string">'arg1'</span>, <span class="string">'arg2'</span>, <span class="string">'etc'</span>)</pre>
+    </ul>
+
+</dd>
+</dl>
 
 
 </div> <!-- id="content" -->

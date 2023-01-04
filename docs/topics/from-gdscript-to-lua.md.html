@@ -1,0 +1,725 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Godot Lua PluginScript</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Empty_script">Empty script </a></li>
+<li><a href="#Declaring_methods">Declaring methods </a></li>
+<li><a href="#Calling_methods_on_instance">Calling methods on instance </a></li>
+<li><a href="#Declaring_and_accessing_properties">Declaring and accessing properties </a></li>
+<li><a href="#Declaring_exported_properties">Declaring exported properties </a></li>
+<li><a href="#Getting_nodes">Getting nodes </a></li>
+<li><a href="#_onready__properties">`onready` properties </a></li>
+<li><a href="#Property_setter_functions">Property setter functions </a></li>
+<li><a href="#Property_getter_functions">Property getter functions </a></li>
+<li><a href="#Arrays">Arrays </a></li>
+<li><a href="#Declaring_and_emitting_signals">Declaring and emitting signals </a></li>
+<li><a href="#Loading_Resources">Loading Resources </a></li>
+<li><a href="#Coroutines_and_signals">Coroutines and signals </a></li>
+<li><a href="#Tool_scripts">Tool scripts </a></li>
+</ul>
+
+
+<h2>Topics</h2>
+<ul class="">
+  <li><a href="../topics/CHANGELOG.md.html">CHANGELOG</a></li>
+  <li><a href="../topics/README.md.html">README</a></li>
+  <li><a href="../topics/building.md.html">building</a></li>
+  <li><a href="../topics/configuring.md.html">configuring</a></li>
+  <li><strong>from-gdscript-to-lua</strong></li>
+  <li><a href="../topics/limitations.md.html">limitations</a></li>
+  <li><a href="../topics/luarocks.md.html">luarocks</a></li>
+  <li><a href="../topics/plugin.md.html">plugin</a></li>
+</ul>
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/Enumerations.html">Enumerations</a></li>
+  <li><a href="../modules/GD.html">GD</a></li>
+  <li><a href="../modules/Globals.html">Globals</a></li>
+  <li><a href="../modules/LuaObject.html">LuaObject</a></li>
+  <li><a href="../modules/LuaScript.html">LuaScript</a></li>
+  <li><a href="../modules/LuaScriptInstance.html">LuaScriptInstance</a></li>
+  <li><a href="../modules/OOP.html">OOP</a></li>
+  <li><a href="../modules/math_extras.html">math_extras</a></li>
+  <li><a href="../modules/package_extras.html">package_extras</a></li>
+  <li><a href="../modules/property.html">property</a></li>
+  <li><a href="../modules/signal.html">signal</a></li>
+  <li><a href="../modules/string_extras.html">string_extras</a></li>
+</ul>
+<h2>Scripts</h2>
+<ul class="nowrap">
+  <li><a href="../scripts/lps_coroutine.lua.html">lps_coroutine.lua</a></li>
+</ul>
+<h2>Classes</h2>
+<ul class="nowrap">
+  <li><a href="../classes/AABB.html">AABB</a></li>
+  <li><a href="../classes/Array.html">Array</a></li>
+  <li><a href="../classes/Basis.html">Basis</a></li>
+  <li><a href="../classes/Color.html">Color</a></li>
+  <li><a href="../classes/Dictionary.html">Dictionary</a></li>
+  <li><a href="../classes/NodePath.html">NodePath</a></li>
+  <li><a href="../classes/Object.html">Object</a></li>
+  <li><a href="../classes/Plane.html">Plane</a></li>
+  <li><a href="../classes/PoolByteArray.html">PoolByteArray</a></li>
+  <li><a href="../classes/PoolColorArray.html">PoolColorArray</a></li>
+  <li><a href="../classes/PoolIntArray.html">PoolIntArray</a></li>
+  <li><a href="../classes/PoolRealArray.html">PoolRealArray</a></li>
+  <li><a href="../classes/PoolStringArray.html">PoolStringArray</a></li>
+  <li><a href="../classes/PoolVector2Array.html">PoolVector2Array</a></li>
+  <li><a href="../classes/PoolVector3Array.html">PoolVector3Array</a></li>
+  <li><a href="../classes/Quat.html">Quat</a></li>
+  <li><a href="../classes/RID.html">RID</a></li>
+  <li><a href="../classes/Rect2.html">Rect2</a></li>
+  <li><a href="../classes/String.html">String</a></li>
+  <li><a href="../classes/StringName.html">StringName</a></li>
+  <li><a href="../classes/Transform.html">Transform</a></li>
+  <li><a href="../classes/Transform2D.html">Transform2D</a></li>
+  <li><a href="../classes/Variant.html">Variant</a></li>
+  <li><a href="../classes/Vector2.html">Vector2</a></li>
+  <li><a href="../classes/Vector3.html">Vector3</a></li>
+</ul>
+<h2>Examples</h2>
+<ul class="nowrap">
+  <li><a href="../examples/lps_coroutine.lua.html">lps_coroutine.lua</a></li>
+  <li><a href="../examples/lua_repl.lua.html">lua_repl.lua</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+
+<h1>From GDScript to Lua</h1>
+<p>Some examples on how to translate GDScript code to Lua.</p>
+
+<p>This document assumes you know how to write GDScript code.
+Check out <a href="https://docs.godotengine.org/en/stable/tutorials/scripting/gdscript/gdscript_basics.html">GDScript Basics</a> for more detail into the GDScript language.</p>
+
+
+<p><a name="Empty_script"></a></p>
+<h2>Empty script</h2>
+<p>GDScript:</p>
+
+<pre>
+extends Node
+# optionally, give your class a name
+class_name MyClass
+</pre>
+
+
+<p>Lua:</p>
+
+<pre>
+<span class="keyword">local</span> MyClass = {
+  extends = Node,
+  <span class="comment">-- optionally, give your class a name
+</span>  class_name = <span class="string">'MyClass'</span>,
+}
+
+<span class="comment">-- Returning the class table is mandatory when creating Godot Lua scripts
+</span><span class="keyword">return</span> MyClass
+</pre>
+
+
+
+<p><a name="Declaring_methods"></a></p>
+<h2>Declaring methods</h2>
+<p>GDScript:</p>
+
+<pre>
+extends Node
+
+
+func _ready():
+    <span class="global">print</span>(<span class="string">"I'm ready!"</span>)
+
+func receives_argument(arg1):
+    pass
+
+func returns_value():
+    <span class="keyword">return</span> <span class="number">42</span>
+</pre>
+
+
+<p>Lua:</p>
+
+<pre>
+<span class="keyword">local</span> MyClass = {
+  extends = Node,
+}
+
+<span class="comment">-- Use <code>:</code> to declare methods, so the function implicitly
+</span><span class="comment">-- declares the <code>self</code> argument
+</span><span class="keyword">function</span> MyClass:_ready()
+  <span class="global">print</span>(<span class="string">"I'm ready!"</span>)
+<span class="keyword">end</span>
+<span class="comment">-- ^ The above is the same as:
+</span><span class="keyword">function</span> MyClass._ready(self)
+  <span class="global">print</span>(<span class="string">"I'm ready!"</span>)
+<span class="keyword">end</span>
+<span class="comment">-- You need the <code>self</code> argument to access properties and
+</span><span class="comment">-- other methods on the object instance
+</span>
+<span class="keyword">function</span> MyClass:receives_argument(arg1)
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> MyClass:returns_value()
+  <span class="keyword">return</span> <span class="number">42</span>
+<span class="keyword">end</span>
+
+<span class="comment">-- Assigning functions to the class table works too
+</span>MyClass.another_function = <span class="keyword">function</span>(self, delta)
+<span class="keyword">end</span>
+
+<span class="keyword">return</span> MyClass
+</pre>
+
+
+
+<p><a name="Calling_methods_on_instance"></a></p>
+<h2>Calling methods on instance</h2>
+<p>GDScript:</p>
+
+<pre>
+extends Node
+
+func _ready():
+    set_process(<span class="keyword">true</span>)
+</pre>
+
+
+<p>Lua:</p>
+
+<pre>
+<span class="keyword">local</span> MyClass = { extends = Node }
+
+<span class="keyword">function</span> MyClass:_ready()
+  <span class="comment">-- Object methods need to be accessed from <code>self</code>
+</span>  <span class="comment">-- Note the method call notation with <code>:</code>
+</span>  self:set_process(<span class="keyword">true</span>)
+
+  <span class="comment">-- Just like when defining methods, the <code>:</code> implicitly
+</span>  <span class="comment">-- passes <code>self</code> to the function, so both are the same
+</span>  self:set_process(<span class="keyword">true</span>)
+  self.set_process(self, <span class="keyword">true</span>)
+<span class="keyword">end</span>
+
+<span class="keyword">return</span> MyClass
+</pre>
+
+<p>Lua function call reference, explaining the method syntax sugar: https://www.lua.org/manual/5.1/manual.html#2.5.8</p>
+
+
+<p><a name="Declaring_and_accessing_properties"></a></p>
+<h2>Declaring and accessing properties</h2>
+<p>GDScript:</p>
+
+<pre>
+extends Node
+
+
+var some_property = <span class="string">"Hello!"</span>
+
+
+func _ready():
+    <span class="global">print</span>(some_property)  #<span class="comment">--&gt; "Hello!"
+</span>    some_property = <span class="string">"another value"</span>
+    <span class="global">print</span>(some_property)  #<span class="comment">--&gt; "another value"
+</span>
+    <span class="global">print</span>(property_not_declared)  #<span class="comment">--&gt; Error!!!
+</span>        # ^ identifier <span class="keyword">not</span> declared <span class="keyword">in</span> current scope
+
+    another_property_not_declared = <span class="string">"value"</span>  #<span class="comment">--&gt; Error!!!
+</span>    # ^ identifier <span class="keyword">not</span> declared <span class="keyword">in</span> current scope
+</pre>
+
+
+<p>Lua:</p>
+
+<pre>
+<span class="keyword">local</span> MyClass = { extends = Node }
+
+MyClass.some_property = <span class="string">"Hello!"</span>
+
+MyClass.some_property_with_metadata = property({
+  default = <span class="number">42</span>,
+  <span class="global">type</span> = int,
+})
+
+<span class="keyword">function</span> MyClass:_ready()
+  <span class="comment">-- object properties need to be accessed from <code>self</code>
+</span>  <span class="global">print</span>(self.some_property)  <span class="comment">--&gt; "Hello!"
+</span>  self.some_property = <span class="string">"another value"</span>
+  <span class="global">print</span>(self.some_property)  <span class="comment">--&gt; "another value"
+</span>
+  <span class="comment">-- This does not error, you simply get a <code>nil</code> value
+</span>  <span class="global">print</span>(self.property_not_declared)  <span class="comment">--&gt; nil
+</span>
+  <span class="comment">-- This does not error, the value is set correctly
+</span>  self.another_property_not_declared = <span class="string">"value"</span>
+  <span class="comment">-- WARNING: properties not declared in <code>MyClass</code> are
+</span>  <span class="comment">-- only available in Lua
+</span>  <span class="comment">-- GDScript / C# will not be able to access them
+</span><span class="keyword">end</span>
+
+<span class="keyword">return</span> MyClass
+</pre>
+
+
+
+<p><a name="Declaring_exported_properties"></a></p>
+<h2>Declaring exported properties</h2>
+<p>GDScript</p>
+
+<pre>
+extends Node
+
+
+export var some_value = <span class="string">""</span>
+export(Array) var some_typed_value
+export(int, <span class="number">1</span>, <span class="number">10</span>) var some_int_from_1_to_10 = <span class="number">1</span>
+</pre>
+
+
+<p>Lua:</p>
+
+<pre>
+<span class="keyword">local</span> MyClass = { extends = Node }
+
+<span class="comment">-- Use the <code>export</code> function to export properties
+</span>MyClass.some_value = export(<span class="string">""</span>)
+
+MyClass.some_typed_value = export({
+  <span class="global">type</span> = Array,
+})
+
+<span class="comment">-- Special export hints need <code>hint</code> and optionally <code>hint_string</code>
+</span><span class="comment">-- It's not a nice API, as it just interfaces directly with GDNative
+</span><span class="comment">-- Maybe someday we'll implement something nicer...
+</span>MyClass.some_int_from_1_to_10 = export({
+  default_value = <span class="number">1</span>,
+  <span class="global">type</span> = int,
+  hint = PropertyHint.RANGE,
+  hint_string = <span class="string">"1,10"</span>,
+})
+
+<span class="keyword">return</span> MyClass
+</pre>
+
+<p>As noted in the <a href="limitations.md">limitations document</a>, instances in editor are not reloaded when a script is edited.
+That means that adding/removing/updating an exported property won't show in
+the editor and <code>tool</code> scripts won't be reloaded until the project is reopened.</p>
+
+
+<p><a name="Getting_nodes"></a></p>
+<h2>Getting nodes</h2>
+<p>GDScript:</p>
+
+<pre>
+extends Node
+
+
+func _ready():
+    var some_child_node = $child_node
+    # <span class="backtick"><code>$child_node</code></span> is the same as <span class="backtick"><code>get_node(&quot;child_node&quot;)</code></span>
+    some_child_node = get_node(<span class="string">"child_node"</span>)
+</pre>
+
+
+<p>Lua:</p>
+
+<pre>
+<span class="keyword">local</span> MyClass = { extends = Node }
+
+<span class="keyword">function</span> MyClass:_ready()
+  <span class="comment">-- Lua does not have the <code>$node_path</code> syntax
+</span>  <span class="comment">-- Use the <code>get_node</code> method explicitly instead
+</span>  <span class="keyword">local</span> some_child_node = self:get_node(<span class="string">"child_node"</span>)
+<span class="keyword">end</span>
+
+<span class="keyword">return</span> MyClass
+</pre>
+
+
+
+<p><a name="_onready__properties"></a></p>
+<h2><code>onready</code> properties</h2>
+<p>GDScript:</p>
+
+<pre>
+extends Node
+
+
+onready var some_child_node = $child_node
+# ^ it's the same as getting the value <span class="keyword">in</span> <span class="backtick"><code>_ready</code></span> method:
+#
+# var some_child_node
+#
+# func _ready():
+#     some_child_node = $child_node
+</pre>
+
+
+<p>Lua:</p>
+
+<pre>
+<span class="keyword">local</span> MyClass = { extends = Node }
+
+<span class="comment">-- Lua does not have the <code>onready</code> syntax
+</span><span class="comment">-- Just get the value in <code>_ready</code> method explicitly
+</span><span class="keyword">function</span> MyClass:_ready()
+  <span class="keyword">local</span> some_child_node = self:get_node(<span class="string">"child_node"</span>)
+<span class="keyword">end</span>
+
+<span class="keyword">return</span> MyClass
+</pre>
+
+
+
+<p><a name="Property_setter_functions"></a></p>
+<h2>Property setter functions</h2>
+<p>GDScript:</p>
+
+<pre>
+extends Node
+
+
+# Declaring
+var with_setter setget setter_function
+
+
+func setter_function(new_value):
+    <span class="global">print</span>(<span class="string">'with_setter new value = '</span> + new_value)
+    # setting value without <span class="backtick"><code>self.</code></span> bypasses setter
+    with_setter = new_value
+
+# Calling
+func _ready():
+    # using <span class="backtick"><code>self.</code></span> calls the setter <span class="keyword">function</span>
+    self.with_setter = <span class="string">'set via setter'</span>
+    # without <span class="backtick"><code>self.</code></span>, setter <span class="keyword">function</span> won<span class="string">'t be called
+    with_setter = '</span>this will <span class="keyword">not</span> call setter <span class="keyword">function</span>'
+</pre>
+
+
+<p>Lua:</p>
+
+<pre>
+<span class="keyword">local</span> MyClass = { extends = Node }
+
+<span class="comment">-- Declaring
+</span>MyClass.with_setter = property({
+  <span class="global">type</span> = String,
+  set = <span class="keyword">function</span>(self, new_value)
+    <span class="global">print</span>(<span class="string">'with_setter new value = '</span> .. new_value)
+    <span class="comment">-- bypass call to setter function using <a href="https://www.lua.org/manual/5.1/manual.html#pdf-rawset">rawset</a>
+</span>    self:<span class="global">rawset</span>(<span class="string">'with_setter'</span>, new_value)
+  <span class="keyword">end</span>,
+})
+
+<span class="comment">-- Calling
+</span><span class="keyword">function</span> MyClass:_ready()
+  <span class="comment">-- using indexing syntax calls the setter functions
+</span>  self.with_setter = <span class="string">'set via setter'</span>
+  <span class="comment">-- to bypass setter functions, use the <a href="https://www.lua.org/manual/5.1/manual.html#pdf-rawset">rawset</a> method
+</span>  self:<span class="global">rawset</span>(<span class="string">'with_setter'</span>, <span class="string">'this will not call setter function'</span>)
+<span class="keyword">end</span>
+
+<span class="keyword">return</span> MyClass
+</pre>
+
+
+
+<p><a name="Property_getter_functions"></a></p>
+<h2>Property getter functions</h2>
+<p>GDScript:</p>
+
+<pre>
+extends Node
+
+
+# Declaring
+var with_getter setget , getter_function = <span class="string">'default value'</span>
+
+
+func getter_function():
+    <span class="keyword">return</span> <span class="string">'constant from getter'</span>
+
+# Calling
+func _ready():
+    # using <span class="backtick"><code>self.</code></span> calls the getter <span class="keyword">function</span>
+    <span class="global">print</span>(self.with_getter)  #<span class="comment">--&gt; 'constant from getter'
+</span>    # without <span class="backtick"><code>self.</code></span>, getter <span class="keyword">function</span> won<span class="string">'t be called
+    print(with_getter)  #--&gt; '</span>default value'
+</pre>
+
+
+<p>Lua:</p>
+
+<pre>
+<span class="keyword">local</span> MyClass = { extends = Node }
+
+<span class="comment">-- Declaring
+</span>MyClass.with_getter = property({
+  default = <span class="string">'default value'</span>,
+  <span class="global">type</span> = String,
+  get = <span class="keyword">function</span>(self)
+    <span class="keyword">return</span> <span class="string">'constant from getter'</span>
+  <span class="keyword">end</span>,
+})
+
+<span class="comment">-- Calling
+</span><span class="keyword">function</span> MyClass:_ready()
+  <span class="comment">-- using indexing syntax calls the getter function
+</span>  <span class="global">print</span>(self.with_getter)  <span class="comment">--&gt; 'constant from getter'
+</span>  <span class="comment">-- to bypass getter functions, use the <a href="https://www.lua.org/manual/5.1/manual.html#pdf-rawget">rawget</a> method
+</span>  <span class="global">print</span>(self:<span class="global">rawget</span>(<span class="string">'with_getter'</span>))  <span class="comment">--&gt; 'default value'
+</span><span class="keyword">end</span>
+
+<span class="keyword">return</span> MyClass
+</pre>
+
+
+
+<p><a name="Arrays"></a></p>
+<h2>Arrays</h2>
+<p>GDScript:</p>
+
+<pre>
+extends Node
+
+func _ready():
+    # Creating an array
+    var array = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]
+
+    # Accessing individual elements
+    <span class="global">assert</span>(array[<span class="number">0</span>] == <span class="number">1</span>)
+    <span class="global">assert</span>(array[<span class="number">1</span>] == <span class="number">2</span>)
+    <span class="global">assert</span>(array[<span class="number">2</span>] == <span class="number">3</span>)
+
+    # Setting elements
+    array[<span class="number">3</span>] = <span class="number">4</span>
+
+    # Accessing out of bounds elements
+    <span class="global">print</span>(array[<span class="number">10</span>])  #<span class="comment">--&gt; Error!!!
+</span>        # ^ Invalid get index <span class="string">'10'</span>
+
+    # Get element count
+    <span class="global">print</span>(array.size())
+
+    # Iterating
+    <span class="keyword">for</span> array_element <span class="keyword">in</span> array:
+        <span class="global">print</span>(array_element)
+</pre>
+
+
+<p>Lua:</p>
+
+<pre>
+<span class="keyword">local</span> MyClass = { extends = Node }
+
+<span class="keyword">function</span> MyClass:_ready()
+  <span class="comment">-- Creating an array
+</span>  <span class="keyword">local</span> array = Array(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)
+
+  <span class="comment">-- Accessing individual elements
+</span>  <span class="comment">-- In Lua, arrays are indexed from 1 just like Lua tables
+</span>  <span class="global">assert</span>(array[<span class="number">1</span>] == <span class="number">1</span>)
+  <span class="global">assert</span>(array[<span class="number">2</span>] == <span class="number">2</span>)
+  <span class="global">assert</span>(array[<span class="number">3</span>] == <span class="number">3</span>)
+  <span class="comment">-- To use 0-based indexing, call <code>get</code> or <code>safe_get</code> directly
+</span>  <span class="global">assert</span>(array:get(<span class="number">0</span>) == <span class="number">1</span>)
+  <span class="global">assert</span>(array:safe_get(<span class="number">0</span>) == <span class="number">1</span>)
+  <span class="comment">-- !!! WARNING: <code>get</code> will crash your game if out of bounds !!!
+</span>  <span class="comment">-- <code>safe_get</code>, on the other hand, will just return <code>nil</code>
+</span>
+  <span class="comment">-- Setting elements
+</span>  array[<span class="number">4</span>] = <span class="number">4</span>
+  <span class="comment">-- To use 0-based indexing, call <code>set</code> or <code>safe_set</code> directly
+</span>  <span class="comment">-- !!! WARNING: <code>set</code> will crash your game if out of bounds !!!
+</span>  <span class="comment">-- <code>safe_set</code> may resize the array before setting the value
+</span>  array:safe_set(<span class="number">3</span>, <span class="number">4</span>)
+
+  <span class="comment">-- Accessing out of bounds elements is not an error
+</span>  <span class="comment">-- <code>nil</code> is returned
+</span>  <span class="global">print</span>(array[<span class="number">10</span>])  <span class="comment">--&gt; nil
+</span>
+  <span class="comment">-- Get element count with the length operator <code>#</code>
+</span>  <span class="global">print</span>(#array)
+  <span class="comment">-- The <code>size</code> method works as well
+</span>  <span class="global">print</span>(array:size())
+
+  <span class="comment">-- Iterating
+</span>  <span class="keyword">for</span> iteration_index, array_element <span class="keyword">in</span> <span class="global">ipairs</span>(array) <span class="keyword">do</span>
+    <span class="global">print</span>(iteration_index, array_element)
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="keyword">return</span> MyClass
+</pre>
+
+
+
+<p><a name="Declaring_and_emitting_signals"></a></p>
+<h2>Declaring and emitting signals</h2>
+<p>GDScript:</p>
+
+<pre>
+extends Node
+
+
+signal my_signal()
+signal my_signal_with_args(arg1, arg2)
+
+
+func _ready():
+    emit_signal(<span class="string">'my_signal'</span>)
+    emit_signal(<span class="string">'my_signal_with_args'</span>, <span class="string">'hello'</span>, <span class="string">'world'</span>)
+</pre>
+
+
+<p>Lua:</p>
+
+<pre>
+<span class="keyword">local</span> MyClass = { extends = Node }
+
+MyClass.my_signal = signal()
+MyClass.my_signal_with_args = signal(<span class="string">'arg1'</span>, <span class="string">'arg2'</span>)
+
+<span class="keyword">function</span> MyClass:_ready()
+  self:emit_signal(<span class="string">'my_signal'</span>)
+  self:emit_signal(<span class="string">'my_signal_with_args'</span>, <span class="string">'hello'</span>, <span class="string">'world'</span>)
+<span class="keyword">end</span>
+
+<span class="keyword">return</span> MyClass
+</pre>
+
+
+
+<p><a name="Loading_Resources"></a></p>
+<h2>Loading Resources</h2>
+<p>GDScript:</p>
+
+<pre>
+extends Node
+
+
+func _ready():
+    var game_icon = <span class="global">load</span>(<span class="string">"res://icon.png"</span>)
+</pre>
+
+
+<p>Lua:</p>
+
+<pre>
+<span class="keyword">local</span> MyClass = { extends = Node }
+
+<span class="keyword">function</span> MyClass:_ready()
+  <span class="keyword">local</span> game_icon = GD.<span class="global">load</span>(<span class="string">"res://icon.png"</span>)
+<span class="keyword">end</span>
+
+<span class="keyword">return</span> MyClass
+</pre>
+
+
+
+<p><a name="Coroutines_and_signals"></a></p>
+<h2>Coroutines and signals</h2>
+<p>GDScript (reference docs: https://docs.godotengine.org/en/stable/tutorials/scripting/gdscript/gdscript_basics.html#coroutines-signals):</p>
+
+<pre>
+extends Node
+
+
+func _ready():
+    <span class="global">print</span>(<span class="string">'This happens some frame'</span>)
+    yield(get_tree(), <span class="string">'idle_frame'</span>)  # await <span class="keyword">for</span> <span class="global">next</span> frame
+    <span class="global">print</span>(<span class="string">'And this happens in the next frame'</span>)
+</pre>
+
+
+<p>Lua:</p>
+
+<pre>
+<span class="keyword">local</span> MyClass = { extends = Node }
+
+MyClass.my_signal = signal()
+MyClass.my_signal_with_args = signal(<span class="string">'arg1'</span>, <span class="string">'arg2'</span>)
+
+<span class="keyword">function</span> MyClass:_ready()
+  <span class="global">print</span>(<span class="string">'This happens some frame'</span>)
+  GD.yield(get_tree(), <span class="string">'idle_frame'</span>)  <span class="comment">-- await for next frame
+</span>  <span class="global">print</span>(<span class="string">'And this happens in the next frame'</span>)
+<span class="keyword">end</span>
+
+<span class="keyword">return</span> MyClass
+</pre>
+
+<p><a href="../modules/GD.html#yield">GD.yield</a> should be used instead of Lua's <a href="https://www.lua.org/manual/5.1/manual.html#pdf-coroutine.yield">coroutine.yield</a> if you want to wait for Godot Objects' signals.
+Lua methods that call <a href="../modules/GD.html#yield">GD.yield</a> return <a href="../../lps_coroutine.lua">LuaCoroutine</a> objects, which are analogous to GDScript's <a href="https://docs.godotengine.org/en/stable/classes/class_gdscriptfunctionstate.html">GDScriptFunctionState</a>.</p>
+
+
+<p><a name="Tool_scripts"></a></p>
+<h2>Tool scripts</h2>
+<p>GDScript:</p>
+
+<pre>
+tool
+extends Node
+</pre>
+
+
+<p>Lua:</p>
+
+<pre>
+<span class="keyword">local</span> MyClass = {
+  is_tool = <span class="keyword">true</span>,
+  extends = Node,
+}
+
+<span class="keyword">return</span> MyClass
+</pre>
+
+
+
+<p>TODO: dictionary (mainly <a href="https://www.lua.org/manual/5.1/manual.html#pdf-pairs">pairs</a>)</p>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2023-01-04 08:52:34 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>
