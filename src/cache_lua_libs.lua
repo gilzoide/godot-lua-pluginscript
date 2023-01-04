@@ -54,6 +54,7 @@ local setthreadfunc, touserdata
 -- FFI
 local ffi_cast, ffi_cdef, ffi_copy, ffi_gc, ffi_istype, ffi_metatype, ffi_new, ffi_sizeof, ffi_string, ffi_typeof
     = ffi.cast, ffi.cdef, ffi.copy, ffi.gc, ffi.istype, ffi.metatype, ffi.new, ffi.sizeof, ffi.string, ffi.typeof
+local clib = ffi.C
 
 -- Weak tables
 local weak_kv = { __mode = 'kv' }

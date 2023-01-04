@@ -35,7 +35,7 @@ GD = {
 	--- (`const godot_gdnative_core_1_2_api_struct *`) GDNative core API 1.2
 	api_1_2 = api_1_2,
 	--- (`Object`) [GDNativeLibrary](https://docs.godotengine.org/en/stable/classes/class_gdnativelibrary.html) instance
-	gdnativelibrary = clib.hgdn_library,
+	gdnativelibrary = gdnativelibrary,
 	--- `Enumerations.Error`
 	Error = Error,
 	--- `Enumerations.VariantType`
