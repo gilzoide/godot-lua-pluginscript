@@ -2,6 +2,7 @@
 ## [Unreleased](https://github.com/gilzoide/godot-lua-pluginscript/compare/0.5.0...HEAD)
 ### Fixed
 
+- Plugin initialization on Windows ([#31](https://github.com/gilzoide/godot-lua-pluginscript/issues/31))
 - [build] Fixed `make dist` dependencies to include LuaJIT's `jit/*.lua` files
 - [build] Fixed `make unzip-to-build` to only copy contents from `build` folder
 
