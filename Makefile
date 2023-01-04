@@ -183,7 +183,6 @@ build/%/liblua_pluginscript.so: $(BUILT_OBJS) build/%/luajit/src/libluajit.a
 
 build/%/lua_pluginscript.dll: TARGET_SYS = Windows
 build/%/lua_pluginscript.dll: EXE = .exe
-build/%/lua_pluginscript.dll: CFLAGS += -DLUAJIT_DYNAMICALLY_LINKED
 build/%/lua_pluginscript.dll: $(BUILT_OBJS) build/%/lua51.dll
 	$(_CC) -o $@ $^ -shared $(CFLAGS) $(LDFLAGS)
 	$(call STRIP_CMD,$@)

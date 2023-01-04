@@ -171,7 +171,7 @@ local ClassWrapper_cache = setmetatable({}, {
 --- MethodBind metatype, wrapper for `godot_method_bind`.
 -- These are returned by `ClassWrapper:__index` and GDNative's `godot_method_bind_get_method`.
 -- @type MethodBind
-local MethodBind = ffi.metatype('godot_method_bind', {
+local MethodBind = ffi_metatype('godot_method_bind', {
 	--- Calls the method in `object`.
 	-- @function __call
 	-- @tparam Object object

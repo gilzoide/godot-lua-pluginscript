@@ -26,7 +26,7 @@
 -- @module lua_object_wrapper
 -- @local
 
-local library_resource_dir = clib.hgdn_library.resource_path:get_base_dir()
+local library_resource_dir = gdnativelibrary.resource_path:get_base_dir()
 
 --- Global cache of Lua object wrappers
 local lps_lua_object_references = setmetatable({}, weak_kv)
