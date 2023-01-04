@@ -272,7 +272,7 @@ static void lps_instance_notification(godot_pluginscript_instance_data *data, in
 }
 
 // In-editor callbacks
-godot_string lps_get_template_source_code(godot_pluginscript_language_data *data, const godot_string *class_name, const godot_string *base_class_name) {
+static godot_string lps_get_template_source_code(godot_pluginscript_language_data *data, const godot_string *class_name, const godot_string *base_class_name) {
 	godot_string ret;
 	hgdn_core_api->godot_string_new(&ret);
 	LPS_PUSH_CALLBACK(lps_L, "get_template_source_code");
@@ -285,7 +285,7 @@ godot_string lps_get_template_source_code(godot_pluginscript_language_data *data
 	return ret;
 }
 
-godot_bool lps_validate(godot_pluginscript_language_data *data, const godot_string *script, int *line_error, int *col_error, godot_string *test_error, const godot_string *path, godot_pool_string_array *functions) {
+static godot_bool lps_validate(godot_pluginscript_language_data *data, const godot_string *script, int *line_error, int *col_error, godot_string *test_error, const godot_string *path, godot_pool_string_array *functions) {
 	LPS_PUSH_CALLBACK(lps_L, "validate");
 	lua_pushlightuserdata(lps_L, (void *) script);
 	lua_pushlightuserdata(lps_L, (void *) line_error);
@@ -302,7 +302,7 @@ godot_bool lps_validate(godot_pluginscript_language_data *data, const godot_stri
 	return success;
 }
 
-godot_string lps_make_function(godot_pluginscript_language_data *data, const godot_string *class_name, const godot_string *name, const godot_pool_string_array *args) {
+static godot_string lps_make_function(godot_pluginscript_language_data *data, const godot_string *class_name, const godot_string *name, const godot_pool_string_array *args) {
 	godot_string ret;
 	hgdn_core_api->godot_string_new(&ret);
 	LPS_PUSH_CALLBACK(lps_L, "make_function");
@@ -316,7 +316,7 @@ godot_string lps_make_function(godot_pluginscript_language_data *data, const god
 	return ret;
 }
 
-void lps_register_in_editor_callbacks(godot_pluginscript_language_desc *desc) {
+static void lps_register_in_editor_callbacks(godot_pluginscript_language_desc *desc) {
 	desc->get_template_source_code = &lps_get_template_source_code;
 	desc->validate = &lps_validate;
 	desc->make_function = &lps_make_function;
