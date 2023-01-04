@@ -48,10 +48,6 @@ extern const size_t LUA_INIT_SCRIPT_SIZE;
 	HGDN_PRINT_ERROR(prefix ": %s", lua_tostring(L, -1)); \
 	lua_pop(L, 1)
 
-#ifdef LUAJIT_DYNAMICALLY_LINKED
-// Active shared library path, for loading symbols in FFI
-static hgdn_string lps_active_library_path;
-#endif
 static bool lps_in_editor;
 static int lps_pcall_error_handler_index;
 static lua_State *lps_L;
@@ -136,12 +132,12 @@ static godot_pluginscript_language_data *lps_language_init() {
 	lua_setfield(L, LUA_REGISTRYINDEX, PLUGINSCRIPT_CALLBACKS_KEY);
 
 	lua_pushboolean(L, lps_in_editor);
-#ifdef LUAJIT_DYNAMICALLY_LINKED
-	lua_pushlstring(L, lps_active_library_path.ptr, lps_active_library_path.length);
-#else
-	lua_pushnil(L);
-#endif
-	if (lua_pcall(L, 3, 0, lps_pcall_error_handler_index) != LUA_OK) {
+	lua_pushlightuserdata(L, (void *) hgdn_core_api);
+	lua_pushlightuserdata(L, (void *) hgdn_core_1_1_api);
+	lua_pushlightuserdata(L, (void *) hgdn_core_1_2_api);
+	lua_pushlightuserdata(L, (void *) hgdn_core_1_3_api);
+	lua_pushlightuserdata(L, (void *) hgdn_library);
+	if (lua_pcall(L, 7, 0, lps_pcall_error_handler_index) != LUA_OK) {
 		LPS_PCALL_CONSUME_ERROR(L, "Error in Lua language initialization script");
 	}
 	return L;
@@ -276,7 +272,7 @@ static void lps_instance_notification(godot_pluginscript_instance_data *data, in
 }
 
 // In-editor callbacks
-godot_string lps_get_template_source_code(godot_pluginscript_language_data *data, const godot_string *class_name, const godot_string *base_class_name) {
+static godot_string lps_get_template_source_code(godot_pluginscript_language_data *data, const godot_string *class_name, const godot_string *base_class_name) {
 	godot_string ret;
 	hgdn_core_api->godot_string_new(&ret);
 	LPS_PUSH_CALLBACK(lps_L, "get_template_source_code");
@@ -289,7 +285,7 @@ godot_string lps_get_template_source_code(godot_pluginscript_language_data *data
 	return ret;
 }
 
-godot_bool lps_validate(godot_pluginscript_language_data *data, const godot_string *script, int *line_error, int *col_error, godot_string *test_error, const godot_string *path, godot_pool_string_array *functions) {
+static godot_bool lps_validate(godot_pluginscript_language_data *data, const godot_string *script, int *line_error, int *col_error, godot_string *test_error, const godot_string *path, godot_pool_string_array *functions) {
 	LPS_PUSH_CALLBACK(lps_L, "validate");
 	lua_pushlightuserdata(lps_L, (void *) script);
 	lua_pushlightuserdata(lps_L, (void *) line_error);
@@ -306,7 +302,7 @@ godot_bool lps_validate(godot_pluginscript_language_data *data, const godot_stri
 	return success;
 }
 
-godot_string lps_make_function(godot_pluginscript_language_data *data, const godot_string *class_name, const godot_string *name, const godot_pool_string_array *args) {
+static godot_string lps_make_function(godot_pluginscript_language_data *data, const godot_string *class_name, const godot_string *name, const godot_pool_string_array *args) {
 	godot_string ret;
 	hgdn_core_api->godot_string_new(&ret);
 	LPS_PUSH_CALLBACK(lps_L, "make_function");
@@ -320,7 +316,7 @@ godot_string lps_make_function(godot_pluginscript_language_data *data, const god
 	return ret;
 }
 
-void lps_register_in_editor_callbacks(godot_pluginscript_language_desc *desc) {
+static void lps_register_in_editor_callbacks(godot_pluginscript_language_desc *desc) {
 	desc->get_template_source_code = &lps_get_template_source_code;
 	desc->validate = &lps_validate;
 	desc->make_function = &lps_make_function;
@@ -384,31 +380,10 @@ GDN_EXPORT void PREFIX_SYMBOL(gdnative_init)(godot_gdnative_init_options *option
 		lps_register_in_editor_callbacks(&lps_language_desc);
 	}
 
-#ifdef LUAJIT_DYNAMICALLY_LINKED
-	godot_object *OS = hgdn_core_api->godot_global_get_singleton("OS");
-	if (hgdn_variant_get_bool_own(hgdn_object_call(OS, "has_feature", "standalone"))) {
-		godot_variant exepath_var = hgdn_object_callv(OS, "get_executable_path", NULL);
-		godot_string exepath = hgdn_core_api->godot_variant_as_string(&exepath_var);
-		godot_string exedir = hgdn_core_api->godot_string_get_base_dir(&exepath);
-		godot_string library_filepath = hgdn_core_api->godot_string_get_file(options->active_library_path);
-		lps_active_library_path = hgdn_string_get_own(hgdn_core_api->godot_string_plus_file(&exedir, &library_filepath));
-		hgdn_core_api->godot_string_destroy(&library_filepath);
-		hgdn_core_api->godot_string_destroy(&exedir);
-		hgdn_core_api->godot_string_destroy(&exepath);
-		hgdn_core_api->godot_variant_destroy(&exepath_var);
-	}
-	else {
-		lps_active_library_path = hgdn_string_get(options->active_library_path);
-	}
-#endif
-
 	hgdn_pluginscript_api->godot_pluginscript_register_language(&lps_language_desc);
 }
 
 GDN_EXPORT void PREFIX_SYMBOL(gdnative_terminate)(godot_gdnative_terminate_options *options) {
-#ifdef LUAJIT_DYNAMICALLY_LINKED
-	hgdn_string_destroy(&lps_active_library_path);
-#endif
 	hgdn_gdnative_terminate(options);
 }
 

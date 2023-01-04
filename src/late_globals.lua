@@ -35,7 +35,7 @@ GD = {
 	--- (`const godot_gdnative_core_1_2_api_struct *`) GDNative core API 1.2
 	api_1_2 = api_1_2,
 	--- (`Object`) [GDNativeLibrary](https://docs.godotengine.org/en/stable/classes/class_gdnativelibrary.html) instance
-	gdnativelibrary = clib.hgdn_library,
+	gdnativelibrary = gdnativelibrary,
 	--- `Enumerations.Error`
 	Error = Error,
 	--- `Enumerations.VariantType`
@@ -48,8 +48,8 @@ GD = {
 	PropertyHint = PropertyHint,
 	--- `Enumerations.PropertyUsage`
 	PropertyUsage = PropertyUsage,
-	--- Project version: 0.5.0
-	_VERSION = '0.5.0',
+	--- Project version: 0.5.1
+	_VERSION = '0.5.1',
 }
 
 local global_constants = api.godot_get_global_constants()

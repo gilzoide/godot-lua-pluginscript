@@ -46,7 +46,7 @@ local methods = {
 	-- @return[type=const void *]
 	get_data_unique_pointer = api.godot_string_name_get_data_unique_pointer,
 }
-StringName = ffi.metatype('godot_string_name', {
+StringName = ffi_metatype('godot_string_name', {
 	--- StringName constructor, called by the idiom `StringName(name)`.
 	-- @function __new
 	-- @param[opt=""] name  Name, stringified with `GD.str`

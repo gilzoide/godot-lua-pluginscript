@@ -1411,20 +1411,12 @@ typedef struct godot_pluginscript_language_desc {
 	void (*profiling_frame)(godot_pluginscript_language_data *p_data);
 	godot_pluginscript_script_desc script_desc;
 } godot_pluginscript_language_desc;
-
-// Global API pointers
-const godot_gdnative_core_api_struct *hgdn_core_api;
-const godot_gdnative_core_1_1_api_struct *hgdn_core_1_1_api;
-const godot_gdnative_core_1_2_api_struct *hgdn_core_1_2_api;
-const godot_gdnative_core_1_3_api_struct *hgdn_core_1_3_api;
-godot_object *hgdn_library;
 ]]
 
-local pluginscript_callbacks, in_editor, active_library_path = ...
-local clib = active_library_path and ffi.load(active_library_path, true) or ffi.C
+local pluginscript_callbacks, in_editor, api, api_1_1, api_1_2, api_1_3, gdnativelibrary = ...
 
-local api = clib.hgdn_core_api
-local api_1_1 = clib.hgdn_core_1_1_api
-local api_1_2 = clib.hgdn_core_1_2_api
-local api_1_3 = clib.hgdn_core_1_3_api
-
+api = ffi.cast('godot_gdnative_core_api_struct *', api)
+api_1_1 = ffi.cast('godot_gdnative_core_1_1_api_struct *', api_1_1)
+api_1_2 = ffi.cast('godot_gdnative_core_1_2_api_struct *', api_1_2)
+api_1_3 = ffi.cast('godot_gdnative_core_1_3_api_struct *', api_1_3)
+gdnativelibrary = ffi.cast('godot_object *', gdnativelibrary)

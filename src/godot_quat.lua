@@ -121,7 +121,7 @@ methods.IDENTITY = ffi_new('godot_quat', { elements = { 0, 0, 0, 1 } })
 
 --- Metamethods
 -- @section metamethods
-Quat = ffi.metatype('godot_quat', {
+Quat = ffi_metatype('godot_quat', {
 	--- Quat constructor, called by the idiom `Quat(...)`.
 	--
 	-- * `Quat()`: `IDENTITY` quaternion (`Quat() == Quat(0, 0, 0, 1)`)

@@ -16,9 +16,10 @@ XCODEBUILD ?= xcodebuild
 NDK_TOOLCHAIN_BIN ?= $(wildcard $(ANDROID_NDK_ROOT)/toolchains/llvm/prebuilt/*/bin)
 ZIP_URL ?=
 ZIP_URL_DOWNLOAD_OUTPUT ?= /tmp/godot-lua-pluginscript-unzip-to-build.zip
+ZIP_TEMP_FOLDER ?= /tmp/godot-lua-pluginscript-unzip-to-build
 
 
-CFLAGS += -std=c11 "-I$(CURDIR)/lib/godot-headers" "-I$(CURDIR)/lib/high-level-gdnative" "-I$(CURDIR)/lib/luajit/src"
+CFLAGS += -std=c11 -Ilib/godot-headers -Ilib/high-level-gdnative -Ilib/luajit/src
 ifeq ($(DEBUG), 1)
 	CFLAGS += -g -O0 -DDEBUG
 else
@@ -36,16 +37,31 @@ _STRIP = $(CROSS)$(STRIP)
 SRC = language_gdnative.c
 OBJS = $(SRC:.c=.o) init_script.o
 BUILT_OBJS = $(addprefix build/%/,$(OBJS))
-MAKE_LUAJIT_OUTPUT = build/%/luajit/src/luajit.o build/%/luajit/src/lua51.dll build/%/luajit/src/libluajit.a
+LUAJIT_MAKE_OUTPUT = build/%/luajit/src/luajit.o build/%/luajit/src/lua51.dll build/%/luajit/src/libluajit.a
+
+PLUGIN_SRC = plugin/export_plugin.lua \
+	plugin/in_editor_callbacks/.gdignore \
+	plugin/in_editor_callbacks/init.lua \
+	plugin/lua_repl.lua \
+	plugin/lua_repl.tscn \
+	plugin/luasrcdiet/.gdignore \
+	plugin/plugin.cfg \
+	plugin/plugin.gd
 
 GDNLIB_ENTRY_PREFIX = addons/godot-lua-pluginscript
 BUILD_FOLDERS = \
-	build build/native build/$(GDNLIB_ENTRY_PREFIX) \
+	build build/native build/$(GDNLIB_ENTRY_PREFIX) build/jit \
 	build/windows_x86 build/windows_x86_64 \
 	build/linux_x86 build/linux_x86_64 \
 	build/osx_x86_64 build/osx_arm64 build/osx_arm64_x86_64 \
 	build/ios_armv7s build/ios_arm64 build/ios_simulator_arm64 build/ios_simulator_x86_64 build/ios_simulator_arm64_x86_64 \
 	build/android_armv7a build/android_aarch64 build/android_x86 build/android_x86_64
+
+LUAJIT_JITLIB_SRC = bc.lua bcsave.lua dump.lua p.lua v.lua zone.lua \
+	dis_x86.lua dis_x64.lua dis_arm.lua dis_arm64.lua \
+	dis_arm64be.lua dis_ppc.lua dis_mips.lua dis_mipsel.lua \
+	dis_mips64.lua dis_mips64el.lua vmdef.lua
+LUAJIT_JITLIB_DEST = $(addprefix build/jit/,$(LUAJIT_JITLIB_SRC))
 
 LUASRCDIET_SRC = $(wildcard lib/luasrcdiet/luasrcdiet/*.lua) lib/luasrcdiet/COPYRIGHT lib/luasrcdiet/COPYRIGHT_Lua51
 LUASRCDIET_DEST = $(addprefix plugin/luasrcdiet/,$(notdir $(LUASRCDIET_SRC)))
@@ -53,7 +69,7 @@ LUASRCDIET_FLAGS = --maximum --quiet --noopt-binequiv
 
 DIST_BUILT_LIBS = $(filter-out build/osx_arm64/% build/osx_x86_64/% build/ios_simulator_arm64/% build/ios_simulator_x86_64/%,$(wildcard build/*/*lua*.*))
 DIST_SRC = LICENSE
-DIST_ADDONS_SRC = LICENSE lps_coroutine.lua lua_pluginscript.gdnlib build/.gdignore $(wildcard build/jit/*.lua plugin/*.* plugin/in_editor_callbacks/* plugin/*/.gdignore) $(DIST_BUILT_LIBS) $(LUASRCDIET_DEST)
+DIST_ADDONS_SRC = LICENSE lps_coroutine.lua lua_pluginscript.gdnlib build/.gdignore $(PLUGIN_SRC) $(DIST_BUILT_LIBS) $(LUASRCDIET_DEST) $(LUAJIT_JITLIB_DEST)
 DIST_ZIP_SRC = $(DIST_SRC) $(addprefix $(GDNLIB_ENTRY_PREFIX)/,$(DIST_ADDONS_SRC))
 DIST_DEST = $(addprefix build/,$(DIST_SRC)) $(addprefix build/$(GDNLIB_ENTRY_PREFIX)/,$(DIST_ADDONS_SRC))
 
@@ -119,33 +135,36 @@ ifneq (,$(CODE_SIGN_IDENTITY))
 endif
 
 define GEN_TEST
-test-$1: $1 $(LUASRCDIET_DEST) $(DIST_DEST) build/project.godot
+test-$1: $1 $(LUASRCDIET_DEST) $(LUAJIT_JITLIB_DEST) $(DIST_DEST) build/project.godot
 	@mkdir -p $(dir build/addons/godot-lua-pluginscript/$2)
 	cp $2 build/addons/godot-lua-pluginscript/$2
 	$(GODOT_BIN) --path build --no-window --quit --script "$(CURDIR)/src/test/init.lua"
 endef
 
 # Avoid removing intermediate files created by chained implicit rules
-.PRECIOUS: build/%/luajit build/%/init_script.c $(BUILT_OBJS) build/%/lua51.dll $(MAKE_LUAJIT_OUTPUT)
+.PRECIOUS: build/%/luajit build/%/init_script.c $(BUILT_OBJS) build/%/lua51.dll $(LUAJIT_MAKE_OUTPUT)
 
 $(BUILD_FOLDERS):
 	mkdir -p $@
 
 build/%/language_gdnative.o: src/language_gdnative.c lib/high-level-gdnative/hgdn.h
 	$(_CC) -o $@ $< -c $(CFLAGS)
-build/%/language_in_editor_callbacks.o: src/language_in_editor_callbacks.c
-	$(_CC) -o $@ $< -c $(CFLAGS)
 
-$(MAKE_LUAJIT_OUTPUT): | build/%/luajit build/jit
+$(LUAJIT_MAKE_OUTPUT): | build/%/luajit
 	$(MAKE) -C $(firstword $|) $(and $(TARGET_SYS),TARGET_SYS=$(TARGET_SYS)) $(MAKE_LUAJIT_ARGS)
-	@mkdir -p build/jit
-	cp $(firstword $|)/src/jit/vmdef.lua build/jit
+build/%/luajit/src/jit/vmdef.lua: | build/%/luajit
+	$(MAKE) -C $(firstword $|)/src jit/vmdef.lua $(MAKE_LUAJIT_ARGS)
 build/%/lua51.dll: build/%/luajit/src/lua51.dll
 	cp $< $@
 build/%/luajit: | build/%
 	cp -r lib/luajit $@
-build/jit: | build
-	cp -r lib/luajit/src/jit/ $@
+
+build/jit/vmdef.lua: MACOSX_DEPLOYMENT_TARGET ?= 11.0
+build/jit/vmdef.lua: MAKE_LUAJIT_ARGS = MACOSX_DEPLOYMENT_TARGET=$(MACOSX_DEPLOYMENT_TARGET)
+build/jit/vmdef.lua: build/native/luajit/src/jit/vmdef.lua | build/jit
+	cp $< $@
+build/jit/%.lua: lib/luajit/src/jit/%.lua | build/jit
+	cp $< $@
 
 build/init_script.lua: $(LUA_INIT_SCRIPT_SRC) | build
 	cat $^ > $@
@@ -164,7 +183,6 @@ build/%/liblua_pluginscript.so: $(BUILT_OBJS) build/%/luajit/src/libluajit.a
 
 build/%/lua_pluginscript.dll: TARGET_SYS = Windows
 build/%/lua_pluginscript.dll: EXE = .exe
-build/%/lua_pluginscript.dll: CFLAGS += -DLUAJIT_DYNAMICALLY_LINKED
 build/%/lua_pluginscript.dll: $(BUILT_OBJS) build/%/lua51.dll
 	$(_CC) -o $@ $^ -shared $(CFLAGS) $(LDFLAGS)
 	$(call STRIP_CMD,$@)
@@ -194,15 +212,20 @@ build/$(GDNLIB_ENTRY_PREFIX)/%:
 	cp $* $@
 $(addprefix build/,$(DIST_SRC)): | build
 	cp $(notdir $@) $@
-build/lua_pluginscript.zip: $(LUASRCDIET_DEST) $(DIST_DEST)
+build/lua_pluginscript.zip: $(LUASRCDIET_DEST) $(LUAJIT_JITLIB_DEST) $(DIST_DEST)
 	cd build && zip lua_pluginscript $(DIST_ZIP_SRC)
 build/project.godot: src/tools/project.godot | build
 	cp $< $@
 
+build/compile_commands.json: COMPILE_COMMAND = $(_CC) -o build/language_gdnative.o src/language_gdnative.c -c $(CFLAGS)
+build/compile_commands.json: Makefile
+	echo '[{"directory":"$(CURDIR)","file":"src/language_gdnative.c","command":"$(subst ",\",$(COMPILE_COMMAND))"}]' > $@
+
+
 # Phony targets
 .PHONY: clean dist docs set-version unzip-to-build
 clean:
-	$(RM) -r build/*/ plugin/luasrcdiet/*
+	$(RM) -r $(wildcard build/**) plugin/luasrcdiet/*
 
 dist: build/lua_pluginscript.zip
 
@@ -215,12 +238,14 @@ set-version:
 		plugin/plugin.cfg
 
 unzip-to-build:
+	$(RM) -r $(ZIP_TEMP_FOLDER)/*
 ifneq (,$(filter http://% https://%,$(ZIP_URL)))
 	curl -L $(ZIP_URL) -o $(ZIP_URL_DOWNLOAD_OUTPUT)
-	cd build && unzip -u $(ZIP_URL_DOWNLOAD_OUTPUT)
+	unzip $(ZIP_URL_DOWNLOAD_OUTPUT) -d $(ZIP_TEMP_FOLDER)
 else
-	cd build && unzip -u $(ZIP_URL)
+	unzip $(ZIP_URL) -d $(ZIP_TEMP_FOLDER)
 endif
+	cp -R $(ZIP_TEMP_FOLDER)/addons/godot-lua-pluginscript/build/. build
 
 
 # Miscelaneous targets
@@ -229,6 +254,9 @@ plugin: $(LUASRCDIET_DEST)
 native-luajit: MACOSX_DEPLOYMENT_TARGET ?= 11.0
 native-luajit: MAKE_LUAJIT_ARGS = MACOSX_DEPLOYMENT_TARGET=$(MACOSX_DEPLOYMENT_TARGET)
 native-luajit: build/native/luajit/src/luajit.o
+
+compilation-database: build/compile_commands.json
+compdb: compilation-database
 
 # Targets by OS + arch
 linux32: MAKE_LUAJIT_ARGS += CC="$(CC) -m32 -fPIC"
