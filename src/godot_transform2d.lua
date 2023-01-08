@@ -1,7 +1,7 @@
 -- @file godot_transform2d.lua  Wrapper for GDNative's Transform2D
 -- This file is part of Godot Lua PluginScript: https://github.com/gilzoide/godot-lua-pluginscript
 --
--- Copyright (C) 2021 Gil Barbosa Reis.
+-- Copyright (C) 2021-2023 Gil Barbosa Reis.
 -- 
 -- Permission is hereby granted, free of charge, to any person obtaining a copy
 -- of this software and associated documentation files (the “Software”), to

@@ -218,7 +218,7 @@ build/compile_commands.json: Makefile
 
 
 # Phony targets
-.PHONY: clean dist docs set-version unzip-to-build
+.PHONY: clean dist docs set-version unzip-to-build update-copyright-year
 clean:
 	$(RM) -r $(wildcard build/**) plugin/luasrcdiet/*
 
@@ -228,7 +228,7 @@ docs:
 	ldoc . $(LDOC_ARGS)
 
 set-version:
-	sed -i '' -E -e 's/[0-9]+\.[0-9]+\.[0-9]+/$(VERSION)/' \
+	sed -i -E -e 's/[0-9]+\.[0-9]+\.[0-9]+/$(VERSION)/' \
 		src/late_globals.lua \
 		plugin/plugin.cfg
 
@@ -241,6 +241,10 @@ else
 	unzip $(ZIP_URL) -d $(ZIP_TEMP_FOLDER)
 endif
 	cp -R $(ZIP_TEMP_FOLDER)/addons/godot-lua-pluginscript/build/. build
+
+update-copyright-year:
+	sed -i -E -e 's/(Copyright [^0-9]*)([0-9]+)(-[0-9]+)?/\1\2-$(shell date +%Y)/' \
+		$(wildcard src/*.c src/*.lua)
 
 
 # Miscelaneous targets
