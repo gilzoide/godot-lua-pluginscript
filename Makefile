@@ -7,7 +7,6 @@ CODE_SIGN_IDENTITY ?=
 OTHER_CODE_SIGN_FLAGS ?=
 # Configurable binaries
 GODOT_BIN ?= godot
-LUA_BIN ?= lua
 LIPO ?= lipo
 STRIP ?= strip
 CODESIGN ?= codesign
@@ -120,15 +119,13 @@ LUA_INIT_SCRIPT_SRC = \
 	src/register_in_editor_callbacks.lua
 
 ifneq (1,$(DEBUG))
-	EMBED_SCRIPT_SED := src/tools/compact_c_ffi.sed
-	LUA_INIT_SCRIPT_TO_USE = build/init_script-diet.lua
 	STRIP_CMD = $(_STRIP) $1
 else
-	LUA_INIT_SCRIPT_TO_USE = build/init_script.lua
 	STRIP_CMD =
 	LDOC_ARGS = --all
 endif
-EMBED_SCRIPT_SED += src/tools/embed_to_c.sed src/tools/add_script_c_decl.sed
+INIT_SCRIPT_SED = src/tools/remove_lua_comments.sed src/tools/squeeze_blank_lines.sed src/tools/compact_c_ffi.sed
+EMBED_SCRIPT_SED = src/tools/embed_to_c.sed src/tools/add_script_c_decl.sed
 
 ifneq (,$(CODE_SIGN_IDENTITY))
 	CODESIGN_CMD = codesign -s "$(CODE_SIGN_IDENTITY)" $1 $(OTHER_CODE_SIGN_FLAGS)
@@ -166,11 +163,9 @@ build/jit/vmdef.lua: build/native/luajit/src/jit/vmdef.lua | build/jit
 build/jit/%.lua: lib/luajit/src/jit/%.lua | build/jit
 	cp $< $@
 
-build/init_script.lua: $(LUA_INIT_SCRIPT_SRC) | build
-	cat $^ > $@
-build/init_script-diet.lua: build/init_script.lua
-	env LUA_PATH=';;lib/luasrcdiet/?.lua;lib/luasrcdiet/?/init.lua' $(LUA_BIN) lib/luasrcdiet/bin/luasrcdiet $< -o $@ $(LUASRCDIET_FLAGS)
-build/%/init_script.c: $(LUA_INIT_SCRIPT_TO_USE) $(EMBED_SCRIPT_SED) | build/%
+build/init_script.lua: $(LUA_INIT_SCRIPT_SRC) $(INIT_SCRIPT_SED) | build
+	cat $(filter %.lua,$^) $(addprefix | sed -E -f ,$(filter %.sed,$^)) > $@
+build/%/init_script.c: build/init_script.lua $(EMBED_SCRIPT_SED) | build/%
 	sed -E $(addprefix -f ,$(EMBED_SCRIPT_SED)) $< > $@
 
 build/%/init_script.o: build/%/init_script.c
