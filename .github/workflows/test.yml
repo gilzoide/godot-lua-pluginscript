@@ -18,7 +18,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install lua5.1 libc6-dev-i386
+          sudo apt-get install libc6-dev-i386
       - name: Install Godot
         uses: vitorgus/setup-godot@v1
         with:
