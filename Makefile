@@ -124,7 +124,7 @@ else
 	STRIP_CMD =
 	LDOC_ARGS = --all
 endif
-INIT_SCRIPT_SED = src/tools/remove_lua_comments.sed src/tools/squeeze_blank_lines.sed src/tools/compact_c_ffi.sed
+INIT_SCRIPT_SED = src/tools/remove_lua_comments.sed src/tools/compact_c_ffi.sed src/tools/squeeze_blank_lines.sed
 EMBED_SCRIPT_SED = src/tools/embed_to_c.sed src/tools/add_script_c_decl.sed
 
 ifneq (,$(CODE_SIGN_IDENTITY))
