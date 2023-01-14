@@ -2,6 +2,8 @@
 
 <img src="extras/icon.png" alt="Lua PluginScript icon" width="128" height="128"/>
 
+[![Pluginscript Lua](https://img.shields.io/discord/1056941025559588874.svg?label=Discord&logo=Discord&colorB=7289da&style=for-the-badge)](https://discord.gg/rZJbXZXQWe)
+
 GDNative + PluginScript library that adds support for [Lua](https://www.lua.org/)
 as a scripting language in [Godot](https://godotengine.org/).
 
@@ -22,10 +24,6 @@ and [plugin/lua\_repl.lua](plugin/lua_repl.lua).
 
 Currently, only LuaJIT is supported, since the implementation is based on its
 [FFI](https://luajit.org/ext_ffi.html) library.
-
-We also have a discord server:
-
-[![Pluginscript Lua](https://img.shields.io/discord/1056941025559588874.svg?label=Discord&logo=Discord&colorB=7289da&style=for-the-badge)](https://discord.gg/rZJbXZXQWe)
 
 
 ## Installing
