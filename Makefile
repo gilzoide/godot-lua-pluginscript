@@ -244,7 +244,7 @@ endif
 
 update-copyright-year:
 	sed -i -E -e 's/(Copyright [^0-9]*)([0-9]+)(-[0-9]+)?/\1\2-$(shell date +%Y)/' \
-		$(wildcard src/*.c src/*.lua)
+		$(wildcard src/*.c src/*.lua plugin/*.lua)
 
 
 # Miscelaneous targets

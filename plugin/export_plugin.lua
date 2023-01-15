@@ -1,7 +1,7 @@
 -- @file plugin/export_plugin.lua  EditorExportPlugin for minifying Lua scripts on release exports
 -- This file is part of Godot Lua PluginScript: https://github.com/gilzoide/godot-lua-pluginscript
 --
--- Copyright (C) 2021 Gil Barbosa Reis.
+-- Copyright (C) 2021-2023 Gil Barbosa Reis.
 -- 
 -- Permission is hereby granted, free of charge, to any person obtaining a copy
 -- of this software and associated documentation files (the “Software”), to
