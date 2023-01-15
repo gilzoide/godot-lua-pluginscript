@@ -2,10 +2,11 @@
 
 <img src="extras/icon.png" alt="Lua PluginScript icon" width="128" height="128"/>
 
+[![Godot Asset Library Icon](https://img.shields.io/static/v1?style=for-the-badge&logo=godotengine&label=asset%20library&color=478CBF&message=0.5.1)](https://godotengine.org/asset-library/asset/1078)
 [![Pluginscript Lua](https://img.shields.io/discord/1056941025559588874.svg?label=Discord&logo=Discord&colorB=7289da&style=for-the-badge)](https://discord.gg/rZJbXZXQWe)
 
 GDNative + PluginScript library that adds support for [Lua](https://www.lua.org/)
-as a scripting language in [Godot](https://godotengine.org/).
+as a scripting language in [Godot](https://godotengine.org/) 3.X
 
 Being a GDNative library, recompiling the engine is not required, so anyone
 with a built release copied to their project can use it.
@@ -19,8 +20,8 @@ script and all of them can understand each other.
 
 This plugin is available in the Asset Library as [Lua PluginScript](https://godotengine.org/asset-library/asset/1078).
 
-For some usage examples, check out [lps\_coroutine.lua](lps_coroutine.lua)
-and [plugin/lua\_repl.lua](plugin/lua_repl.lua).
+For some usage examples, check out [plugin/lua\_repl.lua](plugin/lua_repl.lua)
+and [plugin/export\_plugin.lua](plugin/export_plugin.lua).
 
 Currently, only LuaJIT is supported, since the implementation is based on its
 [FFI](https://luajit.org/ext_ffi.html) library.
