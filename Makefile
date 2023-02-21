@@ -218,7 +218,7 @@ build/compile_commands.json: Makefile
 
 build/%/test_cmodule.so: src/test/test_cmodule.c
 	$(_CC) -o $@ $^ -shared $(CFLAGS) $(LDFLAGS)
-build/%/test_cmodule.dll: src/test/test_cmodule.c
+build/%/test_cmodule.dll: src/test/test_cmodule.c build/%/lua51.dll
 	$(_CC) -o $@ $^ -shared $(CFLAGS) $(LDFLAGS)
 build/%/test_cmodule.dylib: LDFLAGS += -Wl,-undefined,dynamic_lookup
 build/%/test_cmodule.dylib: src/test/test_cmodule.c
@@ -277,18 +277,20 @@ linux64: build/linux_x86_64/liblua_pluginscript.so
 $(eval $(call GEN_TEST,linux64,build/linux_x86_64,liblua_pluginscript.so test_cmodule.so))
 
 windows32: build/windows_x86/lua_pluginscript.dll
-$(eval $(call GEN_TEST,windows32,build/windows_x86,lua_pluginscript.dll test_cmodule.dll))
+$(eval $(call GEN_TEST,windows32,build/windows_x86,lua_pluginscript.dll lua51.dll test_cmodule.dll))
 mingw-windows32: CROSS = i686-w64-mingw32-
 mingw-windows32: MAKE_LUAJIT_ARGS += HOST_CC="$(CC) -m32" CROSS="$(CROSS)" LDFLAGS=-static-libgcc
 mingw-windows32: windows32
-$(eval $(call GEN_TEST,mingw-windows32,build/windows_x86,lua_pluginscript.dll test_cmodule.dll))
+test-mingw-windows32: CROSS = i686-w64-mingw32-
+$(eval $(call GEN_TEST,mingw-windows32,build/windows_x86,lua_pluginscript.dll lua51.dll test_cmodule.dll))
 
 windows64: build/windows_x86_64/lua_pluginscript.dll
-$(eval $(call GEN_TEST,windows64,build/windows_x86_64,lua_pluginscript.dll test_cmodule.dll))
+$(eval $(call GEN_TEST,windows64,build/windows_x86_64,lua_pluginscript.dll lua51.dll test_cmodule.dll))
 mingw-windows64: CROSS = x86_64-w64-mingw32-
 mingw-windows64: MAKE_LUAJIT_ARGS += HOST_CC="$(CC)" CROSS="$(CROSS)" LDFLAGS=-static-libgcc
 mingw-windows64: windows64
-$(eval $(call GEN_TEST,mingw-windows64,build/windows_x86_64,lua_pluginscript.dll test_cmodule.dll))
+test-mingw-windows64: CROSS = x86_64-w64-mingw32-
+$(eval $(call GEN_TEST,mingw-windows64,build/windows_x86_64,lua_pluginscript.dll lua51.dll test_cmodule.dll))
 
 osx-x86_64: MACOSX_DEPLOYMENT_TARGET ?= 10.7
 osx-x86_64: _ADD_CFLAGS = -isysroot '$(shell xcrun --sdk macosx --show-sdk-path)' -arch x86_64
