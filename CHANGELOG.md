@@ -1,5 +1,10 @@
 # Changelog
 ## [Unreleased](https://github.com/gilzoide/godot-lua-pluginscript/compare/0.5.1...HEAD)
+### Fixed
+
+- Fixed `undefined symbol: lua_*` when requiring Lua/C modules in POSIX systems
+  ([#41](https://github.com/gilzoide/godot-lua-pluginscript/issues/41))
+
 
 ## [0.5.1](https://github.com/gilzoide/godot-lua-pluginscript/releases/tag/0.5.1)
 ### Fixed
@@ -7,6 +12,7 @@
 - Plugin initialization on Windows ([#31](https://github.com/gilzoide/godot-lua-pluginscript/issues/31))
 - [build] Fixed `make dist` dependencies to include LuaJIT's `jit/*.lua` files
 - [build] Fixed `make unzip-to-build` to only copy contents from `build` folder
+
 
 ## [0.5.0](https://github.com/gilzoide/godot-lua-pluginscript/releases/tag/0.5.0)
 ### Added
