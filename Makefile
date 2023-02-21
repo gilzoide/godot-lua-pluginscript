@@ -132,9 +132,9 @@ ifneq (,$(CODE_SIGN_IDENTITY))
 endif
 
 define GEN_TEST
-test-$1: $1 $(LUASRCDIET_DEST) $(LUAJIT_JITLIB_DEST) $(DIST_DEST) build/project.godot
-	@mkdir -p $(dir build/addons/godot-lua-pluginscript/$2)
-	cp $2 build/addons/godot-lua-pluginscript/$2
+test-$1: $1 $(addprefix $2/, $3) $(LUASRCDIET_DEST) $(LUAJIT_JITLIB_DEST) $(DIST_DEST) build/project.godot
+	@mkdir -p build/addons/godot-lua-pluginscript/$2
+	cp $(addprefix $2/, $3) build/addons/godot-lua-pluginscript/$2
 	$(GODOT_BIN) --path build --no-window --quit --script "$(CURDIR)/src/test/init.lua"
 endef
 
@@ -177,7 +177,6 @@ build/%/liblua_pluginscript.so: $(BUILT_OBJS) build/%/luajit/src/libluajit.a
 	$(call STRIP_CMD,$@)
 
 build/%/lua_pluginscript.dll: TARGET_SYS = Windows
-build/%/lua_pluginscript.dll: EXE = .exe
 build/%/lua_pluginscript.dll: $(BUILT_OBJS) build/%/lua51.dll
 	$(_CC) -o $@ $^ -shared $(CFLAGS) $(LDFLAGS)
 	$(call STRIP_CMD,$@)
@@ -215,6 +214,15 @@ build/project.godot: src/tools/project.godot | build
 build/compile_commands.json: COMPILE_COMMAND = $(_CC) -o build/language_gdnative.o src/language_gdnative.c -c $(CFLAGS)
 build/compile_commands.json: Makefile
 	echo '[{"directory":"$(CURDIR)","file":"src/language_gdnative.c","command":"$(subst ",\",$(COMPILE_COMMAND))"}]' > $@
+
+
+build/%/test_cmodule.so: src/test/test_cmodule.c
+	$(_CC) -o $@ $^ -shared $(CFLAGS) $(LDFLAGS)
+build/%/test_cmodule.dll: src/test/test_cmodule.c build/%/lua51.dll
+	$(_CC) -o $@ $^ -shared $(CFLAGS) $(LDFLAGS)
+build/%/test_cmodule.dylib: LDFLAGS += -Wl,-undefined,dynamic_lookup
+build/%/test_cmodule.dylib: src/test/test_cmodule.c
+	$(_CC) -o $@ $^ -shared $(CFLAGS) $(LDFLAGS)
 
 
 # Phony targets
@@ -261,26 +269,28 @@ compdb: compilation-database
 linux32: MAKE_LUAJIT_ARGS += CC="$(CC) -m32 -fPIC"
 linux32: CFLAGS += -m32 -fPIC
 linux32: build/linux_x86/liblua_pluginscript.so
-$(eval $(call GEN_TEST,linux32,build/linux_x86/liblua_pluginscript.so))
+$(eval $(call GEN_TEST,linux32,build/linux_x86,liblua_pluginscript.so test_cmodule.so))
 
 linux64: MAKE_LUAJIT_ARGS += CC="$(CC) -fPIC"
 linux64: CFLAGS += -fPIC
 linux64: build/linux_x86_64/liblua_pluginscript.so
-$(eval $(call GEN_TEST,linux64,build/linux_x86_64/liblua_pluginscript.so))
+$(eval $(call GEN_TEST,linux64,build/linux_x86_64,liblua_pluginscript.so test_cmodule.so))
 
 windows32: build/windows_x86/lua_pluginscript.dll
-$(eval $(call GEN_TEST,windows32,build/windows_x86/lua_pluginscript.dll))
+$(eval $(call GEN_TEST,windows32,build/windows_x86,lua_pluginscript.dll lua51.dll test_cmodule.dll))
 mingw-windows32: CROSS = i686-w64-mingw32-
 mingw-windows32: MAKE_LUAJIT_ARGS += HOST_CC="$(CC) -m32" CROSS="$(CROSS)" LDFLAGS=-static-libgcc
 mingw-windows32: windows32
-$(eval $(call GEN_TEST,mingw-windows32,build/windows_x86/lua_pluginscript.dll))
+test-mingw-windows32: CROSS = i686-w64-mingw32-
+$(eval $(call GEN_TEST,mingw-windows32,build/windows_x86,lua_pluginscript.dll lua51.dll test_cmodule.dll))
 
 windows64: build/windows_x86_64/lua_pluginscript.dll
-$(eval $(call GEN_TEST,windows64,build/windows_x86_64/lua_pluginscript.dll))
+$(eval $(call GEN_TEST,windows64,build/windows_x86_64,lua_pluginscript.dll lua51.dll test_cmodule.dll))
 mingw-windows64: CROSS = x86_64-w64-mingw32-
 mingw-windows64: MAKE_LUAJIT_ARGS += HOST_CC="$(CC)" CROSS="$(CROSS)" LDFLAGS=-static-libgcc
 mingw-windows64: windows64
-$(eval $(call GEN_TEST,mingw-windows64,build/windows_x86_64/lua_pluginscript.dll))
+test-mingw-windows64: CROSS = x86_64-w64-mingw32-
+$(eval $(call GEN_TEST,mingw-windows64,build/windows_x86_64,lua_pluginscript.dll lua51.dll test_cmodule.dll))
 
 osx-x86_64: MACOSX_DEPLOYMENT_TARGET ?= 10.7
 osx-x86_64: _ADD_CFLAGS = -isysroot '$(shell xcrun --sdk macosx --show-sdk-path)' -arch x86_64
@@ -295,7 +305,7 @@ osx-arm64: MAKE_LUAJIT_ARGS += TARGET_FLAGS="$(_ADD_CFLAGS)" MACOSX_DEPLOYMENT_T
 osx-arm64: build/osx_arm64/lua_pluginscript.dylib
 
 osx64: osx-x86_64 osx-arm64 build/osx_arm64_x86_64/lua_pluginscript.dylib
-$(eval $(call GEN_TEST,osx64,build/osx_arm64_x86_64/lua_pluginscript.dylib))
+$(eval $(call GEN_TEST,osx64,build/osx_arm64_x86_64,lua_pluginscript.dylib test_cmodule.dylib))
 
 # Note: newer OSX systems can't run i386 apps, so LuaJIT can't build properly with the current Makefile
 #ios-armv7s: _ADD_CFLAGS = -isysroot "$(shell xcrun --sdk iphoneos --show-sdk-path)" -arch armv7s -miphoneos-version-min=$(IOS_VERSION_MIN)

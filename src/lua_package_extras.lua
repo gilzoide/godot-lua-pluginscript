@@ -193,3 +193,23 @@ package.path = lua_path:join(';')
 --
 -- @see searchpath
 package.cpath = lua_cpath:join(';')
+
+--- `dlopen`s the PluginScript library with `RTLD_LAZY | RTLD_GLOBAL`.
+-- This is necessary for loading Lua/C modules in POSIX systems.
+local function dlopen_self()
+	ffi_cdef[[
+	void *dlopen(const char *filename, int flags);
+	int dlclose(void *handle);
+	]]
+
+	local RTLD_LAZY = 0x00001
+	local RTLD_GLOBAL = 0x00100
+	local currentLibraryPath = tostring(gdnativelibrary:get_current_library_path():replace("res://", execdir_repl .. '/'))
+	-- Maintain a reference to dlopened library while PluginScript is loaded
+	-- When the Lua state closes, GC will kick in and the library will get dlclosed
+	pluginscript_callbacks.__dlopened_self = ffi_gc(ffi.C.dlopen(currentLibraryPath, RTLD_LAZY + RTLD_GLOBAL), ffi.C.dlclose)
+end
+
+if Array("Android", "iOS", "OSX", "Server", "X11"):has(OS:get_name()) then
+	xpcall(dlopen_self, GD.print_error)
+end

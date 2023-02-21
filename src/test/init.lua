@@ -24,26 +24,54 @@ local TestRunner = {
 	extends = 'SceneTree',
 }
 
+local function error_handler(msg)
+	if os.getenv('DEBUG_INTERACTIVE') then
+		local have_dbg, dbg = pcall(require, 'debugger')
+		if have_dbg then
+			return dbg()
+		end
+	end
+	GD.print_error(msg)
+end
+
+function TestRunner:setup_luapath(current_script_base_dir)
+	local additional_paths = { '../../lib/luaunit', '../../lib/debugger_lua' }
+	for _, path in ipairs(additional_paths) do
+		local additional_path = current_script_base_dir:plus_file(path)
+		package.path = string.format('%s/?.lua;%s/?/init.lua;%s', additional_path, additional_path, package.path)
+	end
+end
+
+function TestRunner:setup_cpath()
+	local additional_paths
+	if OS:get_name() == 'Windows' then
+		additional_paths = {
+			'!/addons/godot-lua-pluginscript/build/windows_x86/?.dll',
+			'!/addons/godot-lua-pluginscript/build/windows_x86_64/?.dll',
+		}
+	elseif OS:get_name() == 'OSX' then
+		additional_paths = {
+			'!/addons/godot-lua-pluginscript/build/osx_arm64_x86_64/?.dylib',
+		}
+	else
+		additional_paths = {
+			'!/addons/godot-lua-pluginscript/build/linux_x86/?.so',
+			'!/addons/godot-lua-pluginscript/build/linux_x86_64/?.so',
+		}
+	end
+
+	for _, path in ipairs(additional_paths) do
+		package.cpath = string.format('%s;%s', path, package.cpath)
+	end
+end
+
 function TestRunner:_init()
 	local current_script_path = self:get_script().resource_path
 	local current_script_filename = current_script_path:get_file()
 	local current_script_base_dir = current_script_path:get_base_dir()
 
-	local additional_paths = { '../../lib/luaunit', '../../lib/debugger_lua' }
-	for _, path in ipairs(additional_paths) do
-		local additional_path = current_script_base_dir:plus_file(path)
-		package.path = string.format('%s/?.lua;%s/?/init.lua;', additional_path, additional_path) .. package.path
-	end
-
-	local function error_handler(msg)
-		if os.getenv('DEBUG_INTERACTIVE') then
-			local have_dbg, dbg = pcall(require, 'debugger')
-			if have_dbg then
-				return dbg()
-			end
-		end
-		GD.print_error(msg)
-	end
+	self:setup_luapath(current_script_base_dir)
+	self:setup_cpath()
 
 	local dir, all_passed = Directory:new(), true
 	assert(dir:open(current_script_base_dir) == GD.OK)
