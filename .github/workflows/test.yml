@@ -42,7 +42,7 @@ jobs:
         run: |
           curl --location $GODOT_RELEASE_URL --output godot.zip
           unzip godot.zip
-          mv Godot_* godot.exe
+          mv Godot_*.exe godot.exe
         env:
           GODOT_RELEASE_URL: https://github.com/godotengine/godot/releases/download/3.5.1-stable/Godot_v3.5.1-stable_win64.exe.zip
       - name: Build and test
