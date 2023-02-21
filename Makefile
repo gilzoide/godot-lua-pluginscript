@@ -220,8 +220,11 @@ build/%/test_cmodule.so: src/test/test_cmodule.c
 	$(_CC) -o $@ $^ -shared $(CFLAGS) $(LDFLAGS)
 build/%/test_cmodule.dll: src/test/test_cmodule.c
 	$(_CC) -o $@ $^ -shared $(CFLAGS) $(LDFLAGS)
+build/%/test_cmodule.dylib: LDFLAGS += -Wl,-undefined,dynamic_lookup
 build/%/test_cmodule.dylib: src/test/test_cmodule.c
 	$(_CC) -o $@ $^ -shared $(CFLAGS) $(LDFLAGS)
+build/osx_arm64_x86_64/test_cmodule.dylib: build/osx_x86_64/test_cmodule.dylib build/osx_arm64/test_cmodule.dylib | build/osx_arm64_x86_64
+	$(_LIPO) $^ -create -output $@
 
 
 # Phony targets
