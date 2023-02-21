@@ -28,26 +28,27 @@ jobs:
         env:
           GODOT_BIN: ./godot
 
-  test_windows:
-    name: Run tests on Windows
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          submodules: true
-      - name: Install Godot
-        run: |
-          curl --location $GODOT_RELEASE_URL --output godot.zip
-          unzip godot.zip
-          mv Godot_*.exe godot.exe
-          touch _sc_
-        env:
-          GODOT_RELEASE_URL: https://github.com/godotengine/godot/releases/download/3.5.1-stable/Godot_v3.5.1-stable_win64.exe.zip
-      - name: Build and test
-        run: make test-windows64
-        env:
-          CC: gcc
-          GODOT_BIN: ./godot.exe
+  # Windows GitHub runner does not support creating an OpenGL context for running Godot =/
+  # test_windows:
+  #   name: Run tests on Windows
+  #   runs-on: windows-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #       with:
+  #         submodules: true
+  #     - name: Install Godot
+  #       run: |
+  #         curl --location $GODOT_RELEASE_URL --output godot.zip
+  #         unzip godot.zip
+  #         mv Godot_*.exe godot.exe
+  #         touch _sc_
+  #       env:
+  #         GODOT_RELEASE_URL: https://github.com/godotengine/godot/releases/download/3.5.1-stable/Godot_v3.5.1-stable_win64.exe.zip
+  #     - name: Build and test
+  #       run: make test-windows64
+  #       env:
+  #         CC: gcc
+  #         GODOT_BIN: ./godot.exe
 
   test_osx:
     name: Run tests on OSX
