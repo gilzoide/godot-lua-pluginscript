@@ -44,7 +44,7 @@ jobs:
         env:
           GODOT_RELEASE_URL: https://github.com/godotengine/godot/releases/download/3.5.1-stable/Godot_v3.5.1-stable_win64.exe.zip
       - name: Build and test
-        run: make test-mingw-windows64
+        run: make test-windows64
         env:
           CC: gcc
           GODOT_BIN: ./godot.exe
