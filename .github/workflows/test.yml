@@ -8,8 +8,27 @@ env:
   DEBUG: 1
 
 jobs:
-  test:
-    name: Run tests
+  test_linux:
+    name: Run tests on Linux
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+      - name: Install Godot
+        run: |
+          curl --location $GODOT_RELEASE_URL --output godot.zip
+          unzip godot.zip
+          mv Godot_* godot
+        env:
+          GODOT_RELEASE_URL: https://github.com/godotengine/godot/releases/download/3.5.1-stable/Godot_v3.5.1-stable_linux_headless.64.zip
+      - name: Build and test
+        run: make test-linux64
+        env:
+          GODOT_BIN: ./godot
+
+  test_windows:
+    name: Run tests on Windows
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -18,12 +37,34 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install libc6-dev-i386
+          sudo apt-get install wine
       - name: Install Godot
-        uses: vitorgus/setup-godot@v1
-        with:
-          godot-version: 3.4
-          download-templates: false
+        run: |
+          curl --location $GODOT_RELEASE_URL --output godot.zip
+          unzip godot.zip
+          mv Godot_* godot.exe
+        env:
+          GODOT_RELEASE_URL: https://github.com/godotengine/godot/releases/download/3.5.1-stable/Godot_v3.5.1-stable_win64.exe.zip
       - name: Build and test
-        run: make test-linux64
+        run: make test-mingw-windows64
+        env:
+          GODOT_BIN: wine godot.exe
 
+  test_linux:
+    name: Run tests on OSX
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+      - name: Install Godot
+        run: |
+          curl --location $GODOT_RELEASE_URL --output godot.zip
+          unzip godot.zip
+        env:
+          GODOT_RELEASE_URL: https://github.com/godotengine/godot/releases/download/3.5.1-stable/Godot_v3.5.1-stable_osx.universal.zip
+      - name: Build and test
+        run: make test-osx64
+        env:
+          GODOT_BIN: open ./Godot.app --args
+            
