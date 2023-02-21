@@ -5,6 +5,8 @@ config_version=4
 [application]
 
 config/name="godot-lua-pluginscript-unittest"
+config/use_custom_user_dir=true
+config/custom_user_dir_name="testdir"
 
 [gdnative]
 

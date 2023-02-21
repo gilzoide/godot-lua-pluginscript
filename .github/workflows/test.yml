@@ -47,14 +47,11 @@ jobs:
           touch _sc_
         env:
           GODOT_RELEASE_URL: https://github.com/godotengine/godot/releases/download/3.5.1-stable/Godot_v3.5.1-stable_win64.exe.zip
-      - name: Setup wine
-        run: wineboot
       - name: Build and test
         run: make test-mingw-windows64
         env:
           CC: gcc
           GODOT_BIN: wine godot.exe
-          HOME:
           APPDATA:
 
   test_osx:
