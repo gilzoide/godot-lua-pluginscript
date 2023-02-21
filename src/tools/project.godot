@@ -14,3 +14,7 @@ singletons=[ "res://addons/godot-lua-pluginscript/lua_pluginscript.gdnlib" ]
 
 file_logging/enable_file_logging.pc=false
 file_logging/log_path="testlogdir"
+
+[rendering]
+
+quality/driver/driver_name="GLES2"

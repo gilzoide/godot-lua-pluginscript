@@ -48,8 +48,6 @@ jobs:
         env:
           CC: gcc
           GODOT_BIN: ./godot.exe
-          XDG_DATA_HOME:
-          XDG_CONFIG_HOME:
 
   test_osx:
     name: Run tests on OSX
