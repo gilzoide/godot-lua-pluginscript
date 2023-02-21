@@ -52,6 +52,8 @@ jobs:
         env:
           CC: gcc
           GODOT_BIN: wine godot.exe
+          HOME:
+          APPDATA:
 
   test_osx:
     name: Run tests on OSX
