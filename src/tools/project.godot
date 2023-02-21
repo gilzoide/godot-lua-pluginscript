@@ -5,10 +5,12 @@ config_version=4
 [application]
 
 config/name="godot-lua-pluginscript-unittest"
-config/use_custom_user_dir=true
-config/custom_user_dir_name="testdir"
 
 [gdnative]
 
 singletons=[ "res://addons/godot-lua-pluginscript/lua_pluginscript.gdnlib" ]
 
+[logging]
+
+file_logging/enable_file_logging.pc=false
+file_logging/log_path="testlogdir"
