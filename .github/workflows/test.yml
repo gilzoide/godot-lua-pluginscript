@@ -50,7 +50,7 @@ jobs:
         env:
           GODOT_BIN: wine godot.exe
 
-  test_linux:
+  test_osx:
     name: Run tests on OSX
     runs-on: macos-latest
     steps:
