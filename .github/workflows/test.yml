@@ -53,6 +53,8 @@ jobs:
           CC: gcc
           GODOT_BIN: wine godot.exe
           APPDATA:
+          XDG_DATA_HOME:
+          XDG_CONFIG_HOME:
 
   test_osx:
     name: Run tests on OSX
