@@ -20,6 +20,7 @@ jobs:
           curl --location $GODOT_RELEASE_URL --output godot.zip
           unzip godot.zip
           mv Godot_* godot
+          touch _sc_
         env:
           GODOT_RELEASE_URL: https://github.com/godotengine/godot/releases/download/3.5.1-stable/Godot_v3.5.1-stable_linux_headless.64.zip
       - name: Build and test
@@ -43,6 +44,7 @@ jobs:
           curl --location $GODOT_RELEASE_URL --output godot.zip
           unzip godot.zip
           mv Godot_*.exe godot.exe
+          touch _sc_
         env:
           GODOT_RELEASE_URL: https://github.com/godotengine/godot/releases/download/3.5.1-stable/Godot_v3.5.1-stable_win64.exe.zip
       - name: Build and test
