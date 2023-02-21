@@ -52,7 +52,6 @@ jobs:
         env:
           CC: gcc
           GODOT_BIN: wine godot.exe
-          APPDATA:
           XDG_DATA_HOME:
           XDG_CONFIG_HOME:
 
