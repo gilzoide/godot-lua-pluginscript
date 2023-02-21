@@ -30,15 +30,11 @@ jobs:
 
   test_windows:
     name: Run tests on Windows
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
         with:
           submodules: true
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install libc6-dev-i386 gcc-mingw-w64 wine
       - name: Install Godot
         run: |
           curl --location $GODOT_RELEASE_URL --output godot.zip
@@ -51,7 +47,7 @@ jobs:
         run: make test-mingw-windows64
         env:
           CC: gcc
-          GODOT_BIN: wine godot.exe
+          GODOT_BIN: ./godot.exe
           XDG_DATA_HOME:
           XDG_CONFIG_HOME:
 
