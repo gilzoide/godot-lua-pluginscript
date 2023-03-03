@@ -61,7 +61,9 @@ local function print_coroutine_error(co, err, msg_prefix)
 		table_insert(msg_lines, table_concat(lps_callstack[i], ' '))
 	end
 	local msg = table_concat(msg_lines, '\n\tin ')
-	api.godot_print_error(msg, debug_getinfo(co, 0, 'n').name, filename, tonumber(line))
+	api.godot_print_error(
+		("%s:%d: %s"):format(filename, tonumber(line), msg:match("[%w%p%s]-%c"):gsub('%c', '', 1)), debug_getinfo(co, 0, 'n').name, filename, tonumber(line)
+	)
 end
 
 local function wrap_callback(f, error_return)
