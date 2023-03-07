@@ -1,5 +1,8 @@
 # Changelog
-## [Unreleased](https://github.com/gilzoide/godot-lua-pluginscript/compare/0.5.1...HEAD)
+## [Unreleased](https://github.com/gilzoide/godot-lua-pluginscript/compare/0.5.2...HEAD)
+
+
+## [0.5.2](https://github.com/gilzoide/godot-lua-pluginscript/releases/tag/0.5.2)
 ### Fixed
 
 - Fixed `undefined symbol: lua_*` when requiring Lua/C modules in POSIX systems
