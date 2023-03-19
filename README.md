@@ -2,8 +2,12 @@
 
 <img src="extras/icon.png" alt="Lua PluginScript icon" width="128" height="128"/>
 
-[![Godot Asset Library Icon](https://img.shields.io/static/v1?style=for-the-badge&logo=godotengine&label=asset%20library&color=478CBF&message=0.5.1)](https://godotengine.org/asset-library/asset/1078)
+[![Godot Asset Library Icon](https://img.shields.io/static/v1?style=for-the-badge&logo=godotengine&label=asset%20library&color=478CBF&message=0.5.2)](https://godotengine.org/asset-library/asset/1078)
 [![Pluginscript Lua](https://img.shields.io/discord/1056941025559588874.svg?label=Discord&logo=Discord&colorB=7289da&style=for-the-badge)](https://discord.gg/rZJbXZXQWe)
+
+> **WARNING**
+> 
+> This does not work with Godot 4.X, since it relies on GDNative, a Godot 3.X only technology.
 
 GDNative + PluginScript library that adds support for [Lua](https://www.lua.org/)
 as a scripting language in [Godot](https://godotengine.org/) 3.X
